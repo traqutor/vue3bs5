@@ -1,12 +1,9 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+
+import layoutModule from './layout/index';
 
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
-  }
-})
+    layout: layoutModule,
+  },
+});

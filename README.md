@@ -1,5 +1,12 @@
 # vue3bs5
 
+Basic vue 3 and bootstrap sass (sass-node) loader configuration 
+Note: sass-dart failed with loading default bootstrap scss file:
+
+```
+@import "~bootstrap/scss/bootstrap.scss";
+```
+
 ## Project setup
 ```
 npm install
@@ -20,5 +27,3 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
