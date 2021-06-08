@@ -6,6 +6,7 @@ const socketModule = {
     state() {
         return {
             hubConnection: null,
+            mapOfTypingUsers: {},
         }
     },
     mutations: socketMutations,

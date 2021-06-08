@@ -48,6 +48,7 @@ export default {
 
         connection.on("UserIsTypingNotification", payload => {
             const whoIsTyping = JSON.parse(payload);
+            console.log("UserIsTypingNotification", whoIsTyping);
             if (
                 state.mapOfTypingUsers[whoIsTyping.userId + whoIsTyping.conversationId]
             ) {
