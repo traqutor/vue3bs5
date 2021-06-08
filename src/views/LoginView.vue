@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid splash-image-panel">
     <div class="ign-grid-center">
-      <div class="signin-form">
+      <div class="sign-in-form">
         <img
             class="sign-company-logo"
             data-tenant-branding-logo="true"
@@ -100,7 +100,7 @@ export default {
   background-image: url(https://secure.aadcdn.microsoftonline-p.com/447973e2-4lvfxi2jlmwvkyxdgkhbcfabjazk-ycbaeyyhr2nzkw/logintenantbranding/0/illustration?ts=637391759051677859);
 }
 
-.signin-form {
+.sign-in-form {
   padding: 40px 30px;
   background-color: #fff;
   border: 1px solid transparent;
