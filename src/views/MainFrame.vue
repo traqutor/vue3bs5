@@ -10,7 +10,8 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import AsideLeft from "../components/aside/AsideLeft";
+import AsideLeft from "@/components/aside/AsideLeft";
+
 export default {
   setup() {
     const store = useStore();

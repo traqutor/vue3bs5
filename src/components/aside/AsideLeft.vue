@@ -1,8 +1,8 @@
 <template>
   <aside
     class="sidebar sidebar-left bg-white d-flex flex-column"
-    @mouseover="onLeftAsideMouse(VISIBILITIES.HOVER)"
-    @mouseleave="onLeftAsideMouse(VISIBILITIES.SET)"
+    @mouseover="onLeftAsideMouse(visibilities.HOVER)"
+    @mouseleave="onLeftAsideMouse(visibilities.SET)"
   >
     <nav class="navbar bg-light p-0 shadow">
       <div class="navbar-brand w-100">
@@ -314,13 +314,10 @@
         <span class="nav-link-text">Settings</span>
       </a>
     </nav>
-    <!--
-  <button type="button" class="btn btn-sm text-secondary text-dark-hover border-0 w-100 rounded-0"><i class="f-icon-24" data-feather="more-horizontal"></i></button>
--->
+
   </aside>
 </template>
 <script>
-import { onMounted } from "vue";
 import { useStore } from "vuex";
 
 import { VISIBILITIES } from "@/const";
@@ -328,27 +325,24 @@ import { VISIBILITIES } from "@/const";
 export default {
   setup() {
     const store = useStore();
-
-    onMounted(() => {
-      console.log("visibilities", VISIBILITIES);
-      console.log("store", store);
-    });
+    const visibilities = VISIBILITIES;
 
     const onLeftAsideMouse = (visibility) => {
-      if (store.getters.getAsideLeftVisibility !== VISIBILITIES.FIXED) {
+      if (store.getters.getAsideLeftVisibility !== visibilities.FIXED) {
         store.commit("setAsideLeftVisibility", visibility);
       }
     };
+
     const onToggleLeftAsideFixed = () => {
-      if (store.getters.getAsideLeftVisibility !== VISIBILITIES.FIXED) {
-        store.commit("setAsideLeftVisibility", VISIBILITIES.FIXED);
+      if (store.getters.getAsideLeftVisibility !== visibilities.FIXED) {
+        store.commit("setAsideLeftVisibility", visibilities.FIXED);
       } else {
-        store.commit("setAsideLeftVisibility", VISIBILITIES.SET);
+        store.commit("setAsideLeftVisibility", visibilities.SET);
       }
     };
 
     return {
-      VISIBILITIES,
+      visibilities,
       onToggleLeftAsideFixed,
       onLeftAsideMouse,
     };
