@@ -22,7 +22,7 @@ export default {
       getAsideLeftClass,
     };
   },
-  name: "MainFrame",
+  name: "MainFrameView",
   components: {
     AsideLeft,
   },

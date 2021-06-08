@@ -1,22 +1,35 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import MainFrame from '@/views/MainFrame.vue';
+import MainFrameView from '@/views/MainFrameView.vue';
+import LoginView from '@/views/LoginView';
+import NotFoundView from '@/views/NotFoundView';
 
 const routes = [
     {
         path: '/',
-        component: MainFrame,
+        component: MainFrameView,
+        children: [
+            {
+                path: '/tasks',
+                name: 'Tasks',
+                component: () =>
+                    import('@/views/TasksView'),
+            },
+            {
+                path: '/conversations',
+                name: 'Conversations',
+                component: () =>
+                    import('@/views/ConversationsView'),
+            },
+        ]
     },
     {
-        path: '/tasks',
-        name: 'Tasks',
-        component: () =>
-            import('@/views/TasksView'),
+        path: '/login',
+        name: 'Login',
+        component: LoginView,
     },
     {
-        path: '/conversations',
-        name: 'Conversations',
-        component: () =>
-            import('@/views/ConversationsView'),
+        path: '/:catchAll(.*)',
+        component: NotFoundView,
     },
 ];
 
