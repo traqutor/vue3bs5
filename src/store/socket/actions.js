@@ -104,7 +104,7 @@ export default {
 
     },
     onSocketConnectionClose: ({ state }) => {
-        console.log("SOCKET_CONNECTION_CLOSE", state);
+        console.log("onSocketConnectionClose");
         state.hubConnection.stop();
     }
 }
