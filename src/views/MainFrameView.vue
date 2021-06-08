@@ -3,13 +3,18 @@
     class="app header-fixed sidebar-fixed sidebar-footer-fixed bg-white"
     :class="getAsideLeftClass"
   >
-    <aside-left />
+    <app-header></app-header>
+    <aside-left></aside-left>
+    <main class="content">
+      <router-view> </router-view>
+    </main>
   </div>
 </template>
 
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
+import AppHeader from "@/components/header/MainHeader";
 import AsideLeft from "@/components/aside/AsideLeft";
 
 export default {
@@ -24,6 +29,7 @@ export default {
   },
   name: "MainFrameView",
   components: {
+    AppHeader,
     AsideLeft,
   },
 };

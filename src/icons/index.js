@@ -29,6 +29,7 @@ import FeatherFileText from "./FeatherFileText";
 import FeatherFilter from "./FeatherFilter";
 import FeatherFlasher from "./FeatherFlasher";
 import FeatherGrid from "./FeatherGrid";
+import FeatherHeadphonesMic from "./FeatherHeadphonesMic";
 import FeatherInfo from "./FeatherInfo";
 import FeatherLayers from "./FeatherLayers";
 import FeatherList from "./FeatherList";
@@ -56,6 +57,7 @@ import FeatherSearch from "./FeatherSearch";
 import FeatherServer from "./FeatherServer";
 import FeatherSettings from "./FeatherSettings";
 import FeatherShare from "./FeatherShare";
+import FeatherShield from "./FeatherShield";
 import FeatherSidebar from "./FeatherSidebar";
 import FeatherSmile from "./FeatherSmile";
 import FeatherTag from "./FeatherTag";
@@ -75,7 +77,7 @@ import IconAssetUser from "./IconAssetUser";
 import IconAssetRecliner from "./IconAssetRecliner";
 
 
-export {
+export default {
   FeatherAlertCircle,
   FeatherAlertTriangle,
   FeatherArrowUp,
@@ -107,6 +109,7 @@ export {
   FeatherFilter,
   FeatherFlasher,
   FeatherGrid,
+  FeatherHeadphonesMic,
   FeatherInfo,
   FeatherLayers,
   FeatherList,
@@ -134,6 +137,7 @@ export {
   FeatherServer,
   FeatherSettings,
   FeatherShare,
+  FeatherShield,
   FeatherSidebar,
   FeatherSmile,
   FeatherTag,
