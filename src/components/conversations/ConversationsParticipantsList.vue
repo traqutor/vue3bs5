@@ -66,8 +66,9 @@
                             v-for="user of systemUsers"
                             :key="user.userId"
                             :participant-id="user.userId"
-                            :is-selected="true"
+                            :is-selected="isParticipantSelected(user.userId)"
                             :is-highlighted="true"
+                            :on-select="onSelect"
                         ></conversations-participants-list-item>
                       </div>
                       <div
@@ -78,8 +79,9 @@
                             v-for="role of systemRoles"
                             :key="role.id"
                             :participant-id="role.id"
-                            :is-selected="true"
+                            :is-selected="isParticipantSelected(role.id)"
                             :is-highlighted="true"
+                            :on-select="onSelect"
                         ></conversations-participants-list-item>
 
 
@@ -109,11 +111,20 @@ export default {
     const store = useStore();
     const systemUsers = computed(() => store.getters.getSystemUsers);
     const systemRoles = computed(() => store.getters.getSystemRoles);
-
+    const isParticipantSelected = computed(() => store.getters.isParticipantSelected)
     const activeTab = ref("all");
 
+    function onSelect(id) {
+      store.dispatch("setToggleParticipantSelected", id)
+    }
 
-    return {systemUsers, systemRoles, activeTab}
+    return {
+      systemUsers,
+      systemRoles,
+      activeTab,
+      isParticipantSelected,
+      onSelect,
+    }
   },
   components: {ConversationsParticipantsListItem}
 }

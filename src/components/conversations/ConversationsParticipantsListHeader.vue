@@ -51,6 +51,7 @@ export default {
   methods: {
     onChangeConversationViewMode() {
       this.$store.commit("setParticipantsSearchText", "");
+      this.$store.commit("purgeSelectedParticipants");
       this.$store.commit("setConversationViewMode", this.conversationViewModes.VIEW);
     }
 

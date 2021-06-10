@@ -33,13 +33,7 @@ export default {
     isSelected: { type: Boolean },
     isRemovable: { type: Boolean },
     isHighlighted: { type: Boolean },
-  },
-  setup(props) {
-    function onSelect() {
-      console.log(props.participantId);
-    }
-
-    return { onSelect }
+    onSelect: { type: Function }
   },
   components: {ParticipantAvatarNameItem, FeatherMinusCircle, FeatherCheckCircle, FeatherCircle}
 }
