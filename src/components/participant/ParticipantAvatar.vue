@@ -1,30 +1,28 @@
 <template>
-  <figure v-if="participant && participant.isRole" class="avatar avatar-lg me-3">
-    <feather-briefcase></feather-briefcase>
+  <figure v-if="participant && participant.isRole" class="avatar avatar-lg">
+    <feather-briefcase1></feather-briefcase1>
   </figure>
-  <figure v-else class="avatar avatar-lg me-3"
+  <figure v-else class="avatar avatar-lg"
           :data-initial="participant.name.substring(0, 1).toUpperCase()"
   >
-    <div v-if="participant.isRole">
-      <feather-briefcase></feather-briefcase>
-    </div>
     <img
         v-if="participant.avatar.includes('simona')"
         src="@/assets/images/simona.jpg"
         alt="S"
     />
-    <i class="avatar-presence online"></i>
+    <i v-if="isActiveIndicator" class="avatar-presence online"></i>
   </figure>
 </template>
 <script>
 import {computed} from "vue";
 import {useStore} from "vuex";
-import FeatherBriefcase from "@/icons/FeatherBriefcase";
+import FeatherBriefcase1 from "@/icons/FeatherBriefcase1";
 
 export default {
-  components: {FeatherBriefcase},
+  components: {FeatherBriefcase1},
   props: {
-    participantId: {type: String}
+    participantId: {type: String},
+    isActiveIndicator: {true: Boolean}
   },
   setup(props) {
     const store = useStore();

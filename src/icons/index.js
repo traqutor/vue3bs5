@@ -1,9 +1,11 @@
 import FeatherAlertCircle from "./FeatherAlertCircle";
 import FeatherAlertTriangle from "./FeatherAlertTriangle";
+import FeatherArrowReply from "./FeatherArrowReply";
 import FeatherArrowUp from "./FeatherArrowUp";
 import FeatherBarChart from "./FeatherBarChart";
 import FeatherBook from "./FeatherBook";
 import FeatherBriefcase from "./FeatherBriefcase";
+import FeatherBriefcase1 from "./FeatherBriefcase1";
 import FeatherCalendar from "./FeatherCalendar";
 import FeatherCamera from "./FeatherCamera";
 import FeatherCheckCircle from "./FeatherCheckCircle";
@@ -25,6 +27,7 @@ import FeatherDoctor from "./FeatherDoctor";
 import FeatherEdit from "./FeatherEdit";
 import FeatherEdit3 from "./FeatherEdit3";
 import FeatherEye from "./FeatherEye";
+import FeatherEyeOff from "./FeatherEyeOff";
 import FeatherFileText from "./FeatherFileText";
 import FeatherFilter from "./FeatherFilter";
 import FeatherFlasher from "./FeatherFlasher";
@@ -36,6 +39,7 @@ import FeatherList from "./FeatherList";
 import FeatherMapPin from "./FeatherMapPin";
 import FeatherMaximize from "./FeatherMaximize";
 import FeatherMessageGroup from "./FeatherMessageGroup";
+import FeatherMessageSquare from "./FeatherMessageSquare";
 import FeatherMessageSquareGroup from "./FeatherMessageSquareGroup";
 import FeatherMessageSquareLine from "./FeatherMessageSquareLine";
 import FeatherMic from "./FeatherMic";
@@ -70,6 +74,7 @@ import FeatherUserHash from "./FeatherUserHash";
 import FeatherUserPlus from "./FeatherUserPlus";
 import FeatherUsers from "./FeatherUsers";
 import FeatherVideo from "./FeatherVideo";
+import FeatherWhisperMessage from "./FeatherWhisperMessage";
 import FeatherX from "./FeatherX";
 import FeatherZoomIn from "./FeatherZoomIn";
 import IconAssetDrugFridge from "./IconAssetDrugFridge";
@@ -81,9 +86,11 @@ export default {
   FeatherAlertCircle,
   FeatherAlertTriangle,
   FeatherArrowUp,
+  FeatherArrowReply,
   FeatherBarChart,
   FeatherBook,
   FeatherBriefcase,
+  FeatherBriefcase1,
   FeatherCalendar,
   FeatherCamera,
   FeatherCheckCircle,
@@ -105,6 +112,7 @@ export default {
   FeatherEdit,
   FeatherEdit3,
   FeatherEye,
+  FeatherEyeOff,
   FeatherFileText,
   FeatherFilter,
   FeatherFlasher,
@@ -116,6 +124,7 @@ export default {
   FeatherMapPin,
   FeatherMaximize,
   FeatherMessageGroup,
+  FeatherMessageSquare,
   FeatherMessageSquareGroup,
   FeatherMessageSquareLine,
   FeatherMic,
@@ -150,6 +159,7 @@ export default {
   FeatherUserPlus,
   FeatherUsers,
   FeatherVideo,
+  FeatherWhisperMessage,
   FeatherX,
   FeatherZoomIn,
   IconAssetDrugFridge,

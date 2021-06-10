@@ -1,7 +1,10 @@
 <template>
   <div class="d-flex align-items-center user-item-details">
 
-    <participant-avatar :participantId="participantId"></participant-avatar>
+    <participant-avatar
+        :participantId="participantId"
+      class="me-3"
+    ></participant-avatar>
 
     <div class="media-body overflow-hidden is-filtered">
       <div class="d-flex align-items-center overflow-hidden">

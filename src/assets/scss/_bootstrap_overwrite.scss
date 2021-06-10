@@ -1,4 +1,13 @@
 
+.media-body {
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.font-weight-normal {
+  font-weight: 400 !important;
+}
+
 input-group-sm > .form-control, .input-group-sm > .custom-select, .input-group-sm > .input-group-prepend > .input-group-text, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-append > .btn {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;

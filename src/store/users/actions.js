@@ -23,7 +23,6 @@ export default {
     },
 
     setToggleParticipantSelected: ({commit, state, getters}, participantId) => {
-        console.log('selected participant', participantId);
         const selectedParticipants = [...state.selectedParticipants];
         const i = selectedParticipants.findIndex(prt => guidsAreEqual(prt.id, participantId));
         if (i > -1) {
@@ -34,6 +33,7 @@ export default {
         }
         commit("setSelectedParticipants", selectedParticipants);
     },
+
     setToggleParticipantToWhisper: ({commit, state, getters}, participantId) => {
         const whisperToParticipants = [...state.whisperToParticipants];
         const i = state.whisperToParticipants.findIndex(prt => guidsAreEqual(prt.id, participantId));
@@ -45,6 +45,4 @@ export default {
         }
         commit("setWhisperParticipants", whisperToParticipants);
     }
-
-
 }
