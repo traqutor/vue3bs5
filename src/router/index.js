@@ -7,6 +7,7 @@ import {isSignedIn} from "@/services/jwt.service";
 const routes = [
     {
         path: '/',
+        redirect: "/conversations",
         component: MainFrameView,
         children: [
             {

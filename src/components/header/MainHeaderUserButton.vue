@@ -1,12 +1,15 @@
 <template>
   <div class="d-flex align-items-center mx-3 dropdown">
 
-    <div class="d-flex align-items-center on-hover h-100 dropdown-toggle pr-2"
+    <div v-if="loggedUser" class="d-flex align-items-center on-hover h-100 dropdown-toggle pr-2"
          id="dropdownMenuButton1"
          data-bs-toggle="dropdown"
          aria-expanded="false"
     >
-      <figure class="avatar avatar-lg me-3" data-initial="AM" id="mainAvatar">
+      <figure
+          class="avatar avatar-lg me-3"
+          :data-initial="loggedUser.name.substring(0, 1).toUpperCase()"
+          id="mainAvatar">
         <i class="avatar-presence away text-light"></i>
       </figure>
 

@@ -3,7 +3,7 @@ import {getTokenData, getUserFromTokenData, saveTokenData} from "@/services/jwt.
 import jwt_decode from "jwt-decode";
 
 export default {
-    onLogin: ({commit}, authData) => {
+    onLogin: ({commit, dispatch}, authData) => {
         const params = {
             scope: "api1",
             client_id: "ro.client",
@@ -43,9 +43,8 @@ export default {
                     );
                     commit("setLoggedUser", decodedUserData);
 
-                    // commit(PURGE_SELECTED_CONVERSATION);
-                    // dispatch(GET_USERS);
-                    // dispatch("getConversations", {refresh: true});
+                    dispatch("getUsers");
+                    dispatch("getConversations", {refresh: true});
 
                     resolve();
                 } else {
@@ -60,7 +59,7 @@ export default {
                 });
         });
     },
-    onAppInitRecallLoggedUserData: ({commit}) => {
+    onAppInitRecallLoggedUserData: ({commit, dispatch}) => {
         return new Promise((resolve) => {
             const user = getUserFromTokenData();
             const token = getTokenData();
@@ -68,8 +67,8 @@ export default {
             if (user && token) {
                 commit("setLoggedUser", user);
 
-                // dispatch(GET_USERS);
-                // dispatch("getConversations", { refresh: true });
+                dispatch("getUsers");
+                dispatch("getConversations", { refresh: true });
 
                 resolve(user);
             }
