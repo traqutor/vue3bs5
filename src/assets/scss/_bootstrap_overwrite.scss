@@ -1,3 +1,18 @@
+.text-right {
+  text-align: right !important;
+}
+
+.border-secondary-light {
+  border-color: rgba(0,0,0,.1) !important;
+}
+.border-left {
+  border-left: 1px solid #dee2e6 !important;
+}
+
+.flex-fill {
+  -ms-flex: 1 1 auto !important;
+  flex: 1 1 auto !important;
+}
 
 .media-body {
   -ms-flex: 1;

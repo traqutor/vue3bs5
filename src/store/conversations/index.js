@@ -7,10 +7,18 @@ const conversationsModule = {
     state() {
         return {
             conversations: [],
-            isLoadingConversations: null,
-            pageOfConversations: {skipConversations: 0, takeConversations: 20},
+            conversationTopic: null,
             chatViewMode: CHAT_VIEW_MODES.VIEW,
             conversationViewMode: CONVERSATION_VIEW_MODES.VIEW,
+            isConversationsLoading: null,
+            isConversationCreating: null,
+            pageOfConversations: {skipConversations: 0, takeConversations: 20},
+            selectedConversationId: null,
+            selectedCreator: null,
+            messageText: null,
+            selectedMessageId: null,
+            isMessagesLoading: null,
+            isMessageCreating: null,
         }
     },
     mutations: conversationsMutations,

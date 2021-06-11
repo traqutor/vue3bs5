@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-items-center mb-2 pr-3">
+  <div class="d-flex align-items-center mb-2 pe-3">
     <div class="input-group input-group-sm filter-control-group flex-grow-1">
       <input
           v-model="textToSearchParticipants"

@@ -3,7 +3,7 @@
     <div class="step-tabpanel flex-fill position-relative active show">
       <div class="d-flex flex-column h-100 w-100 position-absolute">
 
-        <nav class="side-nav-line pr-3 d-flex w-100">
+        <nav class="side-nav-line pe-3 d-flex w-100">
           <div
               class="nav nav-tabs border-bottom border-secondary-light flex-fill flex-nowrap toggle-filter-group btn-group-sm"
               style="min-height: 38px;">

@@ -80,7 +80,7 @@ export default {
             ).sort(sortByName);
         }
     },
-    selectedParticipants: state => {
+    getSelectedParticipants: state => {
         return state.selectedParticipants;
     },
     isParticipantSelected: state => id => {

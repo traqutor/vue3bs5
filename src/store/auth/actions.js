@@ -42,9 +42,10 @@ export default {
                         decodedUserData.SystemRolesJson
                     );
                     commit("setLoggedUser", decodedUserData);
+                    commit("setSelectedCreator", decodedUserData);
 
                     dispatch("getUsers");
-                    dispatch("getConversations", {refresh: true});
+                    dispatch("onGetConversations", {refresh: true});
 
                     resolve();
                 } else {
@@ -66,9 +67,10 @@ export default {
 
             if (user && token) {
                 commit("setLoggedUser", user);
+                commit("setSelectedCreator", user);
 
                 dispatch("getUsers");
-                dispatch("getConversations", { refresh: true });
+                dispatch("onGetConversations", { refresh: true });
 
                 resolve(user);
             }

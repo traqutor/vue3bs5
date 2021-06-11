@@ -7,7 +7,7 @@
     <conversations-participants v-else></conversations-participants>
 
     <conversation v-if="conversationViewMode === conversationViewModes.VIEW"></conversation>
-    <new-conversation v-else></new-conversation>
+    <conversation-new v-else></conversation-new>
   </div>
 </template>
 <script>
@@ -17,7 +17,7 @@ import Conversations from "@/components/conversations/Conversations";
 import ConversationsParticipants from "@/components/conversations/ConversationsParticipants";
 import {CHAT_VIEW_MODES, CONVERSATION_VIEW_MODES} from "@/const"
 import Conversation from "@/components/conversation/Conversation";
-import NewConversation from "@/components/conversation/NewConversation";
+import ConversatioNew from "@/components/conversation/ConversationNew";
 
 export default {
   setup() {
@@ -35,6 +35,6 @@ export default {
       conversationViewModes,
     }
   },
-  components: {NewConversation, Conversation, ConversationsParticipants, Conversations}
+  components: {ConversatioNew, Conversation, ConversationsParticipants, Conversations}
 }
 </script>

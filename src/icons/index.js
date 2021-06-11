@@ -64,6 +64,7 @@ import FeatherShare from "./FeatherShare";
 import FeatherShield from "./FeatherShield";
 import FeatherSidebar from "./FeatherSidebar";
 import FeatherSmile from "./FeatherSmile";
+import FeatherSquare from "./FeatherSquare";
 import FeatherTag from "./FeatherTag";
 import ToggleLeftIcon from "./FeatherToggleLeft";
 import FeatherToggleRight from "./FeatherToggleRight";
@@ -149,6 +150,7 @@ export default {
   FeatherShield,
   FeatherSidebar,
   FeatherSmile,
+  FeatherSquare,
   FeatherTag,
   ToggleLeftIcon,
   FeatherToggleRight,

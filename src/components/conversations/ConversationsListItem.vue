@@ -1,6 +1,9 @@
 <template>
   <a href="#"
-     class="list-group-item p-2 mt-1 rounded list-group-item-action list-group-dialog hover-action-group border-0 has-new visible">
+     @click="onConversationSelect"
+     class="list-group-item p-2 mt-1 rounded list-group-item-action list-group-dialog hover-action-group border-0 has-new visible"
+     :class="isConversationActive ? 'active' : ''"
+  >
 
     <div class="d-flex list-item-media dialog-media">
 
@@ -20,7 +23,7 @@
                 <feather-clock class="text-primary"></feather-clock>
               </div>
               <div class="text-nowrap ms-auto ps-3 text-muted is-filter-ignore f-size-11">
-                <date-to-last-activity-label :activity-date="conversation.lastActivity"/>
+                <date-to-last-activity-label :activity-date="conversation.createdTime"/>
               </div>
             </div>
 
@@ -28,7 +31,7 @@
               <div class="text-truncate f-size-15 text-dark font-weight-middle">{{ conversation.topic }}</div>
 
               <div class="text-nowrap ms-auto ps-3 text-muted is-filter-ignore f-size-11">
-                <date-to-last-activity-label :activity-date="conversation.lastActivity"/>
+                <date-to-last-activity-label :activity-date="conversation.createdTime"/>
               </div>
             </div>
           </div>
@@ -61,7 +64,6 @@
             {{ conversation.unreadMessageCount }}
           </span>
         </div>
-
       </div>
     </div>
 
@@ -141,6 +143,10 @@ export default {
     const loggedUser = computed(() => store.getters.getLoggedUser);
     const getParticipantById = computed(() => store.getters.getParticipantById)
     const getDirectParticipant = computed(() => store.getters.getDirectParticipant);
+    const isConversationActive = computed(() => {
+      return guidsAreEqual(store.getters.getSelectedConversationId, props.conversation.id);
+    })
+
     const isLoggedUserAuthorOfLastMessage = computed(() => {
       return props.conversation.lastMessage && guidsAreEqual(props.conversation.lastMessage.authorId, loggedUser.value.id);
     });
@@ -160,14 +166,20 @@ export default {
       }
     }
 
+    function onConversationSelect() {
+      store.dispatch("onSelectConversation", props.conversation.id)
+    }
+
 
     return {
       getDirectParticipant,
       getParticipantById,
       getRolesAsLabel,
+      isConversationActive,
       isLoggedUserAuthorOfLastMessage,
       isWatchedByAllParticipants,
       isWatchedByLoggedUser,
+      onConversationSelect,
     }
 
   }
