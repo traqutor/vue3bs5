@@ -2,7 +2,9 @@
   <div
       v-if="conversation"
       class="chat-section-header d-flex justify-content-between align-items-center pb-2 border-bottom border-secondary-light hover-action-group">
-    <div class="d-flex align-items-center overflow-hidden step-tabpanel-open on-hover">
+    <div
+        @click="onConversationModeSelect(chatViewModes.INFO)"
+        class="d-flex align-items-center overflow-hidden on-hover">
 
       <participant-avatar
           v-if="conversation.isDirect"
@@ -85,6 +87,16 @@
         >
           <feather-chevrons-left/>
           Back</a>
+      </div>
+    </div>
+  </div>
+  <div
+      v-else
+      class="chat-section-header d-flex justify-content-between align-items-center pb-2 border-bottom border-secondary-light hover-action-group">
+    <div class="d-flex align-items-center overflow-hidden on-hover">
+
+      <div class="media-body overflow-hidden ml-n1">
+        <div class="text-truncate h6 mb-1 text-dark">Select conversation</div>
       </div>
     </div>
   </div>

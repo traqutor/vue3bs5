@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-fill d-flex flex-column steps-section">
+  <div v-if="conversation" class="flex-fill d-flex flex-column steps-section">
     <chat v-show="chatViewMode === chatViewModes.VIEW"></chat>
     <chat-info v-if="chatViewMode === chatViewModes.INFO"></chat-info>
     <chat-whisper v-if="chatViewMode === chatViewModes.WHISPER"></chat-whisper>
@@ -22,8 +22,9 @@ export default {
     const store = useStore();
     const chatViewModes = CHAT_VIEW_MODES;
     const chatViewMode = computed(() => store.getters.getChatViewMode);
-
+    const conversation = computed(() => store.getters.getSelectedConversation);
     return {
+      conversation,
       chatViewMode,
       chatViewModes,
     }
