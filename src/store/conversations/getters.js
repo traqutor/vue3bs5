@@ -20,16 +20,10 @@ export default {
         return state.selectedConversationId;
     },
     getSelectedConversation: (state, getters) => {
-        if (getters.selectedConversationId) {
-            const idx = state.conversations
-                .findIndex(c => guidsAreEqual(c.id, getters.selectedConversationId));
-            return state.conversations[idx];
-        }
+        return state.conversations.find(conv => conv.id === getters.getSelectedConversationId);
     },
     getMessages: (state, getters) => {
-        if (getters.getSelectedConversation) {
-            return getters.getSelectedConversation.messages;
-        }
+        return getters.getSelectedConversation.messages;
     },
     getSelectedMessageId: (state) => {
         return state.selectedMessageId;

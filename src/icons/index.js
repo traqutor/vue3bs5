@@ -68,6 +68,7 @@ import FeatherSquare from "./FeatherSquare";
 import FeatherTag from "./FeatherTag";
 import ToggleLeftIcon from "./FeatherToggleLeft";
 import FeatherToggleRight from "./FeatherToggleRight";
+import FeatherTrash2 from "./FeatherTrash2";
 import FeatherUser from "./FeatherUser";
 import FeatherUserCheck from "./FeatherUserCheck";
 import FeatherUserGroup from "./FeatherUserGroup";
@@ -77,6 +78,7 @@ import FeatherUsers from "./FeatherUsers";
 import FeatherVideo from "./FeatherVideo";
 import FeatherWhisperMessage from "./FeatherWhisperMessage";
 import FeatherX from "./FeatherX";
+import FeatherXCircle from "./FeatherXCircle";
 import FeatherZoomIn from "./FeatherZoomIn";
 import IconAssetDrugFridge from "./IconAssetDrugFridge";
 import IconAssetUser from "./IconAssetUser";
@@ -154,6 +156,7 @@ export default {
   FeatherTag,
   ToggleLeftIcon,
   FeatherToggleRight,
+  FeatherTrash2,
   FeatherUser,
   FeatherUserCheck,
   FeatherUserGroup,
@@ -163,6 +166,7 @@ export default {
   FeatherVideo,
   FeatherWhisperMessage,
   FeatherX,
+  FeatherXCircle,
   FeatherZoomIn,
   IconAssetDrugFridge,
   IconAssetUser,

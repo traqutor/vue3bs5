@@ -23,7 +23,7 @@
                 <feather-clock class="text-primary"></feather-clock>
               </div>
               <div class="text-nowrap ms-auto ps-3 text-muted is-filter-ignore f-size-11">
-                <date-to-last-activity-label :activity-date="conversation.createdTime"/>
+                <date-to-last-activity-label :activity-date="conversation.lastActivity ? conversation.lastActivity : conversation.createdTime"/>
               </div>
             </div>
 
@@ -31,7 +31,7 @@
               <div class="text-truncate f-size-15 text-dark font-weight-middle">{{ conversation.topic }}</div>
 
               <div class="text-nowrap ms-auto ps-3 text-muted is-filter-ignore f-size-11">
-                <date-to-last-activity-label :activity-date="conversation.createdTime"/>
+                <date-to-last-activity-label :activity-date="conversation.lastActivity ? conversation.lastActivity : conversation.createdTime"/>
               </div>
             </div>
           </div>

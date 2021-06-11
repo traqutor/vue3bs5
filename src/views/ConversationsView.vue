@@ -17,8 +17,7 @@ import Conversations from "@/components/conversations/Conversations";
 import ConversationsParticipants from "@/components/conversations/ConversationsParticipants";
 import {CHAT_VIEW_MODES, CONVERSATION_VIEW_MODES} from "@/const"
 import Conversation from "@/components/conversation/Conversation";
-import ConversatioNew from "@/components/conversation/ConversationNew";
-
+import ConversationNew from "@/components/conversation/ConversationNew";
 export default {
   setup() {
     const store = useStore();
@@ -35,6 +34,6 @@ export default {
       conversationViewModes,
     }
   },
-  components: {ConversatioNew, Conversation, ConversationsParticipants, Conversations}
+  components: { ConversationNew, Conversation, ConversationsParticipants, Conversations}
 }
 </script>

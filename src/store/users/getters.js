@@ -37,14 +37,14 @@ function searchByUser(text, usr) {
 }
 
 export default {
-    getSystemUsers: (state, getters, rootState) => {
+    getSystemUsers: (state, getters) => {
         if (
-            rootState.conversations.conversationViewMode === CONVERSATION_VIEW_MODES.VIEW &&
-            rootState.conversations.chatViewMode === CHAT_VIEW_MODES.ADD_PARTICIPANTS
+            getters.conversationViewMode === CONVERSATION_VIEW_MODES.VIEW &&
+            getters.chatViewMode === CHAT_VIEW_MODES.ADD_PARTICIPANTS
         ) {
             return state.systemUsers.filter(usr => {
                 return (
-                    rootState.conversations.selectedConversation.participants.filter(
+                    getters.selectedConversation.participants.filter(
                         part => {
                             return guidsAreEqual(part.id, usr.userId);
                         }
@@ -53,19 +53,19 @@ export default {
         } else {
             return state.systemUsers.filter(
                 usr => {
-                    return !guidsAreEqual(usr.userId, rootState.auth.user.id) &&
+                    return !guidsAreEqual(usr.userId, getters.getLoggedUser.id) &&
                         searchByUser(state.textToSearchParticipants, usr);
                 }
             ).sort(sortByUserName);
         }
     },
-    getSystemRoles: (state, getters, rootState) => {
+    getSystemRoles: (state, getters) => {
         if (
-            rootState.conversations.chatViewMode === CHAT_VIEW_MODES.ADD_PARTICIPANTS
+            getters.chatViewMode === CHAT_VIEW_MODES.ADD_PARTICIPANTS
         ) {
             return state.systemRoles.filter(role => {
                 return (
-                    rootState.conversations.selectedConversation.participants.filter(
+                    getters.selectedConversation.participants.filter(
                         part => {
                             return guidsAreEqual(part.id, role.id);
                         }
@@ -74,7 +74,7 @@ export default {
         } else {
             return state.systemRoles.filter(
                 role => {
-                    return role.id !== rootState.auth.user.id &&
+                    return role.id !== getters.getLoggedUser.id &&
                         searchByName(state.textToSearchParticipants, role.name);
                 }
             ).sort(sortByName);

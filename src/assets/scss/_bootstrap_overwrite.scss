@@ -36,6 +36,16 @@ input-group-sm > .form-control, .input-group-sm > .custom-select, .input-group-s
   border-color: #ced4da;
 }
 
+.bg-grey {
+  background-color: $grey !important;
+}
+
+.btn-secondary-light {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
 .btn-primary {
   color: #fff;
   background-color: $blue;
