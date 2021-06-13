@@ -58,28 +58,22 @@
                 </div>
 
                 <div
-                    v-if="participantsEditMode === 'delete'"
                     class="list-group list-group-flush overflow-hidden select-action-group"
                 >
                   <conversations-participants-list-item
                       v-for="participant of conversation.participants"
                       :key="participant.id"
+                      :is-toggle-action="participantsEditMode === 'delete'"
                       :participant-id="participant.id"
+                      :is-removable="isParticipantsToDeleteSelected"
                       :on-select="onToggleSelectedParticipantsToDelete"
-                  />
+                  >
+                    <template v-slot:append>
+                      <div class="text-nowrap ml-3 text-success f-size-12">Available</div>
+                    </template>
+                  </conversations-participants-list-item>
                 </div>
 
-                <div
-                    v-else
-                    class="list-group list-group-flush overflow-hidden select-action-group"
-                >
-                  <participant-avatar-name-item
-                      class="p-2"
-                      v-for="participant of conversation.participants"
-                      :key="participant.id"
-                      :participant-id="participant.id"
-                  />
-                </div>
               </div>
 
 
@@ -93,7 +87,6 @@
 <script>
 import {computed, ref} from "vue";
 import {useStore} from "vuex";
-import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
 import FeatherUserEdit from "@/icons/FeatherUserEdit";
 import FeatherUserPlus from "@/icons/FeatherUserPlus";
@@ -108,6 +101,10 @@ export default {
     const selectedParticipantsToDelete = ref([]);
     const store = useStore();
     const conversation = computed(() => store.getters.getSelectedConversation);
+    const isParticipantsToDeleteSelected = computed((id) => {
+      console.log("selectedParticipantsToDelete", selectedParticipantsToDelete);
+      return selectedParticipantsToDelete.value.find(participant => participant === id)
+    })
 
     function onAddParticipant() {
       store.commit("setChatViewMode", chatViewModes.ADD_PARTICIPANTS);
@@ -118,10 +115,11 @@ export default {
     }
 
     function onToggleSelectedParticipantsToDelete(participant) {
-      console.log("participant", participant);
-      console.log("selectedParticipantsToDelete", selectedParticipantsToDelete.value);
-      selectedParticipantsToDelete.value.push(participant)
+      selectedParticipantsToDelete.value.push(participant);
+      console.log("selectedParticipantsToDelete", selectedParticipantsToDelete);
     }
+
+
 
     return {
       conversation,
@@ -129,13 +127,14 @@ export default {
       participantsEditMode,
       onParticipantsEditModeChange,
       selectedParticipantsToDelete,
-      onToggleSelectedParticipantsToDelete,
+      isParticipantsToDeleteSelected,
+      onToggleSelectedParticipantsToDelete
     }
   },
   components: {
     FeatherMessageSquareLine,
     ParticipantAvatar,
-    FeatherUserPlus, FeatherUserEdit, ConversationsParticipantsListItem, ParticipantAvatarNameItem
+    FeatherUserPlus, FeatherUserEdit, ConversationsParticipantsListItem
   }
 }
 </script>

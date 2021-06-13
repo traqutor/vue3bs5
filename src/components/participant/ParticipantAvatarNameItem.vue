@@ -22,6 +22,8 @@
         <span v-else>{{ getRolesAsLabel() }}</span>
       </div>
     </div>
+
+    <slot name="secondary"></slot>
   </div>
 </template>
 <script>

@@ -69,9 +69,11 @@
                     v-for="participant of getSelectedParticipants"
                     :key="participant.id"
                     :participant-id="participant.id"
+                    :is-toggle-action="true"
                     :is-removable="true"
                     :on-select="onSelect"
-                ></conversations-participants-list-item>
+                >
+                </conversations-participants-list-item>
               </div>
             </perfect-scrollbar>
           </div>
