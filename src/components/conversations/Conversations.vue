@@ -8,6 +8,6 @@
 import ConversationsListHeader from "@/components/conversations/ConversationsListHeader";
 import ConversationsList from "@/components/conversations/ConversationsList";
 export default {
-  components: {ConversationsList, ConversationsListHeader}
-}
+  components: { ConversationsList, ConversationsListHeader },
+};
 </script>

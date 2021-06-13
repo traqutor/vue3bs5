@@ -3,15 +3,17 @@
     <chat v-show="chatViewMode === chatViewModes.VIEW"></chat>
     <chat-info v-if="chatViewMode === chatViewModes.INFO"></chat-info>
     <chat-whisper v-if="chatViewMode === chatViewModes.WHISPER"></chat-whisper>
-    <chat-add-participants v-if="chatViewMode === chatViewModes.ADD_PARTICIPANTS"></chat-add-participants>
+    <chat-add-participants
+      v-if="chatViewMode === chatViewModes.ADD_PARTICIPANTS"
+    ></chat-add-participants>
     <chat-message v-if="chatViewMode === chatViewModes.MESSAGE"></chat-message>
   </div>
 </template>
 <script>
 import Chat from "@/components/conversation/chat/Chat";
-import {useStore} from "vuex";
-import {CHAT_VIEW_MODES} from "@/const";
-import {computed} from "vue";
+import { useStore } from "vuex";
+import { CHAT_VIEW_MODES } from "@/const";
+import { computed } from "vue";
 import ChatInfo from "@/components/conversation/chat/ChatInfo";
 import ChatWhisper from "@/components/conversation/chat/ChatWhisper";
 import ChatAddParticipants from "@/components/conversation/chat/ChatAddParticipants";
@@ -27,8 +29,8 @@ export default {
       conversation,
       chatViewMode,
       chatViewModes,
-    }
+    };
   },
-  components: {ChatMessage, ChatAddParticipants, ChatWhisper, ChatInfo, Chat}
-}
+  components: { ChatMessage, ChatAddParticipants, ChatWhisper, ChatInfo, Chat },
+};
 </script>

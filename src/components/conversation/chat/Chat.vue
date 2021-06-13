@@ -12,13 +12,18 @@
   </div>
 </template>
 <script>
-
 import ChatFooterInput from "@/components/conversation/chat/ChatFooterInput";
 import ChatFooterWhisper from "@/components/conversation/chat/ChatFooterWhisper";
 import ChatFooterAcknowledge from "@/components/conversation/chat/ChatFooterAcknowledge";
 import ChatBody from "@/components/conversation/chat/ChatBody";
 import ChatDrawer from "@/components/conversation/chat/ChatDrawer";
 export default {
-  components: {ChatDrawer, ChatBody, ChatFooterAcknowledge, ChatFooterWhisper, ChatFooterInput}
-}
+  components: {
+    ChatDrawer,
+    ChatBody,
+    ChatFooterAcknowledge,
+    ChatFooterWhisper,
+    ChatFooterInput,
+  },
+};
 </script>

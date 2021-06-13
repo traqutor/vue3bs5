@@ -1,5 +1,5 @@
 export default {
-    setSocketHubConnection: (state, connection) => {
-        state.hubConnection = connection;
-    }
-}
+  setSocketHubConnection: (state, connection) => {
+    state.hubConnection = connection;
+  },
+};

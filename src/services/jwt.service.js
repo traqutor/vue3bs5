@@ -1,7 +1,7 @@
-import moment from "moment";
-import jwt_decode from "jwt-decode";
+import moment from 'moment';
+import jwt_decode from 'jwt-decode';
 
-const TOKEN_DATA = "__MEDDYJWTUSRID";
+const TOKEN_DATA = '__MEDDYJWTUSRID';
 
 export const isSignedIn = () => {
   let token = getUserFromTokenData();
@@ -32,7 +32,7 @@ export const getUserFromTokenData = () => {
   return decodedUserData;
 };
 
-export const saveTokenData = tokenData => {
+export const saveTokenData = (tokenData) => {
   try {
     sessionStorage.setItem(TOKEN_DATA, JSON.stringify(tokenData));
   } catch (err) {
@@ -49,5 +49,5 @@ export default {
   getUserFromTokenData,
   saveTokenData,
   purgeTokenData,
-  getTokenData
+  getTokenData,
 };

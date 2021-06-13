@@ -1,24 +1,24 @@
 <template>
   <aside
-      class="sidebar sidebar-left bg-white d-flex flex-column"
-      @mouseover="onLeftAsideMouse(visibilities.HOVER)"
-      @mouseleave="onLeftAsideMouse(visibilities.SET)"
+    class="sidebar sidebar-left bg-white d-flex flex-column"
+    @mouseover="onLeftAsideMouse(visibilities.HOVER)"
+    @mouseleave="onLeftAsideMouse(visibilities.SET)"
   >
     <nav class="navbar bg-light p-0 shadow">
       <div class="navbar-brand w-100">
         <div class="d-flex align-items-center text-decoration-none main-logo">
-          <img class="main-logo-image" src="../../assets/logo.svg" alt=""/>
+          <img class="main-logo-image" src="../../assets/logo.svg" alt="" />
           <img
-              class="main-logo-title ms-2"
-              src="../../assets/meddy-dark.svg"
-              alt=""
+            class="main-logo-title ms-2"
+            src="../../assets/meddy-dark.svg"
+            alt=""
           />
           <button
-              type="button"
-              class="btn btn-sidebar-fixed left-sidebar-toggle text-secondary"
-              @click="onToggleLeftAsideFixed()"
+            type="button"
+            class="btn btn-sidebar-fixed left-sidebar-toggle text-secondary"
+            @click="onToggleLeftAsideFixed()"
           >
-            <feather-sidebar/>
+            <feather-sidebar />
           </button>
         </div>
       </div>
@@ -26,141 +26,140 @@
 
     <nav class="nav flex-column mt-3">
       <router-link
-          class="nav-link"
-          :to="{ path: '/tasks' }"
-          :class="$route.path === '/tasks' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/tasks' }"
+        :class="$route.path === '/tasks' ? 'active' : ''"
       >
-        <feather-clipboard-line class="nav-link-icon"/>
+        <feather-clipboard-line class="nav-link-icon" />
         <span class="nav-link-text">Tasks</span>
       </router-link>
 
       <router-link
-          class="nav-link"
-          :to="{ path: '/conversations' }"
-          :class="$route.path === '/conversations' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/conversations' }"
+        :class="$route.path === '/conversations' ? 'active' : ''"
       >
         <span
-            class="
+          class="
             badge badge-danger
             position-absolute
             badge-pill
             font-weight-normal
           "
-        >12</span
+          >12</span
         >
-        <feather-message-square-line class="nav-link-icon"/>
+        <feather-message-square-line class="nav-link-icon" />
         <span class="nav-link-text">Conversations</span>
       </router-link>
 
       <router-link
-          class="nav-link"
-          :to="{ path: '/incidents' }"
-          :class="$route.path === '/incidents' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/incidents' }"
+        :class="$route.path === '/incidents' ? 'active' : ''"
       >
         <span
-            class="
+          class="
             badge badge-danger
             position-absolute
             badge-pill
             font-weight-normal
             d-none
           "
-        >1</span
+          >1</span
         >
-        <feather-flasher class="nav-link-icon"/>
+        <feather-flasher class="nav-link-icon" />
         <span class="nav-link-text">Incidents</span>
       </router-link>
 
       <router-link
-          class="nav-link"
-          :to="{ path: '/locate' }"
-          :class="$route.path === '/locate' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/locate' }"
+        :class="$route.path === '/locate' ? 'active' : ''"
       >
-        <feather-map-pin class="nav-link-icon"/>
+        <feather-map-pin class="nav-link-icon" />
         <span class="nav-link-text">Locate</span>
       </router-link>
 
       <router-link
-          class="nav-link"
-          :to="{ path: '/alarms' }"
-          :class="$route.path === '/alarms' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/alarms' }"
+        :class="$route.path === '/alarms' ? 'active' : ''"
       >
         <span
-            class="
+          class="
             badge badge-danger
             position-absolute
             badge-pill
             font-weight-normal
           "
-        >4</span
+          >4</span
         >
-        <feather-alert-triangle class="nav-link-icon"/>
+        <feather-alert-triangle class="nav-link-icon" />
         <span class="nav-link-text">Alarms</span>
       </router-link>
 
       <router-link
-          class="nav-link"
-          :to="{ path: '/media' }"
-          :class="$route.path === '/media' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/media' }"
+        :class="$route.path === '/media' ? 'active' : ''"
       >
-        <feather-play class="nav-link-icon"/>
+        <feather-play class="nav-link-icon" />
         <span class="nav-link-text">Media</span>
       </router-link>
 
       <router-link
-          class="nav-link"
-          :to="{ path: '/patients' }"
-          :class="$route.path === '/patients' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/patients' }"
+        :class="$route.path === '/patients' ? 'active' : ''"
       >
-        <feather-patient class="nav-link-icon"/>
+        <feather-patient class="nav-link-icon" />
         <span class="nav-link-text">Patients</span>
       </router-link>
 
       <router-link
-          class="nav-link"
-          :to="{ path: '/sentinel' }"
-          :class="$route.path === '/sentinel' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/sentinel' }"
+        :class="$route.path === '/sentinel' ? 'active' : ''"
       >
-        <feather-shield class="nav-link-icon"/>
+        <feather-shield class="nav-link-icon" />
         <span class="nav-link-text">Sentinel</span>
       </router-link>
     </nav>
 
     <nav class="nav flex-column mt-auto">
       <router-link
-          class="nav-link"
-          :to="{ path: '/switchboard' }"
-          :class="$route.path === '/switchboard' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/switchboard' }"
+        :class="$route.path === '/switchboard' ? 'active' : ''"
       >
-        <feather-headphones-mic class="nav-link-icon"/>
+        <feather-headphones-mic class="nav-link-icon" />
         <span class="nav-link-text">Switchboard</span>
       </router-link>
 
       <router-link
-          class="nav-link"
-          :to="{ path: '/role_management' }"
-          :class="$route.path === '/role_management' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/role_management' }"
+        :class="$route.path === '/role_management' ? 'active' : ''"
       >
-        <feather-user-check class="nav-link-icon"/>
+        <feather-user-check class="nav-link-icon" />
         <span class="nav-link-text">Role Management</span>
       </router-link>
 
       <router-link
-          class="nav-link"
-          :to="{ path: '/settings' }"
-          :class="$route.path === '/settings' ? 'active' : ''"
+        class="nav-link"
+        :to="{ path: '/settings' }"
+        :class="$route.path === '/settings' ? 'active' : ''"
       >
-        <feather-settings class="nav-link-icon"/>
+        <feather-settings class="nav-link-icon" />
         <span class="nav-link-text">Settings</span>
       </router-link>
     </nav>
-
   </aside>
 </template>
 <script>
-import {useStore} from "vuex";
+import { useStore } from "vuex";
 
-import {VISIBILITIES} from "@/const";
+import { VISIBILITIES } from "@/const";
 import FeatherSidebar from "@/icons/FeatherSidebar";
 import FeatherClipboardLine from "@/icons/FeatherClipboardLine";
 import FeatherMessageSquareLine from "@/icons/FeatherMessageSquareLine";
@@ -183,7 +182,11 @@ export default {
     FeatherShield,
     FeatherPatient,
     FeatherAlertTriangle,
-    FeatherMapPin, FeatherFlasher, FeatherMessageSquareLine, FeatherClipboardLine, FeatherSidebar
+    FeatherMapPin,
+    FeatherFlasher,
+    FeatherMessageSquareLine,
+    FeatherClipboardLine,
+    FeatherSidebar,
   },
   setup() {
     const store = useStore();

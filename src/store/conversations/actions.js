@@ -1,409 +1,425 @@
-import axios from "axios";
-import {axiosWebApiInstance} from "@/services/axios.service";
-import {guidsAreEqual, guidsFilterUnique, guidsGetOne} from "@/services/guids.service";
-import {CHAT_VIEW_MODES} from "@/const";
+import axios from 'axios';
+import { axiosWebApiInstance } from '@/services/axios.service';
+import {
+  guidsAreEqual,
+  guidsFilterUnique,
+  guidsGetOne,
+} from '@/services/guids.service';
+import { CHAT_VIEW_MODES } from '@/const';
 
 let getMessagesSource = null;
 
 export default {
+  onGetConversations: (
+    { state, commit, rootState },
+    { refresh = false, silent = false }
+  ) => {
+    if (!silent) commit('setIsConversationsLoading', true);
 
-    onGetConversations: (
-        {state, commit, rootState},
-        {refresh = false, silent = false}
-    ) => {
-        if (!silent) commit("setIsConversationsLoading", true);
+    let skipConversations = refresh
+      ? 0
+      : state.pageOfConversations.takeConversations;
+    let takeConversations = refresh
+      ? 20
+      : state.pageOfConversations.takeConversations + 20;
 
-        let skipConversations = refresh
-            ? 0
-            : state.pageOfConversations.takeConversations;
-        let takeConversations = refresh
-            ? 20
-            : state.pageOfConversations.takeConversations + 20;
+    // silly limiter no more then 100 conversations can be fetched
+    takeConversations = takeConversations > 99 ? 99 : takeConversations;
 
-        // silly limiter no more then 100 conversations can be fetched
-        takeConversations = takeConversations > 99 ? 99 : takeConversations;
+    commit('setPageOfConversations', { skipConversations, takeConversations });
+    let activeRoleIds = '';
+    rootState.auth.user.SystemRoles.forEach((rle, index) => {
+      activeRoleIds =
+        activeRoleIds + (index === 0 ? '&activeRoleIds=' : '&') + rle.Id;
+    });
+    const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetConversations?skip=0&take=${takeConversations}${activeRoleIds}`;
 
-        commit("setPageOfConversations", {skipConversations, takeConversations});
-        let activeRoleIds = "";
-        rootState.auth.user.SystemRoles.forEach((rle, index) => {
-            activeRoleIds =
-                activeRoleIds + (index === 0 ? "&activeRoleIds=" : "&") + rle.Id;
-        });
-        const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetConversations?skip=0&take=${takeConversations}${activeRoleIds}`;
+    axiosWebApiInstance
+      .get(url)
+      .then(function(response) {
+        commit('setConversations', response.data.conversations);
+        commit('setIsConversationsLoading', false);
+      })
+      .catch((error) => {
+        console.error('On GET_CONVERSATIONS error:', error);
+      });
+  },
 
-        axiosWebApiInstance
-            .get(url)
-            .then(function (response) {
-                commit("setConversations", response.data.conversations);
-                commit("setIsConversationsLoading", false);
-            }).catch(error => {
-            console.error("On GET_CONVERSATIONS error:", error);
-        });
-    },
+  onSelectConversation: ({ commit, dispatch }, conversationId) => {
+    commit('setSelectedConversationId', conversationId);
+    commit('purgeWhisperParticipants');
+    commit('setChatViewMode', CHAT_VIEW_MODES.VIEW);
+    dispatch('onGetMessages', {
+      conversationId: conversationId,
+      refresh: true,
+      showLoading: true,
+    });
+  },
 
-    onSelectConversation: ({commit, dispatch}, conversationId) => {
-        commit("setSelectedConversationId", conversationId);
-        commit("purgeWhisperParticipants");
-        commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
-        dispatch("onGetMessages", {
-            conversationId: conversationId,
+  onCreateConversation: (
+    { commit, dispatch, state, rootState, getters },
+    payload
+  ) => {
+    commit('setIsConversationCreating', true);
+
+    return new Promise((resolve) => {
+      if (rootState.users.selectedParticipants.length === 1) {
+        console.log(rootState.users.selectedParticipants);
+        dispatch('onGetDirectConversation', {
+          user: { id: rootState.auth.user.id, isRole: false },
+          recipient: rootState.users.selectedParticipants[0],
+        }).then((response) => {
+          commit('setIsConversationCreating', false);
+          commit('setConversationTopic', null);
+          commit('purgeSelectedParticipants');
+          commit('setSelectedConversationId', response.id);
+
+          dispatch('onGetMessages', {
+            conversationId: response.id,
             refresh: true,
-            showLoading: true
-        });
-    },
+            showLoading: true,
+          });
 
-    onCreateConversation: ({commit, dispatch, state, rootState, getters}, payload) => {
-        commit("setIsConversationCreating", true);
-
-        return new Promise((resolve) => {
-            if (rootState.users.selectedParticipants.length === 1) {
-                console.log(rootState.users.selectedParticipants);
-                dispatch("onGetDirectConversation", {
-                    user: {id: rootState.auth.user.id, isRole: false},
-                    recipient: rootState.users.selectedParticipants[0]
-                }).then((response) => {
-
-                    commit("setIsConversationCreating", false);
-                    commit("setConversationTopic", null);
-                    commit("purgeSelectedParticipants");
-                    commit("setSelectedConversationId", response.id);
-
-                    dispatch("onGetMessages", {
-                        conversationId: response.id,
-                        refresh: true,
-                        showLoading: true
-                    });
-
-                    const message = {
-                        messageText: state.messageText
-                    };
-                    dispatch("onCreateMessage", message);
-                    resolve();
-                });
-            } else {
-                const topic = state.conversationTopic ?
-                    state.conversationTopic :
-                    rootState.users.selectedParticipants.map(participant => {
-                        return getters.getParticipantById(participant.id).name;
-                    }).join(", ");
-
-                const values = {
-                    activeRoleId: state.selectedCreator.id
-                        ? state.selectedCreator.id
-                        : null,
-                    topic: topic,
-                    messageText: payload.messageText,
-                    participants: rootState.users.selectedParticipants
-                };
-
-                const url = `${process.env.VUE_APP_BASE_URL}/Messaging/CreateConversation`;
-
-                axiosWebApiInstance
-                    .post(url, values)
-                    .then(response => {
-                        console.log("CreateConversation", response);
-                        if (response.data.isOk) {
-                            commit("setIsConversationCreating", false);
-                            commit("setConversationTopic", null);
-                            commit("purgeSelectedParticipants");
-                            commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
-                            const conversation = state.conversations
-                                .find(item => item.id === response.data.result);
-                            if (conversation) {
-                                commit("setSelectedConversationId", conversation.id);
-                            }
-                            resolve();
-                        } else {
-                            console.error("On CREATE_CONVERSATION error: ", response.data.message);
-                        }
-                    })
-                    .catch((error) => {
-                        commit("setIsConversationCreating", false);
-                        console.error("On CREATE_CONVERSATION error: ", error);
-                    });
-            }
-        });
-    },
-
-    onCreateMessage: ({commit, state, rootState}, payload) => {
-        commit("setIsMessageCreating", true);
-
-        const message = {
-            id: guidsGetOne(),
-            activeRoleId: payload.activeRoleId,
-            conversationId: state.selectedConversationId,
+          const message = {
             messageText: state.messageText,
-            isWhisper: rootState.users.whisperToParticipants.length > 0,
-            requiresAcknowledgement: payload.requiresAcknowledgement,
-            attachements: [],
-            whisperRecipients: rootState.users.whisperToParticipants
-                .map((whisper) => {
-                    return {...whisper, id: whisper.id.toLowerCase()};
-                })
+          };
+          dispatch('onCreateMessage', message);
+          resolve();
+        });
+      } else {
+        const topic = state.conversationTopic
+          ? state.conversationTopic
+          : rootState.users.selectedParticipants
+              .map((participant) => {
+                return getters.getParticipantById(participant.id).name;
+              })
+              .join(', ');
+
+        const values = {
+          activeRoleId: state.selectedCreator.id
+            ? state.selectedCreator.id
+            : null,
+          topic: topic,
+          messageText: payload.messageText,
+          participants: rootState.users.selectedParticipants,
         };
 
-        const url = `${process.env.VUE_APP_BASE_URL}/Messaging/SendMessage`;
+        const url = `${process.env.VUE_APP_BASE_URL}/Messaging/CreateConversation`;
 
         axiosWebApiInstance
-            .post(url, message)
-            .then(function (response) {
-                if (response.data.isOk) {
-                    commit("setMessageText", null);
-                    commit("purgeWhisperParticipants");
-                } else {
-                    console.error("On CREATE_MESSAGE error:", response.data.message);
-                }
-                commit("setIsMessageCreating", false);
-            })
-            .catch((error) => {
-                commit("setIsMessageCreating", false);
-                console.error("On CREATE_MESSAGE error:", error);
-            });
-    },
-
-    onGetMessages: (
-        {commit, getters},
-        {conversationId, refresh = false, showLoading = false}
-    ) => {
-        if (showLoading) commit("setIsMessagesLoading", true);
-
-        const lastMessageId = refresh ? "" : getters.getMessages[0].id;
-
-        if (getMessagesSource) {
-            if (refresh) {
-                getMessagesSource.cancel("Cancel old get messages. Start new one.");
+          .post(url, values)
+          .then((response) => {
+            console.log('CreateConversation', response);
+            if (response.data.isOk) {
+              commit('setIsConversationCreating', false);
+              commit('setConversationTopic', null);
+              commit('purgeSelectedParticipants');
+              commit('setChatViewMode', CHAT_VIEW_MODES.VIEW);
+              const conversation = state.conversations.find(
+                (item) => item.id === response.data.result
+              );
+              if (conversation) {
+                commit('setSelectedConversationId', conversation.id);
+              }
+              resolve();
+            } else {
+              console.error(
+                'On CREATE_CONVERSATION error: ',
+                response.data.message
+              );
             }
+          })
+          .catch((error) => {
+            commit('setIsConversationCreating', false);
+            console.error('On CREATE_CONVERSATION error: ', error);
+          });
+      }
+    });
+  },
+
+  onCreateMessage: ({ commit, state, rootState }, payload) => {
+    commit('setIsMessageCreating', true);
+
+    const message = {
+      id: guidsGetOne(),
+      activeRoleId: payload.activeRoleId,
+      conversationId: state.selectedConversationId,
+      messageText: state.messageText,
+      isWhisper: rootState.users.whisperToParticipants.length > 0,
+      requiresAcknowledgement: payload.requiresAcknowledgement,
+      attachements: [],
+      whisperRecipients: rootState.users.whisperToParticipants.map(
+        (whisper) => {
+          return { ...whisper, id: whisper.id.toLowerCase() };
         }
-        getMessagesSource = axios.CancelToken.source();
-        const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetMessages?ConversationId=${conversationId}&lastMessageId=${lastMessageId}`;
+      ),
+    };
 
-        axiosWebApiInstance
-            .get(url, {cancelToken: getMessagesSource.token})
-            .then(function (response) {
-                getMessagesSource = null;
+    const url = `${process.env.VUE_APP_BASE_URL}/Messaging/SendMessage`;
 
-                let arr = response.data.messages;
-                let messages = refresh ? [] : getters.getMessages;
-                messages = arr.concat(messages);
+    axiosWebApiInstance
+      .post(url, message)
+      .then(function(response) {
+        if (response.data.isOk) {
+          commit('setMessageText', null);
+          commit('purgeWhisperParticipants');
+        } else {
+          console.error('On CREATE_MESSAGE error:', response.data.message);
+        }
+        commit('setIsMessageCreating', false);
+      })
+      .catch((error) => {
+        commit('setIsMessageCreating', false);
+        console.error('On CREATE_MESSAGE error:', error);
+      });
+  },
 
-                commit("setMessages", messages);
-                commit("setIsMessagesLoading", false);
-            });
-    },
+  onGetMessages: (
+    { commit, getters },
+    { conversationId, refresh = false, showLoading = false }
+  ) => {
+    if (showLoading) commit('setIsMessagesLoading', true);
 
-    onGetDirectConversation: (parameters) => {
-        return new Promise((resolve) => {
-            const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetDirectConversation`;
+    const lastMessageId = refresh ? '' : getters.getMessages[0].id;
 
-            axiosWebApiInstance
-                .post(url, parameters)
-                .then(function (response) {
-                    const conversation = response.data.conversations[0];
+    if (getMessagesSource) {
+      if (refresh) {
+        getMessagesSource.cancel('Cancel old get messages. Start new one.');
+      }
+    }
+    getMessagesSource = axios.CancelToken.source();
+    const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetMessages?ConversationId=${conversationId}&lastMessageId=${lastMessageId}`;
 
-                    resolve(conversation);
-                })
-                .catch((error) => {
-                    console.error("On getDirectConversation error:", error);
-                });
+    axiosWebApiInstance
+      .get(url, { cancelToken: getMessagesSource.token })
+      .then(function(response) {
+        getMessagesSource = null;
+
+        let arr = response.data.messages;
+        let messages = refresh ? [] : getters.getMessages;
+        messages = arr.concat(messages);
+
+        commit('setMessages', messages);
+        commit('setIsMessagesLoading', false);
+      });
+  },
+
+  onGetDirectConversation: (parameters) => {
+    return new Promise((resolve) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetDirectConversation`;
+
+      axiosWebApiInstance
+        .post(url, parameters)
+        .then(function(response) {
+          const conversation = response.data.conversations[0];
+
+          resolve(conversation);
+        })
+        .catch((error) => {
+          console.error('On getDirectConversation error:', error);
         });
-    },
+    });
+  },
 
-    onUserIsTyping: ({state, rootState}) => {
-        const conversationId = state.selectedConversationId;
-        rootState.socket.hubConnection
-            .invoke("UserIsTyping", conversationId)
-            .catch((error) => {
-                console.error("On UserIsTyping error:", error);
-            });
-    },
+  onUserIsTyping: ({ state, rootState }) => {
+    const conversationId = state.selectedConversationId;
+    rootState.socket.hubConnection
+      .invoke('UserIsTyping', conversationId)
+      .catch((error) => {
+        console.error('On UserIsTyping error:', error);
+      });
+  },
 
-    onMessageIsRead: ({state, getters}, message) => {
-        const messagesIds = [];
-        const isWatched = message.watchedByUsers.some((watched) => {
-            return guidsAreEqual(watched.id, getters.getLoggedUser.id) ||
-                getters.getLoggedUser.SystemRoles.some((role) => {
-                    return guidsAreEqual(role.Id, watched.id);
-                });
+  onMessageIsRead: ({ state, getters }, message) => {
+    const messagesIds = [];
+    const isWatched = message.watchedByUsers.some((watched) => {
+      return (
+        guidsAreEqual(watched.id, getters.getLoggedUser.id) ||
+        getters.getLoggedUser.SystemRoles.some((role) => {
+          return guidsAreEqual(role.Id, watched.id);
+        })
+      );
+    });
+
+    if (!isWatched) {
+      messagesIds.push(message.id);
+    }
+    if (messagesIds.length) {
+      // user and all available roles in conversation read the message
+      const roles = getters.getConversationAvailableCreationRoles
+        .filter((role) => role.isRole)
+        .map((role) => role.id.toLowerCase());
+
+      const data = {
+        conversationId: state.selectedConversationId,
+        messagesIds: messagesIds,
+        activeRolesIds: roles,
+      };
+
+      const url = `${process.env.VUE_APP_BASE_URL}/Messaging/ReadMessage`;
+
+      axiosWebApiInstance
+        .post(url, data)
+        .then(function(response) {
+          if (!response.data.isOk) {
+            console.error('On ON_MESSAGE_READ error:', response.data.message);
+          }
+        })
+        .catch((error) => {
+          console.error('On ON_MESSAGE_READ error:', error);
         });
+    }
+  },
 
-        if (!isWatched) {
-            messagesIds.push(message.id);
+  onAcknowledgeMessage: (payload) => {
+    const url = `${process.env.VUE_APP_BASE_URL}/Messaging/AcknowledgeMessage`;
+
+    axiosWebApiInstance
+      .post(url, payload)
+      .then(function() {})
+      .catch((error) => {
+        console.log('On read message error:', error);
+      });
+  },
+
+  onUserAddedToConversationNotification: (
+    { state, commit, dispatch },
+    payload
+  ) => {
+    const idx = state.conversations.findIndex((c) =>
+      guidsAreEqual(c.id, payload.conversationId)
+    );
+
+    if (idx !== -1) {
+      const conversations = [...state.conversations];
+      const conversation = conversations.splice(idx, 1)[0];
+      const tmp = [...conversation.participants, ...payload.participants];
+      const participants = guidsFilterUnique(tmp);
+      conversation.participants = [...participants];
+      conversations.splice(0, 0, conversation);
+
+      commit('setSelectedConversationId', conversation.id);
+      commit('setConversations', [...conversations]);
+    } else {
+      dispatch('onGetConversations', { refresh: false });
+    }
+  },
+
+  onConversationCreatedNotification: ({ state, commit }, payload) => {
+    const conversations = [...state.conversations];
+    const idx = conversations.findIndex((c) => c.id === payload.id);
+    if (idx !== -1) {
+      const tmp = conversations.splice(idx, 1)[0];
+      conversations.splice(0, 0, tmp);
+    } else {
+      conversations.unshift(payload);
+    }
+    commit('setConversations', conversations);
+  },
+  onMessageAcknowledgedNotification: ({ state, commit, getters }, message) => {
+    console.log('ON_MESSAGE_ACKNOWLEDGED_NOTIFICATION', message);
+    if (guidsAreEqual(state.selectedConversationId, message.conversationId)) {
+      const messages = [...getters.getMessages];
+      const idx = messages.findIndex((msg) => msg.id === message.messageId);
+      if (idx !== -1) {
+        const msg = { ...messages[idx] };
+        if (!msg.acknowledgedByUsers) {
+          msg.acknowledgedByUsers = [];
         }
-        if (messagesIds.length) {
-            // user and all available roles in conversation read the message
-            const roles = getters.getConversationAvailableCreationRoles
-                .filter(role => role.isRole)
-                .map(role => role.id.toLowerCase());
-
-            const data = {
-                conversationId: state.selectedConversationId,
-                messagesIds: messagesIds,
-                activeRolesIds: roles
-            };
-
-            const url = `${process.env.VUE_APP_BASE_URL}/Messaging/ReadMessage`;
-
-            axiosWebApiInstance
-                .post(url, data)
-                .then(function (response) {
-                    if (!response.data.isOk) {
-                        console.error("On ON_MESSAGE_READ error:", response.data.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error("On ON_MESSAGE_READ error:", error);
-                });
-        }
-    },
-
-    onAcknowledgeMessage: (payload) => {
-        const url = `${process.env.VUE_APP_BASE_URL}/Messaging/AcknowledgeMessage`;
-
-        axiosWebApiInstance
-            .post(url, payload)
-            .then(function () {
-            })
-            .catch((error) => {
-                console.log("On read message error:", error);
-            });
-    },
-
-    onUserAddedToConversationNotification: ({state, commit, dispatch}, payload) => {
-        const idx = state.conversations.findIndex((c) =>
-            guidsAreEqual(c.id, payload.conversationId));
-
-        if (idx !== -1) {
-            const conversations = [...state.conversations];
-            const conversation = conversations.splice(idx, 1)[0];
-            const tmp = [...conversation.participants, ...payload.participants];
-            const participants = guidsFilterUnique(tmp);
-            conversation.participants = [...participants];
-            conversations.splice(0, 0, conversation);
-
-            commit("setSelectedConversationId", conversation.id);
-            commit("setConversations", [...conversations]);
-        } else {
-            dispatch("onGetConversations", {refresh: false});
-        }
-    },
-
-    onConversationCreatedNotification: ({state, commit}, payload) => {
-        const conversations = [...state.conversations];
-        const idx = conversations.findIndex((c) => c.id === payload.id);
-        if (idx !== -1) {
-            const tmp = conversations.splice(idx, 1)[0];
-            conversations.splice(0, 0, tmp);
-        } else {
-            conversations.unshift(payload);
-        }
-        commit("setConversations", conversations);
-    },
-    onMessageAcknowledgedNotification: ({state, commit, getters}, message) => {
-        console.log("ON_MESSAGE_ACKNOWLEDGED_NOTIFICATION", message);
-        if (guidsAreEqual(state.selectedConversationId, message.conversationId)) {
-            const messages = [...getters.getMessages];
-            const idx = messages.findIndex(msg => msg.id === message.messageId);
-            if (idx !== -1) {
-                const msg = {...messages[idx]};
-                if (!msg.acknowledgedByUsers) {
-                    msg.acknowledgedByUsers = [];
-                }
-                const isAcknowledged = msg.acknowledgedByUsers
-                    .some(ack => guidsAreEqual(ack.id, message.acknowledgeByUser.id));
-                if (!isAcknowledged) {
-                    msg.acknowledgedByUsers.push(message.acknowledgeByUser);
-                    messages[idx] = msg;
-                }
-            }
-            commit("setMessages", messages);
-        }
-    },
-    onReceivedMessageNotification: ({state, commit}, message) => {
-        const idx = state.conversations.findIndex(
-            (c) => guidsAreEqual(c.id, message.conversationId)
+        const isAcknowledged = msg.acknowledgedByUsers.some((ack) =>
+          guidsAreEqual(ack.id, message.acknowledgeByUser.id)
         );
-
-        if (idx !== -1) {
-            const conversations = [...state.conversations];
-            const conversation = {...conversations[idx]};
-            const isMessage = conversation.messages.some(msg => {
-                return guidsAreEqual(msg.id, message.id);
-            });
-
-            if (!isMessage) {
-
-                const tmpMessages = conversations[idx].messages;
-                tmpMessages.push(message);
-                conversations[idx].messages = [...tmpMessages];
-
-                conversation.unreadMessageCount = conversation.unreadMessageCount + 1;
-                conversation.lastMessage = message;
-
-                conversations.splice(idx, 1);
-                conversations.splice(0, 0, conversation);
-
-                commit("setConversations", [...conversations]);
-            }
+        if (!isAcknowledged) {
+          msg.acknowledgedByUsers.push(message.acknowledgeByUser);
+          messages[idx] = msg;
         }
-    },
-    onMessageReadNotification: ({state, commit, getters}, payload) => {
-        const idx = state.conversations.findIndex(
-            (c) => c.id === payload.conversationId
-        );
-        let conversation = {...state.conversations[idx]};
-        if (conversation.unreadMessageCount > 0) {
-            let count = conversation.unreadMessageCount;
-            payload.messageIds.forEach(() => {
-                count = count - 1;
-            });
-            conversation.unreadMessageCount = count >= 0 ? count : 0;
-        }
+      }
+      commit('setMessages', messages);
+    }
+  },
+  onReceivedMessageNotification: ({ state, commit }, message) => {
+    const idx = state.conversations.findIndex((c) =>
+      guidsAreEqual(c.id, message.conversationId)
+    );
 
-        const tmpConversations = state.conversations.map((conv) =>
-            conv.id !== conversation.id ? conv : {...conversation}
-        );
+    if (idx !== -1) {
+      const conversations = [...state.conversations];
+      const conversation = { ...conversations[idx] };
+      const isMessage = conversation.messages.some((msg) => {
+        return guidsAreEqual(msg.id, message.id);
+      });
 
-        commit("setConversations", tmpConversations);
+      if (!isMessage) {
+        const tmpMessages = conversations[idx].messages;
+        tmpMessages.push(message);
+        conversations[idx].messages = [...tmpMessages];
 
-        //update messages watched by users
-        if (guidsAreEqual(state.selectedConversationId, payload.conversationId)) {
+        conversation.unreadMessageCount = conversation.unreadMessageCount + 1;
+        conversation.lastMessage = message;
 
-            const messages = getters.getMessages.map(message => {
-                let msg = {...message};
-                payload.messageIds.forEach(mId => {
-                    if (guidsAreEqual(mId, message.id)) {
-                        const all = [...msg.watchedByUsers, ...payload.participants];
-                        const uniq = guidsFilterUnique(all);
-                        msg = {...msg, watchedByUsers: uniq};
-                    }
-                });
-                return msg;
-            });
+        conversations.splice(idx, 1);
+        conversations.splice(0, 0, conversation);
 
-            commit("setMessages", messages);
-        }
+        commit('setConversations', [...conversations]);
+      }
+    }
+  },
+  onMessageReadNotification: ({ state, commit, getters }, payload) => {
+    const idx = state.conversations.findIndex(
+      (c) => c.id === payload.conversationId
+    );
+    let conversation = { ...state.conversations[idx] };
+    if (conversation.unreadMessageCount > 0) {
+      let count = conversation.unreadMessageCount;
+      payload.messageIds.forEach(() => {
+        count = count - 1;
+      });
+      conversation.unreadMessageCount = count >= 0 ? count : 0;
+    }
 
-    },
-    onUserIsTypingNotification: ({state, commit}, whoIsTyping) => {
-        const idx = state.conversations.findIndex(
-            (c) => c.id === whoIsTyping.conversationId
-        );
+    const tmpConversations = state.conversations.map((conv) =>
+      conv.id !== conversation.id ? conv : { ...conversation }
+    );
 
-        const conversation = {...state.conversations[idx]};
-        if (!conversation.typingUsers) {
-            conversation.typingUsers = [whoIsTyping];
-        } else {
-            if (
-                !conversation.typingUsers.some((t) => t.userId === whoIsTyping.userId)
-            ) {
-                conversation.typingUsers.push(whoIsTyping);
-            }
-        }
+    commit('setConversations', tmpConversations);
 
-        const tmpConversations = state.conversations.map((conv) =>
-            conv.id !== conversation.id ? conv : {...conversation}
-        );
+    //update messages watched by users
+    if (guidsAreEqual(state.selectedConversationId, payload.conversationId)) {
+      const messages = getters.getMessages.map((message) => {
+        let msg = { ...message };
+        payload.messageIds.forEach((mId) => {
+          if (guidsAreEqual(mId, message.id)) {
+            const all = [...msg.watchedByUsers, ...payload.participants];
+            const uniq = guidsFilterUnique(all);
+            msg = { ...msg, watchedByUsers: uniq };
+          }
+        });
+        return msg;
+      });
 
-        commit("setConversations", [...tmpConversations]);
-    },
-}
+      commit('setMessages', messages);
+    }
+  },
+  onUserIsTypingNotification: ({ state, commit }, whoIsTyping) => {
+    const idx = state.conversations.findIndex(
+      (c) => c.id === whoIsTyping.conversationId
+    );
+
+    const conversation = { ...state.conversations[idx] };
+    if (!conversation.typingUsers) {
+      conversation.typingUsers = [whoIsTyping];
+    } else {
+      if (
+        !conversation.typingUsers.some((t) => t.userId === whoIsTyping.userId)
+      ) {
+        conversation.typingUsers.push(whoIsTyping);
+      }
+    }
+
+    const tmpConversations = state.conversations.map((conv) =>
+      conv.id !== conversation.id ? conv : { ...conversation }
+    );
+
+    commit('setConversations', [...tmpConversations]);
+  },
+};

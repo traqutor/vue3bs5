@@ -1,5 +1,7 @@
 export default {
-    isSocketConnectionConnected: state => {
-        return state.hubConnection && state.hubConnection.connectionState === "Connected";
-    }
-}
+  isSocketConnectionConnected: (state) => {
+    return (
+      state.hubConnection && state.hubConnection.connectionState === 'Connected'
+    );
+  },
+};

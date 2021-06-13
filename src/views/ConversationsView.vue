@@ -1,5 +1,6 @@
 <template>
   <div class="row section-widget position-relative flex-fill mt-2">
+
     <conversations
         v-if="conversationViewMode === conversationViewModes.VIEW &&
         chatViewMode !== chatViewModes.ADD_PARTICIPANTS"
@@ -8,6 +9,7 @@
 
     <conversation v-if="conversationViewMode === conversationViewModes.VIEW"></conversation>
     <conversation-new v-else></conversation-new>
+
   </div>
 </template>
 <script>
@@ -18,6 +20,7 @@ import ConversationsParticipants from "@/components/conversations/ConversationsP
 import {CHAT_VIEW_MODES, CONVERSATION_VIEW_MODES} from "@/const"
 import Conversation from "@/components/conversation/Conversation";
 import ConversationNew from "@/components/conversation/ConversationNew";
+
 export default {
   setup() {
     const store = useStore();
@@ -34,6 +37,6 @@ export default {
       conversationViewModes,
     }
   },
-  components: { ConversationNew, Conversation, ConversationsParticipants, Conversations}
+  components: {ConversationNew, Conversation, ConversationsParticipants, Conversations}
 }
 </script>

@@ -13,7 +13,7 @@ export default {
   components: {
     ConversationsParticipantsList,
     ConversationsParticipantsListHeader,
-  }
-}
+  },
+};
 </script>
 

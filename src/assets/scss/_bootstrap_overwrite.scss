@@ -7,7 +7,7 @@
 }
 
 .border-secondary-light {
-  border-color: rgba(0,0,0,.1) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
 }
 .border-left {
   border-left: 1px solid #dee2e6 !important;
@@ -27,14 +27,20 @@
   font-weight: 400 !important;
 }
 
-input-group-sm > .form-control, .input-group-sm > .custom-select, .input-group-sm > .input-group-prepend > .input-group-text, .input-group-sm > .input-group-append > .input-group-text, .input-group-sm > .input-group-prepend > .btn, .input-group-sm > .input-group-append > .btn {
+input-group-sm > .form-control,
+.input-group-sm > .custom-select,
+.input-group-sm > .input-group-prepend > .input-group-text,
+.input-group-sm > .input-group-append > .input-group-text,
+.input-group-sm > .input-group-prepend > .btn,
+.input-group-sm > .input-group-append > .btn {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
 
-.input-group-prepend .btn, .input-group-append .btn {
+.input-group-prepend .btn,
+.input-group-append .btn {
   position: relative;
   z-index: 2;
   border-color: #ced4da;
