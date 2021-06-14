@@ -189,9 +189,7 @@
             <button
               class="btn btn-sm btn-primary shadow-none px-5"
               @click="onCreateConversation()"
-              :disabled="
-                !conversationTopic && getSelectedParticipants.length <= 0
-              "
+              :disabled="checkIfDisabled()"
               type="button"
             >
               Go to conversation
@@ -238,6 +236,9 @@ export default {
           );
         });
     },
+    checkIfDisabled() {
+      return !this.conversationTopic && this.getSelectedParticipants.length <= 0
+    }
   },
   computed: {
     ...mapGetters([
@@ -251,6 +252,7 @@ export default {
         return this.$store.getters.conversationTopic;
       },
       set(value) {
+        console.log("set(value)", value);
         this.$store.commit("setConversationTopic", value);
       },
     },

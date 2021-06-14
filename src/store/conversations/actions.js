@@ -1,18 +1,18 @@
 import axios from 'axios';
-import { axiosWebApiInstance } from '@/services/axios.service';
+import {axiosWebApiInstance} from '@/services/axios.service';
 import {
   guidsAreEqual,
   guidsFilterUnique,
   guidsGetOne,
 } from '@/services/guids.service';
-import { CHAT_VIEW_MODES } from '@/const';
+import {CHAT_VIEW_MODES} from '@/const';
 
 let getMessagesSource = null;
 
 export default {
   onGetConversations: (
-    { state, commit, rootState },
-    { refresh = false, silent = false }
+    {state, commit, rootState},
+    {refresh = false, silent = false}
   ) => {
     if (!silent) commit('setIsConversationsLoading', true);
 
@@ -26,7 +26,7 @@ export default {
     // silly limiter no more then 100 conversations can be fetched
     takeConversations = takeConversations > 99 ? 99 : takeConversations;
 
-    commit('setPageOfConversations', { skipConversations, takeConversations });
+    commit('setPageOfConversations', {skipConversations, takeConversations});
     let activeRoleIds = '';
     rootState.auth.user.SystemRoles.forEach((rle, index) => {
       activeRoleIds =
@@ -36,7 +36,7 @@ export default {
 
     axiosWebApiInstance
       .get(url)
-      .then(function(response) {
+      .then(function (response) {
         commit('setConversations', response.data.conversations);
         commit('setIsConversationsLoading', false);
       })
@@ -45,7 +45,7 @@ export default {
       });
   },
 
-  onSelectConversation: ({ commit, dispatch }, conversationId) => {
+  onSelectConversation: ({commit, dispatch}, conversationId) => {
     commit('setSelectedConversationId', conversationId);
     commit('purgeWhisperParticipants');
     commit('setChatViewMode', CHAT_VIEW_MODES.VIEW);
@@ -57,7 +57,7 @@ export default {
   },
 
   onCreateConversation: (
-    { commit, dispatch, state, rootState, getters },
+    {commit, dispatch, state, rootState, getters},
     payload
   ) => {
     commit('setIsConversationCreating', true);
@@ -66,7 +66,7 @@ export default {
       if (rootState.users.selectedParticipants.length === 1) {
         console.log(rootState.users.selectedParticipants);
         dispatch('onGetDirectConversation', {
-          user: { id: rootState.auth.user.id, isRole: false },
+          user: {id: rootState.auth.user.id, isRole: false},
           recipient: rootState.users.selectedParticipants[0],
         }).then((response) => {
           commit('setIsConversationCreating', false);
@@ -90,10 +90,10 @@ export default {
         const topic = state.conversationTopic
           ? state.conversationTopic
           : rootState.users.selectedParticipants
-              .map((participant) => {
-                return getters.getParticipantById(participant.id).name;
-              })
-              .join(', ');
+            .map((participant) => {
+              return getters.getParticipantById(participant.id).name;
+            })
+            .join(', ');
 
         const values = {
           activeRoleId: state.selectedCreator.id
@@ -101,6 +101,10 @@ export default {
             : null,
           topic: topic,
           messageText: payload.messageText,
+          pushNotification: {
+            title: topic,
+            body: payload.messageText
+          },
           participants: rootState.users.selectedParticipants,
         };
 
@@ -137,7 +141,7 @@ export default {
     });
   },
 
-  onCreateMessage: ({ commit, state, rootState }, payload) => {
+  onCreateMessage: ({commit, state, rootState}, payload) => {
     commit('setIsMessageCreating', true);
 
     const message = {
@@ -150,7 +154,7 @@ export default {
       attachements: [],
       whisperRecipients: rootState.users.whisperToParticipants.map(
         (whisper) => {
-          return { ...whisper, id: whisper.id.toLowerCase() };
+          return {...whisper, id: whisper.id.toLowerCase()};
         }
       ),
     };
@@ -159,7 +163,7 @@ export default {
 
     axiosWebApiInstance
       .post(url, message)
-      .then(function(response) {
+      .then(function (response) {
         if (response.data.isOk) {
           commit('setMessageText', null);
           commit('purgeWhisperParticipants');
@@ -175,8 +179,8 @@ export default {
   },
 
   onGetMessages: (
-    { commit, getters },
-    { conversationId, refresh = false, showLoading = false }
+    {commit, getters},
+    {conversationId, refresh = false, showLoading = false}
   ) => {
     if (showLoading) commit('setIsMessagesLoading', true);
 
@@ -191,8 +195,8 @@ export default {
     const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetMessages?ConversationId=${conversationId}&lastMessageId=${lastMessageId}`;
 
     axiosWebApiInstance
-      .get(url, { cancelToken: getMessagesSource.token })
-      .then(function(response) {
+      .get(url, {cancelToken: getMessagesSource.token})
+      .then(function (response) {
         getMessagesSource = null;
 
         let arr = response.data.messages;
@@ -210,7 +214,7 @@ export default {
 
       axiosWebApiInstance
         .post(url, parameters)
-        .then(function(response) {
+        .then(function (response) {
           const conversation = response.data.conversations[0];
 
           resolve(conversation);
@@ -221,7 +225,7 @@ export default {
     });
   },
 
-  onUserIsTyping: ({ state, rootState }) => {
+  onUserIsTyping: ({state, rootState}) => {
     const conversationId = state.selectedConversationId;
     rootState.socket.hubConnection
       .invoke('UserIsTyping', conversationId)
@@ -230,7 +234,7 @@ export default {
       });
   },
 
-  onMessageIsRead: ({ state, getters }, message) => {
+  onMessageIsRead: ({state, getters}, message) => {
     const messagesIds = [];
     const isWatched = message.watchedByUsers.some((watched) => {
       return (
@@ -260,7 +264,7 @@ export default {
 
       axiosWebApiInstance
         .post(url, data)
-        .then(function(response) {
+        .then(function (response) {
           if (!response.data.isOk) {
             console.error('On ON_MESSAGE_READ error:', response.data.message);
           }
@@ -276,14 +280,15 @@ export default {
 
     axiosWebApiInstance
       .post(url, payload)
-      .then(function() {})
+      .then(function () {
+      })
       .catch((error) => {
         console.log('On read message error:', error);
       });
   },
 
   onUserAddedToConversationNotification: (
-    { state, commit, dispatch },
+    {state, commit, dispatch},
     payload
   ) => {
     const idx = state.conversations.findIndex((c) =>
@@ -301,11 +306,11 @@ export default {
       commit('setSelectedConversationId', conversation.id);
       commit('setConversations', [...conversations]);
     } else {
-      dispatch('onGetConversations', { refresh: false });
+      dispatch('onGetConversations', {refresh: false});
     }
   },
 
-  onConversationCreatedNotification: ({ state, commit }, payload) => {
+  onConversationCreatedNotification: ({state, commit}, payload) => {
     const conversations = [...state.conversations];
     const idx = conversations.findIndex((c) => c.id === payload.id);
     if (idx !== -1) {
@@ -316,13 +321,13 @@ export default {
     }
     commit('setConversations', conversations);
   },
-  onMessageAcknowledgedNotification: ({ state, commit, getters }, message) => {
+  onMessageAcknowledgedNotification: ({state, commit, getters}, message) => {
     console.log('ON_MESSAGE_ACKNOWLEDGED_NOTIFICATION', message);
     if (guidsAreEqual(state.selectedConversationId, message.conversationId)) {
       const messages = [...getters.getMessages];
       const idx = messages.findIndex((msg) => msg.id === message.messageId);
       if (idx !== -1) {
-        const msg = { ...messages[idx] };
+        const msg = {...messages[idx]};
         if (!msg.acknowledgedByUsers) {
           msg.acknowledgedByUsers = [];
         }
@@ -337,14 +342,14 @@ export default {
       commit('setMessages', messages);
     }
   },
-  onReceivedMessageNotification: ({ state, commit }, message) => {
+  onReceivedMessageNotification: ({state, commit}, message) => {
     const idx = state.conversations.findIndex((c) =>
       guidsAreEqual(c.id, message.conversationId)
     );
 
     if (idx !== -1) {
       const conversations = [...state.conversations];
-      const conversation = { ...conversations[idx] };
+      const conversation = {...conversations[idx]};
       const isMessage = conversation.messages.some((msg) => {
         return guidsAreEqual(msg.id, message.id);
       });
@@ -364,11 +369,11 @@ export default {
       }
     }
   },
-  onMessageReadNotification: ({ state, commit, getters }, payload) => {
+  onMessageReadNotification: ({state, commit, getters}, payload) => {
     const idx = state.conversations.findIndex(
       (c) => c.id === payload.conversationId
     );
-    let conversation = { ...state.conversations[idx] };
+    let conversation = {...state.conversations[idx]};
     if (conversation.unreadMessageCount > 0) {
       let count = conversation.unreadMessageCount;
       payload.messageIds.forEach(() => {
@@ -378,7 +383,7 @@ export default {
     }
 
     const tmpConversations = state.conversations.map((conv) =>
-      conv.id !== conversation.id ? conv : { ...conversation }
+      conv.id !== conversation.id ? conv : {...conversation}
     );
 
     commit('setConversations', tmpConversations);
@@ -386,12 +391,12 @@ export default {
     //update messages watched by users
     if (guidsAreEqual(state.selectedConversationId, payload.conversationId)) {
       const messages = getters.getMessages.map((message) => {
-        let msg = { ...message };
+        let msg = {...message};
         payload.messageIds.forEach((mId) => {
           if (guidsAreEqual(mId, message.id)) {
             const all = [...msg.watchedByUsers, ...payload.participants];
             const uniq = guidsFilterUnique(all);
-            msg = { ...msg, watchedByUsers: uniq };
+            msg = {...msg, watchedByUsers: uniq};
           }
         });
         return msg;
@@ -400,12 +405,12 @@ export default {
       commit('setMessages', messages);
     }
   },
-  onUserIsTypingNotification: ({ state, commit }, whoIsTyping) => {
+  onUserIsTypingNotification: ({state, commit}, whoIsTyping) => {
     const idx = state.conversations.findIndex(
       (c) => c.id === whoIsTyping.conversationId
     );
 
-    const conversation = { ...state.conversations[idx] };
+    const conversation = {...state.conversations[idx]};
     if (!conversation.typingUsers) {
       conversation.typingUsers = [whoIsTyping];
     } else {
@@ -417,9 +422,54 @@ export default {
     }
 
     const tmpConversations = state.conversations.map((conv) =>
-      conv.id !== conversation.id ? conv : { ...conversation }
+      conv.id !== conversation.id ? conv : {...conversation}
     );
 
     commit('setConversations', [...tmpConversations]);
+  },
+
+  onAddUsersToConversation: ({commit, getters}) => {
+    const values = {
+      conversationId: getters.getSelectedConversationId,
+      participants: getters.getSelectedParticipants,
+    };
+
+    const url = `${process.env.VUE_APP_BASE_URL}/Messaging/AddUsersToConversation`;
+
+    axiosWebApiInstance
+      .post(url, values)
+      .then(function () {
+        commit("purgeSelectedParticipants");
+      })
+      .catch((error) => {
+        console.error("On onAddUsersToConversation error:", error);
+      });
+  },
+
+  onRemoveUsersFromConversation: ({commit, getters}, participants) => {
+    const values = {
+      activeRoleId: null,
+      conversationId: getters.getSelectedConversationId,
+      participants: participants
+    };
+
+    const url = `${process.env.VUE_APP_BASE_URL}/Messaging/RemoveConversationParticipants`;
+
+    axiosWebApiInstance
+      .post(url, values)
+      .then(function () {
+        const conversation = {...getters.getSelectedConversation};
+        const tmpParticipants = conversation.participants
+          .filter((conv) => participants
+            .filter(p => guidsAreEqual(p.id, conv.id)).length <= 0);
+        console.log("tmpParticipants", tmpParticipants);
+        conversation.participants = [...tmpParticipants];
+
+        commit("setConversation", conversation);
+        commit("purgeSelectedParticipants");
+      })
+      .catch((error) => {
+        console.error("On onRemoveUsersFromConversation error:", error);
+      });
   },
 };

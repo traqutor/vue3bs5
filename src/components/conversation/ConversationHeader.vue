@@ -177,6 +177,7 @@ export default {
     function onConversationModeSelect(mode) {
       if (mode === chatViewModes.VIEW) {
         store.commit("purgeWhisperParticipants");
+        store.commit("purgeSelectedParticipants");
       }
       store.commit("setChatViewMode", mode);
     }

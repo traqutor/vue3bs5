@@ -1,5 +1,5 @@
-import { guidsAreEqual, guidsGetNull } from '@/services/guids.service';
-import { CHAT_VIEW_MODES, CONVERSATION_VIEW_MODES } from '@/const';
+import {guidsAreEqual, guidsGetNull} from '@/services/guids.service';
+import { CHAT_VIEW_MODES } from '@/const';
 
 function sortByUserName(a, b) {
   if (a.userName.toLowerCase() < b.userName.toLowerCase()) {
@@ -30,22 +30,19 @@ function searchByName(text, name) {
 function searchByUser(text, usr) {
   return text.length > 0
     ? searchByName(text, usr.userName) ||
-        usr.roles.some((role) => {
-          return role.name.toLowerCase().includes(text.toLowerCase());
-        })
+    usr.roles.some((role) => {
+      return role.name.toLowerCase().includes(text.toLowerCase());
+    })
     : true;
 }
 
 export default {
   getSystemUsers: (state, getters) => {
-    if (
-      getters.conversationViewMode === CONVERSATION_VIEW_MODES.VIEW &&
-      getters.chatViewMode === CHAT_VIEW_MODES.ADD_PARTICIPANTS
-    ) {
+    if (getters.getChatViewMode === CHAT_VIEW_MODES.ADD_PARTICIPANTS) {
       return state.systemUsers
         .filter((usr) => {
           return (
-            getters.selectedConversation.participants.filter((part) => {
+            getters.getSelectedConversation.participants.filter((part) => {
               return guidsAreEqual(part.id, usr.userId);
             }).length <= 0 && searchByUser(state.textToSearchParticipants, usr)
           );
@@ -63,11 +60,11 @@ export default {
     }
   },
   getSystemRoles: (state, getters) => {
-    if (getters.chatViewMode === CHAT_VIEW_MODES.ADD_PARTICIPANTS) {
+    if (getters.getChatViewMode === CHAT_VIEW_MODES.ADD_PARTICIPANTS) {
       return state.systemRoles
         .filter((role) => {
           return (
-            getters.selectedConversation.participants.filter((part) => {
+            getters.getSelectedConversation.participants.filter((part) => {
               return guidsAreEqual(part.id, role.id);
             }).length <= 0 &&
             searchByName(state.textToSearchParticipants, role.name)
@@ -106,7 +103,7 @@ export default {
     let participant = null;
     state.systemRoles.forEach((rle) => {
       if (guidsAreEqual(rle.id, id)) {
-        participant = { ...rle, id: rle.id, isRole: true };
+        participant = {...rle, id: rle.id, isRole: true};
       }
     });
     state.systemUsers.forEach((usr) => {
