@@ -56,9 +56,7 @@ export default {
     }
 
     function onAddSelectedParticipants() {
-      console.log("conversation.value.isDirect", conversation.value.isDirect);
       if (conversation.value.isDirect) {
-        console.log("direct");
         conversation.value.participants.forEach(participant => {
           store.dispatch("setToggleParticipantSelected", participant.id);
         });

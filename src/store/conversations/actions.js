@@ -56,10 +56,7 @@ export default {
     });
   },
 
-  onCreateConversation: (
-    {commit, dispatch, state, rootState, getters},
-    payload
-  ) => {
+  onCreateConversation: ({commit, dispatch, state, rootState, getters}) => {
     commit('setIsConversationCreating', true);
 
     return new Promise((resolve) => {
@@ -100,10 +97,10 @@ export default {
             ? state.selectedCreator.id
             : null,
           topic: topic,
-          messageText: payload.messageText,
+          messageText: state.messageText,
           pushNotification: {
             title: topic,
-            body: payload.messageText
+            body: state.messageText
           },
           participants: rootState.users.selectedParticipants,
         };
