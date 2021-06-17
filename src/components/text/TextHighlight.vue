@@ -3,32 +3,34 @@
 </template>
 
 <script>
-import {computed} from "vue";
-import {useStore} from "vuex";
+import { computed } from "vue";
+import { useStore } from "vuex";
 
 export default {
   props: {
-    text: {type: String}
+    text: { type: String },
   },
   setup(props) {
     const store = useStore();
-    const textToHighlight = computed(() => store.getters.getTextToSearchParticipants);
+    const textToHighlight = computed(
+      () => store.getters.getTextToSearchParticipants
+    );
 
     function getHighlightedText() {
       const textToFind = textToHighlight.value;
-      const regex = new RegExp(textToFind, 'gi');
+      const regex = new RegExp(textToFind, "gi");
 
-      let oldText = props.text
+      let oldText = props.text;
       if (oldText) {
-        oldText = oldText.replace(/(<mark class="highlight">|<\/mark>)/gim, '');
+        oldText = oldText.replace(/(<mark class="highlight">|<\/mark>)/gim, "");
         return oldText.replace(regex, '<mark class="highlight">$&</mark>');
       }
       return oldText;
     }
 
     return {
-      getHighlightedText
-    }
-  }
-}
+      getHighlightedText,
+    };
+  },
+};
 </script>

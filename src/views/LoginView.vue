@@ -10,7 +10,7 @@
         />
 
         <div class="sign-intro">
-          Sign in with your getUser name
+          Sign in with your User name
         </div>
 
         <form @submit.prevent="onLogIn">

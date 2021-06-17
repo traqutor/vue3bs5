@@ -1,5 +1,5 @@
-import {guidsAreEqual, guidsGetNull} from '@/services/guids.service';
-import { CHAT_VIEW_MODES } from '@/const';
+import { guidsAreEqual, guidsGetNull } from "@/services/guids.service";
+import { CHAT_VIEW_MODES } from "@/const";
 
 function sortByUserName(a, b) {
   if (a.userName.toLowerCase() < b.userName.toLowerCase()) {
@@ -30,9 +30,9 @@ function searchByName(text, name) {
 function searchByUser(text, usr) {
   return text.length > 0
     ? searchByName(text, usr.userName) ||
-    usr.roles.some((role) => {
-      return role.name.toLowerCase().includes(text.toLowerCase());
-    })
+        usr.roles.some((role) => {
+          return role.name.toLowerCase().includes(text.toLowerCase());
+        })
     : true;
 }
 
@@ -88,7 +88,7 @@ export default {
   isParticipantSelected: (state) => (id) => {
     return state.selectedParticipants.some((prt) => guidsAreEqual(prt.id, id));
   },
-  whisperToParticipants: (state) => {
+  getWhisperToParticipants: (state) => {
     return state.whisperToParticipants;
   },
   isWhisperParticipantSelected: (state) => (id) => {
@@ -103,7 +103,7 @@ export default {
     let participant = null;
     state.systemRoles.forEach((rle) => {
       if (guidsAreEqual(rle.id, id)) {
-        participant = {...rle, id: rle.id, isRole: true};
+        participant = { ...rle, id: rle.id, isRole: true };
       }
     });
     state.systemUsers.forEach((usr) => {
@@ -137,7 +137,7 @@ export default {
     return isUser;
   },
   getRoleById: (state) => (id) => {
-    let role = '';
+    let role = "";
     state.systemRoles.forEach((rle) => {
       if (guidsAreEqual(rle.id, id)) {
         role = rle;

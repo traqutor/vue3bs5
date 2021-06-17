@@ -32,6 +32,7 @@
     <participant-avatar-name-item
       :participant-id="participantId"
       :is-highlighted="true"
+      :is-active-indicator="isActiveIndicator"
     >
       <template v-slot:secondary>
         <slot name="append"></slot>
@@ -53,6 +54,7 @@ export default {
     isSelected: { type: Boolean },
     isRemovable: { type: Boolean },
     isHighlighted: { type: Boolean },
+    isActiveIndicator: { type: Boolean },
     onSelect: { type: Function },
   },
   components: {

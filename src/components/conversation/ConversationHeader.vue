@@ -47,7 +47,10 @@
     <div class="steps-section ml-auto">
       <div v-if="chatViewMode === chatViewModes.VIEW">
         <div class="d-flex align-items-center">
-          <div class="avatar-group avatar-group-move mr-2">
+          <div
+            v-if="!conversation.isDirect"
+            class="avatar-group avatar-group-move mr-2"
+          >
             <a
               v-for="participant of conversation.participants.slice(0, 4)"
               :key="participant.id"
@@ -76,6 +79,7 @@
             aria-label="Button group with nested dropdown"
           >
             <a
+              v-if="!conversation.isDirect"
               @click="onConversationModeSelect(chatViewModes.WHISPER)"
               class="
                 btn

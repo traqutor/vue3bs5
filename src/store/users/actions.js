@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { axiosWebApiInstance } from '@/services/axios.service';
-import { guidsAreEqual } from '@/services/guids.service';
+import axios from "axios";
+import { axiosWebApiInstance } from "@/services/axios.service";
+import { guidsAreEqual } from "@/services/guids.service";
 
 let getUsersSource = null;
 
@@ -15,10 +15,10 @@ export default {
 
     axiosWebApiInstance
       .get(url, { cancelToken: getUsersSource.token })
-      .then(function(response) {
+      .then(function (response) {
         getUsersSource = null;
-        commit('setUsers', response.data.users);
-        commit('setRoles', response.data.roles);
+        commit("setUsers", response.data.users);
+        commit("setRoles", response.data.roles);
       });
   },
 
@@ -33,7 +33,7 @@ export default {
       const participant = getters.getParticipantById(participantId);
       selectedParticipants.push(participant);
     }
-    commit('setSelectedParticipants', selectedParticipants);
+    commit("setSelectedParticipants", selectedParticipants);
   },
 
   setToggleParticipantToWhisper: (
@@ -50,6 +50,6 @@ export default {
       const participant = getters.getParticipantById(participantId);
       whisperToParticipants.push(participant);
     }
-    commit('setWhisperParticipants', whisperToParticipants);
+    commit("setWhisperParticipants", whisperToParticipants);
   },
 };

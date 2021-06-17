@@ -10,17 +10,18 @@ module.exports = {
         changeOrigin: true,
         ws: true,
         pathRewrite: {
-          "^/tokenApi": ""
-        }
+          "^/tokenApi": "",
+        },
       },
       "/webApi": {
         target: webApi,
         changeOrigin: true,
         ws: true,
         pathRewrite: {
-          "^/webApi": ""
-        }
-      }
-    }
-  }
+          "^/webApi": "",
+        },
+      },
+    },
+  },
+  lintOnSave: false,
 };
