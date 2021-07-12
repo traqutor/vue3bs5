@@ -6,6 +6,10 @@
   color: $grey !important;
 }
 
+.text-primary, .text-primary-hover:hover {
+  color: $blue !important;
+}
+
 .border-secondary-light {
   border-color: rgba(0, 0, 0, 0.1) !important;
 }
@@ -27,6 +31,11 @@
   font-weight: 400 !important;
 }
 
+.has-transition {
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+
 input-group-sm > .form-control,
 .input-group-sm > .custom-select,
 .input-group-sm > .input-group-prepend > .input-group-text,
@@ -44,6 +53,11 @@ input-group-sm > .form-control,
   position: relative;
   z-index: 2;
   border-color: #ced4da;
+}
+
+.input-group-prepend, .input-group-append {
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .bg-grey {

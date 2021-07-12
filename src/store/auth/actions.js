@@ -1,30 +1,30 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   getTokenData,
   getUserFromTokenData,
   saveTokenData,
-} from '@/services/jwt.service';
-import jwt_decode from 'jwt-decode';
+} from "@/services/jwt.service";
+import jwt_decode from "jwt-decode";
 
 export default {
   onLogin: ({ commit, dispatch }, authData) => {
     const params = {
-      scope: 'api1',
-      client_id: 'ro.client',
-      client_secret: 'secret',
-      grant_type: 'password',
+      scope: "api1",
+      client_id: "ro.client",
+      client_secret: "secret",
+      grant_type: "password",
       username: authData.username,
       password: authData.password,
-      AllowedCorsOrigins: 'https://meddy-frontend-app.azurewebsites.net',
+      AllowedCorsOrigins: "https://meddy-frontend-app.azurewebsites.net",
     };
 
     const data = Object.keys(params)
       .map((key) => `${key}=${encodeURIComponent(params[key])}`)
-      .join('&');
+      .join("&");
 
     const options = {
-      method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
       data,
       url: `${process.env.VUE_APP_TOKEN_URL}/connect/token`,
     };
@@ -34,11 +34,11 @@ export default {
     });
 
     return new Promise((resolve) => {
-      commit('setLoggedIsLoading', true);
-      commit('setLoggedError', null);
+      commit("setLoggedIsLoading", true);
+      commit("setLoggedError", null);
       instance(options)
         .then((response) => {
-          commit('setLoggedIsLoading', false);
+          commit("setLoggedIsLoading", false);
           if (response.data && response.data.access_token) {
             saveTokenData(response.data.access_token);
 
@@ -46,24 +46,24 @@ export default {
             decodedUserData.SystemRoles = JSON.parse(
               decodedUserData.SystemRolesJson
             );
-            commit('setLoggedUser', decodedUserData);
-            commit('setSelectedCreator', decodedUserData);
+            commit("setLoggedUser", decodedUserData);
+            commit("setSelectedCreator", decodedUserData);
 
-            dispatch('getUsers');
-            dispatch('onGetConversations', { refresh: true });
+            dispatch("getUsers");
+            dispatch("onGetConversations", { refresh: true });
 
             resolve();
           } else {
-            commit('setLogOutUser');
+            commit("setLogOutUser");
           }
         })
         .catch((error) => {
           console.error(error);
-          commit('setLoggedIsLoading', false);
-          commit('setLogOutUser');
+          commit("setLoggedIsLoading", false);
+          commit("setLogOutUser");
           commit(
-            'setLoggedError',
-            'Provided username or password are invalid.'
+            "setLoggedError",
+            "Provided username or password are invalid."
           );
         });
     });
@@ -74,11 +74,11 @@ export default {
       const token = getTokenData();
 
       if (user && token) {
-        commit('setLoggedUser', user);
-        commit('setSelectedCreator', user);
+        commit("setLoggedUser", user);
+        commit("setSelectedCreator", user);
 
-        dispatch('getUsers');
-        dispatch('onGetConversations', { refresh: true });
+        dispatch("getUsers");
+        dispatch("onGetConversations", { refresh: true });
 
         resolve(user);
       }

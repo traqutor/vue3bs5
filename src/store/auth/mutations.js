@@ -1,4 +1,4 @@
-import { purgeTokenData } from '@/services/jwt.service';
+import { purgeTokenData } from "@/services/jwt.service";
 
 export default {
   setLoggedError(state, error) {

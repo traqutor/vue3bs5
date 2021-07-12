@@ -3,40 +3,38 @@
     <div class="ign-grid-center">
       <div class="sign-in-form">
         <img
-            class="sign-company-logo"
-            data-tenant-branding-logo="true"
-            src="https://secure.aadcdn.microsoftonline-p.com/447973e2-4lvfxi2jlmwvkyxdgkhbcfabjazk-ycbaeyyhr2nzkw/logintenantbranding/0/bannerlogo?ts=637391782718144813"
-            alt="Company Logo"
+          class="sign-company-logo"
+          data-tenant-branding-logo="true"
+          src="https://secure.aadcdn.microsoftonline-p.com/447973e2-4lvfxi2jlmwvkyxdgkhbcfabjazk-ycbaeyyhr2nzkw/logintenantbranding/0/bannerlogo?ts=637391782718144813"
+          alt="Company Logo"
         />
 
-        <div class="sign-intro">
-          Sign in with your User name
-        </div>
+        <div class="sign-intro">Sign in with your User name</div>
 
         <form @submit.prevent="onLogIn">
           <div class="mb-3">
             <input
-                v-model="authData.username"
-                required
-                class="form-control"
-                type="text"
-                placeholder="User name"
+              v-model="authData.username"
+              required
+              class="form-control"
+              type="text"
+              placeholder="User name"
             />
           </div>
           <div class="mb-3">
             <input
-                v-model="authData.password"
-                required
-                class="form-control"
-                type="password"
-                placeholder="Password"
+              v-model="authData.password"
+              required
+              class="form-control"
+              type="password"
+              placeholder="Password"
             />
           </div>
           <div class="mb-3">
             <button
-                type="submit"
-                :disabled="isLoadingLogin"
-                class="btn btn-primary align-items-center"
+              type="submit"
+              :disabled="isLoadingLogin"
+              class="btn btn-primary align-items-center"
             >
               SignIn
 
@@ -57,7 +55,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Login",
@@ -65,23 +63,23 @@ export default {
     return {
       authData: {
         username: "",
-        password: ""
+        password: "",
       },
-      imageNumber: 0
+      imageNumber: 0,
     };
   },
   methods: {
     onLogIn() {
       this.$store.dispatch("onLogin", this.authData).then(() => {
-        this.$router.push({name: "Conversations"});
+        this.$router.push({ name: "Conversations" });
       });
-    }
+    },
   },
   computed: {
     ...mapGetters({
       getErrors: "getErrors",
-      isLoadingLogin: "isLoadingLogin"
-    })
+      isLoadingLogin: "isLoadingLogin",
+    }),
   },
 };
 </script>
@@ -118,4 +116,3 @@ export default {
   padding-bottom: 12px;
 }
 </style>
-

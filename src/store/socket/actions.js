@@ -1,6 +1,6 @@
-import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 
-import { getTokenData } from '@/services/jwt.service';
+import { getTokenData } from "@/services/jwt.service";
 
 export default {
   onCreateHubConnection: ({ state, commit, dispatch, rootState }) => {
@@ -19,41 +19,41 @@ export default {
     connection
       .start()
       .then(() => {
-        console.log('Hub connection started');
-        commit('setSocketHubConnection', connection);
+        console.log("Hub connection started");
+        commit("setSocketHubConnection", connection);
       })
       .catch((error) => {
         connection.stop();
-        console.log('Error establishing the connection: ', error);
+        console.log("Error establishing the connection: ", error);
       });
 
-    connection.on('ReceivedMessageNotification', (response) => {
+    connection.on("ReceivedMessageNotification", (response) => {
       const message = JSON.parse(response);
-      console.log('ReceivedMessageNotification', message);
+      console.log("ReceivedMessageNotification", message);
 
-      dispatch('onReceivedMessageNotification', message);
-      commit('purgeUserIsTyping', {
+      dispatch("onReceivedMessageNotification", message);
+      commit("purgeUserIsTyping", {
         userId: message.authorId,
         conversationId: message.conversationId,
       });
     });
 
-    connection.on('MessageUpdatedNotification', (response) => {
+    connection.on("MessageUpdatedNotification", (response) => {
       const message = JSON.parse(response);
       // todo
-      console.log('MessageUpdatedNotification', message);
+      console.log("MessageUpdatedNotification", message);
     });
 
-    connection.on('MessageAcknowledgedNotification', (response) => {
+    connection.on("MessageAcknowledgedNotification", (response) => {
       const message = JSON.parse(response);
-      console.log('MessageAcknowledgedNotification', message);
+      console.log("MessageAcknowledgedNotification", message);
 
-      dispatch('onMessageAcknowledgedNotification', message);
+      dispatch("onMessageAcknowledgedNotification", message);
     });
 
-    connection.on('UserIsTypingNotification', (payload) => {
+    connection.on("UserIsTypingNotification", (payload) => {
       const whoIsTyping = JSON.parse(payload);
-      console.log('UserIsTypingNotification', whoIsTyping);
+      console.log("UserIsTypingNotification", whoIsTyping);
       if (
         state.mapOfTypingUsers[whoIsTyping.userId + whoIsTyping.conversationId]
       ) {
@@ -68,52 +68,51 @@ export default {
         ] = null;
       }
 
-      state.mapOfTypingUsers[
-        whoIsTyping.userId + whoIsTyping.conversationId
-      ] = setTimeout(() => {
-        commit('purgeUserIsTyping', whoIsTyping);
-      }, 3000);
+      state.mapOfTypingUsers[whoIsTyping.userId + whoIsTyping.conversationId] =
+        setTimeout(() => {
+          commit("purgeUserIsTyping", whoIsTyping);
+        }, 3000);
 
       if (rootState.auth.user.id !== whoIsTyping.userId) {
-        dispatch('onUserIsTypingNotification', whoIsTyping);
+        dispatch("onUserIsTypingNotification", whoIsTyping);
       }
     });
 
-    connection.on('ConversationCreatedNotification', (payload) => {
+    connection.on("ConversationCreatedNotification", (payload) => {
       const conversation = JSON.parse(payload);
-      console.log('ConversationCreatedNotification', conversation);
+      console.log("ConversationCreatedNotification", conversation);
 
-      dispatch('onConversationCreatedNotification', conversation);
+      dispatch("onConversationCreatedNotification", conversation);
     });
 
-    connection.on('ConversationTopicChangedNotification', (payload) => {
+    connection.on("ConversationTopicChangedNotification", (payload) => {
       const conversation = JSON.parse(payload);
-      console.log('ConversationTopicChangedNotification', conversation);
+      console.log("ConversationTopicChangedNotification", conversation);
 
-      dispatch('onConversationTopicChangedNotification', conversation);
+      dispatch("onConversationTopicChangedNotification", conversation);
     });
 
-    connection.on('UserAddedToConversationNotification', (payload) => {
+    connection.on("UserAddedToConversationNotification", (payload) => {
       const data = JSON.parse(payload);
-      console.log('UserAddedToConversationNotification', data);
+      console.log("UserAddedToConversationNotification", data);
 
-      dispatch('onUserAddedToConversationNotification', data);
+      dispatch("onUserAddedToConversationNotification", data);
     });
 
-    connection.on('UserLeaveConversationNotification', (payload) => {
+    connection.on("UserLeaveConversationNotification", (payload) => {
       const data = JSON.parse(payload);
       // todo
-      console.log('UserLeaveConversationNotification', data);
+      console.log("UserLeaveConversationNotification", data);
     });
 
-    connection.on('MessageReadNotification', (payload) => {
+    connection.on("MessageReadNotification", (payload) => {
       const readMessage = JSON.parse(payload);
-      console.log('MessageReadNotification', readMessage);
-      dispatch('onMessageReadNotification', readMessage);
+      console.log("MessageReadNotification", readMessage);
+      dispatch("onMessageReadNotification", readMessage);
     });
   },
   onSocketConnectionClose: ({ state }) => {
-    console.log('onSocketConnectionClose');
+    console.log("onSocketConnectionClose");
     state.hubConnection.stop();
   },
 };

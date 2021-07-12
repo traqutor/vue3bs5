@@ -1,7 +1,7 @@
 <template>
   <div
-      class="app header-fixed sidebar-fixed sidebar-footer-fixed bg-white"
-      :class="getAsideLeftClass"
+    class="app header-fixed sidebar-fixed sidebar-footer-fixed bg-white"
+    :class="getAsideLeftClass"
   >
     <app-header></app-header>
     <aside-left></aside-left>
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import {computed} from "vue";
-import {useStore} from "vuex";
+import { computed } from "vue";
+import { useStore } from "vuex";
 import AppHeader from "@/components/header/MainHeader";
 import AsideLeft from "@/components/aside/AsideLeft";
 

@@ -1,7 +1,7 @@
-import moment from 'moment';
-import jwt_decode from 'jwt-decode';
+import moment from "moment";
+import jwt_decode from "jwt-decode";
 
-const TOKEN_DATA = '__MEDDYJWTUSRID';
+const TOKEN_DATA = "__MEDDYJWTUSRID";
 
 export const isSignedIn = () => {
   let token = getUserFromTokenData();

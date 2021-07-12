@@ -3,7 +3,7 @@
     <div class="steps-section">
       <div id="chat-footer-input-textarea">
         <div class="d-flex">
-          <div class="media-body">
+          <div class="media-body me-3">
             <div
               class="
                 input-group
@@ -26,20 +26,23 @@
                     class="
                       btn
                       d-inline-flex
-                      align-items-end
+                      align-items-center
                       text-secondary text-dark-hover
                       border-0
                       pb-10px
                       btn-options
                       shadow-none
                     "
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
+                    id="dropdownMenuChatInputTextAreaAppendMenu"
+                    data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
                     <feather-more-vertical class="f-icon-22" />
                   </button>
-                  <div class="dropdown-menu dropdown-menu-sm shadow">
+                  <div
+                    class="dropdown-menu dropdown-menu-sm shadow"
+                    aria-labelledby="dropdownMenuChatInputTextAreaAppendMenu"
+                  >
                     <button
                       class="dropdown-item"
                       onclick="document.querySelector('.inputFile').click();"
@@ -155,10 +158,7 @@
             </div>
           </div>
 
-          <div
-            class="align-self-end btn-group-send ms-3"
-            id="dialogGroupContol"
-          >
+          <div class="align-self-end btn-group-send" id="dialogGroupContol">
             <div>
               <button
                 class="
@@ -195,7 +195,6 @@
           </div>
         </div>
       </div>
-
       <chat-record-message v-if="false"></chat-record-message>
       <chat-play-message v-if="false"></chat-play-message>
     </div>

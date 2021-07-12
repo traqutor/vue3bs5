@@ -1,7 +1,7 @@
-import { v4 as uuIdv4, NIL as NIL_UUID } from 'uuid';
+import { v4 as uuIdv4, NIL as NIL_UUID } from "uuid";
 
 export function guidsAreEqual(left, right) {
-  if (typeof left === 'string' && typeof right === 'string') {
+  if (typeof left === "string" && typeof right === "string") {
     const txtLeft = left && left.slice().toLowerCase();
     const txtRight = right && right.slice().toLowerCase();
     return txtLeft === txtRight;
