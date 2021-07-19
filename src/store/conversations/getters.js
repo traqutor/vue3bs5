@@ -1,4 +1,4 @@
-import { guidsAreEqual } from '@/services/guids.service';
+import { guidsAreEqual } from "@/services/guids.service";
 
 export default {
   getChatViewMode: (state) => {
@@ -26,6 +26,9 @@ export default {
   },
   getMessages: (state, getters) => {
     return getters.getSelectedConversation.messages;
+  },
+  getIsMessagesLoading: (state) => {
+    return state.isMessagesLoading;
   },
   getSelectedMessageId: (state) => {
     return state.selectedMessageId;

@@ -38,7 +38,11 @@
             >
               SignIn
 
-              <div v-if="isLoadingLogin" class="spinner-border" role="status">
+              <div
+                v-if="isLoadingLogin"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              >
                 <span class="visually-hidden">Loading...</span>
               </div>
             </button>

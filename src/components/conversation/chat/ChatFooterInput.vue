@@ -158,25 +158,8 @@
             </div>
           </div>
 
-          <div class="align-self-end btn-group-send" id="dialogGroupContol">
+          <div class="align-self-end btn-group-send">
             <div>
-              <button
-                class="
-                  btn btn-circle
-                  f-icon-42
-                  btn-primary
-                  border-0
-                  shadow-none
-                  step-tabpanel-open
-                  toggle-audio-visual
-                "
-                data-outside="true"
-                href="#dialog-input-audio-1"
-              >
-                <feather-mic class="f-icon-20" />
-              </button>
-            </div>
-            <div class="is-hidden is-send-control">
               <button
                 id="dialogSendControl"
                 class="

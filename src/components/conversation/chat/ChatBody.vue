@@ -2,8 +2,159 @@
   <div class="flex-slide-content">
     <div class="d-flex flex-column h-100 w-100 position-absolute">
       <perfect-scrollbar class="pe-3">
-        <div class="dialog-group-strip text-primary">Yesterday</div>
+        <div v-for="(msg, idx) of messages" :key="msg.id">
+          <!-- time divider-->
+          <div
+            v-if="idx === 0 || getIfPeriodToDisplay(idx)"
+            class="dialog-group-strip text-primary"
+          >
+            {{ timeMessagesDividerFormat(msg.createdTime.seconds) }}
+          </div>
+          <ign-chat-message-bubble :item="msg"></ign-chat-message-bubble>
+        </div>
       </perfect-scrollbar>
     </div>
   </div>
 </template>
+<script>
+import { useStore } from "vuex";
+import { timeMessagesDividerFormat } from "@/services/datetime.service";
+import { computed, ref } from "vue";
+import { guidsAreEqual, guidsGetNull } from "@/services/guids.service";
+import IgnChatMessageBubble from "@/components/conversation/chat/ChatMessageBubble";
+export default {
+  name: "ign-chat-mode",
+  components: {
+    IgnChatMessageBubble,
+  },
+
+  setup() {
+    const store = useStore();
+    const isScrollUp = ref(false);
+    const tmpScrollTop = ref(0);
+
+    const messages = computed(() => store.getters.getMessages);
+    const selectedConversation = computed(
+      () => store.getters.getSelectedConversation
+    );
+    const isMessagesLoading = computed(
+      () => store.getters.getIsMessagesLoading
+    );
+    const loggedUser = computed(() => store.getters.getLoggedUser);
+
+    const isRoleById = (id) =>
+      computed(() => {
+        let isRole = false;
+        store.getters.getSystemRoles.forEach((rle) => {
+          if (guidsAreEqual(rle.id, id)) {
+            isRole = true;
+          }
+        });
+        return isRole;
+      });
+    const getUserById = (id) => {
+      let user = null;
+      store.getters.getSystemUsers.forEach((usr) => {
+        if (guidsAreEqual(usr.userId, id)) {
+          user = usr;
+        }
+      });
+      return user;
+    };
+    const getParticipantById = (id) => {
+      if (!id || id === guidsGetNull) return;
+
+      let participant = null;
+      store.getters.getSystemRoles.forEach((rle) => {
+        if (guidsAreEqual(rle.id, id)) {
+          participant = { ...rle, id: rle.id, isRole: true };
+        }
+      });
+      store.getters.getSystemUsers.forEach((usr) => {
+        if (guidsAreEqual(usr.userId, id)) {
+          participant = {
+            ...usr,
+            id: usr.userId,
+            name: usr.userName,
+            isRole: false,
+          };
+        }
+      });
+      return participant;
+    };
+
+    const onScroll = (e) => {
+      const container = this.$refs.chatContainer.$el;
+
+      if (tmpScrollTop.value > e.target.scrollTop) {
+        isScrollUp.value = true;
+        if (!isMessagesLoading.value && e.target.scrollTop <= 200) {
+          const { id } = selectedConversation;
+          store.dispatch("onGetMessages", { conversationId: id });
+        }
+      } else if (
+        container.clientHeight + e.target.scrollTop >=
+        container.scrollHeight - 50
+      ) {
+        this.isScrollUp = false;
+      }
+      this.tmpScrollTop = e.target.scrollTop;
+    };
+
+    const getIfPeriodToDisplay = (index) => {
+      return (
+        timeMessagesDividerFormat(messages.value[index].createdTime.seconds) !==
+        timeMessagesDividerFormat(messages.value[index - 1].createdTime.seconds)
+      );
+    };
+
+    const getIfUserInfoToDisplay = (index) => {
+      return (
+        index === 0 ||
+        messages.value[index].authorId !== messages.value[index - 1].authorId ||
+        messages.value[index].activeRoleId !==
+          messages.value[index - 1].activeRoleId
+      );
+    };
+
+    const scrollToEnd = () => {
+      if (!isScrollUp.value) {
+        const container = this.$refs.chatContainer.$el;
+        container.scrollTop = container.scrollHeight;
+        tmpScrollTop.value = container.scrollTop;
+      }
+    };
+
+    const onSendMessage = (msg) => {
+      this.$store
+        .dispatch("onGetDirectConversation", {
+          user: {
+            isRole: false,
+            id: loggedUser.value.id,
+          },
+          recipient: {
+            isRole: isRoleById(msg.authorId),
+            id: msg.authorId,
+          },
+        })
+        .then((conversation) => {
+          this.$store.dispatch("onSelectConversation", conversation);
+        });
+    };
+
+    return {
+      messages,
+      isScrollUp,
+      tmpScrollTop,
+      onScroll,
+      onSendMessage,
+      scrollToEnd,
+      getUserById,
+      getParticipantById,
+      getIfPeriodToDisplay,
+      getIfUserInfoToDisplay,
+      timeMessagesDividerFormat,
+    };
+  },
+};
+</script>

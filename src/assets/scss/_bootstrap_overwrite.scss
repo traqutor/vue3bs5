@@ -6,7 +6,8 @@
   color: $grey !important;
 }
 
-.text-primary, .text-primary-hover:hover {
+.text-primary,
+.text-primary-hover:hover {
   color: $blue !important;
 }
 
@@ -32,8 +33,8 @@
 }
 
 .has-transition {
-  -webkit-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 input-group-sm > .form-control,
@@ -55,7 +56,8 @@ input-group-sm > .form-control,
   border-color: #ced4da;
 }
 
-.input-group-prepend, .input-group-append {
+.input-group-prepend,
+.input-group-append {
   display: -ms-flexbox;
   display: flex;
 }
@@ -90,4 +92,8 @@ input-group-sm > .form-control,
 .badge-primary {
   color: #fff;
   background-color: $blue;
+}
+
+.mw-70 {
+  max-width: 70% !important;
 }

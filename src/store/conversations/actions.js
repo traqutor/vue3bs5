@@ -195,7 +195,7 @@ export default {
       .get(url, { cancelToken: getMessagesSource.token })
       .then(function (response) {
         getMessagesSource = null;
-
+        console.log("on get messages response", response);
         let arr = response.data.messages;
         let messages = refresh ? [] : getters.getMessages;
         messages = arr.concat(messages);

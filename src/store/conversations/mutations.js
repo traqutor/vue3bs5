@@ -1,5 +1,5 @@
-import {CONVERSATION_VIEW_MODES} from '@/const';
-import {guidsAreEqual} from '@/services/guids.service';
+import { CONVERSATION_VIEW_MODES } from "@/const";
+import { guidsAreEqual } from "@/services/guids.service";
 
 export default {
   setConversations: (state, conversations) => {
@@ -7,7 +7,9 @@ export default {
   },
   setConversation: (state, conversation) => {
     const conversations = [...state.conversations];
-    const idx = conversations.findIndex(conv => guidsAreEqual(conv.id, conversation.id));
+    const idx = conversations.findIndex((conv) =>
+      guidsAreEqual(conv.id, conversation.id)
+    );
     conversations[idx] = conversation;
     state.conversations = [...conversations];
   },
@@ -72,7 +74,7 @@ export default {
       return guidsAreEqual(c.id, whoIsTyping.conversationId);
     });
 
-    const tmpConversation = {...state.conversations[idx]};
+    const tmpConversation = { ...state.conversations[idx] };
     if (!tmpConversation.typingUsers) return;
 
     const typingUsers = tmpConversation.typingUsers.filter(
@@ -82,7 +84,7 @@ export default {
     const tmp = state.conversations.map((conv) =>
       conv.id !== tmpConversation.id
         ? conv
-        : {...tmpConversation, typingUsers: typingUsers}
+        : { ...tmpConversation, typingUsers: typingUsers }
     );
 
     state.conversations = [...tmp];
