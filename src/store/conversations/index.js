@@ -1,7 +1,7 @@
-import conversationsMutations from './mutations';
-import conversationsActions from './actions';
-import conversationsGetters from './getters';
-import { CHAT_VIEW_MODES, CONVERSATION_VIEW_MODES } from '@/const';
+import conversationsMutations from "./mutations";
+import conversationsActions from "./actions";
+import conversationsGetters from "./getters";
+import { CHAT_VIEW_MODES, CONVERSATION_VIEW_MODES } from "@/const";
 
 const conversationsModule = {
   state() {

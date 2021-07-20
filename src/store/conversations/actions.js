@@ -196,7 +196,7 @@ export default {
       .then(function (response) {
         getMessagesSource = null;
         console.log("on get messages response", response);
-        let arr = response.data.messages;
+        let arr = response.data.messages.reverse();
         let messages = refresh ? [] : getters.getMessages;
         messages = arr.concat(messages);
 

@@ -1,4 +1,5 @@
 <template>
+  <!--start::By logged User bubble-->
   <div
     v-if="isPostByLoggedUser"
     class="
@@ -6,9 +7,10 @@
       align-items-center
       justify-content-end
       hover-visible-group hover-action-group
-      mb-1
+      mb-4
     "
   >
+    <!--start::message more-vertical dropdown menu -->
     <div class="on-hover-visible me-1 dropdown" role="group">
       <button
         type="button"
@@ -25,7 +27,6 @@
       >
         <feather-more-vertical class="f-icon-20" />
       </button>
-
       <div
         class="
           dropdown-menu dropdown-menu-sm dropdown-menu-right
@@ -35,7 +36,7 @@
       >
         <button class="dropdown-item px-3 d-flex align-items-center">
           <feather-arrow-forward class="text-secondary f-icon-18" />
-          <span class="ml-n1">Forward</span>
+          <span class="">Forward</span>
         </button>
         <button class="dropdown-item px-3 d-flex align-items-center">
           <feather-copy class="text-secondary f-icon-18" />
@@ -47,11 +48,13 @@
         </button>
         <button class="dropdown-item px-3 d-flex align-items-center">
           <feather-link2 class="text-secondary f-icon-18" />
-          <span class="ml-n1">Message details</span>
+          <span class="">Message details</span>
         </button>
       </div>
     </div>
+    <!--end::message more-vertical dropdown menu -->
 
+    <!--start::message quick reply emoji  -->
     <div class="on-hover-visible me-2 dropdown" role="group">
       <button
         type="button"
@@ -131,7 +134,9 @@
         </div>
       </div>
     </div>
+    <!--end::message quick reply emoji  -->
 
+    <!--start::message reply button  -->
     <div
       class="on-hover-visible me-2"
       data-toggle="tooltip"
@@ -150,43 +155,558 @@
         <feather-arrow-forward-down class="f-icon-20" />
       </button>
     </div>
-    <div class="mw-70 position-relative">
-      <div
-        class="
-          dialog-group-message
-          d-inline-block
-          text-light
-          bg-primary
-          rounded
-          pb-2
-        "
-      >
-        Duis aute irure dolor in reprehenderit
-        <div class="d-flex align-items-center f-size-12 pt-1">
-          <feather-check-double class="me-1 text-slime" />
+    <!--start::message reply button  -->
 
-          <a
-            class="dialog-message-action step-tabpanel-open"
-            data-outside="true"
-            href="#dialog-content-section-3, #header-btn-group-2"
-            >12/12</a
-          >
+    <!--start::message content  -->
+    <div
+      class="
+        dialog-group-message
+        d-inline-block
+        text-light
+        bg-primary
+        rounded
+        pb-2
+      "
+      :class="getBubbleClass"
+    >
+      <!--start::whisper over text -->
+      <div class="d-flex" v-if="item.isWhisper">
+        <div class="flex-grow-1 position-relative">
+          <div class="position-absolute text-nowrap overflow-hidden w-100">
+            <div
+              class="text-truncate w-100 d-inline-block text-white-75 f-size-12"
+            >
+              Whispered to Chad Evans (Cardiology Registrar), William Foster
+              (Pharmacy Manager) and 1 other
+            </div>
+          </div>
+        </div>
 
-          <a
-            class="ml-auto dialog-message-action step-tabpanel-open"
-            data-outside="true"
-            href="#dialog-content-section-3, #header-btn-group-2"
-            data-toggle="tooltip"
-            data-placement="top"
-            title=""
-            data-original-title="10:11 pm • Yesterday"
-            >10:11</a
+        <div class="dropdown ms-2 on-hover-visible me-n1 mt-n1">
+          <button
+            class="btn btn-secondary btn-circle btn-sm shadow-none f-icon-28"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="true"
           >
+            <feather-whisper-message class="text-white f-icon-16" />
+          </button>
+
+          <div
+            class="
+              dropdown-menu dropdown-menu-right dropdown-menu-sm
+              pt-1
+              shadow
+            "
+            x-placement="bottom-end"
+            style="
+              position: absolute;
+              transform: translate3d(-184px, 28px, 0px);
+              top: 0px;
+              left: 0px;
+              will-change: transform;
+            "
+          >
+            <div class="dropdown-item-text text-secondary text-nowrap">
+              Whisper to someone (3)
+            </div>
+
+            <div class="dropdown-menu-scroll-list ps-scrollbar mt-1 ps">
+              <div
+                class="
+                  dropdown-item
+                  media
+                  align-items-center
+                  on-hover
+                  mb-1
+                  me-4
+                "
+              >
+                <figure
+                  class="avatar avatar-lg me-3 ms-n1 shadow-none"
+                  data-initial="RT"
+                >
+                  <img src="images/avatar/2.jpg" alt="" />
+                </figure>
+                <div class="media-body ms-n1">
+                  <div class="font-weight-middle">Chad Evans</div>
+                  <div class="text-secondary f-size-12">
+                    Cardiology Registrar
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="
+                  dropdown-item
+                  media
+                  align-items-center
+                  on-hover
+                  mb-1
+                  me-4
+                "
+              >
+                <figure
+                  class="avatar avatar-lg me-3 ms-n1 shadow-none"
+                  data-initial="WF"
+                ></figure>
+                <div class="media-body ms-n1">
+                  <div class="font-weight-middle">William Foster</div>
+                  <div class="text-secondary f-size-12">Pharmacy Manager</div>
+                </div>
+              </div>
+
+              <div
+                class="
+                  dropdown-item
+                  media
+                  align-items-center
+                  on-hover
+                  mb-1
+                  me-4
+                "
+              >
+                <figure
+                  class="avatar avatar-lg me-3 ms-n1 shadow-none"
+                  data-initial="JD"
+                ></figure>
+                <div class="media-body ms-n1">
+                  <div class="font-weight-middle">Amanda Pit</div>
+                  <div class="text-secondary f-size-12">Doctor</div>
+                </div>
+              </div>
+
+              <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                <div
+                  class="ps__thumb-x"
+                  tabindex="0"
+                  style="left: 0px; width: 0px"
+                ></div>
+              </div>
+              <div class="ps__rail-y" style="top: 0px; right: 0px">
+                <div
+                  class="ps__thumb-y"
+                  tabindex="0"
+                  style="top: 0px; height: 0px"
+                ></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+      <!--end::whisper over text -->
 
+      <!--start::message text -->
+      <div class="d-inline show-white-space" v-html="item.text"></div>
+      <!--end::message text -->
+
+      <!--start::message sub text check and date-->
+      <div class="d-flex align-items-center f-size-12 pt-1">
+        <feather-check-double class="me-1 text-white-75" />
+
+        <div class="dropdown">
+          <a
+            href="#"
+            class="dialog-message-action"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >2/12</a
+          >
+
+          <div class="dropdown-menu dropdown-menu-sm p-0 shadow">
+            <button
+              class="
+                dropdown-item-text
+                py-2
+                btn btn-white
+                border-0
+                d-flex
+                align-items-center
+                w-100
+                text-secondary
+                rounded-bottom-0
+                step-tabpanel-open
+              "
+              data-outside="true"
+              href="#dialog-content-section-3, #header-btn-group-2"
+              type="button"
+            >
+              Read (2)<svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-chevron-down ms-auto"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            <div class="dropdown-menu-scroll-list ps-scrollbar mt-1 ps">
+              <div class="dropdown-item media align-items-center on-hover mb-1">
+                <figure
+                  class="avatar avatar-lg me-3 shadow-none"
+                  data-initial="RT"
+                >
+                  <img src="images/avatar/2.jpg" alt="" />
+                </figure>
+                <div class="media-body">
+                  <div class="font-weight-middle">Ruben Tillman</div>
+                  <div class="text-secondary f-size-12">Cardiology Doctor</div>
+                </div>
+                <div
+                  class="
+                    text-nowrap
+                    ms-5
+                    pt-1
+                    text-muted
+                    f-size-12
+                    align-self-start
+                  "
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-check-double text-success me-1"
+                  >
+                    <polyline
+                      points="22.158 6 11.158 17 10.882 16.724"
+                    ></polyline>
+                    <polyline
+                      points="16.771 5.999 5.771 16.999 1.731 13.265"
+                    ></polyline>
+                  </svg>
+                  30 min ago
+                </div>
+              </div>
+
+              <div class="dropdown-item media align-items-center on-hover mb-1">
+                <figure
+                  class="avatar avatar-lg me-3 shadow-none"
+                  data-initial="JD"
+                ></figure>
+                <div class="media-body">
+                  <div class="font-weight-middle">Josephin Doe</div>
+                  <div class="text-secondary f-size-12">Doctor</div>
+                </div>
+                <div
+                  class="
+                    text-nowrap
+                    ms-5
+                    pt-1
+                    text-muted
+                    f-size-12
+                    align-self-start
+                  "
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-check-double text-success me-1"
+                  >
+                    <polyline
+                      points="22.158 6 11.158 17 10.882 16.724"
+                    ></polyline>
+                    <polyline
+                      points="16.771 5.999 5.771 16.999 1.731 13.265"
+                    ></polyline>
+                  </svg>
+                  11:23 am
+                </div>
+              </div>
+
+              <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                <div
+                  class="ps__thumb-x"
+                  tabindex="0"
+                  style="left: 0px; width: 0px"
+                ></div>
+              </div>
+              <div class="ps__rail-y" style="top: 0px; right: 0px">
+                <div
+                  class="ps__thumb-y"
+                  tabindex="0"
+                  style="top: 0px; height: 0px"
+                ></div>
+              </div>
+            </div>
+
+            <button
+              class="
+                dropdown-item-text
+                py-2
+                btn btn-light
+                border-0
+                d-flex
+                align-items-center
+                w-100
+                text-secondary
+                rounded-top-0
+                step-tabpanel-open
+              "
+              data-outside="true"
+              href="#dialog-content-section-3, #header-btn-group-2"
+              type="button"
+            >
+              Not read (10)<svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-more-horizontal ms-auto"
+              >
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="19" cy="12" r="1"></circle>
+                <circle cx="5" cy="12" r="1"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <a
+          class="ms-auto dialog-message-action step-tabpanel-open"
+          data-outside="true"
+          href="#dialog-content-section-3, #header-btn-group-2"
+          data-toggle="tooltip"
+          data-placement="top"
+          title=""
+          data-original-title="10:11 pm • Yesterday"
+          >10:11</a
+        >
+      </div>
+      <!--end::message sub text check and date-->
+
+      <!--start::message bub text acknowledge-->
+      <div class="mt-2 pb-1 text-right">
+        <div class="dropdown">
+          <button
+            class="
+              btn btn-sm
+              py-1
+              f-size-12
+              text-primary
+              bg-blue-light
+              shadow-none
+            "
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Acknowledged<span class="text-red ms-2">2/12</span>
+          </button>
+
+          <div
+            class="
+              dropdown-menu dropdown-menu-sm dropdown-menu-right
+              p-0
+              shadow
+            "
+          >
+            <button
+              class="
+                dropdown-item-text
+                py-2
+                btn btn-white
+                border-0
+                d-flex
+                align-items-center
+                w-100
+                text-secondary
+                rounded-bottom-0
+                step-tabpanel-open
+              "
+              data-outside="true"
+              href="#dialog-content-section-3, #header-btn-group-2"
+              type="button"
+            >
+              Acknowledged (2)<svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-chevron-down ms-auto"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            <div class="dropdown-menu-scroll-list ps-scrollbar mt-1 ps">
+              <div class="dropdown-item media align-items-center on-hover mb-1">
+                <figure
+                  class="avatar avatar-lg me-3 ms-n1 shadow-none"
+                  data-initial="RT"
+                >
+                  <img src="images/avatar/2.jpg" alt="" />
+                </figure>
+                <div class="media-body ms-n1">
+                  <div class="font-weight-middle">Ruben Tillman</div>
+                  <div class="text-secondary f-size-12">Cardiology Doctor</div>
+                </div>
+                <div
+                  class="
+                    text-nowrap
+                    ms-5
+                    pt-1
+                    text-muted
+                    f-size-12
+                    align-self-start
+                  "
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-check-double text-success me-1"
+                  >
+                    <polyline
+                      points="22.158 6 11.158 17 10.882 16.724"
+                    ></polyline>
+                    <polyline
+                      points="16.771 5.999 5.771 16.999 1.731 13.265"
+                    ></polyline>
+                  </svg>
+                  30 min ago
+                </div>
+              </div>
+
+              <div class="dropdown-item media align-items-center on-hover mb-1">
+                <figure
+                  class="avatar avatar-lg me-3 ms-n1 shadow-none"
+                  data-initial="JD"
+                ></figure>
+                <div class="media-body ms-n1">
+                  <div class="font-weight-middle">Josephin Doe</div>
+                  <div class="text-secondary f-size-12">Doctor</div>
+                </div>
+                <div
+                  class="
+                    text-nowrap
+                    ms-5
+                    pt-1
+                    text-muted
+                    f-size-12
+                    align-self-start
+                  "
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-check-double text-success me-1"
+                  >
+                    <polyline
+                      points="22.158 6 11.158 17 10.882 16.724"
+                    ></polyline>
+                    <polyline
+                      points="16.771 5.999 5.771 16.999 1.731 13.265"
+                    ></polyline>
+                  </svg>
+                  11:23 am
+                </div>
+              </div>
+
+              <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                <div
+                  class="ps__thumb-x"
+                  tabindex="0"
+                  style="left: 0px; width: 0px"
+                ></div>
+              </div>
+              <div class="ps__rail-y" style="top: 0px; right: 0px">
+                <div
+                  class="ps__thumb-y"
+                  tabindex="0"
+                  style="top: 0px; height: 0px"
+                ></div>
+              </div>
+            </div>
+
+            <button
+              class="
+                dropdown-item-text
+                py-2
+                btn btn-light
+                border-0
+                d-flex
+                align-items-center
+                w-100
+                text-secondary
+                rounded-top-0
+                step-tabpanel-open
+              "
+              data-outside="true"
+              href="#dialog-content-section-3, #header-btn-group-2"
+              type="button"
+            >
+              Not acknowledged (10)<svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-more-horizontal ms-auto"
+              >
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="19" cy="12" r="1"></circle>
+                <circle cx="5" cy="12" r="1"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--end::message bub text acknowledge-->
+    </div>
+    <!--end::message content  -->
+  </div>
+  <!--end::By logged User bubble-->
+
+  <!--start::others Users bubble-->
   <div v-else class="d-flex pr-5 mt-3">
     <figure class="avatar avatar-lg me-3 ms-1" data-initial="BC">
       <img src="images/avatar/5.jpg" alt="" />
@@ -202,24 +722,483 @@
           d-flex
           align-items-center
           hover-visible-group hover-action-group
-          mb-1
+          mb-4
         "
       >
+        <!--start::message content  -->
         <div class="mw-70 position-relative">
           <div
-            class="dialog-group-message d-inline-block bg-grey-light rounded"
+            class="dialog-group-message d-inline-block rounded pb-2"
+            :class="getBubbleClass"
           >
-            {{ item.text }}
-            <div
-              class="
-                dialog-message-status
-                d-inline-flex
-                align-items-center
-                f-size-12
-                ms-3
-                float-right
-              "
-            >
+            <!--start::whisper over text-->
+            <div class="d-flex" v-if="item.isWhisper">
+              <div class="flex-grow-1 position-relative">
+                <div
+                  class="position-absolute text-nowrap overflow-hidden w-100"
+                >
+                  <div
+                    class="
+                      text-truncate
+                      w-100
+                      d-inline-block
+                      text-white-75
+                      f-size-12
+                    "
+                  >
+                    Whispered to Chad Evans (Cardiology Registrar), William
+                    Foster (Pharmacy Manager) and 1 other
+                  </div>
+                </div>
+              </div>
+
+              <div class="dropdown ml-2 on-hover-visible mr-n1 mt-n1">
+                <button
+                  class="
+                    btn btn-secondary btn-circle btn-sm
+                    shadow-none
+                    f-icon-28
+                  "
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-whisper-message text-white f-icon-16"
+                  >
+                    <path
+                      d="M 23.433 19.095 C 26.576 17.382 26.687 12.908 23.63 11.042 C 22.901 10.597 22.064 10.363 21.21 10.362 L 20.038 10.362 C 18.605 4.815 11.703 2.903 7.619 6.916 C 4.797 9.689 4.639 14.187 7.257 17.151"
+                      transform="matrix(0.186127, 0.982526, -0.982526, 0.186127, 24.445436, -5.637602)"
+                    ></path>
+                    <path
+                      d="M 19.184 9.439 C 18.453 6.609 14.932 5.633 12.847 7.681"
+                      transform="matrix(0.897932, 0.440135, -0.440135, 0.897932, 5.162175, -6.230948)"
+                    ></path>
+                    <path
+                      d="M 11.383 16.366 C 11.383 16.972 10.892 17.46 10.288 17.46 L 3.72 17.46 L 1.53 19.65 L 1.53 10.893 C 1.53 10.288 2.02 9.797 2.625 9.797 L 10.288 9.797 C 10.892 9.797 11.383 10.288 11.383 10.893 Z"
+                    ></path>
+                  </svg>
+                </button>
+
+                <div
+                  class="
+                    dropdown-menu dropdown-menu-right dropdown-menu-sm
+                    pt-1
+                    shadow
+                  "
+                >
+                  <div class="dropdown-item-text text-secondary text-nowrap">
+                    Whisper to someone (3)
+                  </div>
+
+                  <div class="dropdown-menu-scroll-list ps-scrollbar mt-1 ps">
+                    <div
+                      class="
+                        dropdown-item
+                        media
+                        align-items-center
+                        on-hover
+                        mb-1
+                        mr-4
+                      "
+                    >
+                      <figure
+                        class="avatar avatar-lg mr-3 ml-n1 shadow-none"
+                        data-initial="RT"
+                      >
+                        <img src="images/avatar/2.jpg" alt="" />
+                      </figure>
+                      <div class="media-body ml-n1">
+                        <div class="font-weight-middle">Chad Evans</div>
+                        <div class="text-secondary f-size-12">
+                          Cardiology Registrar
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="
+                        dropdown-item
+                        media
+                        align-items-center
+                        on-hover
+                        mb-1
+                        mr-4
+                      "
+                    >
+                      <figure
+                        class="avatar avatar-lg mr-3 ml-n1 shadow-none"
+                        data-initial="WF"
+                      ></figure>
+                      <div class="media-body ml-n1">
+                        <div class="font-weight-middle">William Foster</div>
+                        <div class="text-secondary f-size-12">
+                          Pharmacy Manager
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="
+                        dropdown-item
+                        media
+                        align-items-center
+                        on-hover
+                        mb-1
+                        mr-4
+                      "
+                    >
+                      <figure
+                        class="avatar avatar-lg mr-3 ml-n1 shadow-none"
+                        data-initial="JD"
+                      ></figure>
+                      <div class="media-body ml-n1">
+                        <div class="font-weight-middle">Amanda Pit</div>
+                        <div class="text-secondary f-size-12">Doctor</div>
+                      </div>
+                    </div>
+
+                    <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                      <div
+                        class="ps__thumb-x"
+                        tabindex="0"
+                        style="left: 0px; width: 0px"
+                      ></div>
+                    </div>
+                    <div class="ps__rail-y" style="top: 0px; right: 0px">
+                      <div
+                        class="ps__thumb-y"
+                        tabindex="0"
+                        style="top: 0px; height: 0px"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--start::whisper over text-->
+
+            <!--start::message text -->
+            <div class="d-inline show-white-space" v-html="item.text"></div>
+            <!--end::message text -->
+
+            <!--start::message sub text check and date-->
+            <div class="d-flex align-items-center f-size-12 pt-1">
+              <div class="dropdown">
+                <a
+                  href="#"
+                  class="dialog-message-action"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  >4/12</a
+                >
+
+                <div class="dropdown-menu dropdown-menu-sm p-0 shadow">
+                  <button
+                    class="
+                      dropdown-item-text
+                      py-2
+                      btn btn-white
+                      border-0
+                      d-flex
+                      align-items-center
+                      w-100
+                      text-secondary
+                      rounded-bottom-0
+                      step-tabpanel-open
+                    "
+                    data-outside="true"
+                    href="#dialog-content-section-3, #header-btn-group-2"
+                    type="button"
+                  >
+                    Read (4)<svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="feather feather-chevron-down ms-auto"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+
+                  <div class="dropdown-menu-scroll-list ps-scrollbar mt-1 ps">
+                    <div
+                      class="
+                        dropdown-item
+                        media
+                        align-items-center
+                        on-hover
+                        mb-1
+                      "
+                    >
+                      <figure
+                        class="avatar avatar-lg me-3 shadow-none"
+                        data-initial="RT"
+                      >
+                        <img src="images/avatar/2.jpg" alt="" />
+                      </figure>
+                      <div class="media-body">
+                        <div class="font-weight-middle">Ruben Tillman</div>
+                        <div class="text-secondary f-size-12">
+                          Cardiology Doctor
+                        </div>
+                      </div>
+                      <div
+                        class="
+                          text-nowrap
+                          ms-5
+                          pt-1
+                          text-muted
+                          f-size-12
+                          align-self-start
+                        "
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-check-double text-success me-1"
+                        >
+                          <polyline
+                            points="22.158 6 11.158 17 10.882 16.724"
+                          ></polyline>
+                          <polyline
+                            points="16.771 5.999 5.771 16.999 1.731 13.265"
+                          ></polyline>
+                        </svg>
+                        30 min ago
+                      </div>
+                    </div>
+
+                    <div
+                      class="
+                        dropdown-item
+                        media
+                        align-items-center
+                        on-hover
+                        mb-1
+                      "
+                    >
+                      <figure
+                        class="avatar avatar-lg me-3 shadow-none"
+                        data-initial="JD"
+                      ></figure>
+                      <div class="media-body">
+                        <div class="font-weight-middle">Josephin Doe</div>
+                        <div class="text-secondary f-size-12">Doctor</div>
+                      </div>
+                      <div
+                        class="
+                          text-nowrap
+                          ms-5
+                          pt-1
+                          text-muted
+                          f-size-12
+                          align-self-start
+                        "
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-check-double text-success me-1"
+                        >
+                          <polyline
+                            points="22.158 6 11.158 17 10.882 16.724"
+                          ></polyline>
+                          <polyline
+                            points="16.771 5.999 5.771 16.999 1.731 13.265"
+                          ></polyline>
+                        </svg>
+                        11:23 am
+                      </div>
+                    </div>
+
+                    <div
+                      class="
+                        dropdown-item
+                        media
+                        align-items-center
+                        on-hover
+                        mb-1
+                      "
+                    >
+                      <figure
+                        class="avatar avatar-lg me-3 shadow-none"
+                        data-initial="SA"
+                      >
+                        <img src="images/avatar/3.jpg" alt="..." />
+                      </figure>
+                      <div class="media-body">
+                        <div class="font-weight-middle">Steve Arnott</div>
+                        <div class="text-secondary f-size-12">Doctor</div>
+                      </div>
+                      <div
+                        class="
+                          text-nowrap
+                          ms-5
+                          pt-1
+                          text-muted
+                          f-size-12
+                          align-self-start
+                        "
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-check-double text-success me-1"
+                        >
+                          <polyline
+                            points="22.158 6 11.158 17 10.882 16.724"
+                          ></polyline>
+                          <polyline
+                            points="16.771 5.999 5.771 16.999 1.731 13.265"
+                          ></polyline>
+                        </svg>
+                        11:23 am
+                      </div>
+                    </div>
+
+                    <div
+                      class="
+                        dropdown-item
+                        media
+                        align-items-center
+                        on-hover
+                        mb-1
+                      "
+                    >
+                      <figure
+                        class="avatar avatar-lg me-3 shadow-none"
+                        data-initial="GB"
+                      >
+                        <img src="images/avatar/4.jpg" alt="..." />
+                      </figure>
+                      <div class="media-body">
+                        <div class="font-weight-middle">Gerald Baker</div>
+                        <div class="text-secondary f-size-12">Doctor</div>
+                      </div>
+                      <div
+                        class="
+                          text-nowrap
+                          ms-5
+                          pt-1
+                          text-muted
+                          f-size-12
+                          align-self-start
+                        "
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-check-double text-success me-1"
+                        >
+                          <polyline
+                            points="22.158 6 11.158 17 10.882 16.724"
+                          ></polyline>
+                          <polyline
+                            points="16.771 5.999 5.771 16.999 1.731 13.265"
+                          ></polyline>
+                        </svg>
+                        11:23 am
+                      </div>
+                    </div>
+
+                    <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                      <div
+                        class="ps__thumb-x"
+                        tabindex="0"
+                        style="left: 0px; width: 0px"
+                      ></div>
+                    </div>
+                    <div class="ps__rail-y" style="top: 0px; right: 0px">
+                      <div
+                        class="ps__thumb-y"
+                        tabindex="0"
+                        style="top: 0px; height: 0px"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <button
+                    class="
+                      dropdown-item-text
+                      py-2
+                      btn btn-light
+                      border-0
+                      d-flex
+                      align-items-center
+                      w-100
+                      text-secondary
+                      rounded-top-0
+                      step-tabpanel-open
+                    "
+                    data-outside="true"
+                    href="#dialog-content-section-3, #header-btn-group-2"
+                    type="button"
+                  >
+                    Not read (8)<svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="feather feather-more-horizontal ms-auto"
+                    >
+                      <circle cx="12" cy="12" r="1"></circle>
+                      <circle cx="19" cy="12" r="1"></circle>
+                      <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
               <a
                 class="ms-auto dialog-message-action step-tabpanel-open"
                 data-outside="true"
@@ -227,13 +1206,232 @@
                 data-toggle="tooltip"
                 data-placement="top"
                 title=""
-                data-original-title="09:11 am • Yesterday"
-                >09:11</a
+                data-original-title="10:11 pm • Yesterday"
+                >10:11</a
               >
             </div>
+            <!--end::message sub text check and date-->
+
+            <!--start::message bub text acknowledge-->
+            <div class="mt-2 pb-1">
+              <button class="btn btn-sm btn-primary f-size-12 shadow-none">
+                Acknowledge
+              </button>
+              <div class="dropdown">
+                <button
+                  class="
+                    btn btn-sm
+                    py-1
+                    f-size-12
+                    text-primary
+                    bg-light
+                    shadow-none
+                  "
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Acknowledged<span class="text-red ml-2">2/12</span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-sm p-0 shadow">
+                  <button
+                    class="
+                      dropdown-item-text
+                      py-2
+                      btn btn-white
+                      border-0
+                      d-flex
+                      align-items-center
+                      w-100
+                      text-secondary
+                      rounded-bottom-0
+                      step-tabpanel-open
+                    "
+                    data-outside="true"
+                    href="#dialog-content-section-3, #header-btn-group-2"
+                    type="button"
+                  >
+                    Acknowledged (2)<svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="feather feather-chevron-down ml-auto"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+
+                  <div class="dropdown-menu-scroll-list ps-scrollbar mt-1 ps">
+                    <div
+                      class="
+                        dropdown-item
+                        media
+                        align-items-center
+                        on-hover
+                        mb-1
+                      "
+                    >
+                      <figure
+                        class="avatar avatar-lg mr-3 ml-n1 shadow-none"
+                        data-initial="RT"
+                      >
+                        <img src="images/avatar/2.jpg" alt="" />
+                      </figure>
+                      <div class="media-body ml-n1">
+                        <div class="font-weight-middle">Ruben Tillman</div>
+                        <div class="text-secondary f-size-12">
+                          Cardiology Doctor
+                        </div>
+                      </div>
+                      <div
+                        class="
+                          text-nowrap
+                          ml-5
+                          pt-1
+                          text-muted
+                          f-size-12
+                          align-self-start
+                        "
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-check-double text-success mr-1"
+                        >
+                          <polyline
+                            points="22.158 6 11.158 17 10.882 16.724"
+                          ></polyline>
+                          <polyline
+                            points="16.771 5.999 5.771 16.999 1.731 13.265"
+                          ></polyline>
+                        </svg>
+                        30 min ago
+                      </div>
+                    </div>
+
+                    <div
+                      class="
+                        dropdown-item
+                        media
+                        align-items-center
+                        on-hover
+                        mb-1
+                      "
+                    >
+                      <figure
+                        class="avatar avatar-lg mr-3 ml-n1 shadow-none"
+                        data-initial="JD"
+                      ></figure>
+                      <div class="media-body ml-n1">
+                        <div class="font-weight-middle">Josephin Doe</div>
+                        <div class="text-secondary f-size-12">Doctor</div>
+                      </div>
+                      <div
+                        class="
+                          text-nowrap
+                          ml-5
+                          pt-1
+                          text-muted
+                          f-size-12
+                          align-self-start
+                        "
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-check-double text-success mr-1"
+                        >
+                          <polyline
+                            points="22.158 6 11.158 17 10.882 16.724"
+                          ></polyline>
+                          <polyline
+                            points="16.771 5.999 5.771 16.999 1.731 13.265"
+                          ></polyline>
+                        </svg>
+                        11:23 am
+                      </div>
+                    </div>
+
+                    <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                      <div
+                        class="ps__thumb-x"
+                        tabindex="0"
+                        style="left: 0px; width: 0px"
+                      ></div>
+                    </div>
+                    <div class="ps__rail-y" style="top: 0px; right: 0px">
+                      <div
+                        class="ps__thumb-y"
+                        tabindex="0"
+                        style="top: 0px; height: 0px"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <button
+                    class="
+                      dropdown-item-text
+                      py-2
+                      btn btn-light
+                      border-0
+                      d-flex
+                      align-items-center
+                      w-100
+                      text-secondary
+                      rounded-top-0
+                      step-tabpanel-open
+                    "
+                    data-outside="true"
+                    href="#dialog-content-section-3, #header-btn-group-2"
+                    type="button"
+                  >
+                    Not acknowledged (10)<svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="feather feather-more-horizontal ml-auto"
+                    >
+                      <circle cx="12" cy="12" r="1"></circle>
+                      <circle cx="19" cy="12" r="1"></circle>
+                      <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!--end::message bub text acknowledge-->
           </div>
         </div>
+        <!--end::message content  -->
 
+        <!--start::message reply button  -->
         <div
           class="on-hover-visible ms-2"
           data-toggle="tooltip"
@@ -252,7 +1450,9 @@
             <FeatherArrowReplyDown class="f-icon-20" />
           </button>
         </div>
+        <!--end::message reply button  -->
 
+        <!--start::message quick reply emoji  -->
         <div class="on-hover-visible ms-2 dropdown" role="group">
           <button
             type="button"
@@ -332,7 +1532,9 @@
             </div>
           </div>
         </div>
+        <!--end::message quick reply emoji  -->
 
+        <!--start::message more-vertical dropdown menu -->
         <div class="on-hover-visible ms-1 dropdown" role="group">
           <button
             type="button"
@@ -387,7 +1589,7 @@
                 toggle-item-hidden
               "
             >
-              <feather-link-2 class="me-3 text-secondary f-icon-18" />
+              <feather-link2 class="me-3 text-secondary f-icon-18" />
               <span class="ms-n1">Message details</span>
             </button>
           </div>
@@ -418,17 +1620,20 @@
             </div>
           </div>
         </div>
+        <!--end::message more-vertical dropdown menu -->
       </div>
     </div>
   </div>
+  <!--end::others Users bubble-->
 </template>
 <script>
+import { computed, onMounted } from "vue";
+import { useStore } from "vuex";
+
+import { guidsAreEqual } from "@/services/guids.service";
 import FeatherArrowReplyDown from "@/icons/FeatherArrowReplyDown";
 import FeatherSmile from "@/icons/FeatherSmile";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
-import { useStore } from "vuex";
-import { computed } from "vue";
-import { guidsAreEqual } from "@/services/guids.service";
 import FeatherArrowForward from "@/icons/FeatherArrowForward";
 import FeatherCopy from "@/icons/FeatherCopy";
 import FeatherEdit3 from "@/icons/FeatherEdit3";
@@ -436,9 +1641,13 @@ import FeatherLink2 from "@/icons/FeatherLink2";
 import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
 import FeatherArrowForwardDown from "@/icons/FeatherArrowForwardDown";
 import FeatherMessageCircle from "@/icons/FeatherMessageCircle";
+import { timeOffsetFormat } from "@/services/datetime.service";
+import { CHAT_VIEW_MODES } from "@/const";
+import FeatherWhisperMessage from "@/icons/FeatherWhisperMessage";
 export default {
   name: "ign-chat-message-bubble",
   components: {
+    FeatherWhisperMessage,
     FeatherMessageCircle,
     FeatherArrowForwardDown,
     FeatherCheckDouble,
@@ -453,6 +1662,29 @@ export default {
   props: ["item"],
   setup(props) {
     const store = useStore();
+    const loggedUser = computed(() => store.getters.getLoggedUser);
+    const selectedConversation = computed(
+      () => store.getters.getSelectedConversation
+    );
+    const selectedCreator = computed(() => store.getters.getSelectedCreator);
+    const getConversationAvailableCreationRoles = computed(
+      () => store.getters.getConversationAvailableCreationRoles
+    );
+    const isMessageAcknowledged = computed(() => {
+      let visible = null;
+      const whoCanAcknowledge =
+        store.getters.getConversationAvailableCreationRoles;
+      if (whoCanAcknowledge && props.item.acknowledgedByUsers) {
+        whoCanAcknowledge.forEach((who) => {
+          props.item.acknowledgedByUsers.forEach((ack) => {
+            if (guidsAreEqual(who.id, ack.id)) {
+              visible = true;
+            }
+          });
+        });
+      }
+      return visible;
+    });
     const isPostByLoggedUser = computed(() => {
       return (
         (store.getters.getLoggedUser &&
@@ -464,10 +1696,136 @@ export default {
           ))
       );
     });
+    const getWhisperedRecipients = computed(() => {
+      return props.item.whisperRecipients
+        .map((rcp) => {
+          if (rcp.isRole) {
+            return store.getters.getSystemRoles
+              .filter((rle) => guidsAreEqual(rle.id, rcp.id))
+              .map((rle) => rle.name);
+          }
+          return store.getters.getSystemUsers
+            .filter((usr) => guidsAreEqual(usr.id, rcp.id))
+            .map((usr) => usr.userName);
+        })
+        .join(", ");
+    });
+    const getBubbleClass = computed(() => {
+      if (isPostByLoggedUser.value)
+        if (props.item.isWhisper) {
+          return "bg-grey";
+        } else if (props.item.requiresAcknowledgement) {
+          return "text-white bg-blue-dark";
+        } else {
+          return "bg-darker-blue text-light";
+        }
+      else {
+        if (props.item.isWhisper) {
+          return "text-white bg-grey-medium";
+        } else if (props.item.requiresAcknowledgement) {
+          return "bg-blue-light";
+        } else {
+          return "bg-grey-light";
+        }
+      }
+    });
+
+    const onMessageOpen = () => {
+      store.commit("setSelectedMessageId", this.item.id);
+      store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
+    };
+    const isWatchedByAllParticipants = () => {
+      return (
+        (props.item.watchedByUsers && props.item.watchedByUsers.length) ===
+        (selectedConversation.value.participants &&
+          selectedConversation.value.participants.length)
+      );
+    };
+    const isMessageWatchedByUser = (id) => {
+      return (
+        props.item.watchedByUsers &&
+        props.item.watchedByUsers.find((watch) => guidsAreEqual(watch.id, id))
+      );
+    };
+    const isMessageAcknowledgedByUser = (id) => {
+      return (
+        props.item.acknowledgedByUsers &&
+        props.item.acknowledgedByUsers.find((ack) => guidsAreEqual(ack.id, id))
+      );
+    };
+    const onAcknowledgePost = () => {
+      const whoCanAcknowledge =
+        store.getters.getConversationAvailableCreationRoles;
+      let data = {
+        conversationId: selectedConversation.value.id,
+        messageId: this.item.id,
+        aciveRoleId: null,
+      };
+      whoCanAcknowledge.forEach((who) => {
+        if (who.isRole) {
+          // acknowledge as Role in the conversation
+          data = {
+            ...data,
+            aciveRoleId: who.id.toLowerCase(),
+          };
+        } else {
+          // acknowledge as User
+          data = {
+            ...data,
+            aciveRoleId: null,
+          };
+        }
+        store.dispatch("onAcknowledgeMessage", data);
+      });
+    };
+
+    onMounted(() => {
+      if (!isPostByLoggedUser.value) {
+        const isWatched = props.item.watchedByUsers.some((watched) => {
+          return (
+            guidsAreEqual(watched.id, loggedUser.value.id) ||
+            loggedUser.value.SystemRoles.some((role) => {
+              return guidsAreEqual(role.Id, watched.id);
+            })
+          );
+        });
+        if (!isWatched) {
+          console.log("onMessageIsRead", props.item);
+          // this.$store.dispatch("onMessageIsRead", props.item);
+        }
+      }
+    });
 
     return {
+      selectedConversation,
+      selectedCreator,
+      getConversationAvailableCreationRoles,
+      isMessageAcknowledged,
       isPostByLoggedUser,
+      getWhisperedRecipients,
+      getBubbleClass,
+      onMessageOpen,
+      isWatchedByAllParticipants,
+      isMessageWatchedByUser,
+      isMessageAcknowledgedByUser,
+      onAcknowledgePost,
+      timeOffsetFormat,
+      CHAT_VIEW_MODES,
     };
   },
 };
 </script>
+<style scoped>
+.bubble {
+  flex: 1;
+  max-width: 70% !important;
+}
+
+.bubble-acknowledged-background {
+  background-color: #2c4e72 !important;
+}
+
+.show-white-space {
+  white-space: pre-wrap;
+}
+</style>

@@ -28,3 +28,11 @@ export const timeMessagesDividerFormat = (value) => {
   }
   return text;
 };
+
+export const timeOffsetFormat = value => {
+  if (typeof value === "number") {
+    return moment.unix(value).format("h:mm a");
+  } else {
+    return moment(value).format("h:mm a");
+  }
+};
