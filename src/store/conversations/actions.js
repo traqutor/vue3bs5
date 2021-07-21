@@ -272,11 +272,11 @@ export default {
     }
   },
 
-  onAcknowledgeMessage: (payload) => {
+  onAcknowledgeMessage: (_, data) => {
     const url = `${process.env.VUE_APP_BASE_URL}/Messaging/AcknowledgeMessage`;
-
+    console.log("onAcknowledgeMessage data", data);
     axiosWebApiInstance
-      .post(url, payload)
+      .post(url, data)
       .then(function () {})
       .catch((error) => {
         console.log("On read message error:", error);

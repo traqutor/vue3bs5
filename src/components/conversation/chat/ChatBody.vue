@@ -21,7 +21,7 @@ import { useStore } from "vuex";
 import { timeMessagesDividerFormat } from "@/services/datetime.service";
 import { computed, ref } from "vue";
 import { guidsAreEqual, guidsGetNull } from "@/services/guids.service";
-import IgnChatMessageBubble from "@/components/conversation/chat/ChatMessageBubble";
+import IgnChatMessageBubble from "@/components/conversation/chat/bubble/ChatMessageBubble";
 export default {
   name: "ign-chat-mode",
   components: {
