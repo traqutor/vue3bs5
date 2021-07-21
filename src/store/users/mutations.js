@@ -15,7 +15,7 @@ export default {
     state.textToSearchParticipants = text;
   },
   purgeParticipantsSearchParams: (state) => {
-    state.textToSearchParticipants = '';
+    state.textToSearchParticipants = "";
   },
   setIsLoadingUsers: (state, flag) => {
     state.isLoadingUsers = flag;
@@ -31,5 +31,15 @@ export default {
   },
   purgeWhisperParticipants: (state) => {
     state.whisperToParticipants = [];
+  },
+  toggleWhisperParticipants: (state, participant) => {
+    const i = state.whisperToParticipants.indexOf(
+      (whisper) => whisper.id === participant.id
+    );
+    if (i > -1) {
+      state.whisperToParticipants.splice(i, 1);
+    } else {
+      state.whisperToParticipants.push(participant);
+    }
   },
 };

@@ -89,4 +89,9 @@ export default {
 
     state.conversations = [...tmp];
   },
+
+  toggleQuickChatTextSelector: (state) => {
+    state.isQuickChatTextSelectorVisible =
+      !state.isQuickChatTextSelectorVisible;
+  },
 };

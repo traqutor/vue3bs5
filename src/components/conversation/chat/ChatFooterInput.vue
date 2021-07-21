@@ -51,10 +51,13 @@
                     </button>
                     <input class="inputFile d-none" type="file" />
 
-                    <a class="dropdown-item" href="#">Add Body Map</a>
-                    <a class="dropdown-item dialog-ack-contol" href="#"
-                      >Request Acknowledgement</a
+                    <button class="dropdown-item">Add Body Map</button>
+                    <button
+                      class="dropdown-item"
+                      @click="toggleRequestAcknowledgement"
                     >
+                      Request Acknowledgement
+                    </button>
                   </div>
                 </div>
               </div>
@@ -77,6 +80,7 @@
                 rows="1"
                 placeholder="Type a message ..."
                 style="height: 42px; overflow-y: hidden"
+                v-model="messageText"
               ></textarea>
 
               <div
@@ -88,6 +92,7 @@
                 "
               >
                 <button
+                  v-if="requiresAcknowledgement"
                   class="
                     btn
                     text-primary
@@ -102,6 +107,7 @@
                     rounded-0
                   "
                   type="button"
+                  @click="toggleRequestAcknowledgement()"
                 >
                   <feather-point-square class="f-icon-26" />
                 </button>
@@ -122,12 +128,13 @@
                       shadow-none
                       rounded-0
                     "
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
+                    id="dropdownEmojiMenuButtonId"
+                    data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
                     <feather-smile class="f-icon-26" />
                   </button>
+                  <EmojiPicker @onInsert="insertEmoji" />
                 </div>
               </div>
 
@@ -144,13 +151,8 @@
                     border-0
                     shadow-none
                     rounded-0
-                    step-tabpanel-open
-                    todo-tabpanel-open
                   "
-                  data-slide-tabpanel="#dialogTempsList"
-                  data-todo="temp"
-                  data-outside="true"
-                  href="#tempAddTabPanel"
+                  @click="onShowTemplatesAndQuickMessages"
                 >
                   <feather-paper class="f-icon-24" />
                 </button>
@@ -171,6 +173,8 @@
                   shadow-none
                 "
                 type="button"
+                @click="onSubmit"
+                :disabled="!messageText"
               >
                 <feather-arrow-up class="f-icon-22" />
               </button>
@@ -184,25 +188,127 @@
   </div>
 </template>
 <script>
+import { computed, ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import FeatherPointSquare from "@/icons/FeatherPointSquare";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 import FeatherSmile from "@/icons/FeatherSmile";
-import FeatherMic from "@/icons/FeatherMic";
 import FeatherArrowUp from "@/icons/FeatherArrowUp";
 import FeatherPaper from "@/icons/FeatherPaper";
 import ChatRecordMessage from "@/components/conversation/chat/ChatRecordMessage";
 import ChatPlayMessage from "@/components/conversation/chat/ChatPlayMessage";
+import { CONVERSATION_VIEW_MODES } from "@/const";
+import EmojiPicker from "@/components/conversation/chat/chat-text-selector/EmojiPicker";
 
 export default {
   components: {
+    EmojiPicker,
     ChatPlayMessage,
     ChatRecordMessage,
     FeatherPaper,
     FeatherArrowUp,
-    FeatherMic,
     FeatherSmile,
     FeatherMoreVertical,
     FeatherPointSquare,
+  },
+  setup() {
+    const store = useStore();
+    const messageText = ref("");
+    const requiresAcknowledgement = ref(false);
+    const selectedSender = ref();
+    const placeholder = ref("Enter a message...");
+    const selectedConversation = computed(
+      () => store.getters.getSelectedConversation
+    );
+
+    function insertEmoji(emoji) {
+      messageText.value = messageText.value ? messageText.value + emoji : emoji;
+    }
+
+    function onShowTemplatesAndQuickMessages() {
+      store.commit("toggleQuickChatTextSelector");
+    }
+
+    function onSenderSelect(sender) {
+      selectedSender.value = sender;
+    }
+
+    function onSubmit(event) {
+      if (event.shiftKey === true && event.key === "Enter") {
+        messageText.value = messageText.value + `\n`;
+      } else {
+        if (messageText.value) {
+          const activeRoleId = selectedSender.value.isRole
+            ? selectedSender.value.id.toLowerCase()
+            : null;
+          const payload = {
+            requiresAcknowledgement: requiresAcknowledgement.value,
+            messageText: messageText.value,
+            activeRoleId: activeRoleId,
+          };
+          store.dispatch("onCreateMessage", payload).then(() => {
+            requiresAcknowledgement.value = false;
+          });
+        }
+      }
+    }
+
+    function toggleParticipant(participant) {
+      store.commit("toggleWhisperParticipants", participant);
+    }
+
+    function toggleRequestAcknowledgement() {
+      requiresAcknowledgement.value = !requiresAcknowledgement.value;
+      placeholder.value = requiresAcknowledgement.value
+        ? "Requires Acknowledgement"
+        : "Enter a message...";
+    }
+
+    function onAcknowledgePost(message) {
+      const whoCanAcknowledge =
+        store.getters.getConversationAvailableCreationRoles;
+      let data = {
+        conversationId: selectedConversation.value.id,
+        messageId: message.id,
+        aciveRoleId: null,
+      };
+      whoCanAcknowledge.forEach((who) => {
+        if (who.isRole) {
+          // acknowledge as Role in the conversation
+          data = {
+            ...data,
+            aciveRoleId: who.id.toLowerCase(),
+          };
+        } else {
+          // acknowledge as User
+          data = {
+            ...data,
+            aciveRoleId: null,
+          };
+        }
+        this.$store.dispatch("onAcknowledgeMessage", data);
+      });
+    }
+
+    onMounted(() => {
+      selectedSender.value =
+        store.getters.getConversationAvailableCreationRoles[0];
+    });
+
+    return {
+      messageText,
+      selectedSender,
+      placeholder,
+      requiresAcknowledgement,
+      onShowTemplatesAndQuickMessages,
+      insertEmoji,
+      onSenderSelect,
+      onSubmit,
+      toggleParticipant,
+      toggleRequestAcknowledgement,
+      onAcknowledgePost,
+      CONVERSATION_VIEW_MODES,
+    };
   },
 };
 </script>

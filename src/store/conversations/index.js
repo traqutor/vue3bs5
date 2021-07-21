@@ -10,6 +10,7 @@ const conversationsModule = {
       conversationTopic: null,
       chatViewMode: CHAT_VIEW_MODES.VIEW,
       conversationViewMode: CONVERSATION_VIEW_MODES.VIEW,
+      isQuickChatTextSelectorVisible: null,
       isConversationsLoading: null,
       isConversationCreating: null,
       pageOfConversations: { skipConversations: 0, takeConversations: 20 },

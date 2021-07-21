@@ -65,4 +65,7 @@ export default {
         .map((participant) => getters.getParticipantById(participant.id));
     }
   },
+  getIsQuickChatTextSelectorVisible: (state) => {
+    return state.isQuickChatTextSelectorVisible;
+  },
 };
