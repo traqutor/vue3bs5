@@ -213,13 +213,21 @@ export default {
   },
   setup() {
     const store = useStore();
-    const messageText = ref("");
     const requiresAcknowledgement = ref(false);
     const selectedSender = ref();
     const placeholder = ref("Enter a message...");
     const selectedConversation = computed(
       () => store.getters.getSelectedConversation
     );
+
+    const messageText = computed({
+      get: () => {
+        return store.state.conversations.messageText;
+      },
+      set: (value) => {
+        store.commit("setMessageText", value);
+      },
+    });
 
     function insertEmoji(emoji) {
       messageText.value = messageText.value ? messageText.value + emoji : emoji;
@@ -243,7 +251,6 @@ export default {
             : null;
           const payload = {
             requiresAcknowledgement: requiresAcknowledgement.value,
-            messageText: messageText.value,
             activeRoleId: activeRoleId,
           };
           store.dispatch("onCreateMessage", payload).then(() => {

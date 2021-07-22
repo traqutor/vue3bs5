@@ -1,6 +1,6 @@
-import conversationsMutations from "./mutations";
-import conversationsActions from "./actions";
-import conversationsGetters from "./getters";
+import Mutations from "./mutations";
+import Actions from "./actions";
+import Getters from "./getters";
 import { CHAT_VIEW_MODES, CONVERSATION_VIEW_MODES } from "@/const";
 
 const conversationsModule = {
@@ -22,9 +22,9 @@ const conversationsModule = {
       isMessageCreating: null,
     };
   },
-  mutations: conversationsMutations,
-  actions: conversationsActions,
-  getters: conversationsGetters,
+  mutations: Mutations,
+  actions: Actions,
+  getters: Getters,
 };
 
 export default conversationsModule;

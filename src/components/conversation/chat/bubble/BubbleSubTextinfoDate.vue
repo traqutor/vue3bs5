@@ -1,15 +1,12 @@
 <template>
   <div class="dropdown">
-    <a
-      href="#"
+    <span
       class="dialog-message-action"
       data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
       >{{ item.watchedByUsers.length }}/{{
         selectedConversation.participants.length
       }}
-    </a>
+    </span>
 
     <div class="dropdown-menu dropdown-menu-sm p-0 shadow">
       <button

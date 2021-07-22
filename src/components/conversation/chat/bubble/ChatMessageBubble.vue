@@ -191,8 +191,8 @@
       <!--end::message sub text check and date-->
 
       <!--start::message bub text acknowledge-->
-      <div class="mt-2 pb-1 text-right">
-        <div v-if="item.requiresAcknowledgement" class="dropdown">
+      <div v-if="item.requiresAcknowledgement" class="mt-2 pb-1 text-right">
+        <div class="dropdown">
           <BubbleAcknowledgedDropDownButton
             :item="item"
             :selected-conversation="selectedConversation"
@@ -697,8 +697,7 @@ export default {
           );
         });
         if (!isWatched) {
-          console.log("onMessageIsRead", props.item);
-          // this.$store.dispatch("onMessageIsRead", props.item);
+          store.dispatch("onMessageIsRead", props.item);
         }
       }
     });

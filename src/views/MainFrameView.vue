@@ -20,7 +20,6 @@ import AsideLeft from "@/components/aside/AsideLeft";
 export default {
   setup() {
     const store = useStore();
-    console.log("app store", store);
     const getAsideLeftClass = computed(() => store.getters.getAsideLeftClass);
 
     store.dispatch("onAppInitRecallLoggedUserData");

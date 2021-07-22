@@ -1,7 +1,7 @@
 <template>
   <div class="flex-slide-content">
     <div class="d-flex flex-column h-100 w-100 position-absolute">
-      <perfect-scrollbar class="pe-3">
+      <perfect-scrollbar ref="chatContainer" class="pe-3 ign-scroll-smooth">
         <div v-for="(msg, idx) of messages" :key="msg.id">
           <!-- time divider-->
           <div
@@ -17,9 +17,9 @@
   </div>
 </template>
 <script>
+import { computed, ref, watch, nextTick } from "vue";
 import { useStore } from "vuex";
 import { timeMessagesDividerFormat } from "@/services/datetime.service";
-import { computed, ref } from "vue";
 import { guidsAreEqual, guidsGetNull } from "@/services/guids.service";
 import IgnChatMessageBubble from "@/components/conversation/chat/bubble/ChatMessageBubble";
 export default {
@@ -30,6 +30,7 @@ export default {
 
   setup() {
     const store = useStore();
+    const chatContainer = ref();
     const isScrollUp = ref(false);
     const tmpScrollTop = ref(0);
 
@@ -119,9 +120,10 @@ export default {
 
     const scrollToEnd = () => {
       if (!isScrollUp.value) {
-        const container = this.$refs.chatContainer.$el;
-        container.scrollTop = container.scrollHeight;
-        tmpScrollTop.value = container.scrollTop;
+        const container = chatContainer.value.$el;
+        for (let i = container.scrollTop; i < container.scrollHeight; i++) {
+          container.scrollTop = i;
+        }
       }
     };
 
@@ -142,7 +144,16 @@ export default {
         });
     };
 
+    watch(messages, (value) => {
+      if (value.length && !isScrollUp.value) {
+        nextTick(() => {
+          scrollToEnd();
+        });
+      }
+    });
+
     return {
+      chatContainer,
       messages,
       isScrollUp,
       tmpScrollTop,

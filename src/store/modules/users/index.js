@@ -1,6 +1,6 @@
-import usersMutations from './mutations';
-import usersGetters from './getters';
-import usersActions from './actions';
+import Mutations from "./mutations";
+import Getters from "./getters";
+import Actions from "./actions";
 
 const usersModule = {
   state() {
@@ -12,13 +12,13 @@ const usersModule = {
       whisperToParticipants: [],
       selectedMessageCreator: null,
       pageOfParticipants: 0,
-      textToSearchParticipants: '',
+      textToSearchParticipants: "",
       isLoadingUsers: false,
     };
   },
-  mutations: usersMutations,
-  getters: usersGetters,
-  actions: usersActions,
+  mutations: Mutations,
+  getters: Getters,
+  actions: Actions,
 };
 
 export default usersModule;

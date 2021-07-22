@@ -1,4 +1,4 @@
-import { VISIBILITIES } from '@/const';
+import { VISIBILITIES } from "@/const";
 
 export default {
   getAsideLeftVisibility: (state) => {
@@ -8,11 +8,11 @@ export default {
   getAsideLeftClass: (state) => {
     switch (state.asideLeftVisibility) {
       case VISIBILITIES.FIXED:
-        return 'sidebar-left-fixed';
+        return "sidebar-left-fixed";
       case VISIBILITIES.HOVER:
-        return 'sidebar-left-hover';
+        return "sidebar-left-hover";
       default:
-        return '';
+        return "";
     }
   },
 
@@ -23,11 +23,11 @@ export default {
   getAsideRightClass: (state) => {
     switch (state.asideRightVisibility) {
       case VISIBILITIES.FIXED:
-        return 'sidebar-right-fixed';
+        return "sidebar-right-fixed";
       case VISIBILITIES.HOVER:
-        return 'sidebar-right-hover';
+        return "sidebar-right-hover";
       default:
-        return '';
+        return "";
     }
   },
 };

@@ -6,7 +6,7 @@
     data-bs-toggle="dropdown"
     aria-expanded="false"
   >
-    Acknowledged<span class="text-red ms-2">
+    Acknowledged<span v-if="item.acknowledgedByUsers && selectedConversation.participants" class="text-red ms-2">
       {{ item.acknowledgedByUsers.length }}/{{
         selectedConversation.participants.length - 1
       }}

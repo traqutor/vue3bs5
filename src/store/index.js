@@ -1,10 +1,11 @@
 import { createStore } from "vuex";
-import authModule from "@/store/auth";
-import conversationsModule from "@/store/conversations";
-import layoutModule from "@/store/layout";
-import mediaModule from "@/store/media";
-import usersModule from "@/store/users";
-import socketModule from "@/store/socket";
+import authModule from "@/store/modules/auth";
+import conversationsModule from "@/store/modules/conversations";
+import layoutModule from "@/store/modules/layout";
+import mediaModule from "@/store/modules/media";
+import usersModule from "@/store/modules/users";
+import socketModule from "@/store/modules/socket";
+import templateModule from "@/store/modules/templates";
 
 const store = createStore({
   modules: {
@@ -14,6 +15,7 @@ const store = createStore({
     media: mediaModule,
     users: usersModule,
     socket: socketModule,
+    templates: templateModule,
   },
 });
 

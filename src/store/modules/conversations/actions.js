@@ -145,7 +145,7 @@ export default {
       id: guidsGetOne(),
       activeRoleId: payload.activeRoleId,
       conversationId: state.selectedConversationId,
-      messageText: payload.messageText,
+      messageText: state.messageText,
       isWhisper: rootState.users.whisperToParticipants.length > 0,
       requiresAcknowledgement: payload.requiresAcknowledgement,
       pushNotification: {
