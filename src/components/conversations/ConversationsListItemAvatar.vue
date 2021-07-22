@@ -1,6 +1,6 @@
 <template>
   <participant-avatar
-    v-if="conversation.isDirect"
+    v-if="conversation.isDirect && getDirectParticipant(conversation)"
     class="avatar-xm me-3"
     :participant-id="getDirectParticipant(conversation).id"
   />
@@ -33,6 +33,7 @@ export default {
     const showAuthorOfLastMessage = computed(() => {
       return (
         props.conversation.lastMessage &&
+        loggedUser.value &&
         !guidsAreEqual(
           props.conversation.lastMessage.authorId,
           loggedUser.value.id

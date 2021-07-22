@@ -49,9 +49,6 @@ export default {
             commit("setLoggedUser", decodedUserData);
             commit("setSelectedCreator", decodedUserData);
 
-            dispatch("getUsers");
-            dispatch("onGetConversations", { refresh: true });
-
             resolve();
           } else {
             commit("setLogOutUser");

@@ -1,25 +1,26 @@
 <template>
-  <div class="d-flex align-items-center user-item-details">
-    <participant-avatar
-      :participantId="participantId"
-      :is-active-indicator="isActiveIndicator"
-      class="me-3"
-    ></participant-avatar>
-
-    <div class="media-body overflow-hidden is-filtered">
-      <div class="d-flex align-items-center overflow-hidden">
-        <div class="text-truncate text-dark font-weight-middle f-size-15">
-          <span v-if="isHighlighted">
-            <text-highlight :text="participant.name"></text-highlight>
-          </span>
-          <span v-else>{{ participant.name }}</span>
+  <div class="d-flex flex-fill align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+      <participant-avatar
+        :participantId="participantId"
+        :is-active-indicator="isActiveIndicator"
+        class="me-3"
+      ></participant-avatar>
+      <div class="media-body">
+        <div class="d-flex align-items-center">
+          <div class="text-truncate text-dark font-weight-middle f-size-15">
+            <span v-if="isHighlighted">
+              <text-highlight :text="participant.name"></text-highlight>
+            </span>
+            <span v-else>{{ participant.name }}</span>
+          </div>
         </div>
-      </div>
-      <div class="text-truncate text-secondary f-size-13">
-        <span v-if="isHighlighted">
-          <text-highlight :text="getRolesAsLabel()"></text-highlight>
-        </span>
-        <span v-else>{{ getRolesAsLabel() }}</span>
+        <div class="text-truncate text-secondary f-size-13">
+          <span v-if="isHighlighted">
+            <text-highlight :text="getRolesAsLabel()"></text-highlight>
+          </span>
+          <span v-else>{{ getRolesAsLabel() }}</span>
+        </div>
       </div>
     </div>
 

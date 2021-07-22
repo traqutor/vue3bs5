@@ -1,14 +1,19 @@
 <template>
   <div class="dropdown">
     <span
-      class="dialog-message-action"
-      data-toggle="dropdown"
+      class="dialog-message-action ign-pointer"
+      :id="`dropdownMenuBubbleWatchersId${item.id}`"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
       >{{ item.watchedByUsers.length }}/{{
         selectedConversation.participants.length
       }}
     </span>
 
-    <div class="dropdown-menu dropdown-menu-sm p-0 shadow">
+    <div
+      class="dropdown-menu dropdown-menu-sm p-0 shadow"
+      :aria-labelledby="`dropdownMenuBubbleWatchersId${item.id}`"
+    >
       <button
         class="
           dropdown-item-text
@@ -20,7 +25,6 @@
           w-100
           text-secondary
           rounded-bottom-0
-          step-tabpanel-open
         "
         data-outside="true"
         href="#dialog-content-section-3, #header-btn-group-2"
@@ -43,7 +47,7 @@
       </button>
 
       <div class="dropdown-menu-scroll-list ps-scrollbar mt-1 ps">
-        <div class="dropdown-item media align-items-center on-hover mb-1">
+        <div class="dropdown-item d-flex align-items-center on-hover mb-1">
           <figure class="avatar avatar-lg me-3 shadow-none" data-initial="RT">
             <img src="images/avatar/2.jpg" alt="" />
           </figure>
@@ -75,7 +79,7 @@
           </div>
         </div>
 
-        <div class="dropdown-item media align-items-center on-hover mb-1">
+        <div class="dropdown-item d-flex align-items-center on-hover mb-1">
           <figure
             class="avatar avatar-lg me-3 shadow-none"
             data-initial="JD"
@@ -108,7 +112,7 @@
           </div>
         </div>
 
-        <div class="dropdown-item media align-items-center on-hover mb-1">
+        <div class="dropdown-item d-flex align-items-center on-hover mb-1">
           <figure class="avatar avatar-lg me-3 shadow-none" data-initial="SA">
             <img src="images/avatar/3.jpg" alt="..." />
           </figure>
@@ -140,7 +144,7 @@
           </div>
         </div>
 
-        <div class="dropdown-item media align-items-center on-hover mb-1">
+        <div class="dropdown-item d-flex align-items-center on-hover mb-1">
           <figure class="avatar avatar-lg me-3 shadow-none" data-initial="GB">
             <img src="images/avatar/4.jpg" alt="..." />
           </figure>
@@ -226,7 +230,7 @@
   </div>
 
   <span
-    class="ms-auto ps-3"
+    class="ms-auto ps-3 ign-pointer"
     @click="onMessageOpen"
     data-bs-toggle="tooltip"
     data-bs-placement="top"
@@ -236,7 +240,10 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { timeOffsetFormat, timeHhMmaDotDdddFormat } from "@/services/datetime.service";
+import {
+  timeOffsetFormat,
+  timeHhMmaDotDdddFormat,
+} from "@/services/datetime.service";
 import { CHAT_VIEW_MODES } from "@/const";
 
 export default {

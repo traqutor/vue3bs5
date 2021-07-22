@@ -16,7 +16,7 @@
       class="d-flex align-items-center overflow-hidden on-hover"
     >
       <participant-avatar
-        v-if="conversation.isDirect"
+        v-if="conversation.isDirect && getDirectParticipant(conversation)"
         class="avatar-xm me-3"
         :participant-id="getDirectParticipant(conversation).id"
       />

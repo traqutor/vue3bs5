@@ -1,5 +1,6 @@
 import { guidsAreEqual, guidsGetNull } from "@/services/guids.service";
 import { CHAT_VIEW_MODES } from "@/const";
+import { computed } from "vue";
 
 function sortByUserName(a, b) {
   if (a.userName.toLowerCase() < b.userName.toLowerCase()) {
@@ -156,9 +157,28 @@ export default {
   },
   getDirectParticipant: (state, getters) => (conversation) => {
     return conversation.participants.find((usr) => {
-      return !guidsAreEqual(usr.id, getters.getLoggedUser.id);
+      return (
+        getters.getLoggedUser &&
+        !guidsAreEqual(usr.id, getters.getLoggedUser.id)
+      );
     });
   },
+
+  getMessageAuthor: (state, getters) => (message) => {
+    let author = { user: null, role: null };
+    if (message.authorId) {
+      author.user = getters.getSystemUsers.find(
+        (usr) => usr.userId === message.authorId
+      );
+    }
+    if (message.activeRoleId) {
+      author.user = getters.getSystemRoles.find(
+        (rle) => rle.id === message.activeRoleId
+      );
+    }
+    return author;
+  },
+
   getTextToSearchParticipants: (state) => {
     return state.textToSearchParticipants;
   },

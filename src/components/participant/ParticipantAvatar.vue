@@ -1,14 +1,12 @@
 <template>
-  <figure v-if="participant && participant.isRole" class="avatar avatar-lg">
-    <feather-briefcase1></feather-briefcase1>
-  </figure>
   <figure
-    v-else
+    v-if="participant"
     class="avatar avatar-lg"
     :data-initial="participant.name.substring(0, 1).toUpperCase()"
   >
+    <feather-briefcase1 v-if="participant.isRole" />
     <img
-      v-if="participant.avatar.includes('simona')"
+      v-else-if="participant.avatar.includes('simona')"
       src="@/assets/images/simona.jpg"
       alt="S"
     />

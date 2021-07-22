@@ -29,10 +29,17 @@
               class="d-flex align-items-center overflow-hidden"
             >
               <div class="text-truncate f-size-15 text-dark font-weight-middle">
-                {{
-                  getParticipantById(getDirectParticipant(conversation).id)
-                    .name
-                }}<span class="text-secondary font-weight-normal f-size-14 ms-2"
+                <span
+                  v-if="
+                    getDirectParticipant(conversation) &&
+                    getParticipantById(getDirectParticipant(conversation).id)
+                  "
+                  >{{
+                    getParticipantById(getDirectParticipant(conversation).id)
+                      .name
+                  }}
+                </span>
+                <span class="text-secondary font-weight-normal f-size-14 ms-2"
                   >Shared role</span
                 >
               </div>
@@ -95,8 +102,18 @@
           "
           class="text-truncate f-size-13"
         >
-          {{ getParticipantById(conversation.lastMessage.authorId).name }}
+          <span
+            v-if="
+              conversation.lastMessage.authorId &&
+              getParticipantById(conversation.lastMessage.authorId)
+            "
+          >
+            {{
+              getParticipantById(conversation.lastMessage.authorId).name
+            }}</span
+          >
           <span class="text-secondary ms-2">{{
+            getParticipantById(conversation.lastMessage.authorId) &&
             getRolesAsLabel(
               getParticipantById(conversation.lastMessage.authorId)
             )
@@ -265,6 +282,7 @@ export default {
     const isLoggedUserAuthorOfLastMessage = computed(() => {
       return (
         props.conversation.lastMessage &&
+        loggedUser.value &&
         guidsAreEqual(
           props.conversation.lastMessage.authorId,
           loggedUser.value.id
@@ -272,8 +290,8 @@ export default {
       );
     });
     const isWatchedByLoggedUser = computed(() => {
-      return props.conversation.lastMessage.watchedByUsers.some((usr) =>
-        guidsAreEqual(usr.id, loggedUser.value.id)
+      return props.conversation.lastMessage.watchedByUsers.some(
+        (usr) => loggedUser.value && guidsAreEqual(usr.id, loggedUser.value.id)
       );
     });
     const isWatchedByAllParticipants = computed(() => {

@@ -209,13 +209,13 @@
   <!--start::others Users bubble-->
   <div v-else class="d-flex pe-5 mt-3">
     <figure
-      v-if="isUserInfoToDisplay && getAuthor.user"
+      v-if="isUserInfoToDisplay && getAuthor(item).user"
       class="avatar avatar-lg me-3 ms-1"
-      :data-initial="getAuthor.user.userName.substr(0, 1).toUpperCase()"
+      :data-initial="getAuthor(item).user.userName.substr(0, 1).toUpperCase()"
     >
       <img
-        v-if="getAuthor.user.avatar"
-        :src="`images/avatar/${getAuthor.user.avatar}`"
+        v-if="getAuthor(item).user.avatar"
+        :src="`images/${getAuthor(item).user.avatar}`"
         alt=""
       />
     </figure>
@@ -225,11 +225,13 @@
         v-if="isUserInfoToDisplay && !selectedConversation.isDirect"
         class="mb-2"
       >
-        <span v-if="getAuthor.user" class="font-weight-middle">{{
-          getAuthor.user.userName
+        <span v-if="getAuthor(item).user" class="font-weight-middle">{{
+          getAuthor(item).user.userName
         }}</span>
-        <span v-if="getAuthor.user" class="f-size-13 ms-2 text-secondary">{{
-          getAuthor.user.roles.map((rle) => rle.name).join(", ")
+        <span v-if="getAuthor(item).user" class="f-size-13 ms-2 text-secondary">{{
+          getAuthor(item)
+            .user.roles.map((rle) => rle.name)
+            .join(", ")
         }}</span>
       </div>
 
@@ -530,7 +532,7 @@ export default {
   setup(props) {
     const store = useStore();
     const loggedUser = computed(() => store.getters.getLoggedUser);
-
+    const getAuthor = computed(() => store.getters.getMessageAuthor);
     const selectedConversation = computed(
       () => store.getters.getSelectedConversation
     );
@@ -612,21 +614,6 @@ export default {
           return "bg-grey-light";
         }
       }
-    });
-
-    const getAuthor = computed(() => {
-      let author = { user: null, role: null };
-      if (props.item.authorId) {
-        author.user = store.getters.getSystemUsers.find(
-          (usr) => usr.userId === props.item.authorId
-        );
-      }
-      if (props.item.activeRoleId) {
-        author.user = store.getters.getSystemRoles.find(
-          (rle) => rle.id === props.item.activeRoleId
-        );
-      }
-      return author;
     });
 
     const isMessageAcknowledgedByUser = computed(() => {
