@@ -1,6 +1,6 @@
 <template>
   <div
-      class="
+    class="
       col
       d-flex
       flex-column
@@ -12,10 +12,10 @@
   >
     <div class="flex-fill chat-section-content position-relative">
       <div
-          class="d-flex flex-column h-100 w-100 position-absolute overflow-hidden"
+        class="d-flex flex-column h-100 w-100 position-absolute overflow-hidden"
       >
         <div
-            class="
+          class="
             chat-section-header
             d-flex
             justify-content-between
@@ -31,8 +31,8 @@
 
             <div class="flex-fill me-5">
               <input
-                  type="text"
-                  class="
+                type="text"
+                class="
                   form-control form-control-lg
                   bg-transparent
                   shadow-none
@@ -41,16 +41,16 @@
                   pl-3
                   is-keyup-form-control
                 "
-                  :value="conversationTopic"
-                  @input="onConversationTopicInput"
-                  placeholder="Enter a topic"
+                :value="conversationTopic"
+                @input="onConversationTopicInput"
+                placeholder="Enter a topic"
               />
             </div>
           </div>
 
           <div class="dropdown me-1">
             <button
-                class="
+              class="
                 btn btn-sm
                 pr-0
                 btn-link
@@ -58,22 +58,22 @@
                 dropdown-toggle
                 role-dropdown-toggle
               "
-                type="button"
-                id="newConversationCreatorMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+              type="button"
+              id="newConversationCreatorMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
             >
               Creator:<span class="ms-1 role-name">
                 {{ getSelectedCreator.name }}</span
-            >
+              >
             </button>
 
             <ul
-                class="dropdown-menu dropdown-menu-sm dropdown-menu-right shadow"
-                aria-labelledby="newConversationCreatorMenuButton1"
+              class="dropdown-menu dropdown-menu-sm dropdown-menu-right shadow"
+              aria-labelledby="newConversationCreatorMenuButton1"
             >
               <div
-                  class="
+                class="
                   dropdown-item
                   role-item
                   media
@@ -81,17 +81,17 @@
                   on-hover
                   py-2
                 "
-                  @click="onSelectCreator(getLoggedUser.id)"
+                @click="onSelectCreator(getLoggedUser.id)"
               >
                 <participant-avatar-name-item
-                    :participant-id="getLoggedUser.id"
+                  :participant-id="getLoggedUser.id"
                 ></participant-avatar-name-item>
               </div>
 
               <div
-                  v-for="role of getLoggedUser.SystemRoles"
-                  :key="role.Id"
-                  class="
+                v-for="role of getLoggedUser.SystemRoles"
+                :key="role.Id"
+                class="
                   dropdown-item
                   role-item
                   media
@@ -99,10 +99,10 @@
                   on-hover
                   py-2
                 "
-                  @click="onSelectCreator(role.Id)"
+                @click="onSelectCreator(role.Id)"
               >
                 <participant-avatar-name-item
-                    :participant-id="role.Id"
+                  :participant-id="role.Id"
                 ></participant-avatar-name-item>
               </div>
             </ul>
@@ -116,7 +116,7 @@
         </div>
 
         <div
-            class="
+          class="
             chat-section-body
             d-flex
             flex-column flex-fill
@@ -125,7 +125,7 @@
           "
         >
           <div
-              class="
+            class="
               d-flex
               flex-column
               position-absolute
@@ -136,7 +136,7 @@
           >
             <perfect-scrollbar class="pr-3">
               <div
-                  class="
+                class="
                   list-group
                   chat-list-dialog
                   list-group-flush
@@ -145,12 +145,12 @@
                 "
               >
                 <conversations-participants-list-item
-                    v-for="participant of getSelectedParticipants"
-                    :key="participant.id"
-                    :participant-id="participant.id"
-                    :is-toggle-action="true"
-                    :is-removable="true"
-                    :on-select="onSelect"
+                  v-for="participant of getSelectedParticipants"
+                  :key="participant.id"
+                  :participant-id="participant.id"
+                  :is-toggle-action="true"
+                  :is-removable="true"
+                  :on-select="onSelect"
                 >
                 </conversations-participants-list-item>
               </div>
@@ -161,7 +161,7 @@
         <div class="chat-section-footer mt-auto pt-3">
           <div class="input-group chat-msg-input-group mb-0 h-100">
             <textarea
-                class="
+              class="
                 form-control
                 h-100
                 bg-light
@@ -170,17 +170,17 @@
                 f-size-14
                 chat-textarea-control
               "
-                :value="messageText"
-                @input="onMessageTextInput"
-                rows="2"
-                placeholder="Enter a message ..."
+              :value="messageText"
+              @input="onMessageTextInput"
+              rows="2"
+              placeholder="Enter a message ..."
             ></textarea>
           </div>
         </div>
 
         <div class="mt-3 d-flex">
           <label class="toggle-input toggle-input-success m-0">
-            <input type="checkbox" checked=""/>
+            <input type="checkbox" checked="" />
             <span class="input-icon f-icon-20">
               <feather-square></feather-square>
               <feather-check-square></feather-check-square> </span
@@ -189,10 +189,10 @@
 
           <div class="flex-fill text-right">
             <button
-                class="btn btn-sm btn-primary shadow-none px-5"
-                @click="onCreateConversation()"
-                :disabled="checkIfDisabled()"
-                type="button"
+              class="btn btn-sm btn-primary shadow-none px-5"
+              @click="onCreateConversation()"
+              :disabled="checkIfDisabled()"
+              type="button"
             >
               Go to conversation
             </button>
@@ -203,24 +203,28 @@
   </div>
 </template>
 <script>
-import {computed} from "vue";
-import {useStore} from "vuex";
+import { computed } from "vue";
+import { useStore } from "vuex";
 import FeatherSquare from "@/icons/FeatherSquare";
 import FeatherCheckSquare from "@/icons/FeatherCheckSquare";
 import FeatherMessageSquareGroup from "@/icons/FeatherMessageSquareGroup";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
-import {CONVERSATION_VIEW_MODES} from "@/const";
+import { CONVERSATION_VIEW_MODES } from "@/const";
 
 export default {
   setup() {
     const conversationViewModes = CONVERSATION_VIEW_MODES;
     const store = useStore();
     const getLoggedUser = computed(() => store.getters.getLoggedUser);
-    const getSelectedParticipants = computed(() => store.getters.getSelectedParticipants);
+    const getSelectedParticipants = computed(
+      () => store.getters.getSelectedParticipants
+    );
     const getSelectedCreator = computed(() => store.getters.getSelectedCreator);
     const messageText = computed(() => store.getters.getMessageText);
-    const conversationTopic = computed(() => store.getters.getConversationTopic);
+    const conversationTopic = computed(
+      () => store.getters.getConversationTopic
+    );
 
     function onMessageTextInput(e) {
       store.commit("setMessageText", e.target.value);
@@ -240,19 +244,17 @@ export default {
     }
 
     function onCreateConversation() {
-      store.dispatch("onCreateConversation")
-          .then(() => {
-            store.commit("setMessageText", null);
-            store.commit("setConversationTopic", null);
-            store.commit(
-                "setConversationViewMode",
-                conversationViewModes.VIEW
-            );
-          });
+      store.dispatch("onCreateConversation").then(() => {
+        store.commit("setMessageText", null);
+        store.commit("setConversationTopic", null);
+        store.commit("setConversationViewMode", conversationViewModes.VIEW);
+      });
     }
 
     function checkIfDisabled() {
-      return !conversationTopic.value || getSelectedParticipants.value.length <= 0
+      return (
+        !conversationTopic.value || getSelectedParticipants.value.length <= 0
+      );
     }
 
     return {
@@ -268,7 +270,7 @@ export default {
       onSelect,
       onCreateConversation,
       onSelectCreator,
-    }
+    };
   },
   components: {
     ConversationsParticipantsListItem,

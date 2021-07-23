@@ -84,7 +84,7 @@
 
             <div class="list-group list-group-flush overflow-hidden">
               <div
-                v-for="(item, index) of selectedConversation.participants"
+                v-for="(item, index) of selectedConversationParticipants"
                 :key="index"
                 class="
                   list-group-item
@@ -108,7 +108,7 @@
                           <feather-check-double
                             class="mr-1"
                             :class="
-                              isMessageAcknowledgedByUser(item.id)
+                              isMessageWatchedByUser(item.id)
                                 ? 'text-success'
                                 : 'text-dark'
                             "
@@ -201,6 +201,13 @@ export default {
     const getAuthor = computed(() =>
       store.getters.getMessageAuthor(selectedMessage.value)
     );
+    const selectedConversationParticipants = computed(() =>
+      store.getters.getSelectedConversation.participants.filter(
+        (participant) =>
+          selectedMessage.value &&
+          !guidsAreEqual(participant.id, selectedMessage.value.authorId)
+      )
+    );
 
     const isRoleById = (id) => {
       let isRole = false;
@@ -234,6 +241,7 @@ export default {
       selectedConversation,
       selectedMessage,
       getAuthor,
+      selectedConversationParticipants,
       isMessageWatchedByUser,
       isMessageAcknowledgedByUser,
       isRoleById,

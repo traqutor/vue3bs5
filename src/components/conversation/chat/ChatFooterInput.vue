@@ -62,26 +62,31 @@
                 </div>
               </div>
 
-              <textarea
-                class="
-                  form-control
-                  dialog-input-textarea
-                  chat-textarea-control
-                  f-size-14
-                  bg-transparent
-                  border-0
-                  rounded-0
-                  is-keyup-group-control
-                  shadow-none
-                  ps-2
-                  autoresize-textarea
-                  no-resize
-                "
-                rows="1"
-                placeholder="Type a message ..."
-                style="height: 42px; overflow-y: hidden"
-                v-model="messageText"
-              ></textarea>
+              <TextareaResizeAuto>
+                <template v-slot:default="{ resize }">
+                  <textarea
+                    class="
+                      form-control
+                      dialog-input-textarea
+                      chat-textarea-control
+                      f-size-14
+                      bg-transparent
+                      border-0
+                      rounded-0
+                      is-keyup-group-control
+                      shadow-none
+                      ps-2
+                      autoresize-textarea
+                      no-resize
+                    "
+                    rows="1"
+                    placeholder="Type a message ..."
+                    style="height: 42px; overflow-y: hidden"
+                    v-model="messageText"
+                    @input="resize"
+                  ></textarea>
+                </template>
+              </TextareaResizeAuto>
 
               <div
                 class="
@@ -199,7 +204,7 @@ import ChatRecordMessage from "@/components/conversation/chat/ChatRecordMessage"
 import ChatPlayMessage from "@/components/conversation/chat/ChatPlayMessage";
 import { CONVERSATION_VIEW_MODES } from "@/const";
 import EmojiPicker from "@/components/conversation/chat/chat-text-selector/EmojiPicker";
-
+import TextareaResizeAuto from "@/components/text/TextareaResizeAuto";
 export default {
   components: {
     EmojiPicker,
@@ -210,6 +215,7 @@ export default {
     FeatherSmile,
     FeatherMoreVertical,
     FeatherPointSquare,
+    TextareaResizeAuto,
   },
   setup() {
     const store = useStore();

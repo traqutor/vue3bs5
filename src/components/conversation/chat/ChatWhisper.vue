@@ -134,10 +134,10 @@ export default {
     const chatViewModes = CHAT_VIEW_MODES;
     const store = useStore();
     const conversation = computed(() => store.getters.getSelectedConversation);
+    const loggedUser = computed(() => store.getters.getLoggedUser);
     const participants = computed(() =>
       conversation.value.participants.filter(
-        (participant) =>
-          !guidsAreEqual(participant.id, conversation.value.creatorId)
+        (participant) => !guidsAreEqual(participant.id, loggedUser.value.id)
       )
     );
     const whisperToParticipants = computed(

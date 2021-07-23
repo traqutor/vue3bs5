@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import { computed, ref, watch, nextTick } from "vue";
+import { computed, ref, watch, nextTick, onMounted } from "vue";
 import { useStore } from "vuex";
 import { timeMessagesDividerFormat } from "@/services/datetime.service";
 import { guidsAreEqual, guidsGetNull } from "@/services/guids.service";
@@ -53,6 +53,7 @@ export default {
         });
         return isRole;
       });
+
     const getUserById = (id) => {
       let user = null;
       store.getters.getSystemUsers.forEach((usr) => {
@@ -62,6 +63,7 @@ export default {
       });
       return user;
     };
+
     const getParticipantById = (id) => {
       if (!id || id === guidsGetNull) return;
 
@@ -144,11 +146,22 @@ export default {
         });
     };
 
-    watch(messages, (value) => {
-      if (value.length && !isScrollUp.value) {
-        nextTick(() => {
-          scrollToEnd();
-        });
+    watch(
+      () => messages.value.length,
+      (after, before) => {
+        console.log(after);
+        console.log(before);
+        if (after > before && !isScrollUp.value) {
+          nextTick(() => {
+            scrollToEnd();
+          });
+        }
+      }
+    );
+
+    onMounted(() => {
+      if (selectedConversation.value) {
+        store.dispatch("onMarkMultipleAsRead");
       }
     });
 

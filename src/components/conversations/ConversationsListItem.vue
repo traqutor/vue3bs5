@@ -21,7 +21,7 @@
       ></conversations-list-item-avatar>
 
       <div class="media-body overflow-hidden is-filtered">
-        <!-- first line-->
+        <!-- start::first line-->
         <div class="d-flex">
           <div class="media-body overflow-hidden">
             <div
@@ -92,8 +92,9 @@
             </div>
           </div>
         </div>
+        <!-- end::first line-->
 
-        <!-- second line-->
+        <!-- star::second line-->
         <div
           v-if="
             !conversation.isDirect &&
@@ -119,8 +120,9 @@
             )
           }}</span>
         </div>
+        <!-- end::second line-->
 
-        <!-- third line-->
+        <!-- start::third line-->
         <div class="d-flex justify-content-between align-items-center pt-1">
           <div class="d-flex align-items-center dialog-msg overflow-hidden">
             <div
@@ -129,6 +131,7 @@
               :class="!isWatchedByLoggedUser ? 'font-weight-middle' : ''"
             >
               <feather-check-double
+                v-if="isLastMessageByLoggedUser"
                 :class="isWatchedByAllParticipants ? 'text-success' : ''"
               />
               {{ conversation.lastMessage.text }}
@@ -147,6 +150,7 @@
             {{ conversation.unreadMessageCount }}
           </span>
         </div>
+        <!-- end::third line-->
       </div>
     </div>
 
@@ -303,6 +307,16 @@ export default {
       );
     });
 
+    const isLastMessageByLoggedUser = computed(() => {
+      return (
+        props.conversation.lastMessage &&
+        guidsAreEqual(
+          props.conversation.lastMessage.authorId,
+          loggedUser.value.id
+        )
+      );
+    });
+
     function getRolesAsLabel(participant) {
       if (participant.roles) {
         return participant.roles.map((role) => role.name).join(", ");
@@ -320,6 +334,7 @@ export default {
       isConversationActive,
       isLoggedUserAuthorOfLastMessage,
       isWatchedByAllParticipants,
+      isLastMessageByLoggedUser,
       isWatchedByLoggedUser,
       onConversationSelect,
     };

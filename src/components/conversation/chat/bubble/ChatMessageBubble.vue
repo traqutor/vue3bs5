@@ -171,7 +171,9 @@
     >
       <!--start::whisper over text -->
       <div class="d-flex" v-if="item.isWhisper">
-        <BubbleWhisperHeaderDropdown :item="item" />
+        <BubbleWhisperHeaderDropdown
+          :item="item"
+        />
       </div>
       <!--end::whisper over text -->
 
@@ -181,11 +183,10 @@
 
       <!--start::message sub text check and date-->
       <div class="d-flex align-items-center f-size-12 pt-1">
-        <feather-check-double class="me-1 text-white-75" />
-
-        <BubbleSubTextinfoDate
+        <BubbleSubTextInfoDate
           :item="item"
           :selected-conversation="selectedConversation"
+          :is-user-post="true"
         />
       </div>
       <!--end::message sub text check and date-->
@@ -208,6 +209,7 @@
 
   <!--start::others Users bubble-->
   <div v-else class="d-flex pe-5 mt-3">
+    <!--start::User avatar-->
     <figure
       v-if="isUserInfoToDisplay && getAuthor(item).user"
       class="avatar avatar-lg me-3 ms-1"
@@ -219,8 +221,10 @@
         alt=""
       />
     </figure>
+    <!--end::User avatar-->
     <div v-else class="avatar-lg me-3 ms-1"></div>
     <div class="media-body">
+      <!--start::User name and roles-->
       <div
         v-if="isUserInfoToDisplay && !selectedConversation.isDirect"
         class="mb-2"
@@ -234,6 +238,7 @@
             .join(", ")
         }}</span>
       </div>
+      <!--end::User name and roles-->
 
       <div
         class="
@@ -251,7 +256,9 @@
           >
             <!--start::whisper over text-->
             <div class="d-flex" v-if="item.isWhisper">
-              <BubbleWhisperHeaderDropdown :item="item" />
+              <BubbleWhisperHeaderDropdown
+                :item="item"
+              />
             </div>
             <!--start::whisper over text-->
 
@@ -261,9 +268,10 @@
 
             <!--start::message sub text check and date-->
             <div class="d-flex align-items-center f-size-12 pt-1">
-              <BubbleSubTextinfoDate
+              <BubbleSubTextInfoDate
                 :item="item"
                 :selected-conversation="selectedConversation"
+                :is-user-post="false"
               />
             </div>
             <!--end::message sub text check and date-->
@@ -498,7 +506,6 @@ import FeatherArrowForward from "@/icons/FeatherArrowForward";
 import FeatherCopy from "@/icons/FeatherCopy";
 import FeatherEdit3 from "@/icons/FeatherEdit3";
 import FeatherLink2 from "@/icons/FeatherLink2";
-import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
 import FeatherArrowForwardDown from "@/icons/FeatherArrowForwardDown";
 import FeatherMessageCircle from "@/icons/FeatherMessageCircle";
 import {
@@ -509,17 +516,16 @@ import {
 import { CHAT_VIEW_MODES } from "@/const";
 import BubbleAcknowledgedDropDownButton from "@/components/conversation/chat/bubble/BubbleAcknowledgedDropDownButton";
 import BubbleWhisperHeaderDropdown from "@/components/conversation/chat/bubble/BubbleWhisperHeaderDropdown";
-import BubbleSubTextinfoDate from "@/components/conversation/chat/bubble/BubbleSubTextinfoDate";
+import BubbleSubTextInfoDate from "@/components/conversation/chat/bubble/BubbleSubTextInfoDate";
 
 export default {
   name: "ign-chat-message-bubble",
   components: {
-    BubbleSubTextinfoDate,
+    BubbleSubTextInfoDate,
     BubbleWhisperHeaderDropdown,
     BubbleAcknowledgedDropDownButton,
     FeatherMessageCircle,
     FeatherArrowForwardDown,
-    FeatherCheckDouble,
     FeatherLink2,
     FeatherEdit3,
     FeatherCopy,

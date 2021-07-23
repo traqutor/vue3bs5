@@ -267,13 +267,35 @@ export default {
         .post(url, data)
         .then(function (response) {
           if (!response.data.isOk) {
-            console.error("On ON_MESSAGE_READ error:", response.data.message);
+            console.error("On ON_MESSAGE_READ error:", response);
           }
         })
         .catch((error) => {
           console.error("On ON_MESSAGE_READ error:", error);
         });
     }
+  },
+
+  onMarkMultipleAsRead: ({ state }) => {
+    const data = {
+      conversationIds: [state.selectedConversationId],
+    };
+
+    const url = `${process.env.VUE_APP_BASE_URL}/Messages/MarkMultipleAsRead`;
+
+    axiosWebApiInstance
+      .post(url, data)
+      .then(function (response) {
+        if (!response.data.isOk) {
+          console.error(
+            "On ON_MARK_MULTIPLE_AS_READ error:",
+            response.data.message
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("On ON_MARK_MULTIPLE_AS_READ error:", error);
+      });
   },
 
   onAcknowledgeMessage: (_, data) => {

@@ -53,6 +53,7 @@ export default {
       return state.systemUsers
         .filter((usr) => {
           return (
+            getters.getLoggedUser &&
             !guidsAreEqual(usr.userId, getters.getLoggedUser.id) &&
             searchByUser(state.textToSearchParticipants, usr)
           );

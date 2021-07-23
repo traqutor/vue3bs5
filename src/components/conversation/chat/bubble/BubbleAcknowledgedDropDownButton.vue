@@ -2,20 +2,30 @@
   <button
     class="btn btn-sm py-1 f-size-12 text-primary shadow-none"
     :class="background"
-    id="dropdownMenuButton1"
+    :id="`dropdownMenuAcknowledgedId${item.id}`"
     data-bs-toggle="dropdown"
     aria-expanded="false"
   >
-    Acknowledged<span v-if="item.acknowledgedByUsers && selectedConversation.participants" class="text-red ms-2">
-      {{ item.acknowledgedByUsers.length }}/{{
-        selectedConversation.participants.length - 1
-      }}
+    Acknowledged<span class="text-red ms-2">
+      <span v-if="item.acknowledgedByUsers">{{
+        item.acknowledgedByUsers.length
+      }}</span
+      ><span v-else>0</span>/<span v-if="item.isWhisper">
+        <span v-if="item.whisperRecipients">{{
+          item.whisperRecipients.length - 1
+        }}</span>
+      </span>
+      <span v-else>
+        <span v-if="selectedConversation.participants">{{
+          selectedConversation.participants.length - 1
+        }}</span>
+      </span>
     </span>
   </button>
 
   <div
     class="dropdown-menu dropdown-menu-sm dropdown-menu-right p-0 shadow"
-    aria-labelledby="dropdownMenuButton1"
+    :aria-labelledby="`dropdownMenuAcknowledgedId${item.id}`"
   >
     <button
       class="
@@ -31,7 +41,9 @@
       "
       type="button"
     >
-      Acknowledged (2)
+      Acknowledged ({{
+        item.acknowledgedByUsers ? item.acknowledgedByUsers.length : 0
+      }})
       <feather-chevron-down class="ms-auto" />
     </button>
 
@@ -88,7 +100,12 @@
       data-outside="true"
       type="button"
     >
-      Not acknowledged (10) <feather-more-horizontal class="ms-auto" />
+      Not acknowledged (<span v-if="selectedConversation"></span>
+      {{
+        selectedConversation.participants.length -
+        1 -
+        (item.acknowledgedByUsers ? item.acknowledgedByUsers.length : 0)
+      }}) <feather-more-horizontal class="ms-auto" />
     </button>
   </div>
 </template>
