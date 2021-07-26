@@ -279,29 +279,7 @@ export default {
     }
 
     function onAcknowledgePost(message) {
-      const whoCanAcknowledge =
-        store.getters.getConversationAvailableCreationRoles;
-      let data = {
-        conversationId: selectedConversation.value.id,
-        messageId: message.id,
-        aciveRoleId: null,
-      };
-      whoCanAcknowledge.forEach((who) => {
-        if (who.isRole) {
-          // acknowledge as Role in the conversation
-          data = {
-            ...data,
-            aciveRoleId: who.id.toLowerCase(),
-          };
-        } else {
-          // acknowledge as User
-          data = {
-            ...data,
-            aciveRoleId: null,
-          };
-        }
-        this.$store.dispatch("onAcknowledgeMessage", data);
-      });
+      this.$store.dispatch("onAcknowledgeMessage", message.id);
     }
 
     onMounted(() => {

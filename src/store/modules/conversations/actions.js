@@ -180,7 +180,7 @@ export default {
   },
 
   onGetMessages: (
-    { commit, getters, dispatch },
+    { commit, getters },
     { conversationId, refresh = false, showLoading = false }
   ) => {
     if (showLoading) commit("setIsMessagesLoading", true);
@@ -249,8 +249,6 @@ export default {
       })
       .map((message) => message.id);
 
-    console.log("messagesIds", messagesIds);
-
     if (messagesIds.length) {
       // user and all available roles in conversation read the message
       const roles = getters.getConversationAvailableCreationRoles
@@ -278,9 +276,17 @@ export default {
     }
   },
 
-  onAcknowledgeMessage: (_, data) => {
+  onAcknowledgeMessage: ({ getters }, messageId) => {
+    // const activeRoleId = getters.getLoggedUserActiveRole.Id;
+
+    const data = {
+      conversationId: getters.getSelectedConversationId,
+      messageId: messageId,
+      activeRoleId: null,
+    };
+
     const url = `${process.env.VUE_APP_BASE_URL}/Messaging/AcknowledgeMessage`;
-    console.log("onAcknowledgeMessage data", data);
+
     axiosWebApiInstance
       .post(url, data)
       .then(function () {})
