@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import { computed, ref, watch, nextTick, onMounted } from "vue";
+import { computed, ref, watch, nextTick } from "vue";
 import { useStore } from "vuex";
 import { timeMessagesDividerFormat } from "@/services/datetime.service";
 import { guidsAreEqual, guidsGetNull } from "@/services/guids.service";
@@ -149,21 +149,14 @@ export default {
     watch(
       () => messages.value.length,
       (after, before) => {
-        console.log(after);
-        console.log(before);
         if (after > before && !isScrollUp.value) {
           nextTick(() => {
             scrollToEnd();
           });
         }
+        store.dispatch("onMarkMessagesAsRead");
       }
     );
-
-    onMounted(() => {
-      if (selectedConversation.value) {
-        store.dispatch("onMarkMultipleAsRead");
-      }
-    });
 
     return {
       chatContainer,

@@ -21,8 +21,8 @@
           text-secondary text-dark-hover
           toggle-action-active
         "
-        data-toggle="dropdown"
-        aria-haspopup="true"
+        :id="`dropdownMenuMoreMessageUserActionsId${item.id}`"
+        data-bs-toggle="dropdown"
         aria-expanded="false"
       >
         <feather-more-vertical class="f-icon-20" />
@@ -33,21 +33,22 @@
           shadow
           cursor-default
         "
+        :aria-labelledby="`dropdownMenuMoreMessageUserActionsId${item.id}`"
       >
         <button class="dropdown-item px-3 d-flex align-items-center">
-          <feather-arrow-forward class="text-secondary f-icon-18" />
+          <feather-arrow-forward class="text-secondary f-icon-18 me-3" />
           <span class="">Forward</span>
         </button>
         <button class="dropdown-item px-3 d-flex align-items-center">
-          <feather-copy class="text-secondary f-icon-18" />
+          <feather-copy class="text-secondary f-icon-18 me-3" />
           <span>Copy</span>
         </button>
         <button class="dropdown-item px-3 d-flex align-items-center">
-          <feather-edit3 class="text-secondary f-icon-18" />
+          <feather-edit3 class="text-secondary f-icon-18 me-3" />
           <span>Edit message</span>
         </button>
         <button class="dropdown-item px-3 d-flex align-items-center">
-          <feather-link2 class="text-secondary f-icon-18" />
+          <feather-link2 class="text-secondary f-icon-18 me-3" />
           <span class="">Message details</span>
         </button>
       </div>
@@ -65,8 +66,8 @@
           text-secondary text-dark-hover
           toggle-action-active
         "
-        data-toggle="dropdown"
-        aria-haspopup="true"
+        :id="`dropdownMenuQuickReactionMessageUserId${item.id}`"
+        data-bs-toggle="dropdown"
         aria-expanded="false"
       >
         <feather-smile class="f-icon-20" />
@@ -78,6 +79,7 @@
           shadow
           cursor-default
         "
+        :aria-labelledby="`dropdownMenuQuickReactionMessageUserId${item.id}`"
       >
         <div
           class="
@@ -88,49 +90,17 @@
             joypixels-group
             text-nowrap
           "
+          v-for="(emojiGroup, category) in frequentlyUsedEmojis"
+          :key="category"
         >
-          <i data-joypixels="thumbsup" class="joypixels-icon on-hover"
-            ><img
-              class="joypixels"
-              alt="👍"
-              src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/1f44d.png"
-          /></i>
-          <i data-joypixels="thumbsdown" class="joypixels-icon on-hover"
-            ><img
-              class="joypixels"
-              alt="👎"
-              src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/1f44e.png"
-          /></i>
-          <i data-joypixels="heart" class="joypixels-icon on-hover"
-            ><img
-              class="joypixels"
-              alt="❤️"
-              src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/2764.png"
-          /></i>
-          <i data-joypixels="slight_smile" class="joypixels-icon on-hover"
-            ><img
-              class="joypixels"
-              alt="🙂"
-              src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/1f642.png"
-          /></i>
-          <i data-joypixels="frowning2" class="joypixels-icon on-hover"
-            ><img
-              class="joypixels"
-              alt="☹️"
-              src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/2639.png"
-          /></i>
-          <i data-joypixels="question" class="joypixels-icon on-hover"
-            ><img
-              class="joypixels"
-              alt="❓"
-              src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/2753.png"
-          /></i>
-          <i data-joypixels="bangbang" class="joypixels-icon on-hover"
-            ><img
-              class="joypixels"
-              alt="‼️"
-              src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/203c.png"
-          /></i>
+          <span
+            class="f-size-26 ign-pointer"
+            v-for="(emoji, emojiName) in emojiGroup"
+            :key="emojiName"
+            @click="onMessageQuickReaction(emoji)"
+            :title="emojiName"
+            >{{ emoji }}
+          </span>
         </div>
       </div>
     </div>
@@ -139,18 +109,14 @@
     <!--start::message reply button  -->
     <div
       class="on-hover-visible me-2"
-      data-toggle="tooltip"
-      data-placement="top"
-      title=""
-      data-original-title="Reply"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      title="Reply"
     >
       <button
         class="btn text-secondary text-dark-hover p-0 shadow-none"
         type="button"
-        data-toggle="collapse"
-        data-target="#replyMessage"
-        aria-expanded="false"
-        aria-controls="replyMessage"
+        @click="onMessageReply"
       >
         <feather-arrow-forward-down class="f-icon-20" />
       </button>
@@ -171,9 +137,7 @@
     >
       <!--start::whisper over text -->
       <div class="d-flex" v-if="item.isWhisper">
-        <BubbleWhisperHeaderDropdown
-          :item="item"
-        />
+        <BubbleWhisperHeaderDropdown :item="item" />
       </div>
       <!--end::whisper over text -->
 
@@ -256,9 +220,7 @@
           >
             <!--start::whisper over text-->
             <div class="d-flex" v-if="item.isWhisper">
-              <BubbleWhisperHeaderDropdown
-                :item="item"
-              />
+              <BubbleWhisperHeaderDropdown :item="item" />
             </div>
             <!--start::whisper over text-->
 
@@ -331,8 +293,8 @@
               text-secondary text-dark-hover
               toggle-action-active
             "
-            data-toggle="dropdown"
-            aria-haspopup="true"
+            :id="`dropdownMenuQuickReactionMessageId${item.id}`"
+            data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <FeatherSmile class="f-icon-20" />
@@ -344,6 +306,7 @@
               shadow
               cursor-default
             "
+            :aria-labelledby="`dropdownMenuQuickReactionMessageId${item.id}`"
           >
             <div
               class="
@@ -354,49 +317,17 @@
                 joypixels-group
                 text-nowrap
               "
+              v-for="(emojiGroup, category) in frequentlyUsedEmojis"
+              :key="category"
             >
-              <i data-joypixels="thumbsup" class="joypixels-icon on-hover"
-                ><img
-                  class="joypixels"
-                  alt="👍"
-                  src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/1f44d.png"
-              /></i>
-              <i data-joypixels="thumbsdown" class="joypixels-icon on-hover"
-                ><img
-                  class="joypixels"
-                  alt="👎"
-                  src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/1f44e.png"
-              /></i>
-              <i data-joypixels="heart" class="joypixels-icon on-hover"
-                ><img
-                  class="joypixels"
-                  alt="❤️"
-                  src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/2764.png"
-              /></i>
-              <i data-joypixels="slight_smile" class="joypixels-icon on-hover"
-                ><img
-                  class="joypixels"
-                  alt="🙂"
-                  src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/1f642.png"
-              /></i>
-              <i data-joypixels="frowning2" class="joypixels-icon on-hover"
-                ><img
-                  class="joypixels"
-                  alt="☹️"
-                  src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/2639.png"
-              /></i>
-              <i data-joypixels="question" class="joypixels-icon on-hover"
-                ><img
-                  class="joypixels"
-                  alt="❓"
-                  src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/2753.png"
-              /></i>
-              <i data-joypixels="bangbang" class="joypixels-icon on-hover"
-                ><img
-                  class="joypixels"
-                  alt="‼️"
-                  src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/203c.png"
-              /></i>
+              <span
+                class="f-size-26 ign-pointer"
+                v-for="(emoji, emojiName) in emojiGroup"
+                :key="emojiName"
+                @click="onMessageQuickReaction(emoji)"
+                :title="emojiName"
+                >{{ emoji }}
+              </span>
             </div>
           </div>
         </div>
@@ -495,7 +426,7 @@
   <!--end::others Users bubble-->
 </template>
 <script>
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 
 import { guidsAreEqual } from "@/services/guids.service";
@@ -513,10 +444,11 @@ import {
   timeHhMmaDotDdddFormat,
 } from "@/services/datetime.service";
 
-import { CHAT_VIEW_MODES } from "@/const";
 import BubbleAcknowledgedDropDownButton from "@/components/conversation/chat/bubble/BubbleAcknowledgedDropDownButton";
 import BubbleWhisperHeaderDropdown from "@/components/conversation/chat/bubble/BubbleWhisperHeaderDropdown";
 import BubbleSubTextInfoDate from "@/components/conversation/chat/bubble/BubbleSubTextInfoDate";
+import emojisTemplate from "@/const/emojis";
+import { CHAT_VIEW_MODES } from "@/const";
 
 export default {
   name: "ign-chat-message-bubble",
@@ -648,9 +580,35 @@ export default {
       );
     });
 
+    const frequentlyUsedEmojis = computed(() => {
+      const obj = {};
+      for (const category in emojisTemplate) {
+        if (category === "Frequently used") {
+          obj[category] = {};
+          for (const emoji in emojisTemplate[category]) {
+            obj[category][emoji] = emojisTemplate[category][emoji];
+          }
+          if (Object.keys(obj[category]).length === 0) {
+            delete obj[category];
+          }
+        }
+      }
+      return obj;
+    });
+
     const onMessageOpen = () => {
       store.commit("setSelectedMessageId", props.item.id);
       store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
+    };
+
+    const onMessageReply = () => {
+      console.log("setReplyMessage", props.item);
+      // store.commit("setReplyMessage", props.item);
+    };
+
+    const onMessageQuickReaction = (reactionEmoji) => {
+      console.log("setReplyMessage", props.item, reactionEmoji);
+      // store.commit("setReplyMessage", props.item);
     };
 
     const onAcknowledgePost = () => {
@@ -679,22 +637,6 @@ export default {
       });
     };
 
-    onMounted(() => {
-      if (!isPostByLoggedUser.value) {
-        const isWatched = props.item.watchedByUsers.some((watched) => {
-          return (
-            guidsAreEqual(watched.id, loggedUser.value.id) ||
-            loggedUser.value.SystemRoles.some((role) => {
-              return guidsAreEqual(role.Id, watched.id);
-            })
-          );
-        });
-        if (!isWatched) {
-          store.dispatch("onMessageIsRead", props.item);
-        }
-      }
-    });
-
     return {
       selectedConversation,
       selectedCreator,
@@ -706,6 +648,8 @@ export default {
       isUserInfoToDisplay,
       getAuthor,
       onMessageOpen,
+      onMessageReply,
+      onMessageQuickReaction,
       isWatchedByAllParticipants,
       isMessageWatchedByUser,
       isMessageAcknowledgedByUser,
@@ -713,6 +657,7 @@ export default {
       timeOffsetFormat,
       timeHhMmaDotDdddFormat,
       CHAT_VIEW_MODES,
+      frequentlyUsedEmojis,
     };
   },
 };

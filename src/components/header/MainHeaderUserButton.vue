@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-items-center mx-3 dropdown">
+  <div class="d-flex align-items-center me-3 dropdown">
     <div
       v-if="loggedUser"
       class="d-flex align-items-center on-hover h-100 dropdown-toggle pr-2"
@@ -8,25 +8,15 @@
       aria-expanded="false"
     >
       <figure
-        class="avatar avatar-lg me-3"
+        class="avatar avatar-lg me-1"
         :data-initial="loggedUser.name.substring(0, 1).toUpperCase()"
         id="mainAvatar"
       >
         <i class="avatar-presence away text-light"></i>
       </figure>
-
-      <div class="media-body font-weight-middle pr-1">
-        {{ loggedUser.name }}
-      </div>
     </div>
 
-    <ul
-      class="
-        dropdown-menu dropdown-menu-sm dropdown-menu-right
-        shadow
-        dropdown-insert-click
-      "
-    >
+    <ul class="dropdown-menu dropdown-menu-end">
       <li class="dropdown-header text-secondary pt-0 pb-1">My Status</li>
 
       <li

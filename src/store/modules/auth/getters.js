@@ -18,4 +18,8 @@ export default {
   getErrors(state) {
     return state.errors;
   },
+
+  getLoggedUserActiveRole(state) {
+    return state.activeRole;
+  },
 };

@@ -310,6 +310,7 @@ export default {
     const isLastMessageByLoggedUser = computed(() => {
       return (
         props.conversation.lastMessage &&
+        loggedUser.value &&
         guidsAreEqual(
           props.conversation.lastMessage.authorId,
           loggedUser.value.id

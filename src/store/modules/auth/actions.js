@@ -5,9 +5,10 @@ import {
   saveTokenData,
 } from "@/services/jwt.service";
 import jwt_decode from "jwt-decode";
+import { Mutations } from "@/store/enums/EnumTypes";
 
 export default {
-  onLogin: ({ commit, dispatch }, authData) => {
+  onLogin: ({ commit }, authData) => {
     const params = {
       scope: "api1",
       client_id: "ro.client",
@@ -34,11 +35,11 @@ export default {
     });
 
     return new Promise((resolve) => {
-      commit("setLoggedIsLoading", true);
-      commit("setLoggedError", null);
+      commit(Mutations.setLoggedIsLoading, true);
+      commit(Mutations.setLoggedError, null);
       instance(options)
         .then((response) => {
-          commit("setLoggedIsLoading", false);
+          commit(Mutations.setLoggedIsLoading, false);
           if (response.data && response.data.access_token) {
             saveTokenData(response.data.access_token);
 
@@ -46,32 +47,35 @@ export default {
             decodedUserData.SystemRoles = JSON.parse(
               decodedUserData.SystemRolesJson
             );
-            commit("setLoggedUser", decodedUserData);
+            commit(Mutations.setLoggedUser, decodedUserData);
+            commit(Mutations.setActiveRole, decodedUserData.SystemRoles[0]);
             commit("setSelectedCreator", decodedUserData);
 
             resolve();
           } else {
-            commit("setLogOutUser");
+            commit(Mutations.setLogOutUser);
           }
         })
         .catch((error) => {
           console.error(error);
-          commit("setLoggedIsLoading", false);
-          commit("setLogOutUser");
+          commit(Mutations.setLoggedIsLoading, false);
+          commit(Mutations.setLogOutUser);
           commit(
-            "setLoggedError",
+            Mutations.setLoggedError,
             "Provided username or password are invalid."
           );
         });
     });
   },
+
   onAppInitRecallLoggedUserData: ({ commit, dispatch }) => {
     return new Promise((resolve) => {
       const user = getUserFromTokenData();
       const token = getTokenData();
 
       if (user && token) {
-        commit("setLoggedUser", user);
+        commit(Mutations.setLoggedUser, user);
+        commit(Mutations.setActiveRole, user.SystemRoles[0]);
         commit("setSelectedCreator", user);
 
         dispatch("getUsers");

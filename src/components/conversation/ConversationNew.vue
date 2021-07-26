@@ -211,6 +211,7 @@ import FeatherMessageSquareGroup from "@/icons/FeatherMessageSquareGroup";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
 import { CONVERSATION_VIEW_MODES } from "@/const";
+import {Mutations} from "@/store/enums/EnumTypes";
 
 export default {
   setup() {
@@ -236,7 +237,7 @@ export default {
 
     function onSelectCreator(id) {
       const creator = store.getters.getParticipantById(id);
-      store.commit("setSelectedCreator", creator);
+      store.commit(Mutations.setActiveRole, creator);
     }
 
     function onSelect(id) {

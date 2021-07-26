@@ -9,7 +9,10 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.$el.setAttribute("style", "height", `${this.$el.scrollHeight}px`);
+      if (this.$el) {
+        console.log("TextareaResizeAuto", this);
+        this.$el.setAttribute("style", "height", `${this.$el.scrollHeight}px`);
+      }
     });
   },
   render() {

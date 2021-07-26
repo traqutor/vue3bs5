@@ -7,6 +7,7 @@ const authModule = {
     return {
       isLoadingLogin: false,
       user: null,
+      activeRole: null,
       errors: null,
     };
   },

@@ -2,7 +2,10 @@
   <div class="flex-grow-1 position-relative">
     <div class="position-absolute text-nowrap overflow-hidden w-100">
       <div class="text-truncate w-100 d-inline-block text-white-75 f-size-12">
-        Whispered to {{ "" }}
+        Whispered to
+        {{
+          item.whisperRecipients.map((recipient) => recipient.name).join(", ")
+        }}
       </div>
     </div>
   </div>

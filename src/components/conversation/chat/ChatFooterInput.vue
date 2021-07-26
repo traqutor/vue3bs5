@@ -135,6 +135,7 @@
                     "
                     id="dropdownEmojiMenuButtonId"
                     data-bs-toggle="dropdown"
+                    data-bs-auto-close="false"
                     aria-expanded="false"
                   >
                     <feather-smile class="f-icon-26" />

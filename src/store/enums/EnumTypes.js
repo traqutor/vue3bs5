@@ -16,6 +16,14 @@ const SocketReceivers = {
 };
 
 const Mutations = {
+  // auth mutation types
+  setLoggedError: "setLoggedError",
+  setLoggedUser: "setLoggedUser",
+  setLogOutUser: "setLogOutUser",
+  setLoggedIsLoading: "setLoggedIsLoading",
+  setActiveRole: "setActiveRole",
+
+  // templates mutation types
   setSelectedTemplateViewMode: "setSelectedTemplateViewMode",
   setSelectedTemplate: "setSelectedTemplate",
 };

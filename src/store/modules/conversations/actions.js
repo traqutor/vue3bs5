@@ -180,7 +180,7 @@ export default {
   },
 
   onGetMessages: (
-    { commit, getters },
+    { commit, getters, dispatch },
     { conversationId, refresh = false, showLoading = false }
   ) => {
     if (showLoading) commit("setIsMessagesLoading", true);
@@ -235,20 +235,22 @@ export default {
       });
   },
 
-  onMessageIsRead: ({ state, getters }, message) => {
-    const messagesIds = [];
-    const isWatched = message.watchedByUsers.some((watched) => {
-      return (
-        guidsAreEqual(watched.id, getters.getLoggedUser.id) ||
-        getters.getLoggedUser.SystemRoles.some((role) => {
-          return guidsAreEqual(role.Id, watched.id);
-        })
-      );
-    });
+  onMarkMessagesAsRead: ({ state, getters }) => {
+    const messagesIds = getters.getSelectedConversation.messages
+      .filter((message) => {
+        return !message.watchedByUsers.some((watched) => {
+          return (
+            guidsAreEqual(watched.id, getters.getLoggedUser.id) ||
+            getters.getLoggedUser.SystemRoles.some((role) => {
+              return guidsAreEqual(role.Id, watched.id);
+            })
+          );
+        });
+      })
+      .map((message) => message.id);
 
-    if (!isWatched) {
-      messagesIds.push(message.id);
-    }
+    console.log("messagesIds", messagesIds);
+
     if (messagesIds.length) {
       // user and all available roles in conversation read the message
       const roles = getters.getConversationAvailableCreationRoles
@@ -274,28 +276,6 @@ export default {
           console.error("On ON_MESSAGE_READ error:", error);
         });
     }
-  },
-
-  onMarkMultipleAsRead: ({ state }) => {
-    const data = {
-      conversationIds: [state.selectedConversationId],
-    };
-
-    const url = `${process.env.VUE_APP_BASE_URL}/Messages/MarkMultipleAsRead`;
-
-    axiosWebApiInstance
-      .post(url, data)
-      .then(function (response) {
-        if (!response.data.isOk) {
-          console.error(
-            "On ON_MARK_MULTIPLE_AS_READ error:",
-            response.data.message
-          );
-        }
-      })
-      .catch((error) => {
-        console.error("On ON_MARK_MULTIPLE_AS_READ error:", error);
-      });
   },
 
   onAcknowledgeMessage: (_, data) => {

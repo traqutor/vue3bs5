@@ -1,4 +1,5 @@
 import { purgeTokenData } from "@/services/jwt.service";
+import { Mutations } from "@/store/enums/EnumTypes";
 
 export default {
   setLoggedError(state, error) {
@@ -15,5 +16,9 @@ export default {
   },
   setLoggedIsLoading: (state, flag) => {
     state.isLoadingLogin = flag;
+  },
+
+  [Mutations.setActiveRole]: (state, role) => {
+    state.activeRole = role;
   },
 };
