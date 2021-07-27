@@ -277,8 +277,6 @@ export default {
   },
 
   onAcknowledgeMessage: ({ getters }, messageId) => {
-    // const activeRoleId = getters.getLoggedUserActiveRole.Id;
-
     const data = {
       conversationId: getters.getSelectedConversationId,
       messageId: messageId,
@@ -293,6 +291,22 @@ export default {
       .catch((error) => {
         console.log("On read message error:", error);
       });
+
+    const roles = getters.getConversationAvailableCreationRoles
+      .filter((role) => role.isRole)
+      .map((role) => role.id.toLowerCase());
+
+    roles.forEach((role) => {
+      console.log(role);
+      data.activeRoleId = role;
+
+      axiosWebApiInstance
+        .post(url, data)
+        .then(function () {})
+        .catch((error) => {
+          console.log("On read message error:", error);
+        });
+    });
   },
 
   onUserAddedToConversationNotification: (

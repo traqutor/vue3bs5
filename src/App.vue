@@ -4,14 +4,10 @@
 
 <script>
 import { defineComponent } from "vue";
-import { useStore } from "vuex";
 
 export default defineComponent({
   name: "app",
-  setup() {
-    const store = useStore();
-    console.log(store);
-  },
+  setup() {},
 });
 </script>
 

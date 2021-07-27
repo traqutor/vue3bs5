@@ -12,12 +12,12 @@
       }}</span
       ><span v-else>0</span>/<span v-if="item.isWhisper">
         <span v-if="item.whisperRecipients">{{
-          item.whisperRecipients.length - 1
+          item.whisperRecipients.length
         }}</span>
       </span>
       <span v-else>
         <span v-if="selectedConversation.participants">{{
-          selectedConversation.participants.length - 1
+          selectedConversation.participants.length
         }}</span>
       </span>
     </span>
@@ -40,49 +40,81 @@
         rounded-bottom-0
       "
       type="button"
+      @click="onMessageOpen"
     >
       Acknowledged ({{
         item.acknowledgedByUsers ? item.acknowledgedByUsers.length : 0
       }})
-      <feather-chevron-down class="ms-auto" />
+      <feather-chevrons-right class="ms-auto" />
     </button>
 
-    <div class="dropdown-menu-scroll-list mt-1">
-      <div class="dropdown-item d-flex align-items-center on-hover mb-1">
-        <figure
-          class="avatar avatar-lg me-3 ms-n1 shadow-none"
-          data-initial="RT"
-        >
-          <img src="images/avatar/2.jpg" alt="" />
-        </figure>
-        <div class="media-body ms-n1">
-          <div class="font-weight-middle">Ruben Tillman</div>
-          <div class="text-secondary f-size-12">Cardiology Doctor</div>
-        </div>
-        <div
-          class="text-nowrap ms-5 pt-1 text-muted f-size-12 align-self-start"
-        >
-          <feather-check-double class="text-success me-1" />
-          30 min ago
-        </div>
+    <perfect-scrollbar
+      v-if="item.isWhisper"
+      class="dropdown-menu-scroll-list mt-1 pe-3"
+    >
+      <div
+        v-for="(item, index) of item.whisperRecipients"
+        :key="index"
+        class="dropdown-item d-flex align-items-center on-hover mb-1"
+      >
+        <ParticipantAvatarNameItem :participant-id="item.id">
+          <template v-slot:secondary>
+            <div
+              class="
+                ms-auto
+                text-nowrap
+                ms-5
+                pt-1
+                text-muted
+                f-size-12
+                align-self-start
+              "
+            >
+              <feather-check-double
+                class="ms-1"
+                :class="
+                  isMessageAcknowledgedByUser(item.id)
+                    ? 'text-success'
+                    : 'text-dark'
+                "
+              />
+            </div>
+          </template>
+        </ParticipantAvatarNameItem>
       </div>
-      <div class="dropdown-item d-flex align-items-center on-hover mb-1">
-        <figure
-          class="avatar avatar-lg me-3 ms-n1 shadow-none"
-          data-initial="JD"
-        ></figure>
-        <div class="media-body ms-n1">
-          <div class="font-weight-middle">Josephin Doe</div>
-          <div class="text-secondary f-size-12">Doctor</div>
-        </div>
-        <div
-          class="text-nowrap ms-5 pt-1 text-muted f-size-12 align-self-start"
-        >
-          <feather-check-double class="text-success me-1" />
-          11:23 am
-        </div>
+    </perfect-scrollbar>
+    <perfect-scrollbar v-else class="dropdown-menu-scroll-list mt-1 pe-3">
+      <div
+        v-for="(item, index) of selectedConversation.participants"
+        :key="index"
+        class="dropdown-item d-flex align-items-center on-hover mb-1"
+      >
+        <ParticipantAvatarNameItem :participant-id="item.id">
+          <template v-slot:secondary>
+            <div
+              class="
+                ms-auto
+                text-nowrap
+                ms-5
+                pt-1
+                text-muted
+                f-size-12
+                align-self-start
+              "
+            >
+              <feather-check-double
+                class="ms-1"
+                :class="
+                  isMessageAcknowledgedByUser(item.id)
+                    ? 'text-success'
+                    : 'text-dark'
+                "
+              />
+            </div>
+          </template>
+        </ParticipantAvatarNameItem>
       </div>
-    </div>
+    </perfect-scrollbar>
 
     <button
       class="
@@ -95,29 +127,58 @@
         w-100
         text-secondary
         rounded-top-0
-        step-tabpanel-open
+        text-nowrap
       "
       data-outside="true"
       type="button"
+      @click="onMessageOpen"
     >
-      Not acknowledged (<span v-if="selectedConversation"></span>
-      {{
-        selectedConversation.participants.length -
-        1 -
+      Not acknowledged (<span v-if="item.isWhisper">{{
+        item.whisperRecipients.length -
         (item.acknowledgedByUsers ? item.acknowledgedByUsers.length : 0)
-      }}) <feather-more-horizontal class="ms-auto" />
+      }}</span
+      ><span v-else>{{
+        selectedConversation.participants.length -
+        (item.acknowledgedByUsers ? item.acknowledgedByUsers.length : 0)
+      }}</span
+      >) <feather-more-horizontal class="ms-auto ps-1" />
     </button>
   </div>
 </template>
 <script>
 import FeatherMoreHorizontal from "@/icons/FeatherMoreHorizontal";
 import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
-import FeatherChevronDown from "@/icons/FeatherChevronDown";
+import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
+import { CHAT_VIEW_MODES } from "@/const";
+import { useStore } from "vuex";
+import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
+import { guidsAreEqual } from "@/services/guids.service";
 export default {
-  components: { FeatherChevronDown, FeatherCheckDouble, FeatherMoreHorizontal },
+  components: {
+    FeatherChevronsRight,
+    ParticipantAvatarNameItem,
+    FeatherCheckDouble,
+    FeatherMoreHorizontal,
+  },
   props: ["item", "selectedConversation", "background"],
-  setup() {
-    return {};
+  setup(props) {
+    const store = useStore();
+
+    const onMessageOpen = () => {
+      store.commit("setSelectedMessageId", props.item.id);
+      store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
+    };
+
+    const isMessageAcknowledgedByUser = (id) => {
+      return (
+        props.item.acknowledgedByUsers &&
+        props.item.acknowledgedByUsers.find((watch) =>
+          guidsAreEqual(watch.id, id)
+        )
+      );
+    };
+
+    return { onMessageOpen, isMessageAcknowledgedByUser };
   },
 };
 </script>

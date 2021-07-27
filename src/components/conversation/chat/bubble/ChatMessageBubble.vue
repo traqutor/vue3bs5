@@ -35,19 +35,31 @@
         "
         :aria-labelledby="`dropdownMenuMoreMessageUserActionsId${item.id}`"
       >
-        <button class="dropdown-item px-3 d-flex align-items-center">
+        <button
+          class="dropdown-item px-3 d-flex align-items-center"
+          @click="onMessageForward"
+        >
           <feather-arrow-forward class="text-secondary f-icon-18 me-3" />
           <span class="">Forward</span>
         </button>
-        <button class="dropdown-item px-3 d-flex align-items-center">
+        <button
+          class="dropdown-item px-3 d-flex align-items-center"
+          @click="onMessageCopy"
+        >
           <feather-copy class="text-secondary f-icon-18 me-3" />
           <span>Copy</span>
         </button>
-        <button class="dropdown-item px-3 d-flex align-items-center">
+        <button
+          class="dropdown-item px-3 d-flex align-items-center"
+          @click="onMessageEdit"
+        >
           <feather-edit3 class="text-secondary f-icon-18 me-3" />
           <span>Edit message</span>
         </button>
-        <button class="dropdown-item px-3 d-flex align-items-center">
+        <button
+          class="dropdown-item px-3 d-flex align-items-center"
+          @click="onMessageOpen"
+        >
           <feather-link2 class="text-secondary f-icon-18 me-3" />
           <span class="">Message details</span>
         </button>
@@ -276,6 +288,7 @@
             data-target="#replyMessage"
             aria-expanded="false"
             aria-controls="replyMessage"
+            @click="onMessageReply"
           >
             <FeatherArrowReplyDown class="f-icon-20" />
           </button>
@@ -344,80 +357,72 @@
               text-secondary text-dark-hover
               toggle-action-active
             "
-            data-toggle="dropdown"
-            aria-haspopup="true"
+            :id="`dropdownMenuMoreMessageActionsId${item.id}`"
+            data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <FeatherMoreVertical class="f-icon-20" />
           </button>
 
-          <div
+          <ul
             class="
               dropdown-menu dropdown-menu-sm dropdown-menu-right
               shadow
               cursor-default
             "
+            :aria-labelledby="`dropdownMenuMoreMessageActionsId${item.id}`"
           >
-            <button
-              class="
-                dropdown-item
-                px-3
-                d-flex
-                align-items-center
-                dropdown-trigger-toggle
-              "
-              dropdown-trigger=".mqreply-1"
-            >
-              <feather-message-circle class="me-3 text-secondary f-icon-18" />
-              <span class="ms-n1">Quick Reply</span>
-            </button>
-            <button class="dropdown-item px-3 d-flex align-items-center">
-              <feather-arrow-forward class="me-3 text-secondary f-icon-18" />
-              <span class="ms-n1">Forward</span>
-            </button>
-            <button class="dropdown-item px-3 d-flex align-items-center">
-              <feather-copy class="me-3 text-secondary f-icon-18" />
-              <span class="ms-n1">Copy</span>
-            </button>
-            <button
-              class="
-                dropdown-item
-                px-3
-                d-flex
-                align-items-center
-                toggle-item-hidden
-              "
-            >
-              <feather-link2 class="me-3 text-secondary f-icon-18" />
-              <span class="ms-n1">Message details</span>
-            </button>
-          </div>
-
-          <div class="dropdown">
-            <div
-              class="toggle-action-active mqreply-1"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            ></div>
-            <div
-              class="
-                dropdown-menu dropdown-menu-sm dropdown-menu-right
-                shadow
-                cursor-default
-              "
-            >
-              <div class="dropdown-item-text text-secondary text-center px-3">
-                Quick Reply
-              </div>
-              <button class="dropdown-item px-3">Call me later, please</button>
-              <button class="dropdown-item px-3">I’m on my way</button>
-              <button class="dropdown-item px-3">I’ll call you ASAP</button>
-              <button class="dropdown-item px-3">
-                I’m not available right now
+            <li>
+              <button class="dropdown-item px-3 d-flex align-items-center">
+                <feather-message-circle class="me-3 text-secondary f-icon-18" />
+                <span class="">Quick Reply</span>
+                <FeatherChevronsRight class="ms-2" />
               </button>
-            </div>
-          </div>
+              <ul class="submenu dropdown-menu">
+                <li v-for="(text, index) of quickResponsesOptions" :key="index">
+                  <button
+                    class="dropdown-item px-3"
+                    @click="onMessageQuickText(text)"
+                  >
+                    {{ text }}
+                  </button>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <button
+                class="dropdown-item px-3 d-flex align-items-center"
+                @click="onMessageForward"
+              >
+                <feather-arrow-forward class="me-3 text-secondary f-icon-18" />
+                <span class="ms-n1">Forward</span>
+              </button>
+            </li>
+            <li>
+              <button
+                class="dropdown-item px-3 d-flex align-items-center"
+                @click="onMessageCopy"
+              >
+                <feather-copy class="me-3 text-secondary f-icon-18" />
+                <span class="ms-n1">Copy</span>
+              </button>
+            </li>
+            <li>
+              <button
+                class="
+                  dropdown-item
+                  px-3
+                  d-flex
+                  align-items-center
+                  toggle-item-hidden
+                "
+                @click="onMessageOpen"
+              >
+                <feather-link2 class="me-3 text-secondary f-icon-18" />
+                <span class="ms-n1">Message details</span>
+              </button>
+            </li>
+          </ul>
         </div>
         <!--end::message more-vertical dropdown menu -->
       </div>
@@ -426,7 +431,7 @@
   <!--end::others Users bubble-->
 </template>
 <script>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 
 import { guidsAreEqual } from "@/services/guids.service";
@@ -449,10 +454,12 @@ import BubbleWhisperHeaderDropdown from "@/components/conversation/chat/bubble/B
 import BubbleSubTextInfoDate from "@/components/conversation/chat/bubble/BubbleSubTextInfoDate";
 import emojisTemplate from "@/const/emojis";
 import { CHAT_VIEW_MODES } from "@/const";
+import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
 
 export default {
   name: "ign-chat-message-bubble",
   components: {
+    FeatherChevronsRight,
     BubbleSubTextInfoDate,
     BubbleWhisperHeaderDropdown,
     BubbleAcknowledgedDropDownButton,
@@ -469,6 +476,12 @@ export default {
   props: ["item"],
   setup(props) {
     const store = useStore();
+    const quickResponsesOptions = ref([
+      "Call me later, please",
+      "I'm on my way",
+      "I'll call you ASAP",
+      "I'm not available right now",
+    ]);
     const loggedUser = computed(() => store.getters.getLoggedUser);
     const getAuthor = computed(() => store.getters.getMessageAuthor);
     const selectedConversation = computed(
@@ -495,6 +508,32 @@ export default {
         });
       }
       return visible;
+    });
+
+    const isMessageAcknowledgedByUser = computed(() => {
+      return (
+        props.item.acknowledgedByUsers &&
+        props.item.acknowledgedByUsers.find((ack) =>
+          guidsAreEqual(ack.id, loggedUser.value.id)
+        )
+      );
+    });
+
+    const isWatchedByAllParticipants = computed(() => {
+      return (
+        (props.item.watchedByUsers && props.item.watchedByUsers.length) ===
+        (selectedConversation.value.participants &&
+          selectedConversation.value.participants.length)
+      );
+    });
+
+    const isMessageWatchedByUser = computed(() => {
+      return (
+        props.item.watchedByUsers &&
+        props.item.watchedByUsers.find((watch) =>
+          guidsAreEqual(watch.id, loggedUser.value.id)
+        )
+      );
     });
 
     const isUserInfoToDisplay = computed(() => {
@@ -554,32 +593,6 @@ export default {
       }
     });
 
-    const isMessageAcknowledgedByUser = computed(() => {
-      return (
-        props.item.acknowledgedByUsers &&
-        props.item.acknowledgedByUsers.find((ack) =>
-          guidsAreEqual(ack.id, loggedUser.value.id)
-        )
-      );
-    });
-
-    const isWatchedByAllParticipants = computed(() => {
-      return (
-        (props.item.watchedByUsers && props.item.watchedByUsers.length) ===
-        (selectedConversation.value.participants &&
-          selectedConversation.value.participants.length)
-      );
-    });
-
-    const isMessageWatchedByUser = computed(() => {
-      return (
-        props.item.watchedByUsers &&
-        props.item.watchedByUsers.find((watch) =>
-          guidsAreEqual(watch.id, loggedUser.value.id)
-        )
-      );
-    });
-
     const frequentlyUsedEmojis = computed(() => {
       const obj = {};
       for (const category in emojisTemplate) {
@@ -601,14 +614,28 @@ export default {
       store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
     };
 
+    const onMessageForward = () => {
+      console.log("onMessageForward", props.item);
+    };
+
+    const onMessageCopy = () => {
+      console.log("onMessageCopy", props.item);
+    };
+
+    const onMessageEdit = () => {
+      console.log("onMessageEdit", props.item);
+    };
+
     const onMessageReply = () => {
-      console.log("setReplyMessage", props.item);
-      // store.commit("setReplyMessage", props.item);
+      console.log("onMessageReply", props.item);
+    };
+
+    const onMessageQuickText = (text) => {
+      console.log("onMessageQuickText", props.item, text);
     };
 
     const onMessageQuickReaction = (reactionEmoji) => {
-      console.log("setReplyMessage", props.item, reactionEmoji);
-      // store.commit("setReplyMessage", props.item);
+      console.log("onMessageQuickReaction", props.item, reactionEmoji);
     };
 
     const onAcknowledgePost = () => {
@@ -616,6 +643,7 @@ export default {
     };
 
     return {
+      quickResponsesOptions,
       selectedConversation,
       selectedCreator,
       getConversationAvailableCreationRoles,
@@ -625,9 +653,13 @@ export default {
       getBubbleClass,
       isUserInfoToDisplay,
       getAuthor,
+      onMessageCopy,
+      onMessageEdit,
+      onMessageForward,
       onMessageOpen,
       onMessageReply,
       onMessageQuickReaction,
+      onMessageQuickText,
       isWatchedByAllParticipants,
       isMessageWatchedByUser,
       isMessageAcknowledgedByUser,

@@ -32,9 +32,24 @@
         will-change: transform;
       "
     >
-      <div class="dropdown-item-text text-secondary text-nowrap">
+      <button
+        class="
+          dropdown-item-text
+          py-2
+          btn btn-white
+          border-0
+          d-flex
+          align-items-center
+          w-100
+          text-secondary
+          rounded-bottom-0
+        "
+        type="button"
+        @click="onMessageOpen"
+      >
         Whisper to ({{ item.whisperRecipients.length }})
-      </div>
+        <feather-chevrons-right class="ms-auto" />
+      </button>
 
       <perfect-scrollbar class="dropdown-menu-scroll-list pe-3">
         <div
@@ -43,24 +58,6 @@
           class="dropdown-item d-flex align-items-center on-hover mb-1"
         >
           <ParticipantAvatarNameItem :participant-id="item.id">
-            <template v-slot:secondary>
-              <div
-                class="
-                  ms-auto
-                  text-nowrap
-                  ms-5
-                  pt-1
-                  text-muted
-                  f-size-12
-                  align-self-start
-                "
-              >
-                <feather-check-double
-                  class="me-1"
-                  :class="isMessageWatchedByUser(item.id) ? 'text-success' : ''"
-                />
-              </div>
-            </template>
           </ParticipantAvatarNameItem>
         </div>
       </perfect-scrollbar>
@@ -71,17 +68,22 @@
 <script>
 import FeatherWhisperMessage from "@/icons/FeatherWhisperMessage";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
-import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
 import { guidsAreEqual } from "@/services/guids.service";
+import { CHAT_VIEW_MODES } from "@/const";
+import { useStore } from "vuex";
+import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
+
 export default {
   components: {
-    FeatherCheckDouble,
+    FeatherChevronsRight,
     ParticipantAvatarNameItem,
     FeatherWhisperMessage,
   },
   props: ["item"],
 
   setup(props) {
+    const store = useStore();
+
     const isMessageWatchedByUser = (id) => {
       return (
         props.item.watchedByUsers &&
@@ -89,7 +91,12 @@ export default {
       );
     };
 
-    return { isMessageWatchedByUser };
+    const onMessageOpen = () => {
+      store.commit("setSelectedMessageId", props.item.id);
+      store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
+    };
+
+    return { onMessageOpen, isMessageWatchedByUser };
   },
 };
 </script>
