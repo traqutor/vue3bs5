@@ -173,7 +173,7 @@ export default {
       );
     }
     if (message.activeRoleId) {
-      author.user = getters.getSystemRoles.find(
+      author.role = getters.getSystemRoles.find(
         (rle) => rle.id === message.activeRoleId
       );
     }

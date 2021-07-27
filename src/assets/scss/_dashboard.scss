@@ -576,6 +576,10 @@ mark {
   filter: none;
 }
 
+.pb-10px {
+  padding-bottom: 10px;
+}
+
 .mw-100 {
   max-width: 100% !important;
 }
@@ -3058,13 +3062,13 @@ textarea.no-resize {
 }
 
 .dialog-group-strip {
-  font-size: .813rem;
+  font-size: 0.813rem;
   text-align: center;
   margin: 1rem;
 }
 .dialog-group-message {
-  padding: .75rem 1rem;
-  font-size: .813rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.813rem;
   position: relative;
 }
 

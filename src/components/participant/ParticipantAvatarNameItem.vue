@@ -39,7 +39,6 @@ export default {
     participantId: { type: String },
     isHighlighted: { type: Boolean },
     isActiveIndicator: { type: Boolean },
-    onSelect: { type: Function },
   },
   setup(props) {
     const store = useStore();

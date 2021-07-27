@@ -16,6 +16,7 @@
                 bg-light
               "
             >
+              <!-- start::more vertical menu dropdown -->
               <div class="input-group-prepend">
                 <div
                   class="btn-group dropup bg-transparent dropdown"
@@ -61,7 +62,9 @@
                   </div>
                 </div>
               </div>
+              <!-- end::more vertical menu dropdown -->
 
+              <!-- start::message text area -->
               <TextareaResizeAuto>
                 <template v-slot:default="{ resize }">
                   <textarea
@@ -87,7 +90,9 @@
                   ></textarea>
                 </template>
               </TextareaResizeAuto>
+              <!-- end::message text area -->
 
+              <!-- start::request acknowledge indicator icon toggle button -->
               <div
                 class="
                   input-group-append
@@ -117,6 +122,107 @@
                   <feather-point-square class="f-icon-26" />
                 </button>
               </div>
+              <!-- end::request acknowledge indicator icon toggle button -->
+
+              <!-- start::message creator selector -->
+              <div class="input-group-append bg-transparent">
+                <div class="btn-group dropup">
+                  <button
+                    type="button"
+                    class="
+                      btn btn-sm
+                      pr-1
+                      pb-10px
+                      btn-link
+                      text-decoration-none
+                      f-size-14
+                      rounded-0
+                      border-0
+                      shadow-none
+                      d-flex
+                      align-items-end
+                      role-label
+                      text-blue
+                    "
+                    id="dropdownMessageSelectorButtonId"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <span class="role-name" v-if="selectedSender">{{
+                      selectedSender.userName
+                        ? selectedSender.userName
+                        : selectedSender.name
+                    }}</span>
+                    <feather-chevrons-left class="f-icon-20" />
+                  </button>
+
+                  <div
+                    class="
+                      dropdown-menu dropdown-menu-right
+                      pull-menu-right
+                      dropdown-menu-sm
+                      p-0
+                      shadow
+                      dropdown-insert-click
+                      w-col-sm
+                    "
+                    aria-labelledby="dropdownMessageSelectorButtonId"
+                  >
+                    <div
+                      class="
+                        dropdown-header
+                        f-size-15
+                        mb-0
+                        mt-1
+                        pb-1
+                        text-dark
+                        font-weight-middle
+                      "
+                    >
+                      Send as:
+                    </div>
+
+                    <div
+                      class="
+                        list-group list-group-flush
+                        overflow-hidden
+                        p-2
+                        pt-0
+                        role-list-group
+                        no-select
+                      "
+                    >
+                      <div
+                        class="
+                          list-group-item
+                          role-item
+                          p-2
+                          rounded
+                          list-group-item-action
+                          border-0
+                          on-hover
+                          mb-1
+                          visible
+                        "
+                        :class="false ? 'active' : ''"
+                        v-for="(creator, index) of availableMessageCreators"
+                        :key="index"
+                      >
+                        <div class="media align-items-center">
+                          <ParticipantAvatarNameItem
+                            :participant-id="creator.id"
+                            @click="onSenderSelect(creator)"
+                          >
+                          </ParticipantAvatarNameItem>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end::message creator selector -->
+
+              <!-- start::emoji selector -->
               <div class="input-group-append bg-transparent">
                 <div class="btn-group dropdown">
                   <button
@@ -143,7 +249,9 @@
                   <EmojiPicker @onInsert="insertEmoji" />
                 </div>
               </div>
+              <!-- end::emoji selector -->
 
+              <!-- start::quick messages selector -->
               <div class="input-group-append bg-transparent">
                 <button
                   class="
@@ -163,6 +271,7 @@
                   <feather-paper class="f-icon-24" />
                 </button>
               </div>
+              <!-- end::quick messages selector -->
             </div>
           </div>
 
@@ -206,8 +315,12 @@ import ChatPlayMessage from "@/components/conversation/chat/ChatPlayMessage";
 import { CONVERSATION_VIEW_MODES } from "@/const";
 import EmojiPicker from "@/components/conversation/chat/chat-text-selector/EmojiPicker";
 import TextareaResizeAuto from "@/components/text/TextareaResizeAuto";
+import FeatherChevronsLeft from "@/icons/FeatherChevronsLeft";
+import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 export default {
   components: {
+    ParticipantAvatarNameItem,
+    FeatherChevronsLeft,
     EmojiPicker,
     ChatPlayMessage,
     ChatRecordMessage,
@@ -223,8 +336,9 @@ export default {
     const requiresAcknowledgement = ref(false);
     const selectedSender = ref();
     const placeholder = ref("Enter a message...");
-    const selectedConversation = computed(
-      () => store.getters.getSelectedConversation
+
+    const availableMessageCreators = computed(
+      () => store.getters.getConversationAvailableCreationRoles
     );
 
     const messageText = computed({
@@ -290,6 +404,7 @@ export default {
     return {
       messageText,
       selectedSender,
+      availableMessageCreators,
       placeholder,
       requiresAcknowledgement,
       onShowTemplatesAndQuickMessages,

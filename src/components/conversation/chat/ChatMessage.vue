@@ -6,44 +6,36 @@
           <div class="col-7">
             <div class="text-secondary my-3 f-size-15">Message</div>
 
-            <div class="d-flex">
-              <figure
+            <div class="d-flex pb-2">
+              <ParticipantAvatarNameItem
                 v-if="getAuthor.user"
-                class="avatar avatar-lg me-3 ms-1"
-                :data-initial="
-                  getAuthor.user.userName.substr(0, 1).toUpperCase()
+                :participant-id="getAuthor.user.userId"
+              >
+              </ParticipantAvatarNameItem>
+              <ParticipantAvatarNameItem
+                v-if="getAuthor.role"
+                :participant-id="getAuthor.role.id"
+              >
+              </ParticipantAvatarNameItem>
+            </div>
+
+            <div
+              class="d-flex media-body flex-column align-items-start ms-5 ps-1"
+            >
+              <div
+                class="
+                  dialog-group-message
+                  d-inline-block
+                  bg-grey-light
+                  rounded
                 "
               >
-                <img
-                  v-if="getAuthor.user.avatar"
-                  :src="`images/${getAuthor.user.avatar}`"
-                  alt=""
-                />
-              </figure>
-
-              <div class="media-body d-flex flex-column align-items-start">
-                <div class="mb-2">
-                  <div class="font-weight-middle">
-                    <span v-if="getAuthor.user">{{
-                      getAuthor.user.userName
-                    }}</span>
-                  </div>
-                  <div class="f-size-13 text-secondary">
-                    <span v-if="getAuthor.user">{{
-                      getAuthor.user.roles.map((rle) => rle.name).join(", ")
-                    }}</span>
-                  </div>
-                </div>
+                <!--start::message text -->
                 <div
-                  class="
-                    dialog-group-message
-                    d-inline-block
-                    bg-grey-light
-                    rounded
-                  "
-                >
-                  {{ selectedMessage.text }}
-                </div>
+                  class="d-inline show-white-space"
+                  v-html="selectedMessage.text"
+                ></div>
+                <!--end::message text -->
               </div>
             </div>
 
@@ -201,13 +193,31 @@ export default {
     const getAuthor = computed(() =>
       store.getters.getMessageAuthor(selectedMessage.value)
     );
-    const selectedConversationParticipants = computed(() =>
-      store.getters.getSelectedConversation.participants.filter(
-        (participant) =>
-          selectedMessage.value &&
-          !guidsAreEqual(participant.id, selectedMessage.value.authorId)
-      )
-    );
+    const selectedConversationParticipants = computed(() => {
+      let participantsArray = [];
+      if (selectedMessage.value.isWhisper) {
+        participantsArray = selectedMessage.value.whisperRecipients;
+      } else {
+        participantsArray = store.getters.getSelectedConversation.participants;
+      }
+      return participantsArray.filter((participant) => {
+        let isParticipant = true;
+        if (selectedMessage.value) {
+          if (selectedMessage.value.activeRoleId) {
+            if (
+              guidsAreEqual(participant.id, selectedMessage.value.activeRoleId)
+            ) {
+              isParticipant = false;
+            }
+          } else {
+            if (guidsAreEqual(participant.id, selectedMessage.value.authorId)) {
+              isParticipant = false;
+            }
+          }
+        }
+        return isParticipant;
+      });
+    });
 
     const isRoleById = (id) => {
       let isRole = false;
