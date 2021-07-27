@@ -1,6 +1,5 @@
 import { guidsAreEqual, guidsGetNull } from "@/services/guids.service";
 import { CHAT_VIEW_MODES } from "@/const";
-import { computed } from "vue";
 
 function sortByUserName(a, b) {
   if (a.userName.toLowerCase() < b.userName.toLowerCase()) {

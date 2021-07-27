@@ -253,14 +253,14 @@
             <!--start::message button text acknowledge-->
             <div v-show="item.requiresAcknowledgement" class="mt-2 pb-1">
               <button
-                v-if="!isMessageAcknowledgedByUser"
+                v-if="!isMessageAcknowledgedByUser(item)"
                 class="btn btn-sm btn-primary f-size-12 shadow-none"
                 @click="onAcknowledgePost"
               >
                 Acknowledge
               </button>
 
-              <div v-show="isMessageAcknowledgedByUser" class="dropdown">
+              <div v-show="isMessageAcknowledgedByUser(item)" class="dropdown">
                 <BubbleAcknowledgedDropDownButton
                   :item="item"
                   :selected-conversation="selectedConversation"
@@ -495,9 +495,11 @@ export default {
     );
 
     const isMessageAcknowledged = computed(() => {
-      let visible = null;
+      let visible = false;
+
       const whoCanAcknowledge =
         store.getters.getConversationAvailableCreationRoles;
+
       if (whoCanAcknowledge && props.item.acknowledgedByUsers) {
         whoCanAcknowledge.forEach((who) => {
           props.item.acknowledgedByUsers.forEach((ack) => {
@@ -510,14 +512,7 @@ export default {
       return visible;
     });
 
-    const isMessageAcknowledgedByUser = computed(() => {
-      return (
-        props.item.acknowledgedByUsers &&
-        props.item.acknowledgedByUsers.find((ack) =>
-          guidsAreEqual(ack.id, loggedUser.value.id)
-        )
-      );
-    });
+    const isMessageAcknowledgedByUser = computed(() => store.getters.getIsMessageAcknowledged);
 
     const isWatchedByAllParticipants = computed(() => {
       return (

@@ -1,4 +1,5 @@
 import { guidsAreEqual } from "@/services/guids.service";
+import { computed } from "vue";
 
 export default {
   getChatViewMode: (state) => {
@@ -67,5 +68,31 @@ export default {
   },
   getIsQuickChatTextSelectorVisible: (state) => {
     return state.isQuickChatTextSelectorVisible;
+  },
+
+  getIsMessageAcknowledged: (state, getters) => (message) => {
+    return (
+      message.acknowledgedByUsers &&
+      message.acknowledgedByUsers.find(
+        (ack) =>
+          (getters.getLoggedUser &&
+            guidsAreEqual(ack.id, getters.getLoggedUser.id)) ||
+          getters.getLoggedUser.SystemRoles.find((role) =>
+            guidsAreEqual(ack.id, role.Id)
+          )
+      )
+    );
+  },
+
+  getMessagesToAcknowledge: (state, getters) => {
+    return getters.getSelectedConversation.messages.filter(
+      (message) =>
+        message.authorId !== getters.getLoggedUser.id &&
+        getters.getLoggedUser.SystemRoles.find(
+          (role) => role.Id === message.activeRoleId
+        ) &&
+        message.requiresAcknowledgement &&
+        !getters.getIsMessageAcknowledged(message)
+    );
   },
 };
