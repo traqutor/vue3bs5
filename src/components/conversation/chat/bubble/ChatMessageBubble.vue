@@ -197,22 +197,20 @@
         alt=""
       />
     </figure>
-    <!--end::User avatar-->
     <div v-else class="avatar-lg me-3 ms-1"></div>
+    <!--end::User avatar-->
+
     <div class="media-body">
       <!--start::User name and roles-->
       <div
         v-if="isUserInfoToDisplay && !selectedConversation.isDirect"
         class="mb-2"
       >
-        <span v-if="getAuthor(item).user" class="font-weight-middle">{{
-          getAuthor(item).user.userName
-        }}</span>
-        <span v-if="getAuthor(item).user" class="f-size-13 ms-2 text-secondary">{{
-          getAuthor(item)
-            .user.roles.map((rle) => rle.name)
-            .join(", ")
-        }}</span>
+        <ParticipantNameAndRolesItem
+          :participant-id="
+            item.activeRoleId ? item.activeRoleId : item.authorId
+          "
+        />
       </div>
       <!--end::User name and roles-->
 
@@ -455,10 +453,12 @@ import BubbleSubTextInfoDate from "@/components/conversation/chat/bubble/BubbleS
 import emojisTemplate from "@/const/emojis";
 import { CHAT_VIEW_MODES } from "@/const";
 import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
+import ParticipantNameAndRolesItem from "@/components/participant/ParticipantNameAndRolesItem";
 
 export default {
   name: "ign-chat-message-bubble",
   components: {
+    ParticipantNameAndRolesItem,
     FeatherChevronsRight,
     BubbleSubTextInfoDate,
     BubbleWhisperHeaderDropdown,
@@ -512,7 +512,9 @@ export default {
       return visible;
     });
 
-    const isMessageAcknowledgedByUser = computed(() => store.getters.getIsMessageAcknowledged);
+    const isMessageAcknowledgedByUser = computed(
+      () => store.getters.getIsMessageAcknowledged
+    );
 
     const isWatchedByAllParticipants = computed(() => {
       return (

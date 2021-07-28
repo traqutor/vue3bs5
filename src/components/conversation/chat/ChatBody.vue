@@ -20,7 +20,7 @@
 import { computed, ref, watch, nextTick } from "vue";
 import { useStore } from "vuex";
 import { timeMessagesDividerFormat } from "@/services/datetime.service";
-import { guidsAreEqual, guidsGetNull } from "@/services/guids.service";
+import { guidsAreEqual } from "@/services/guids.service";
 import IgnChatMessageBubble from "@/components/conversation/chat/bubble/ChatMessageBubble";
 export default {
   name: "ign-chat-mode",
@@ -35,6 +35,7 @@ export default {
     const tmpScrollTop = ref(0);
 
     const messages = computed(() => store.getters.getMessages);
+
     const selectedConversation = computed(
       () => store.getters.getSelectedConversation
     );
@@ -53,38 +54,6 @@ export default {
         });
         return isRole;
       });
-
-    const getUserById = (id) => {
-      let user = null;
-      store.getters.getSystemUsers.forEach((usr) => {
-        if (guidsAreEqual(usr.userId, id)) {
-          user = usr;
-        }
-      });
-      return user;
-    };
-
-    const getParticipantById = (id) => {
-      if (!id || id === guidsGetNull) return;
-
-      let participant = null;
-      store.getters.getSystemRoles.forEach((rle) => {
-        if (guidsAreEqual(rle.id, id)) {
-          participant = { ...rle, id: rle.id, isRole: true };
-        }
-      });
-      store.getters.getSystemUsers.forEach((usr) => {
-        if (guidsAreEqual(usr.userId, id)) {
-          participant = {
-            ...usr,
-            id: usr.userId,
-            name: usr.userName,
-            isRole: false,
-          };
-        }
-      });
-      return participant;
-    };
 
     const onScroll = (e) => {
       const container = this.$refs.chatContainer.$el;
@@ -166,8 +135,6 @@ export default {
       onScroll,
       onSendMessage,
       scrollToEnd,
-      getUserById,
-      getParticipantById,
       getIfPeriodToDisplay,
       getIfUserInfoToDisplay,
       timeMessagesDividerFormat,

@@ -81,7 +81,7 @@
 
       <div
         v-if="whisperToParticipants.length > 0"
-        class="d-flex align-items-center border-top whispered-wrapper"
+        class="d-flex align-items-center border-top"
       >
         <div class="me-4 text-secondary">
           Whispering to
@@ -100,7 +100,7 @@
         </perfect-scrollbar>
       </div>
 
-      <div class="mb-3">
+      <div class="my-3">
         <button
           @click="onWhisperButton"
           :disabled="
@@ -149,7 +149,6 @@ export default {
     }
 
     function onToggleParticipant(participantId) {
-      console.log("isWhisperParticipantSelected", participantId);
       store.dispatch("setToggleParticipantToWhisper", participantId);
     }
 
@@ -169,8 +168,3 @@ export default {
   },
 };
 </script>
-<style>
-.whispered-wrapper {
-  min-height: 90px;
-}
-</style>

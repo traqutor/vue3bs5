@@ -87,10 +87,12 @@ export default {
   getMessagesToAcknowledge: (state, getters) => {
     return getters.getSelectedConversation.messages.filter(
       (message) =>
-        message.authorId !== getters.getLoggedUser.id &&
-        getters.getLoggedUser.SystemRoles.find(
-          (role) => role.Id === message.activeRoleId
-        ) &&
+        getters.getLoggedUser &&
+        (message.authorId !== getters.getLoggedUser.id ||
+          (message.activeRoleId &&
+            getters.getLoggedUser.SystemRoles.find(
+              (role) => role.Id === message.activeRoleId
+            ))) &&
         message.requiresAcknowledgement &&
         !getters.getIsMessageAcknowledged(message)
     );

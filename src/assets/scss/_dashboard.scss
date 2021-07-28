@@ -749,6 +749,9 @@ p:last-child {
   color: $secondary;
   cursor: not-allowed;
 }
+.toggle-input-lime input:checked ~ .input-icon {
+  color: #08ff52;
+}
 .toggle-input-success input:checked ~ .input-icon {
   color: #28a745;
 }

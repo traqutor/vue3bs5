@@ -53,7 +53,7 @@ export default {
       conversationId: conversationId,
       refresh: true,
       showLoading: true,
-    });
+    })
   },
 
   onCreateConversation: ({ commit, dispatch, state, rootState, getters }) => {
@@ -199,8 +199,8 @@ export default {
       .get(url, { cancelToken: getMessagesSource.token })
       .then(function (response) {
         getMessagesSource = null;
-        console.log("on get messages response", response);
         let arr = response.data.messages.reverse();
+        console.log("on get messages response", arr);
         let messages = refresh ? [] : getters.getMessages;
         messages = arr.concat(messages);
 

@@ -1,7 +1,7 @@
 <template>
   <div class="list-contact list-contact-xm me-3 pt-2 hover-visible-group">
     <figure v-if="participant && participant.isRole" class="avatar avatar-lg">
-      <feather-briefcase1></feather-briefcase1>
+      <feather-briefcase1 />
       <span
         class="
           avatar-icon avatar-icon-top
@@ -36,7 +36,7 @@
       <i v-if="isActiveIndicator" class="avatar-presence online"></i>
     </figure>
 
-    <div class="text-truncate f-size-12 text-center pt-1 text-dark">
+    <div class="text-truncate f-size-12 text-center pt-1 text-dark" :class="textClasses">
       {{ participant.name }}
     </div>
   </div>
@@ -45,10 +45,12 @@
 import FeatherX from "@/icons/FeatherX";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import FeatherBriefcase1 from "@/icons/FeatherBriefcase1";
 export default {
   props: {
     participantId: { type: String },
     isActiveIndicator: { true: Boolean },
+    textClasses: { type: String },
   },
   setup(props) {
     const store = useStore();
@@ -57,6 +59,6 @@ export default {
     );
     return { participant };
   },
-  components: { FeatherX },
+  components: { FeatherBriefcase1, FeatherX },
 };
 </script>

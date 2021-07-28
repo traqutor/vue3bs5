@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="messagesToAcknowledge.length > 0"
+    v-if="numberOfMessagesToAcknowledge > 0"
     class="
       d-flex
       align-items-center
@@ -46,6 +46,7 @@
               step-tabpanel-open
               shadow-none
             "
+            @click="onAcknowledgePost(message)"
           >
             Acknowledge
           </button>
@@ -117,7 +118,15 @@ export default {
       () => store.getters.getMessagesToAcknowledge.length
     );
 
-    return { messagesToAcknowledge, numberOfMessagesToAcknowledge };
+    const onAcknowledgePost = (item) => {
+      store.dispatch("onAcknowledgeMessage", item.id);
+    };
+
+    return {
+      messagesToAcknowledge,
+      numberOfMessagesToAcknowledge,
+      onAcknowledgePost,
+    };
   },
 };
 </script>

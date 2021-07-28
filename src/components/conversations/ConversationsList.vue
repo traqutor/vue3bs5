@@ -15,7 +15,9 @@
           >
             <a class="nav-item nav-link nav-filter-control shadow-none active">
               Conversations
-              <span class="badge badge-primary badge-pill ms-2">12</span>
+              <span v-if="numberOfConversations > 0" class="badge badge-primary badge-pill ms-2"
+                >{{ numberOfConversations }}
+              </span>
             </a>
 
             <div class="btn-toolbar ms-auto">
@@ -112,7 +114,13 @@ export default {
   setup() {
     const store = useStore();
     const conversations = computed(() => store.getters.getConversations);
-    return { conversations };
+    const numberOfConversations = computed(
+      () =>
+        store.getters.getConversations.filter(
+          (conversation) => conversation.unreadMessageCount > 0
+        ).length
+    );
+    return { conversations, numberOfConversations };
   },
   components: { FeatherMoreHorizontal, ConversationsListItem },
 };

@@ -17,9 +17,7 @@ export default {
     const participant = computed(() =>
       store.getters.getParticipantById(props.participantId)
     );
-    const getTextToSearchParticipants = computed(
-      () => store.getters.getTextToSearchParticipants
-    );
+
 
     function getRolesAsLabel() {
       if (participant.value.roles) {
@@ -27,7 +25,7 @@ export default {
       }
     }
 
-    return { participant, getTextToSearchParticipants, getRolesAsLabel };
+    return { participant, getRolesAsLabel };
   },
 };
 </script>
