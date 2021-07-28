@@ -23,6 +23,7 @@
     </span>
   </button>
 
+  <!-- start:: dropdown menu -->
   <div
     class="dropdown-menu dropdown-menu-sm dropdown-menu-right p-0 shadow"
     :aria-labelledby="`dropdownMenuAcknowledgedId${item.id}`"
@@ -48,6 +49,7 @@
       <feather-chevrons-right class="ms-auto" />
     </button>
 
+    <!-- start:: dropdown menu for whisper message -->
     <perfect-scrollbar
       v-if="item.isWhisper"
       class="dropdown-menu-scroll-list mt-1 pe-3"
@@ -83,6 +85,9 @@
         </ParticipantAvatarNameItem>
       </div>
     </perfect-scrollbar>
+    <!-- end:: dropdown menu for whisper message -->
+
+    <!-- start:: dropdown menu for all conversation participants message -->
     <perfect-scrollbar v-else class="dropdown-menu-scroll-list mt-1 pe-3">
       <div
         v-for="(item, index) of selectedConversation.participants"
@@ -115,6 +120,7 @@
         </ParticipantAvatarNameItem>
       </div>
     </perfect-scrollbar>
+    <!-- end:: dropdown menu for all conversation participants message -->
 
     <button
       class="
@@ -143,6 +149,7 @@
       }}</span
       >) <feather-more-horizontal class="ms-auto ps-1" />
     </button>
+    <!-- end:: dropdown menu -->
   </div>
 </template>
 <script>

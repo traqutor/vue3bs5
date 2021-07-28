@@ -19,7 +19,7 @@
     >
       <feather-whisper-message class="text-white f-icon-16" />
     </button>
-
+    <!-- start:: dropdown menu -->
     <div
       class="dropdown-menu dropdown-menu-right dropdown-menu-sm pt-1 shadow"
       :aria-labelledby="`dropdownMenuBubbleWhispersId${item.id}`"
@@ -62,6 +62,7 @@
         </div>
       </perfect-scrollbar>
     </div>
+    <!-- end:: dropdown menu -->
   </div>
 </template>
 

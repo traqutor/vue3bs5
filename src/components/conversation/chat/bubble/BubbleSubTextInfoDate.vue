@@ -16,7 +16,7 @@
       }}</span>
       <span v-else>{{ selectedConversation.participants.length }}</span>
     </span>
-
+    <!-- start:: dropdown menu -->
     <div
       class="dropdown-menu dropdown-menu-sm p-0 shadow"
       :aria-labelledby="`dropdownMenuBubbleWatchersId${item.id}`"
@@ -126,6 +126,7 @@
         <feather-more-horizontal class="ms-auto" />
       </button>
     </div>
+    <!-- end:: dropdown menu -->
   </div>
 
   <span
