@@ -122,8 +122,31 @@
         </div>
         <!-- end::second line-->
 
+        <!-- start::user is typing toggle with third line -->
+        <div
+          v-if="conversation.typingUsers && conversation.typingUsers.length > 0"
+          class="d-flex justify-content-between align-items-center pt-1"
+        >
+          <div class="d-flex align-items-center dialog-msg overflow-hidden">
+            <span class="typing-indicator"><i></i></span>
+            <div class="media-body f-size-13 text-truncate ms-2">
+              <em class="is-filter-ignore">
+                {{
+                  conversation.typingUsers
+                    .map((user) => getParticipantById(user.userId).userName)
+                    .join(", ")
+                }}
+              </em>
+            </div>
+          </div>
+        </div>
+        <!-- end::user is typing toggle with third line -->
+
         <!-- start::third line-->
-        <div class="d-flex justify-content-between align-items-center pt-1">
+        <div
+          v-else
+          class="d-flex justify-content-between align-items-center pt-1"
+        >
           <div class="d-flex align-items-center dialog-msg overflow-hidden">
             <div
               v-if="conversation.lastMessage"
@@ -154,6 +177,7 @@
       </div>
     </div>
 
+    <!-- start::hidden dropdown menu -->
     <div
       class="
         btn-group-sm btn-group-vertical
@@ -236,6 +260,7 @@
         </div>
       </div>
     </div>
+    <!-- end::hidden dropdown menu -->
   </a>
 </template>
 <script>

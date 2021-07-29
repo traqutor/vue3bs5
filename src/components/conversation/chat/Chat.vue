@@ -5,6 +5,7 @@
         <chat-body></chat-body>
         <chat-drawer></chat-drawer>
       </div>
+      <chat-footer-user-is-typing></chat-footer-user-is-typing>
       <chat-footer-acknowledge></chat-footer-acknowledge>
       <chat-footer-whisper></chat-footer-whisper>
       <chat-footer-input></chat-footer-input>
@@ -17,8 +18,10 @@ import ChatFooterWhisper from "@/components/conversation/chat/input/ChatFooterWh
 import ChatFooterAcknowledge from "@/components/conversation/chat/input/ChatFooterAcknowledge";
 import ChatBody from "@/components/conversation/chat/ChatBody";
 import ChatDrawer from "@/components/conversation/chat/ChatDrawer";
+import ChatFooterUserIsTyping from "@/components/conversation/chat/input/ChatFooterUserIsTyping";
 export default {
   components: {
+    ChatFooterUserIsTyping,
     ChatDrawer,
     ChatBody,
     ChatFooterAcknowledge,

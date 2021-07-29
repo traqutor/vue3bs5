@@ -396,7 +396,9 @@ export default {
     watch(
       () => messageText.value,
       (after) => {
-        store.dispatch("onUserIsTyping", after);
+        if (after) {
+          store.dispatch("onUserIsTyping", after);
+        }
       }
     );
 

@@ -122,7 +122,6 @@ export default {
     return new Promise((resolve) => {
       dispatch("onGetDirectConversation", requestPayload).then(
         (conversation) => {
-          console.log("response", conversation);
           commit("setIsConversationCreating", false);
           commit("setConversationTopic", null);
           commit("purgeSelectedParticipants");

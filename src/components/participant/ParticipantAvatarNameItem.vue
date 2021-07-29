@@ -4,7 +4,7 @@
       <participant-avatar
         :participantId="participantId"
         :is-active-indicator="isActiveIndicator"
-        class="me-3"
+        avatar-classes="avatar-lg me-3"
       ></participant-avatar>
       <div class="media-body">
         <div class="d-flex align-items-center">

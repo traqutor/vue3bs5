@@ -1,7 +1,8 @@
 <template>
   <figure
     v-if="participant"
-    class="avatar avatar-lg"
+    class="avatar"
+    :class="avatarClasses"
     :data-initial="participant.name.substring(0, 1).toUpperCase()"
   >
     <feather-briefcase1 v-if="participant.isRole" />
@@ -23,6 +24,7 @@ export default {
   props: {
     participantId: { type: String },
     isActiveIndicator: { true: Boolean },
+    avatarClasses: { type: String },
   },
   setup(props) {
     const store = useStore();
