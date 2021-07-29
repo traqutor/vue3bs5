@@ -14,6 +14,7 @@
       <div
         class="d-flex flex-column h-100 w-100 position-absolute overflow-hidden"
       >
+        <!-- start::conversation header-->
         <div
           class="
             chat-section-header
@@ -24,27 +25,16 @@
             border-bottom border-secondary-light
           "
         >
-          <div class="d-flex align-content-center flex-grow-1">
-            <figure class="avatar avatar-xm">
+          <div class="d-flex align-content-center">
+            <figure class="avatar avatar-xm me-3">
               <feather-message-square-group></feather-message-square-group>
             </figure>
-
-            <div class="flex-fill me-5">
-              <input
-                type="text"
-                class="
-                  form-control form-control-lg
-                  bg-transparent
-                  shadow-none
-                  border-0
-                  m-0
-                  pl-3
-                  is-keyup-form-control
-                "
-                :value="conversationTopic"
-                @input="onConversationTopicInput"
-                placeholder="Enter a topic"
-              />
+            <div class="media-body overflow-hidden">
+              <div
+                class="text-truncate f-size-18 font-weight-middle m-0 text-dark"
+              >
+                New conversation
+              </div>
             </div>
           </div>
 
@@ -52,7 +42,7 @@
             <button
               class="
                 btn btn-sm
-                pr-0
+                pe-0
                 btn-link
                 text-decoration-none
                 dropdown-toggle
@@ -76,7 +66,7 @@
                 class="
                   dropdown-item
                   role-item
-                  media
+                  d-flex
                   align-items-center
                   on-hover
                   py-2
@@ -94,7 +84,7 @@
                 class="
                   dropdown-item
                   role-item
-                  media
+                  d-flex
                   align-items-center
                   on-hover
                   py-2
@@ -108,10 +98,12 @@
             </ul>
           </div>
         </div>
+        <!-- end:: conversation header -->
 
+        <!-- start:: conversation participants-->
         <div class="pt-3">
           <div class="d-flex align-items-center text-secondary f-size-15">
-            Participants<span class="ml-2" id="participantsGroup-cnt"></span>
+            Participants<span class="ms-2" id="participantsGroup-cnt"></span>
           </div>
         </div>
 
@@ -134,7 +126,7 @@
               overflow-hidden
             "
           >
-            <perfect-scrollbar class="pr-3">
+            <perfect-scrollbar class="pe-3">
               <div
                 class="
                   list-group
@@ -157,53 +149,254 @@
             </perfect-scrollbar>
           </div>
         </div>
+        <!-- end::conversations participants-->
 
-        <div class="chat-section-footer mt-auto pt-3">
-          <div class="input-group chat-msg-input-group mb-0 h-100">
-            <textarea
+        <!-- start::input text -->
+        <div v-if="isCreationStep === 0" class="d-flex">
+          <div class="media-body me-3">
+            <div
               class="
-                form-control
+                input-group
                 h-100
+                position-relative
+                dialog-input-group
+                has-transition
+                border border-grey-middle
+                rounded
                 bg-light
-                pl-3
-                shadow-none
-                f-size-14
-                chat-textarea-control
               "
-              :value="messageText"
-              @input="onMessageTextInput"
-              rows="2"
-              placeholder="Enter a message ..."
-            ></textarea>
+            >
+              <!-- start::message text area -->
+              <TextareaResizeAuto>
+                <template v-slot:default="{ resize }">
+                  <textarea
+                    class="
+                      form-control
+                      dialog-input-textarea
+                      chat-textarea-control
+                      f-size-14
+                      bg-transparent
+                      border-0
+                      rounded-0
+                      is-keyup-group-control
+                      shadow-none
+                      ps-2
+                      autoresize-textarea
+                      no-resize
+                    "
+                    rows="1"
+                    placeholder="Type a message ..."
+                    style="height: 42px; overflow-y: hidden"
+                    v-model="messageText"
+                    @input="resize"
+                    @keydown.enter.prevent="onSubmitFirstStep"
+                  ></textarea>
+                </template>
+              </TextareaResizeAuto>
+              <!-- end::message text area -->
+
+              <!-- start:: emoji dropdown -->
+              <div class="input-group-append bg-transparent">
+                <div class="btn-group dropdown">
+                  <button
+                    type="button"
+                    class="
+                      btn
+                      text-secondary
+                      px-2
+                      d-inline-flex
+                      align-items-end
+                      pb-2
+                      text-dark-hover
+                      border-0
+                      shadow-none
+                      rounded-0
+                    "
+                    id="dropdownEmojiMenuButtonId"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="false"
+                    aria-expanded="false"
+                  >
+                    <feather-smile class="f-icon-26" />
+                  </button>
+                  <EmojiPicker @onInsert="insertEmoji" />
+                </div>
+              </div>
+              <!-- end:: emoji dropdown -->
+
+              <!-- start:: quick messages -->
+              <div class="input-group-append bg-transparent">
+                <button
+                  class="
+                    btn
+                    text-secondary
+                    ps-2
+                    d-inline-flex
+                    align-items-end
+                    pb-2
+                    text-primary-hover
+                    border-0
+                    shadow-none
+                    rounded-0
+                  "
+                  @click="onShowTemplatesAndQuickMessages"
+                >
+                  <feather-paper class="f-icon-24" />
+                </button>
+              </div>
+              <!-- end:: quick messages -->
+            </div>
+          </div>
+
+          <div class="align-self-end btn-group-send">
+            <div>
+              <button
+                id="dialogSendControl"
+                class="
+                  btn btn-circle
+                  rounded
+                  f-icon-42
+                  btn-primary
+                  border-0
+                  shadow-none
+                "
+                type="button"
+                @click="onSubmitFirstStep"
+                :disabled="getSelectedParticipants.length <= 0"
+              >
+                <feather-arrow-up class="f-icon-22" />
+              </button>
+            </div>
           </div>
         </div>
+        <!-- end::input text -->
 
-        <div class="mt-3 d-flex">
-          <label class="toggle-input toggle-input-success m-0">
-            <input type="checkbox" checked="" />
-            <span class="input-icon f-icon-20">
-              <feather-square></feather-square>
-              <feather-check-square></feather-check-square> </span
-            >Broadcast conversation
-          </label>
+        <!-- start::make decision create new open existing conversation -->
+        <div v-if="isCreationStep === 1">
+          <div class="border-top border-secondary-light"></div>
 
-          <div class="flex-fill text-right">
+          <div
+            class="
+              text-dark text-center
+              font-weight-middle
+              f-size-16
+              px-5
+              position-relative
+              my-4
+            "
+          >
+            A conversation with
+            <span
+              v-if="getSelectedParticipants[0].isRole"
+              class="text-primary"
+              >{{ getSelectedParticipants[0].name }}</span
+            >
+            <span v-else class="text-primary">{{
+              getSelectedParticipants[0].userName
+            }}</span>
+            already exists
+
+            <span
+              class="
+                text-decoration-none
+                position-absolute position-left-center
+                f-size-14
+                font-weight-normal
+                ign-pointer
+              "
+              @click="isCreationStep = 0"
+              >Cancel</span
+            >
+          </div>
+
+          <div class="btn-group btn-group-sm w-100">
             <button
-              class="btn btn-sm btn-primary shadow-none px-5"
-              @click="onCreateConversation()"
-              :disabled="checkIfDisabled()"
               type="button"
+              class="btn btn-secondary-light rounded shadow-none me-4"
+              @click="onDirectConversationUpdate"
+            >
+              Open the existing conversation
+            </button>
+            <button
+              type="button"
+              class="btn btn-success rounded shadow-none"
+              @click="onSubmitSecondStep"
+            >
+              Start a new conversation
+            </button>
+          </div>
+        </div>
+        <!-- end::make decision create new open existing conversation -->
+
+        <!-- start::enter the topic broadcast and create conversation -->
+        <div v-if="isCreationStep === 2">
+          <div class="border-top border-secondary-light"></div>
+
+          <div
+            class="
+              text-dark text-center
+              font-weight-middle
+              f-size-16
+              px-5
+              position-relative
+              my-4
+            "
+          >
+            Enter a topic
+
+            <span
+              class="
+                ign-pointer
+                text-decoration-none
+                position-absolute position-left-center
+                f-size-14
+                font-weight-normal
+              "
+              @click="isCreationStep = 0"
+              >Cancel</span
+            >
+          </div>
+
+          <input
+            type="text"
+            class="
+              form-control form-control-sm
+              bg-light
+              shadow-none
+              is-keyup-form-control
+              my-4
+            "
+            v-model="conversationTopic"
+            placeholder="Conversation topic"
+          />
+
+          <div class="d-flex align-items-center justify-content-between">
+            <label class="toggle-input toggle-input-success m-0">
+              <input type="checkbox" />
+              <span class="input-icon f-icon-20">
+                <feather-square />
+                <feather-check-square /> </span
+              >Broadcast conversation
+            </label>
+
+            <button
+              type="button"
+              class="btn btn-primary btn-sm px-5 shadow-none"
+              :disabled="!conversationTopic"
+              @click="onCreateConversation"
             >
               Go to conversation
             </button>
           </div>
         </div>
+
+        <!-- end::enter the topic broadcast and create conversation -->
       </div>
     </div>
   </div>
 </template>
 <script>
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import FeatherSquare from "@/icons/FeatherSquare";
 import FeatherCheckSquare from "@/icons/FeatherCheckSquare";
@@ -211,28 +404,60 @@ import FeatherMessageSquareGroup from "@/icons/FeatherMessageSquareGroup";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
 import { CONVERSATION_VIEW_MODES } from "@/const";
-import {Mutations} from "@/store/enums/EnumTypes";
+import { Mutations } from "@/store/enums/EnumTypes";
+import TextareaResizeAuto from "@/components/text/TextareaResizeAuto";
+import FeatherArrowUp from "@/icons/FeatherArrowUp";
+import FeatherSmile from "@/icons/FeatherSmile";
+import EmojiPicker from "@/components/conversation/chat/chat-text-selector/EmojiPicker";
+import FeatherPaper from "@/icons/FeatherPaper";
 
 export default {
   setup() {
     const conversationViewModes = CONVERSATION_VIEW_MODES;
     const store = useStore();
+    const isCreationStep = ref(0);
     const getLoggedUser = computed(() => store.getters.getLoggedUser);
     const getSelectedParticipants = computed(
       () => store.getters.getSelectedParticipants
     );
     const getSelectedCreator = computed(() => store.getters.getSelectedCreator);
-    const messageText = computed(() => store.getters.getMessageText);
-    const conversationTopic = computed(
-      () => store.getters.getConversationTopic
-    );
+    const conversationTopic = computed({
+      get: () => {
+        return store.getters.getConversationTopic;
+      },
+      set: (value) => {
+        store.commit("setConversationTopic", value);
+      },
+    });
 
-    function onMessageTextInput(e) {
-      store.commit("setMessageText", e.target.value);
+    const messageText = computed({
+      get: () => {
+        return store.state.conversations.messageText;
+      },
+      set: (value) => {
+        store.commit("setMessageText", value);
+      },
+    });
+
+    function onSubmitFirstStep(event) {
+      if (event.shiftKey === true && event.key === "Enter") {
+        messageText.value = messageText.value + `\n`;
+      } else {
+        if (getSelectedParticipants.value.length === 1) {
+          isCreationStep.value = 1;
+        } else {
+          isCreationStep.value = 2;
+        }
+      }
     }
 
-    function onConversationTopicInput(e) {
-      store.commit("setConversationTopic", e.target.value);
+    function onSubmitSecondStep() {
+      isCreationStep.value = 2;
+    }
+
+    function insertEmoji(emoji) {
+      const txt = messageText.value ? messageText.value + emoji : emoji;
+      store.commit("setMessageText", txt);
     }
 
     function onSelectCreator(id) {
@@ -252,28 +477,52 @@ export default {
       });
     }
 
-    function checkIfDisabled() {
-      return (
-        !conversationTopic.value || getSelectedParticipants.value.length <= 0
-      );
+    function onDirectConversationUpdate() {
+      store.dispatch("onDirectConversationUpdate").then(() => {
+        store.commit("setConversationViewMode", conversationViewModes.VIEW);
+      });
     }
 
+    function onShowTemplatesAndQuickMessages() {
+      store.commit("toggleQuickChatTextSelector");
+    }
+
+    watch(
+      () => getSelectedParticipants.value,
+      (after) => {
+        if (isCreationStep.value === 1) {
+          isCreationStep.value = 0;
+        }
+        if (isCreationStep.value === 2 && after.length <= 0) {
+          isCreationStep.value = 0;
+        }
+      }
+    );
+
     return {
+      isCreationStep,
       messageText,
       conversationTopic,
-      onMessageTextInput,
-      onConversationTopicInput,
+      insertEmoji,
+      onSubmitFirstStep,
+      onSubmitSecondStep,
       conversationViewModes,
-      checkIfDisabled,
       getLoggedUser,
       getSelectedCreator,
       getSelectedParticipants,
       onSelect,
       onCreateConversation,
+      onDirectConversationUpdate,
       onSelectCreator,
+      onShowTemplatesAndQuickMessages,
     };
   },
   components: {
+    FeatherPaper,
+    EmojiPicker,
+    FeatherSmile,
+    FeatherArrowUp,
+    TextareaResizeAuto,
     ConversationsParticipantsListItem,
     ParticipantAvatarNameItem,
     FeatherMessageSquareGroup,

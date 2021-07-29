@@ -85,8 +85,9 @@
                     rows="1"
                     placeholder="Type a message ..."
                     style="height: 42px; overflow-y: hidden"
-                    v-model="messageText"
-                    @input="resize"
+                    v-model.lazy="messageText"
+                    v-debounce="500"
+                    @keydown.enter.prevent="onSubmit"
                   ></textarea>
                 </template>
               </TextareaResizeAuto>
@@ -303,7 +304,7 @@
   </div>
 </template>
 <script>
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, watch } from "vue";
 import { useStore } from "vuex";
 import FeatherPointSquare from "@/icons/FeatherPointSquare";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
@@ -381,10 +382,6 @@ export default {
       }
     }
 
-    function toggleParticipant(participant) {
-      store.commit("toggleWhisperParticipants", participant);
-    }
-
     function toggleRequestAcknowledgement() {
       requiresAcknowledgement.value = !requiresAcknowledgement.value;
       placeholder.value = requiresAcknowledgement.value
@@ -395,6 +392,13 @@ export default {
     function onAcknowledgePost(message) {
       this.$store.dispatch("onAcknowledgeMessage", message.id);
     }
+
+    watch(
+      () => messageText.value,
+      (after) => {
+        store.dispatch("onUserIsTyping", after);
+      }
+    );
 
     onMounted(() => {
       selectedSender.value =
@@ -411,7 +415,6 @@ export default {
       insertEmoji,
       onSenderSelect,
       onSubmit,
-      toggleParticipant,
       toggleRequestAcknowledgement,
       onAcknowledgePost,
       CONVERSATION_VIEW_MODES,

@@ -10,7 +10,12 @@ export default {
     const idx = conversations.findIndex((conv) =>
       guidsAreEqual(conv.id, conversation.id)
     );
-    conversations[idx] = conversation;
+    if (idx !== -1) {
+      const cutOut = conversations.splice(idx, 1)[0];
+      conversations.splice(0, 0, cutOut);
+    } else {
+      conversations.unshift(conversation);
+    }
     state.conversations = [...conversations];
   },
   setSelectedConversationId: (state, conversationId) => {

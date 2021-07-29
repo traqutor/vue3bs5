@@ -54,50 +54,16 @@
       </div>
     </div>
 
-    <div class="dropdown dropup ms-3 badge-acknowledgement">
+    <div
+      v-if="numberOfMessagesToAcknowledge > 1"
+      class="dropdown dropup ms-3 badge-acknowledgement"
+    >
       <button
         class="btn btn-sm badge-pill btn-secondary shadow-none w-100 f-size-12"
         type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
       >
-        +{{ numberOfMessagesToAcknowledge }}
+        +{{ numberOfMessagesToAcknowledge - 1 }}
       </button>
-
-      <div
-        class="dropdown-menu dropdown-menu-right dropdown-menu-sm shadow pt-0"
-        aria-labelledby="dropdownMenuButton"
-      >
-        <div class="dropdown-header text-secondary">
-          Request Acknowledgement (4)
-        </div>
-
-        <perfect-scrollbar class="dropdown-menu-scroll-list f-col-lg">
-          <div class="d-flex dropdown-item align-items-center on-hover mb-1">
-            <figure class="avatar avatar-lg me-3 shadow-none">
-              <img src="images/avatar/2.jpg" alt="" />
-            </figure>
-            <div class="media-body overflow-hidden">
-              <div class="d-flex align-items-center">
-                <div class="text-truncate me-4">
-                  <span class="text-dark font-weight-middle"
-                    >Ruben Tillman</span
-                  >
-                  <span class="text-secondary ms-2 f-size-13">Doctor</span>
-                </div>
-                <span class="ms-auto text-muted f-size-12">11:23 am</span>
-              </div>
-
-              <div class="text-truncate text-secondary f-size-13 me-4">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla
-              </div>
-            </div>
-          </div>
-        </perfect-scrollbar>
-      </div>
     </div>
   </div>
 </template>

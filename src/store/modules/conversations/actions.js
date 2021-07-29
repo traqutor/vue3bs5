@@ -53,88 +53,97 @@ export default {
       conversationId: conversationId,
       refresh: true,
       showLoading: true,
-    })
+    });
   },
 
-  onCreateConversation: ({ commit, dispatch, state, rootState, getters }) => {
+  onCreateConversation: ({ commit, state, rootState, getters }) => {
     commit("setIsConversationCreating", true);
 
     return new Promise((resolve) => {
-      if (rootState.users.selectedParticipants.length === 1) {
-        console.log(rootState.users.selectedParticipants);
-        dispatch("onGetDirectConversation", {
-          user: { id: rootState.auth.user.id, isRole: false },
-          recipient: rootState.users.selectedParticipants[0],
-        }).then((response) => {
+      const topic = state.conversationTopic
+        ? state.conversationTopic
+        : rootState.users.selectedParticipants
+            .map((participant) => {
+              return getters.getParticipantById(participant.id).name;
+            })
+            .join(", ");
+
+      const values = {
+        activeRoleId: state.selectedCreator.id
+          ? state.selectedCreator.id
+          : null,
+        topic: topic,
+        messageText: state.messageText,
+        pushNotification: {
+          title: topic,
+          body: state.messageText,
+        },
+        participants: rootState.users.selectedParticipants,
+      };
+
+      const url = `${process.env.VUE_APP_BASE_URL}/Messaging/CreateConversation`;
+
+      axiosWebApiInstance
+        .post(url, values)
+        .then((response) => {
+          console.log("CreateConversation", response);
+          if (response.data.isOk) {
+            commit("setIsConversationCreating", false);
+            commit("setConversationTopic", null);
+            commit("purgeSelectedParticipants");
+            commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
+            const conversation = state.conversations.find(
+              (item) => item.id === response.data.result
+            );
+            if (conversation) {
+              commit("setSelectedConversationId", conversation.id);
+            }
+            resolve();
+          } else {
+            console.error(
+              "On CREATE_CONVERSATION error: ",
+              response.data.message
+            );
+          }
+        })
+        .catch((error) => {
+          commit("setIsConversationCreating", false);
+          console.error("On CREATE_CONVERSATION error: ", error);
+        });
+    });
+  },
+
+  onDirectConversationUpdate: ({ commit, dispatch, state, getters }) => {
+    commit("setIsConversationCreating", true);
+    const requestPayload = {
+      user: { id: getters.getLoggedUser.id, isRole: false },
+      recipient: getters.getSelectedParticipants[0],
+    };
+    return new Promise((resolve) => {
+      dispatch("onGetDirectConversation", requestPayload).then(
+        (conversation) => {
+          console.log("response", conversation);
           commit("setIsConversationCreating", false);
           commit("setConversationTopic", null);
           commit("purgeSelectedParticipants");
-          commit("setSelectedConversationId", response.id);
+          commit("setConversation", conversation);
+          commit("setSelectedConversationId", conversation.id);
 
           dispatch("onGetMessages", {
-            conversationId: response.id,
+            conversationId: conversation.id,
             refresh: true,
             showLoading: true,
-          });
-
-          const message = {
-            messageText: state.messageText,
-          };
-          dispatch("onCreateMessage", message);
-          resolve();
-        });
-      } else {
-        const topic = state.conversationTopic
-          ? state.conversationTopic
-          : rootState.users.selectedParticipants
-              .map((participant) => {
-                return getters.getParticipantById(participant.id).name;
-              })
-              .join(", ");
-
-        const values = {
-          activeRoleId: state.selectedCreator.id
-            ? state.selectedCreator.id
-            : null,
-          topic: topic,
-          messageText: state.messageText,
-          pushNotification: {
-            title: topic,
-            body: state.messageText,
-          },
-          participants: rootState.users.selectedParticipants,
-        };
-
-        const url = `${process.env.VUE_APP_BASE_URL}/Messaging/CreateConversation`;
-
-        axiosWebApiInstance
-          .post(url, values)
-          .then((response) => {
-            console.log("CreateConversation", response);
-            if (response.data.isOk) {
-              commit("setIsConversationCreating", false);
-              commit("setConversationTopic", null);
-              commit("purgeSelectedParticipants");
-              commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
-              const conversation = state.conversations.find(
-                (item) => item.id === response.data.result
-              );
-              if (conversation) {
-                commit("setSelectedConversationId", conversation.id);
-              }
-              resolve();
-            } else {
-              console.error(
-                "On CREATE_CONVERSATION error: ",
-                response.data.message
-              );
+          }).then(() => {
+            if (state.messageText) {
+              const message = {
+                messageText: state.messageText,
+              };
+              dispatch("onCreateMessage", message);
             }
-          })
-          .catch((error) => {
-            commit("setIsConversationCreating", false);
-            console.error("On CREATE_CONVERSATION error: ", error);
+            resolve();
           });
-      }
+        }
+      );
     });
   },
 
@@ -209,12 +218,12 @@ export default {
       });
   },
 
-  onGetDirectConversation: (parameters) => {
+  onGetDirectConversation: (_, requestPayload) => {
     return new Promise((resolve) => {
       const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetDirectConversation`;
 
       axiosWebApiInstance
-        .post(url, parameters)
+        .post(url, requestPayload)
         .then(function (response) {
           const conversation = response.data.conversations[0];
 
@@ -228,6 +237,7 @@ export default {
 
   onUserIsTyping: ({ state, rootState }) => {
     const conversationId = state.selectedConversationId;
+    console.log("UserIsTyping");
     rootState.socket.hubConnection
       .invoke("UserIsTyping", conversationId)
       .catch((error) => {
