@@ -1,22 +1,23 @@
 <template>
-  <media-general-grid v-if="mediaViewMode === MEDIA_VIEW_MODE.GRID" />
-  <media-general-list v-else-if="mediaViewMode === MEDIA_VIEW_MODE.TABLE" />
+  <media-general-grid v-if="mediaViewMode === MEDIA_VIEW_MODES.GRID" />
+  <media-general-list v-else-if="mediaViewMode === MEDIA_VIEW_MODES.TABLE" />
 </template>
 <script>
-import MediaGeneralGrid from "@/views/content/media/grid/MediaGeneralGrid";
 import { mapGetters } from "vuex";
-import { MEDIA_VIEW_MODE } from "@/store/modules/media";
-import MediaGeneralList from "@/views/content/media/list/MediaGeneralList";
+import { MEDIA_VIEW_MODES } from "@/store/enums/EnumTypes";
+import MediaGeneralGrid from "@/components/media/grid/MediaGeneralGrid";
+import MediaGeneralList from "@/components/media/list/MediaGeneralList";
+
 export default {
   name: "MediaGeneral",
   data() {
-    return { MEDIA_VIEW_MODE };
+    return { MEDIA_VIEW_MODES };
   },
   components: { MediaGeneralList, MediaGeneralGrid },
   computed: {
     ...mapGetters({
-      mediaViewMode: "getMediaViewMode"
-    })
-  }
+      mediaViewMode: "getMediaViewMode",
+    }),
+  },
 };
 </script>

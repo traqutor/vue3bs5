@@ -5,8 +5,8 @@
       btn-block
       alert
       bg-media-type-1
-      pl-3
-      pr-0
+      ps-3
+      pe-0
       py-2
       mx-0
       shadow-none
@@ -15,7 +15,7 @@
     @click="onMediaTypeItem()"
   >
     <div class="d-flex justify-content-between align-items-center">
-      <div class="media align-items-center overflow-hidden">
+      <div class="d-flex align-items-center overflow-hidden">
         <figure
           class="avatar avatar-md avatar-custom text-white me-2"
           :class="getAvatarClass()"
@@ -32,20 +32,20 @@
         </div>
       </div>
 
-      <div class="btn-group btn-group-sm mx-1">
-        <b-dropdown
-          variant="link"
-          size="sm"
-          right
-          toggle-class="text-decoration-none btn-sm f-icon-28 px-2"
-          no-caret
+      <div class="btn-group btn-group-sm">
+        <button
+          role="button"
+          class="btn border-0 px-2 shadow-none text-dark rounded"
+          id="dropdownMediaTypeLinkId"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
-          <template #button-content>
-            <b-icon icon="three-dots-vertical"></b-icon>
-          </template>
-          <b-dropdown-item href="#">Action</b-dropdown-item>
-          <b-dropdown-item href="#">Second Action</b-dropdown-item>
-        </b-dropdown>
+          <FeatherMoreVertical class="f-icon-20" />
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMediaTypeLinkId">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Second Action</a></li>
+        </ul>
       </div>
     </div>
 
@@ -68,6 +68,7 @@ import {
   Mutations,
 } from "@/store/enums/EnumTypes";
 import { mapGetters } from "vuex";
+import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 export default {
   name: "MediaTypeListItem",
   props: {
@@ -134,6 +135,7 @@ export default {
     },
   },
   components: {
+    FeatherMoreVertical,
     FeatherLayers,
     FeatherMic,
     FeatherFileText,

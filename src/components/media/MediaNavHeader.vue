@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-8">
+    <div class="col-9">
       <b-nav class="side-nav-line border-bottom border-secondary-light">
         <b-nav-item
-          v-if="mediaTypeSelected.type === MEDIA_TYPE.ALL"
+          v-if="mediaTypeSelected.type === MEDIA_TYPES.ALL"
           @click="onTab(MEDIA_NAV_TABS.RECENT)"
           :active="tabActive === MEDIA_NAV_TABS.RECENT"
           >{{ MEDIA_NAV_TABS.RECENT }}
@@ -34,9 +34,9 @@
               <div class="d-flex align-items-center pb-1">
                 <nav class="nav nav-inline nav-tabs border-0">
                   <button
-                    @click="onViewMode(MEDIA_VIEW_MODE.GRID)"
+                    @click="onViewMode(MEDIA_VIEW_MODES.GRID)"
                     class="btn border-0 nav-link m-0 shadow-none"
-                    :class="mediaViewMode === MEDIA_VIEW_MODE.GRID && 'active'"
+                    :class="mediaViewMode === MEDIA_VIEW_MODES.GRID && 'active'"
                   >
                     <FeatherGrid class="f-icon-22" />
                   </button>
@@ -50,20 +50,20 @@
                       variant="link"
                       right
                       toggle-class="text-decoration-none"
-                      :disabled="mediaViewMode !== MEDIA_VIEW_MODE.GRID"
+                      :disabled="mediaViewMode !== MEDIA_VIEW_MODES.GRID"
                     >
                       <b-dropdown-header>Item size</b-dropdown-header>
                       <b-dropdown-item
                         class="font-weight-middle"
                         v-for="(item, index) of Object.entries(
-                          MEDIA_PATIENT_ITEM_SIZE
+                          MEDIA_PATIENT_ITEM_SIZES
                         )"
                         :key="index"
                         @click="onPatientSize(item[1])"
                       >
                         <b-icon
                           v-if="
-                            patientItemSize === MEDIA_PATIENT_ITEM_SIZE[item[0]]
+                            patientItemSize === MEDIA_PATIENT_ITEM_SIZES[item[0]]
                           "
                           variant="success"
                           icon="check2-circle"
@@ -80,18 +80,18 @@
                       variant="link"
                       right
                       toggle-class="text-decoration-none"
-                      :disabled="mediaViewMode !== MEDIA_VIEW_MODE.GRID"
+                      :disabled="mediaViewMode !== MEDIA_VIEW_MODES.GRID"
                     >
                       <b-dropdown-header>Item size</b-dropdown-header>
 
                       <b-dropdown-item
                         class="font-weight-middle"
-                        v-for="(item, index) of Object.entries(MEDIA_ITEM_SIZE)"
+                        v-for="(item, index) of Object.entries(MEDIA_ITEM_SIZES)"
                         :key="index"
                         @click="onSize(item[1])"
                       >
                         <b-icon
-                          v-if="itemSize === MEDIA_ITEM_SIZE[item[0]]"
+                          v-if="itemSize === MEDIA_ITEM_SIZES[item[0]]"
                           variant="success"
                           icon="check2-circle"
                           class="mr-2"
@@ -103,9 +103,9 @@
                   </div>
 
                   <button
-                    @click="onViewMode(MEDIA_VIEW_MODE.TABLE)"
+                    @click="onViewMode(MEDIA_VIEW_MODES.TABLE)"
                     class="btn border-0 nav-link ml-2 mr-1 shadow-none"
-                    :class="mediaViewMode === MEDIA_VIEW_MODE.TABLE && 'active'"
+                    :class="mediaViewMode === MEDIA_VIEW_MODES.TABLE && 'active'"
                   >
                     <FeatherList class="f-icon-28" />
                   </button>
@@ -130,19 +130,16 @@
   </div>
 </template>
 <script>
-import FeatherGrid from "@/views/content/icons/FeatherGrid";
-import FeatherList from "@/views/content/icons/FeatherList";
+import FeatherGrid from "@/icons/FeatherGrid";
+import FeatherList from "@/icons/FeatherList";
 import {
-  MEDIA_TYPE,
-  MEDIA_ITEM_SIZE,
-  MEDIA_PATIENT_ITEM_SIZE,
+  MEDIA_TYPES,
+  MEDIA_ITEM_SIZES,
+  MEDIA_PATIENT_ITEM_SIZES,
   MEDIA_NAV_TABS,
-  MEDIA_VIEW_MODE,
-  SET_MEDIA_ITEM_SIZE,
-  SET_MEDIA_NAV_TAB_SELECTED,
-  SET_MEDIA_VIEW_MODE,
-  SET_MEDIA_PATIENT_ITEM_SIZE
-} from "@/store/modules/media";
+  MEDIA_VIEW_MODES,
+  Mutations,
+} from "@/store/enums/EnumTypes";
 import { mapGetters } from "vuex";
 
 export default {
@@ -150,26 +147,26 @@ export default {
   components: { FeatherList, FeatherGrid },
   data() {
     return {
-      MEDIA_TYPE,
-      MEDIA_ITEM_SIZE,
-      MEDIA_PATIENT_ITEM_SIZE,
+      MEDIA_TYPES,
+      MEDIA_ITEM_SIZES,
+      MEDIA_PATIENT_ITEM_SIZES,
       MEDIA_NAV_TABS,
-      MEDIA_VIEW_MODE
+      MEDIA_VIEW_MODES,
     };
   },
   methods: {
     onTab(tab) {
-      this.$store.commit(SET_MEDIA_NAV_TAB_SELECTED, tab);
+      this.$store.commit(Mutations.setMediaNavTabSelected, tab);
     },
     onSize(size) {
-      this.$store.commit(SET_MEDIA_ITEM_SIZE, size);
+      this.$store.commit(Mutations.setMediaItemSize, size);
     },
     onPatientSize(size) {
-      this.$store.commit(SET_MEDIA_PATIENT_ITEM_SIZE, size);
+      this.$store.commit(Mutations.setMediaPatientItemSize, size);
     },
     onViewMode(mode) {
-      this.$store.commit(SET_MEDIA_VIEW_MODE, mode);
-    }
+      this.$store.commit(Mutations.setMediaViewMode, mode);
+    },
   },
   computed: {
     ...mapGetters({
@@ -177,8 +174,8 @@ export default {
       patientItemSize: "getMediaPatientItemSize",
       tabActive: "getMediaNavTabSelected",
       mediaTypeSelected: "getMediaTypeSelected",
-      mediaViewMode: "getMediaViewMode"
-    })
-  }
+      mediaViewMode: "getMediaViewMode",
+    }),
+  },
 };
 </script>

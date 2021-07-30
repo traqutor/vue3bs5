@@ -15,9 +15,9 @@
         class="position-absolute h-100 w-100 pe-3 media-type-group"
       >
         <MediaTypeListItem
-            v-for="item of mediaTypes"
-            :key="item.id"
-            :item="item"
+          v-for="item of mediaTypes"
+          :key="item.id"
+          :item="item"
         />
       </perfect-scrollbar>
     </div>
@@ -29,7 +29,7 @@ import { computed } from "vue";
 import MediaTypeListItem from "@/components/media/MediaTypeListItem";
 
 export default {
-  components: {MediaTypeListItem},
+  components: { MediaTypeListItem },
   setup() {
     const store = useStore();
     const mediaTypes = computed(() => store.getters.getMediaTypes);
