@@ -26,6 +26,15 @@ const Mutations = {
   // templates mutation types
   setSelectedTemplateViewMode: "setSelectedTemplateViewMode",
   setSelectedTemplate: "setSelectedTemplate",
+
+  // media mutation types
+  setMediaTypeSelected: "setMediaTypeSelected",
+  setMediaNavTabSelected: "setMediaNavTabSelected",
+  setMediaViewMode: "setMediaViewMode",
+  setMediaDrawerViewMode: "setMediaDrawerViewMode",
+  setMediaItemSize: "setMediaItemSize",
+  setMediaPatientItemSize: "setMediaPatientItemSize",
+  setMediaPatientSelected: "setMediaPatientSelected",
 };
 
 const TEMPLATE_VIEW_MODES = {
@@ -66,6 +75,39 @@ const TEMPLATES = {
   },
 };
 
+// media
+
+const MEDIA_VIEW_MODES = { GRID: "GRID", TABLE: "TABLE" };
+
+const MEDIA_DRAWER_VIEW_MODES = {
+  CLOSED: "Closed",
+  PATIENT: "Patient",
+};
+const MEDIA_ITEM_SIZES = {
+  DEFAULT: "Default",
+  MEDIUM: "Medium",
+  LARGE: "Large",
+};
+const MEDIA_PATIENT_ITEM_SIZES = {
+  DEFAULT: "Default",
+  SMALL: "Small",
+  LARGE: "Large",
+};
+const MEDIA_TYPES = {
+  ALL: "all",
+  AUDIO: "audio",
+  PHOTO: "photo",
+  VIDEO: "video",
+  DOC: "doc",
+  NOTE: "note",
+};
+const MEDIA_NAV_TABS = {
+  RECENT: "Recent",
+  GENERAL: "General",
+  PATIENTS: "Patients",
+  UNDEFINED: "Unidentified",
+};
+
 export {
   Actions,
   Mutations,
@@ -73,4 +115,10 @@ export {
   TEMPLATE_VIEW_MODES,
   TEMPLATES,
   QUICK_MESSAGES,
+  MEDIA_VIEW_MODES,
+  MEDIA_DRAWER_VIEW_MODES,
+  MEDIA_ITEM_SIZES,
+  MEDIA_PATIENT_ITEM_SIZES,
+  MEDIA_TYPES,
+  MEDIA_NAV_TABS,
 };

@@ -290,7 +290,7 @@
                 "
                 type="button"
                 @click="onSubmit"
-                :disabled="!messageText"
+                :disabled="onTrimMessageText(messageText) <= 0"
               >
                 <feather-arrow-up class="f-icon-22" />
               </button>
@@ -363,11 +363,15 @@ export default {
       selectedSender.value = sender;
     }
 
+    function onTrimMessageText(msg) {
+      return msg && msg.replace(/\s/g, "").length;
+    }
+
     function onSubmit(event) {
       if (event.shiftKey === true && event.key === "Enter") {
-        messageText.value = messageText.value + `\n`;
+        messageText.value = messageText.value ? messageText.value : "" + `\n`;
       } else {
-        if (messageText.value) {
+        if (onTrimMessageText(messageText.value) > 0) {
           const activeRoleId = selectedSender.value.isRole
             ? selectedSender.value.id.toLowerCase()
             : null;
@@ -413,6 +417,7 @@ export default {
       availableMessageCreators,
       placeholder,
       requiresAcknowledgement,
+      onTrimMessageText,
       onShowTemplatesAndQuickMessages,
       insertEmoji,
       onSenderSelect,

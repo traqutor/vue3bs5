@@ -15,7 +15,7 @@
       </figure>
     </div>
 
-    <div id="toggleHeaderRole" class="dropdown-menu dropdown-menu-end">
+    <div v-if="loggedUser" id="toggleHeaderRole" class="dropdown-menu dropdown-menu-end">
       <div
         class="dropdown-item role-item d-flex align-items-center on-hover py-2"
       >
