@@ -35,14 +35,14 @@
   </div>
 </template>
 <script>
-import MediaListItem from "@/views/content/media/gridItem/MediaListItem";
 import { mapGetters } from "vuex";
-import { MEDIA_ITEM_SIZE } from "@/store/modules/media";
+import { MEDIA_ITEM_SIZES } from "@/store/enums/EnumTypes";
+import MediaListItem from "@/components/media/gridItem/MediaListItem";
 export default {
   name: "MediaRecentGrid",
   data() {
     return {
-      MEDIA_ITEM_SIZE,
+      MEDIA_ITEM_SIZES,
     };
   },
   components: { MediaListItem },

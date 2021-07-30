@@ -3,15 +3,24 @@
     class="list-media-item on-hover position-relative mb-4"
     @click="onItemClick($event)"
   >
-    <AudioListItem :item="item" v-if="item && item.type === MEDIA_TYPE.AUDIO" />
+    <AudioListItem
+      :item="item"
+      v-if="item && item.type === MEDIA_TYPES.AUDIO"
+    />
 
-    <DocListItem :item="item" v-if="item && item.type === MEDIA_TYPE.DOC" />
+    <DocListItem :item="item" v-if="item && item.type === MEDIA_TYPES.DOC" />
 
-    <PhotoListItem :item="item" v-if="item && item.type === MEDIA_TYPE.PHOTO" />
+    <PhotoListItem
+      :item="item"
+      v-if="item && item.type === MEDIA_TYPES.PHOTO"
+    />
 
-    <VideoListItem :item="item" v-if="item && item.type === MEDIA_TYPE.VIDEO" />
+    <VideoListItem
+      :item="item"
+      v-if="item && item.type === MEDIA_TYPES.VIDEO"
+    />
 
-    <NoteListItem :item="item" v-if="item && item.type === MEDIA_TYPE.NOTE" />
+    <NoteListItem :item="item" v-if="item && item.type === MEDIA_TYPES.NOTE" />
 
     <div class="media py-1">
       <div class="media-body overflow-hidden">
@@ -32,36 +41,36 @@
   </div>
 </template>
 <script>
-import AudioListItem from "@/views/content/media/gridItem/AudioListItem";
-import DocListItem from "@/views/content/media/gridItem/DocListItem";
-import PhotoListItem from "@/views/content/media/gridItem/PhotoListItem";
-import NoteListItem from "@/views/content/media/gridItem/NoteListItem";
-import VideoListItem from "@/views/content/media/gridItem/VideoListItem";
-import { MEDIA_TYPE } from "@/store/modules/media";
+import AudioListItem from "@/components/media/gridItem/AudioListItem";
+import DocListItem from "@/components/media/gridItem/DocListItem";
+import PhotoListItem from "@/components/media/gridItem/PhotoListItem";
+import NoteListItem from "@/components/media/gridItem/NoteListItem";
+import VideoListItem from "@/components/media/gridItem/VideoListItem";
+import { MEDIA_TYPES } from "@/store/enums/EnumTypes";
 
 export default {
   name: "MediaListItem",
   data() {
     return {
-      MEDIA_TYPE
+      MEDIA_TYPES,
     };
   },
   props: {
-    item: null
+    item: null,
   },
   methods: {
     onItemClick(event) {
       event.preventDefault();
       event.stopPropagation();
       console.log("onItemClick");
-    }
+    },
   },
   components: {
     NoteListItem,
     AudioListItem,
     DocListItem,
     PhotoListItem,
-    VideoListItem
-  }
+    VideoListItem,
+  },
 };
 </script>

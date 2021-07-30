@@ -4,7 +4,14 @@
       class="d-flex flex-column position-absolute h-100 w-100 pr-3"
     >
       <table
-        class="table table-hover table-head-sticky table-self-middle table-collapse-list table-todo-list"
+        class="
+          table
+          table-hover
+          table-head-sticky
+          table-self-middle
+          table-collapse-list
+          table-todo-list
+        "
       >
         <thead>
           <tr class="bg-white">
@@ -18,7 +25,14 @@
             <td>
               <div class="media align-items-center on-hover">
                 <figure
-                  class="avatar avatar-md rounded avatar-custom text-white bg-media-2 mr-3"
+                  class="
+                    avatar avatar-md
+                    rounded
+                    avatar-custom
+                    text-white
+                    bg-media-2
+                    mr-3
+                  "
                 >
                   <FeatherFileText />
                 </figure>
@@ -42,7 +56,12 @@
             <td>
               <div class="media align-items-center on-hover">
                 <figure
-                  class="avatar avatar-md avatar-custom text-white bg-media-1 mr-3"
+                  class="
+                    avatar avatar-md avatar-custom
+                    text-white
+                    bg-media-1
+                    mr-3
+                  "
                 >
                   <FeatherMic />
                 </figure>
@@ -58,7 +77,18 @@
               <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                   <div
-                    class="d-flex align-items-center rounded-pill mr-2 alert alert-primary bg-media-type-2 on-hover p-0 pr-3 mb-0"
+                    class="
+                      d-flex
+                      align-items-center
+                      rounded-pill
+                      mr-2
+                      alert alert-primary
+                      bg-media-type-2
+                      on-hover
+                      p-0
+                      pr-3
+                      mb-0
+                    "
                   >
                     <figure
                       class="avatar avatar-custom text-white bg-media-1 mr-2"
@@ -101,7 +131,18 @@
               <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                   <div
-                    class="d-flex align-items-center rounded-pill mr-2 alert alert-success bg-media-type-5 on-hover p-0 pr-3 mb-0"
+                    class="
+                      d-flex
+                      align-items-center
+                      rounded-pill
+                      mr-2
+                      alert alert-success
+                      bg-media-type-5
+                      on-hover
+                      p-0
+                      pr-3
+                      mb-0
+                    "
                   >
                     <figure
                       class="avatar avatar-custom text-white bg-media-5 mr-2"
@@ -120,7 +161,14 @@
             <td>
               <div class="media align-items-center on-hover">
                 <figure
-                  class="avatar avatar-md rounded avatar-custom text-white bg-media-3 mr-3"
+                  class="
+                    avatar avatar-md
+                    rounded
+                    avatar-custom
+                    text-white
+                    bg-media-3
+                    mr-3
+                  "
                 >
                   <FeatherEdit />
                 </figure>
@@ -146,11 +194,11 @@
   </div>
 </template>
 <script>
-import FeatherFileText from "@/views/content/icons/FeatherFileText";
-import FeatherMic from "@/views/content/icons/FeatherMic";
-import FeatherPlay from "@/views/content/icons/FeatherPlay";
-import FeatherEdit from "@/views/content/icons/FeatherEdit";
-import MediaItemDropDown from "@/views/content/media/gridItem/MediaItemDropDown";
+import FeatherFileText from "@/icons/FeatherFileText";
+import FeatherMic from "@/icons/FeatherMic";
+import FeatherPlay from "@/icons/FeatherPlay";
+import FeatherEdit from "@/icons/FeatherEdit";
+import MediaItemDropDown from "@/components/media/gridItem/MediaItemDropDown";
 export default {
   name: "MediaGeneralList",
   components: {
@@ -158,7 +206,7 @@ export default {
     FeatherEdit,
     FeatherPlay,
     FeatherMic,
-    FeatherFileText
-  }
+    FeatherFileText,
+  },
 };
 </script>

@@ -6,7 +6,7 @@
           @click="index = 1"
           class="image-inner-content image-inner-img text-white"
         >
-          <img src="../../../../assets/files/video1.png" />
+          <img src="../../../assets/files/video1.png" />
           <FeatherPlay class="f-icon-34 image-inner-icon" />
         </a>
 
@@ -29,12 +29,13 @@
   </figure>
 </template>
 <script>
-import FeatherPlay from "@/views/content/icons/FeatherPlay";
-import MediaListItemDropDown from "@/views/content/media/gridItem/MediaListItemDropDown";
+import FeatherPlay from "@/icons/FeatherPlay";
+import MediaListItemDropDown from "@/components/media/gridItem/MediaListItemDropDown";
+
 export default {
   name: "VideoListItem",
   components: { MediaListItemDropDown, FeatherPlay },
-  data: function() {
+  data: function () {
     return {
       items: [
         {
@@ -42,21 +43,21 @@ export default {
           description: "Photo by Lucas",
           thumb:
             "https://cosmos-images2.imgix.net/file/spina/photo/20565/191010_nature.jpg?ixlib=rails-2.1.4&auto=format&ch=Width%2CDPR&fit=max&w=835",
-          src: "https://www.youtube.com/watch?v=d0tU18Ybcvk"
+          src: "https://www.youtube.com/watch?v=d0tU18Ybcvk",
         },
         {
           title: "A beautiful mountain view",
           description: "Photo by Facundo",
           src: "https://vimeo.com/43338103",
           thumb:
-            "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/nature-quotes-1557340276.jpg?crop=0.666xw:1.00xh;0.168xw,0&resize=640:*"
-        }
+            "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/nature-quotes-1557340276.jpg?crop=0.666xw:1.00xh;0.168xw,0&resize=640:*",
+        },
       ],
-      index: null
+      index: null,
     };
   },
   props: {
-    item: null
-  }
+    item: null,
+  },
 };
 </script>

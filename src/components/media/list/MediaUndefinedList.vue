@@ -6,7 +6,14 @@
       <table
         v-for="t in [1, 2, 3, 4, 5, 6, 7, 8]"
         :key="t"
-        class="table table-hover table-head-sticky table-self-middle table-collapse-list table-todo-list"
+        class="
+          table
+          table-hover
+          table-head-sticky
+          table-self-middle
+          table-collapse-list
+          table-todo-list
+        "
       >
         <thead>
           <tr class="bg-white">
@@ -18,7 +25,7 @@
         <tbody>
           <tr v-for="item of items" :key="item.id" @click="index = item.id">
             <td>
-              <div class="media align-items-center on-hover">
+              <div class="d-flex align-items-center on-hover">
                 <figure class="avatar avatar-md mr-3 rounded overflow-hidden">
                   <img :src="item.src" />
                   <figcaption>
@@ -47,39 +54,33 @@
         </tbody>
       </table>
     </perfect-scrollbar>
-    <CoolLightBox
-      :items="items"
-      :index="index"
-      @close="index = null"
-    >
+    <CoolLightBox :items="items" :index="index" @close="index = null">
     </CoolLightBox>
   </div>
 </template>
 <script>
-import MediaItemDropDown from "@/views/content/media/gridItem/MediaItemDropDown";
+import MediaItemDropDown from "@/components/media/gridItem/MediaItemDropDown";
 export default {
   name: "MediaUndefinedList",
-  data: function() {
+  data: function () {
     return {
       items: [
         {
           id: 0,
           title: "In nature, nothing is perfect and everything is perfect",
           description: "Photo by Lucas",
-          src:
-            "https://www.belpressa.ru/media/filer_public/37/aa/37aab313-6a24-4d43-bf99-9975f7246d03/1cee90bfda11cd2c108f0d3749d1f5a4.jpg.640x480_q75_upscale.jpg"
+          src: "https://www.belpressa.ru/media/filer_public/37/aa/37aab313-6a24-4d43-bf99-9975f7246d03/1cee90bfda11cd2c108f0d3749d1f5a4.jpg.640x480_q75_upscale.jpg",
         },
         {
           id: 1,
           title: "a beautiful mountain view",
           description: "Photo by Facundo",
-          src:
-            "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/nature-quotes-1557340276.jpg?crop=0.666xw:1.00xh;0.168xw,0&resize=640:*"
-        }
+          src: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/nature-quotes-1557340276.jpg?crop=0.666xw:1.00xh;0.168xw,0&resize=640:*",
+        },
       ],
-      index: null
+      index: null,
     };
   },
-  components: { MediaItemDropDown }
+  components: { MediaItemDropDown },
 };
 </script>

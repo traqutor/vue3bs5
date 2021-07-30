@@ -1,26 +1,32 @@
 <template>
   <div class="btn-group btn-group-sm mr-n3">
-    <b-dropdown
-      variant="link"
-      dropleft
-      toggle-class="text-decoration-none shadow-none text-secondary text-dark-hover"
-      no-caret
+    <button
+      class="
+        btn
+        text-secondary text-dark-hover
+        border-0
+        p-0
+        shadow-none
+        rounded
+      "
     >
-      <template #button-content>
-        <b-icon icon="three-dots-vertical" />
-      </template>
-      <b-dropdown-item>Attach to patient</b-dropdown-item>
-      <b-dropdown-item>Share in conversation</b-dropdown-item>
-      <b-dropdown-divider />
-      <b-dropdown-item>Delete</b-dropdown-item>
-    </b-dropdown>
+      <FeatherMoreVertical class="f-icon-20" />
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <li>Attach to patient</li>
+      <li>Share in conversation</li>
+      <li><hr class="dropdown-divider" /></li>
+      <li>Delete</li>
+    </ul>
   </div>
 </template>
 <script>
+import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 export default {
   name: "MediaItemDropDown",
+  components: { FeatherMoreVertical },
   props: {
-    item: null
-  }
+    item: null,
+  },
 };
 </script>

@@ -4,7 +4,15 @@
       class="d-flex flex-column position-absolute h-100 w-100 pr-3"
     >
       <table
-        class="table table-hover table-head-sticky table-self-middle table-collapse-list table-todo-list pr-3"
+        class="
+          table
+          table-hover
+          table-head-sticky
+          table-self-middle
+          table-collapse-list
+          table-todo-list
+          pr-3
+        "
       >
         <thead>
           <tr class="bg-white">
@@ -59,10 +67,21 @@
                 <div class="d-flex align-items-center">
                   <div
                     v-if="
-                      mediaType.type === MEDIA_TYPE.ALL ||
-                        mediaType.type === MEDIA_TYPE.DOC
+                      mediaType.type === MEDIA_TYPES.ALL ||
+                      mediaType.type === MEDIA_TYPES.DOC
                     "
-                    class="d-flex align-items-center rounded-pill mr-2 alert alert-warning bg-media-type-3 on-hover p-0 pl-3 mb-0"
+                    class="
+                      d-flex
+                      align-items-center
+                      rounded-pill
+                      mr-2
+                      alert alert-warning
+                      bg-media-type-3
+                      on-hover
+                      p-0
+                      pl-3
+                      mb-0
+                    "
                   >
                     <div class="font-weight-middle f-size-15 ml-n1">3</div>
                     <figure
@@ -74,10 +93,21 @@
 
                   <div
                     v-if="
-                      mediaType.type === MEDIA_TYPE.ALL ||
-                        mediaType.type === MEDIA_TYPE.PHOTO
+                      mediaType.type === MEDIA_TYPES.ALL ||
+                      mediaType.type === MEDIA_TYPES.PHOTO
                     "
-                    class="d-flex align-items-center rounded-pill mr-2 alert alert-wait bg-media-type-5 on-hover p-0 pl-3 mb-0"
+                    class="
+                      d-flex
+                      align-items-center
+                      rounded-pill
+                      mr-2
+                      alert alert-wait
+                      bg-media-type-5
+                      on-hover
+                      p-0
+                      pl-3
+                      mb-0
+                    "
                   >
                     <div class="font-weight-middle f-size-15 ml-n1">3</div>
                     <figure
@@ -89,10 +119,21 @@
 
                   <div
                     v-if="
-                      mediaType.type === MEDIA_TYPE.ALL ||
-                        mediaType.type === MEDIA_TYPE.VIDEO
+                      mediaType.type === MEDIA_TYPES.ALL ||
+                      mediaType.type === MEDIA_TYPES.VIDEO
                     "
-                    class="d-flex align-items-center rounded-pill mr-2 alert alert-success bg-media-type-6 on-hover p-0 pl-3 mb-0"
+                    class="
+                      d-flex
+                      align-items-center
+                      rounded-pill
+                      mr-2
+                      alert alert-success
+                      bg-media-type-6
+                      on-hover
+                      p-0
+                      pl-3
+                      mb-0
+                    "
                   >
                     <div class="font-weight-middle f-size-15 ml-n1">1</div>
                     <figure
@@ -104,10 +145,21 @@
 
                   <div
                     v-if="
-                      mediaType.type === MEDIA_TYPE.ALL ||
-                        mediaType.type === MEDIA_TYPE.AUDIO
+                      mediaType.type === MEDIA_TYPES.ALL ||
+                      mediaType.type === MEDIA_TYPES.AUDIO
                     "
-                    class="d-flex align-items-center rounded-pill mr-2 alert alert-primary bg-media-type-2 on-hover p-0 pl-3 mb-0"
+                    class="
+                      d-flex
+                      align-items-center
+                      rounded-pill
+                      mr-2
+                      alert alert-primary
+                      bg-media-type-2
+                      on-hover
+                      p-0
+                      pl-3
+                      mb-0
+                    "
                   >
                     <div class="font-weight-middle f-size-15 ml-n1">14</div>
                     <figure
@@ -119,10 +171,21 @@
 
                   <div
                     v-if="
-                      mediaType.type === MEDIA_TYPE.ALL ||
-                        mediaType.type === MEDIA_TYPE.NOTE
+                      mediaType.type === MEDIA_TYPES.ALL ||
+                      mediaType.type === MEDIA_TYPES.NOTE
                     "
-                    class="d-flex align-items-center rounded-pill mr-2 alert alert-danger bg-media-type-4 on-hover p-0 pl-3 mb-0"
+                    class="
+                      d-flex
+                      align-items-center
+                      rounded-pill
+                      mr-2
+                      alert alert-danger
+                      bg-media-type-4
+                      on-hover
+                      p-0
+                      pl-3
+                      mb-0
+                    "
                   >
                     <div class="font-weight-middle f-size-15 ml-n1">11</div>
                     <figure
@@ -134,18 +197,25 @@
                 </div>
 
                 <div class="btn-group btn-group-sm mr-n3">
-                  <b-dropdown
-                    variant="link"
-                    dropleft
-                    toggle-class="text-decoration-none shadow-none text-secondary text-dark-hover"
-                    no-caret
+                  <button
+                    class="
+                      btn
+                      text-secondary text-dark-hover
+                      border-0
+                      p-0
+                      shadow-none
+                      rounded
+                    "
                   >
-                    <template #button-content>
-                      <b-icon icon="three-dots-vertical" />
-                    </template>
-                    <b-dropdown-item>Details</b-dropdown-item>
-                    <b-dropdown-item>Share with</b-dropdown-item>
-                  </b-dropdown>
+                    <FeatherMoreVertical class="f-icon-20" />
+                  </button>
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li><a class="dropdown-item" href="#">Details</a></li>
+                    <li><a class="dropdown-item" href="#">Share with</a></li>
+                  </ul>
                 </div>
               </div>
             </td>
@@ -156,47 +226,48 @@
   </div>
 </template>
 <script>
-import FeatherPatient from "@/views/content/icons/FeatherPatient";
-import FeatherFileText from "@/views/content/icons/FeatherFileText";
-import FeatherPlay from "@/views/content/icons/FeatherPlay";
-import FeatherCamera from "@/views/content/icons/FeatherCamera";
 import { mapGetters } from "vuex";
+import FeatherPatient from "@/icons/FeatherPatient";
+import FeatherFileText from "@/icons/FeatherFileText";
+import FeatherPlay from "@/icons/FeatherPlay";
+import FeatherCamera from "@/icons/FeatherCamera";
+import FeatherMic from "@/icons/FeatherMic";
+import FeatherEdit from "@/icons/FeatherEdit";
 import {
-  MEDIA_DRAWER_VIEW_MODE,
-  MEDIA_TYPE,
-  SET_MEDIA_DRAWER_VIEW_MODE,
-  SET_MEDIA_PATIENT_SELECTED
-} from "@/store/modules/media";
-import FeatherMic from "@/views/content/icons/FeatherMic";
-import FeatherEdit from "@/views/content/icons/FeatherEdit";
+  MEDIA_DRAWER_VIEW_MODES,
+  MEDIA_TYPES,
+  Mutations,
+} from "@/store/enums/EnumTypes";
+import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 export default {
   name: "MediaPatientsList",
   data() {
-    return { MEDIA_TYPE, MEDIA_DRAWER_VIEW_MODE };
+    return { MEDIA_TYPES, MEDIA_DRAWER_VIEW_MODES };
   },
   methods: {
     onPatient(patient) {
-      this.$store.commit(SET_MEDIA_PATIENT_SELECTED, patient);
+      this.$store.commit(Mutations.setMediaPatientSelected, patient);
       this.$store.commit(
-        SET_MEDIA_DRAWER_VIEW_MODE,
-        this.MEDIA_DRAWER_VIEW_MODE.PATIENT
+        Mutations.setMediaDrawerViewMode,
+        this.MEDIA_DRAWER_VIEW_MODES.PATIENT
       );
-    }
+    },
   },
 
   computed: {
     ...mapGetters({
       patients: "getPatients",
-      mediaType: "getMediaTypeSelected"
-    })
+      mediaType: "getMediaTypeSelected",
+    }),
   },
   components: {
+    FeatherMoreVertical,
     FeatherEdit,
     FeatherMic,
     FeatherCamera,
     FeatherPlay,
     FeatherFileText,
-    FeatherPatient
-  }
+    FeatherPatient,
+  },
 };
 </script>

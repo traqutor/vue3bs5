@@ -19,15 +19,15 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import MediaListItem from "@/views/content/media/gridItem/MediaListItem";
+import MediaListItem from "@/components/media/gridItem/MediaListItem";
 
 export default {
   name: "MediaGeneralGrid",
   components: { MediaListItem },
   computed: {
     ...mapGetters({
-      itemSizeClass: "getMediaItemClass"
-    })
-  }
+      itemSizeClass: "getMediaItemClass",
+    }),
+  },
 };
 </script>

@@ -3,9 +3,14 @@
     <div class="image-figure-wrap">
       <div class="image-figure-inner">
         <div
-          class="image-inner-content justify-content-start image-inner-img text-white"
+          class="
+            image-inner-content
+            justify-content-start
+            image-inner-img
+            text-white
+          "
         >
-          <img src="../../../../assets/files/pdf-1.jpg" />
+          <img src="../../../assets/files/pdf-1.jpg" />
           <FeatherEye class="f-icon-30 image-inner-icon" />
         </div>
 
@@ -21,14 +26,14 @@
   </figure>
 </template>
 <script>
-import FeatherEye from "@/views/content/icons/FeatherEye";
-import MediaListItemDropDown from "@/views/content/media/gridItem/MediaListItemDropDown";
+import FeatherEye from "@/icons/FeatherEye";
+import MediaListItemDropDown from "@/components/media/gridItem/MediaListItemDropDown";
 
 export default {
   name: "DocListItem",
   components: { MediaListItemDropDown, FeatherEye },
   props: {
-    item: null
-  }
+    item: null,
+  },
 };
 </script>

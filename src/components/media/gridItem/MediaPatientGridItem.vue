@@ -1,7 +1,16 @@
 <template>
   <div class="list-media-item">
     <div
-      class="alert border-secondary-light bg-grey-light pt-2 px-3 on-hover hover-action-group hover-visible-group todo-tabpanel-open"
+      class="
+        alert
+        border-secondary-light
+        bg-grey-light
+        pt-2
+        px-3
+        on-hover
+        hover-action-group hover-visible-group
+        todo-tabpanel-open
+      "
       @click="onPatientClick()"
     >
       <div class="media align-items-center">
@@ -12,7 +21,13 @@
 
         <div class="media-body overflow-hidden">
           <div
-            class="text-truncate font-weight-middle text-dark f-size-15 is-filtered"
+            class="
+              text-truncate
+              font-weight-middle
+              text-dark
+              f-size-15
+              is-filtered
+            "
           >
             {{ patient.name }}
           </div>
@@ -22,17 +37,43 @@
         </div>
 
         <div
-          class="position-absolute position-top-right mt-2 mr-4 p-2 image-inner-dropdown avatar-group-mask on-hover-visible bg-grey-light"
+          class="
+            position-absolute position-top-right
+            mt-2
+            mr-4
+            p-2
+            image-inner-dropdown
+            avatar-group-mask
+            on-hover-visible
+            bg-grey-light
+          "
         >
           <div
             v-if="type === MEDIA_TYPE.ALL || type === MEDIA_TYPE.DOC"
-            class="avatar-group avatar-group-slide avatar-slide-reverse btn bg-white border-0 ml-1 pr-0"
+            class="
+              avatar-group avatar-group-slide avatar-slide-reverse
+              btn
+              bg-white
+              border-0
+              ml-1
+              pr-0
+            "
           >
             <figure class="avatar avatar-custom text-white bg-media-2">
               <FeatherFileText />
             </figure>
             <figure
-              class="avatar avatar-custom avatar-text-block text-media-2 alert alert-warning bg-white rounded-right-0 border-right-0 font-weight-middle px-3 f-size-14"
+              class="
+                avatar avatar-custom avatar-text-block
+                text-media-2
+                alert alert-warning
+                bg-white
+                rounded-right-0
+                border-right-0
+                font-weight-middle
+                px-3
+                f-size-14
+              "
             >
               <span class="ml-n1 mr-3">2</span>
             </figure>
@@ -40,13 +81,30 @@
 
           <div
             v-if="type === MEDIA_TYPE.ALL || type === MEDIA_TYPE.PHOTO"
-            class="avatar-group avatar-group-slide avatar-slide-reverse btn bg-white border-0 ml-1 pr-0"
+            class="
+              avatar-group avatar-group-slide avatar-slide-reverse
+              btn
+              bg-white
+              border-0
+              ml-1
+              pr-0
+            "
           >
             <figure class="avatar avatar-custom text-white bg-media-4">
               <FeatherCamera />
             </figure>
             <figure
-              class="avatar avatar-custom avatar-text-block text-media-4 alert alert-wait bg-white rounded-right-0 border-right-0 font-weight-middle px-3 f-size-14"
+              class="
+                avatar avatar-custom avatar-text-block
+                text-media-4
+                alert alert-wait
+                bg-white
+                rounded-right-0
+                border-right-0
+                font-weight-middle
+                px-3
+                f-size-14
+              "
             >
               <span class="ml-n1 mr-3">2</span>
             </figure>
@@ -54,13 +112,30 @@
 
           <div
             v-if="type === MEDIA_TYPE.ALL || type === MEDIA_TYPE.VIDEO"
-            class="avatar-group avatar-group-slide avatar-slide-reverse btn bg-white border-0 ml-1 pr-0"
+            class="
+              avatar-group avatar-group-slide avatar-slide-reverse
+              btn
+              bg-white
+              border-0
+              ml-1
+              pr-0
+            "
           >
             <figure class="avatar avatar-custom text-white bg-media-5">
               <FeatherVideo />
             </figure>
             <figure
-              class="avatar avatar-custom avatar-text-block text-media-5 alert alert-success bg-white rounded-right-0 border-right-0 font-weight-middle px-3 f-size-14"
+              class="
+                avatar avatar-custom avatar-text-block
+                text-media-5
+                alert alert-success
+                bg-white
+                rounded-right-0
+                border-right-0
+                font-weight-middle
+                px-3
+                f-size-14
+              "
             >
               <span class="ml-n1 mr-3">2</span>
             </figure>
@@ -68,13 +143,30 @@
 
           <div
             v-if="type === MEDIA_TYPE.ALL || type === MEDIA_TYPE.AUDIO"
-            class="avatar-group avatar-group-slide avatar-slide-reverse btn bg-white border-0 ml-1 pr-0"
+            class="
+              avatar-group avatar-group-slide avatar-slide-reverse
+              btn
+              bg-white
+              border-0
+              ml-1
+              pr-0
+            "
           >
             <figure class="avatar avatar-custom text-white bg-media-1">
               <FeatherMic />
             </figure>
             <figure
-              class="avatar avatar-custom avatar-text-block text-media-1 alert alert-primary bg-white rounded-right-0 border-right-0 font-weight-middle px-3 f-size-14"
+              class="
+                avatar avatar-custom avatar-text-block
+                text-media-1
+                alert alert-primary
+                bg-white
+                rounded-right-0
+                border-right-0
+                font-weight-middle
+                px-3
+                f-size-14
+              "
             >
               <span class="ml-n1 mr-3">4</span>
             </figure>
@@ -82,32 +174,57 @@
 
           <div
             v-if="type === MEDIA_TYPE.ALL || type === MEDIA_TYPE.NOTE"
-            class="avatar-group avatar-group-slide avatar-slide-reverse btn bg-white border-0 ml-1 pr-0"
+            class="
+              avatar-group avatar-group-slide avatar-slide-reverse
+              btn
+              bg-white
+              border-0
+              ml-1
+              pr-0
+            "
           >
             <figure class="avatar avatar-custom text-white bg-media-3">
               <FeatherEdit />
             </figure>
             <figure
-              class="avatar avatar-custom avatar-text-block text-media-3 alert alert-danger bg-white rounded-right-0 border-right-0 font-weight-middle px-3 f-size-14"
+              class="
+                avatar avatar-custom avatar-text-block
+                text-media-3
+                alert alert-danger
+                bg-white
+                rounded-right-0
+                border-right-0
+                font-weight-middle
+                px-3
+                f-size-14
+              "
             >
               <span class="ml-n1 mr-3">11</span>
             </figure>
           </div>
-
         </div>
 
         <div class="btn-group btn-group-sm mr-n3">
-          <b-dropdown
-            variant="link"
-            toggle-class="text-decoration-none shadow-none text-secondary text-dark-hover"
-            no-caret
+          <button
+            class="
+              btn
+              border-0
+              px-2
+              shadow-none
+              text-secondary text-dark-hover
+              rounded
+            "
+            type="button"
+            id="dropdownMediaPatientGridMenuid"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
           >
-            <template #button-content>
-              <b-icon icon="three-dots-vertical" />
-            </template>
-            <b-dropdown-item>Details</b-dropdown-item>
-            <b-dropdown-item>Share with</b-dropdown-item>
-          </b-dropdown>
+            <FeatherMoreVertical />
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>Details</li>
+            <li>Share with</li>
+          </ul>
         </div>
       </div>
 
@@ -147,28 +264,32 @@
   </div>
 </template>
 <script>
-import { PATIENT_DRAWER_VIEW_MODE } from "@/store/modules/patients";
-import FeatherPatient from "@/views/content/icons/FeatherPatient";
-import FeatherCalendar from "@/views/content/icons/FeatherCalendar";
-import FeatherUserHash from "@/views/content/icons/FeatherUserHash";
-import { MEDIA_TYPE } from "@/store/modules/media";
-import FeatherFileText from "@/views/content/icons/FeatherFileText";
-import FeatherCamera from "@/views/content/icons/FeatherCamera";
-import FeatherVideo from "@/views/content/icons/FeatherVideo";
-import FeatherMic from "@/views/content/icons/FeatherMic";
-import FeatherEdit from "@/views/content/icons/FeatherEdit";
+import {
+  PATIENT_DRAWER_VIEW_MODES,
+  MEDIA_TYPES,
+} from "@/store/enums/EnumTypes";
+import FeatherPatient from "@/icons/FeatherPatient";
+import FeatherCalendar from "@/icons/FeatherCalendar";
+import FeatherUserHash from "@/icons/FeatherUserHash";
+import FeatherFileText from "@/icons/FeatherFileText";
+import FeatherCamera from "@/icons/FeatherCamera";
+import FeatherVideo from "@/icons/FeatherVideo";
+import FeatherMic from "@/icons/FeatherMic";
+import FeatherEdit from "@/icons/FeatherEdit";
+import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 
 export default {
   name: "MediaPatientGridItem",
   data() {
-    return { MEDIA_TYPE, PATIENT_DRAWER_VIEW_MODE };
+    return { MEDIA_TYPES, PATIENT_DRAWER_VIEW_MODES };
   },
   props: {
     patient: null,
     type: null,
-    onPatient: { type: Function }
+    onPatient: { type: Function },
   },
   components: {
+    FeatherMoreVertical,
     FeatherEdit,
     FeatherMic,
     FeatherVideo,
@@ -176,12 +297,12 @@ export default {
     FeatherFileText,
     FeatherUserHash,
     FeatherCalendar,
-    FeatherPatient
+    FeatherPatient,
   },
   methods: {
     onPatientClick() {
       this.onPatient(this.patient);
-    }
-  }
+    },
+  },
 };
 </script>

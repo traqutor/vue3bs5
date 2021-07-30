@@ -1,6 +1,8 @@
 <template>
   <div class="flex-fill position-relative overflow-hidden pt-3">
-    <perfect-scrollbar class="d-flex flex-column position-absolute h-100 w-100 pr-3">
+    <perfect-scrollbar
+      class="d-flex flex-column position-absolute h-100 w-100 pr-3"
+    >
       <div
         class="d-flex flex-wrap list-media-group table-todo-list"
         :class="itemSizeClass"
@@ -21,33 +23,29 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import {
-  MEDIA_DRAWER_VIEW_MODE,
-  SET_MEDIA_DRAWER_VIEW_MODE,
-  SET_MEDIA_PATIENT_SELECTED
-} from "@/store/modules/media";
-import MediaPatientGridItem from "@/views/content/media/gridItem/MediaPatientGridItem";
+import { MEDIA_DRAWER_VIEW_MODES, Mutations } from "@/store/enums/EnumTypes";
+import MediaPatientGridItem from "@/components/media/gridItem/MediaPatientGridItem";
 export default {
   name: "MediaPatientsGrid",
   components: { MediaPatientGridItem },
   data() {
-    return { MEDIA_DRAWER_VIEW_MODE };
+    return { MEDIA_DRAWER_VIEW_MODES };
   },
   methods: {
     onPatient(patient) {
-      this.$store.commit(SET_MEDIA_PATIENT_SELECTED, patient);
+      this.$store.commit(Mutations.setMediaPatientSelected, patient);
       this.$store.commit(
-        SET_MEDIA_DRAWER_VIEW_MODE,
-        this.MEDIA_DRAWER_VIEW_MODE.PATIENT
+        Mutations.setMediaDrawerViewMode,
+        this.MEDIA_DRAWER_VIEW_MODES.PATIENT
       );
-    }
+    },
   },
   computed: {
     ...mapGetters({
       patients: "getPatients",
       itemSizeClass: "getMediaPatientItemClass",
-      mediaType: "getMediaTypeSelected"
-    })
-  }
+      mediaType: "getMediaTypeSelected",
+    }),
+  },
 };
 </script>

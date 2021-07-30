@@ -108,6 +108,21 @@ const MEDIA_NAV_TABS = {
   UNDEFINED: "Unidentified",
 };
 
+//patients
+
+const PATIENTS_VIEW_MODES = { GRID: "GRID", TABLE: "TABLE" };
+const PATIENT_DRAWER_VIEW_MODES = {
+  CLOSED: "Closed",
+  PATIENT: "Patient",
+  FILTER: "Filter",
+};
+const PATIENTS_ITEM_SIZES = {
+  DEFAULT: "Default",
+  SMALL: "Small",
+  MEDIUM: "Medium",
+  LARGE: "Large",
+};
+
 export {
   Actions,
   Mutations,
@@ -121,4 +136,7 @@ export {
   MEDIA_PATIENT_ITEM_SIZES,
   MEDIA_TYPES,
   MEDIA_NAV_TABS,
+  PATIENTS_VIEW_MODES,
+  PATIENT_DRAWER_VIEW_MODES,
+  PATIENTS_ITEM_SIZES,
 };

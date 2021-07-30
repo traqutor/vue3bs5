@@ -28,12 +28,12 @@
   </figure>
 </template>
 <script>
-import MediaListItemDropDown from "@/views/content/media/gridItem/MediaListItemDropDown";
+import MediaListItemDropDown from "@/components/media/gridItem/MediaListItemDropDown";
 export default {
   name: "NoteListItem",
   components: { MediaListItemDropDown },
   props: {
-    item: null
-  }
+    item: null,
+  },
 };
 </script>

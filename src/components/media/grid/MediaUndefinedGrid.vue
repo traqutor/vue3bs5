@@ -26,8 +26,8 @@ export default {
   components: { MediaListItem },
   computed: {
     ...mapGetters({
-      itemSizeClass: "getMediaItemClass"
-    })
-  }
+      itemSizeClass: "getMediaItemClass",
+    }),
+  },
 };
 </script>

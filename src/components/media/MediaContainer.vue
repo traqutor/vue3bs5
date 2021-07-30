@@ -4,21 +4,22 @@
       <div class="flex-slide-content d-flex flex-column">
         <media-nav-header />
 
-<!--        <media-recent v-if="tabActive === MEDIA_NAV_TABS.RECENT" />-->
-<!--        <media-general v-else-if="tabActive === MEDIA_NAV_TABS.GENERAL" />-->
-<!--        <media-patients v-else-if="tabActive === MEDIA_NAV_TABS.PATIENTS" />-->
-<!--        <media-undefined v-else-if="tabActive === MEDIA_NAV_TABS.UNDEFINED" />-->
+        <media-recent v-if="tabActive === MEDIA_NAV_TABS.RECENT" />
+        <!--        <media-general v-else-if="tabActive === MEDIA_NAV_TABS.GENERAL" />-->
+        <!--        <media-patients v-else-if="tabActive === MEDIA_NAV_TABS.PATIENTS" />-->
+        <!--        <media-undefined v-else-if="tabActive === MEDIA_NAV_TABS.UNDEFINED" />-->
       </div>
 
-<!--      <media-drawer />-->
+      <!--      <media-drawer />-->
     </div>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import MediaNavHeader from "@/components/media/MediaNavHeader";
 
 import { MEDIA_NAV_TABS } from "@/store/enums/EnumTypes";
+import MediaNavHeader from "@/components/media/MediaNavHeader";
+import MediaRecent from "@/components/media/MediaRecent";
 
 export default {
   name: "MediaContainer",
@@ -35,6 +36,7 @@ export default {
     }),
   },
   components: {
+    MediaRecent,
     MediaNavHeader,
   },
 };

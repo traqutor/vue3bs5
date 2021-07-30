@@ -6,7 +6,14 @@
       <div class="text-blue my-3 f-size-15">Today</div>
 
       <table
-        class="table table-hover table-head-sticky table-self-middle table-collapse-list table-todo-list"
+        class="
+          table
+          table-hover
+          table-head-sticky
+          table-self-middle
+          table-collapse-list
+          table-todo-list
+        "
       >
         <thead>
           <tr class="bg-white">
@@ -18,9 +25,16 @@
         <tbody>
           <tr>
             <td>
-              <div class="media align-items-center on-hover">
+              <div class="d-flex align-items-center on-hover">
                 <figure
-                  class="avatar avatar-md rounded avatar-custom text-white bg-media-2 mr-3"
+                  class="
+                    avatar avatar-md
+                    rounded
+                    avatar-custom
+                    text-white
+                    bg-media-2
+                    mr-3
+                  "
                 >
                   <FeatherFileText />
                 </figure>
@@ -42,9 +56,14 @@
           </tr>
           <tr>
             <td>
-              <div class="media align-items-center on-hover">
+              <div class="d-flex align-items-center on-hover">
                 <figure
-                  class="avatar avatar-md avatar-custom text-white bg-media-1 mr-3"
+                  class="
+                    avatar avatar-md avatar-custom
+                    text-white
+                    bg-media-1
+                    mr-3
+                  "
                 >
                   <FeatherMic />
                 </figure>
@@ -60,7 +79,18 @@
               <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                   <div
-                    class="d-flex align-items-center rounded-pill mr-2 alert alert-primary bg-media-type-2 on-hover p-0 pr-3 mb-0"
+                    class="
+                      d-flex
+                      align-items-center
+                      rounded-pill
+                      mr-2
+                      alert alert-primary
+                      bg-media-type-2
+                      on-hover
+                      p-0
+                      pr-3
+                      mb-0
+                    "
                   >
                     <figure
                       class="avatar avatar-custom text-white bg-media-1 mr-2"
@@ -81,9 +111,9 @@
             href="videos/video-01.mp4"
           >
             <td>
-              <div class="media align-items-center on-hover">
+              <div class="d-flex align-items-center on-hover">
                 <figure class="avatar avatar-md mr-3 rounded overflow-hidden">
-                  <img src="../../../../assets/files/video-1.png" alt="..." />
+                  <img src="../../../assets/files/video-1.png" alt="..." />
                   <figcaption>
                     <h6>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit
@@ -103,7 +133,18 @@
               <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                   <div
-                    class="d-flex align-items-center rounded-pill mr-2 alert alert-success bg-media-type-5 on-hover p-0 pr-3 mb-0"
+                    class="
+                      d-flex
+                      align-items-center
+                      rounded-pill
+                      mr-2
+                      alert alert-success
+                      bg-media-type-5
+                      on-hover
+                      p-0
+                      pr-3
+                      mb-0
+                    "
                   >
                     <figure
                       class="avatar avatar-custom text-white bg-media-5 mr-2"
@@ -120,9 +161,16 @@
           </tr>
           <tr>
             <td>
-              <div class="media align-items-center on-hover">
+              <div class="d-flex align-items-center on-hover">
                 <figure
-                  class="avatar avatar-md rounded avatar-custom text-white bg-media-3 mr-3"
+                  class="
+                    avatar avatar-md
+                    rounded
+                    avatar-custom
+                    text-white
+                    bg-media-3
+                    mr-3
+                  "
                 >
                   <FeatherEdit />
                 </figure>
@@ -148,7 +196,14 @@
       <div class="text-blue my-3 f-size-15">Yesterday</div>
 
       <table
-        class="table table-hover table-head-sticky table-self-middle table-collapse-list table-todo-list"
+        class="
+          table
+          table-hover
+          table-head-sticky
+          table-self-middle
+          table-collapse-list
+          table-todo-list
+        "
       >
         <thead>
           <tr class="bg-white">
@@ -160,30 +215,21 @@
         <tbody>
           <tr
             v-for="i in [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9,
-              10,
-              11,
-              12,
-              13,
-              14,
-              15,
-              16,
-              17
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
             ]"
             :key="i"
           >
             <td>
-              <div class="media align-items-center on-hover">
+              <div class="d-flex align-items-center on-hover">
                 <figure
-                  class="avatar avatar-md rounded avatar-custom text-white bg-media-3 mr-3"
+                  class="
+                    avatar avatar-md
+                    rounded
+                    avatar-custom
+                    text-white
+                    bg-media-3
+                    mr-3
+                  "
                 >
                   <FeatherEdit />
                 </figure>
@@ -209,11 +255,11 @@
   </div>
 </template>
 <script>
-import FeatherFileText from "@/views/content/icons/FeatherFileText";
-import FeatherMic from "@/views/content/icons/FeatherMic";
-import FeatherPlay from "@/views/content/icons/FeatherPlay";
-import FeatherEdit from "@/views/content/icons/FeatherEdit";
-import MediaItemDropDown from "@/views/content/media/gridItem/MediaItemDropDown";
+import FeatherFileText from "@/icons/FeatherFileText";
+import FeatherMic from "@/icons/FeatherMic";
+import FeatherPlay from "@/icons/FeatherPlay";
+import FeatherEdit from "@/icons/FeatherEdit";
+import MediaItemDropDown from "@/components/media/gridItem/MediaItemDropDown";
 export default {
   name: "MediaRecentList",
   components: {
@@ -221,7 +267,7 @@ export default {
     FeatherEdit,
     FeatherPlay,
     FeatherMic,
-    FeatherFileText
-  }
+    FeatherFileText,
+  },
 };
 </script>

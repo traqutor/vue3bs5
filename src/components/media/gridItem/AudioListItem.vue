@@ -5,12 +5,24 @@
         <div class="image-inner-content">
           <div class="flex-fill position-relative">
             <div
-              class="image-inner-content image-inner-group has-inner-icon px-3 image-inner-content overflow-hidden"
+              class="
+                image-inner-content image-inner-group
+                has-inner-icon
+                px-3
+                image-inner-content
+                overflow-hidden
+              "
             >
-              <img src="../../../../assets/files/voice.svg" class="w-75" />
+              <img src="../../../assets/files/voice.svg" class="w-75" />
 
               <figure
-                class="avatar avatar-lg avatar-custom text-white bg-media-1 image-inner-icon position-index"
+                class="
+                  avatar avatar-lg avatar-custom
+                  text-white
+                  bg-media-1
+                  image-inner-icon
+                  position-index
+                "
               >
                 <FeatherPlay />
               </figure>
@@ -30,16 +42,16 @@
   </figure>
 </template>
 <script>
-import { FeatherPlay } from "@/views/content/icons";
-import MediaListItemDropDown from "@/views/content/media/gridItem/MediaListItemDropDown";
+import FeatherPlay from "@/icons/FeatherPlay";
+import MediaListItemDropDown from "@/components/media/gridItem/MediaListItemDropDown";
 export default {
   name: "AudioListItem",
   props: {
-    item: null
+    item: null,
   },
   components: {
     MediaListItemDropDown,
-    FeatherPlay
-  }
+    FeatherPlay,
+  },
 };
 </script>
