@@ -11,10 +11,10 @@
       :id="`dropdownMenuBubbleWatchersId${item.id}`"
       data-bs-toggle="dropdown"
       aria-expanded="false"
-      >{{ item.watchedByUsers.length }}/<span v-if="item.isWhisper">{{
-        item.whisperRecipients.length
+      >{{ watchedMessageParticipants.length }}/<span v-if="item.isWhisper">{{
+        whisperRecipients.length
       }}</span>
-      <span v-else>{{ selectedConversation.participants.length }}</span>
+      <span v-else>{{ selectedConversationMessageParticipants.length }}</span>
     </span>
     <!-- start:: dropdown menu -->
     <div
@@ -36,7 +36,7 @@
         type="button"
         @click="onMessageOpen"
       >
-        Read ({{ item.watchedByUsers.length }})
+        Read ({{ watchedMessageParticipants.length }})
         <feather-chevron-down class="ms-auto" />
       </button>
 
@@ -45,7 +45,7 @@
         class="dropdown-menu-scroll-list pe-3"
       >
         <div
-          v-for="(item, index) of item.whisperRecipients"
+          v-for="(item, index) of whisperRecipients"
           :key="index"
           class="dropdown-item d-flex align-items-center on-hover mb-1"
         >
@@ -74,7 +74,7 @@
 
       <perfect-scrollbar v-else class="dropdown-menu-scroll-list pe-3">
         <div
-          v-for="(item, index) of selectedConversation.participants"
+          v-for="(item, index) of selectedConversationMessageParticipants"
           :key="index"
           class="dropdown-item d-flex align-items-center on-hover mb-1"
         >
@@ -117,10 +117,11 @@
         @click="onMessageOpen()"
       >
         Not read (<span v-if="item.isWhisper">{{
-          item.whisperRecipients.length - item.watchedByUsers.length
+          whisperRecipients.length - watchedMessageParticipants.length
         }}</span>
         <span v-else>{{
-          selectedConversation.participants.length - item.watchedByUsers.length
+          selectedConversationMessageParticipants.length -
+          watchedMessageParticipants.length
         }}</span
         >)
         <feather-more-horizontal class="ms-auto" />
@@ -167,6 +168,18 @@ export default {
       store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
     };
 
+    const watchedMessageParticipants = computed(() =>
+      store.getters.getWatchedMessageParticipants(props.item)
+    );
+
+    const whisperRecipients = computed(() =>
+      store.getters.getWhisperMessageParticipants(props.item)
+    );
+
+    const selectedConversationMessageParticipants = computed(() =>
+      store.getters.getSelectedConversationMessageParticipants(props.item)
+    );
+
     const isAllParticipantsReadMessage = computed(() => {
       let isRead = false;
       if (
@@ -176,7 +189,7 @@ export default {
         isRead = true;
       } else {
         if (
-          props.selectedConversation.participants.length ===
+          selectedConversationMessageParticipants.value.length ===
           props.item.watchedByUsers.length
         ) {
           isRead = true;
@@ -193,7 +206,10 @@ export default {
     };
 
     return {
+      watchedMessageParticipants,
+      whisperRecipients,
       isAllParticipantsReadMessage,
+      selectedConversationMessageParticipants,
       onMessageOpen,
       timeHhMmaDotDdddFormat,
       timeOffsetFormat,

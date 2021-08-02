@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center me-3 dropdown">
     <div
       v-if="loggedUser"
-      class="d-flex align-items-center on-hover h-100 dropdown-toggle pr-2"
+      class="d-flex align-items-center on-hover h-100 dropdown-toggle pe-2"
       id="dropdownMenuButton1"
       data-bs-toggle="dropdown"
       aria-expanded="false"
@@ -14,6 +14,13 @@
       >
         <i class="avatar-presence away text-light"></i>
       </figure>
+
+      <div
+        v-if="!loggedUser.SystemRoles || loggedUser.SystemRoles.length <= 1"
+        class="media-body font-weight-middle ps-1 pe-1"
+      >
+        {{ loggedUser.name }}
+      </div>
     </div>
 
     <ul class="dropdown-menu dropdown-menu-end">

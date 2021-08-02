@@ -14,7 +14,7 @@
       @click="onPatientClick()"
     >
       <div class="media align-items-center">
-        <figure class="avatar avatar-xm mr-3 ml-n1 rounded" title="">
+        <figure class="avatar avatar-xm me-3 ml-n1 rounded" title="">
           <img v-if="patient.avatar" :src="patient.avatar" />
           <FeatherPatient v-else />
         </figure>
@@ -40,7 +40,7 @@
           class="
             position-absolute position-top-right
             mt-2
-            mr-4
+            me-4
             p-2
             image-inner-dropdown
             avatar-group-mask
@@ -56,7 +56,7 @@
               bg-white
               border-0
               ml-1
-              pr-0
+              pe-0
             "
           >
             <figure class="avatar avatar-custom text-white bg-media-2">
@@ -75,7 +75,7 @@
                 f-size-14
               "
             >
-              <span class="ml-n1 mr-3">2</span>
+              <span class="ml-n1 me-3">2</span>
             </figure>
           </div>
 
@@ -87,7 +87,7 @@
               bg-white
               border-0
               ml-1
-              pr-0
+              pe-0
             "
           >
             <figure class="avatar avatar-custom text-white bg-media-4">
@@ -106,7 +106,7 @@
                 f-size-14
               "
             >
-              <span class="ml-n1 mr-3">2</span>
+              <span class="ml-n1 me-3">2</span>
             </figure>
           </div>
 
@@ -118,7 +118,7 @@
               bg-white
               border-0
               ml-1
-              pr-0
+              pe-0
             "
           >
             <figure class="avatar avatar-custom text-white bg-media-5">
@@ -137,7 +137,7 @@
                 f-size-14
               "
             >
-              <span class="ml-n1 mr-3">2</span>
+              <span class="ml-n1 me-3">2</span>
             </figure>
           </div>
 
@@ -149,7 +149,7 @@
               bg-white
               border-0
               ml-1
-              pr-0
+              pe-0
             "
           >
             <figure class="avatar avatar-custom text-white bg-media-1">
@@ -168,7 +168,7 @@
                 f-size-14
               "
             >
-              <span class="ml-n1 mr-3">4</span>
+              <span class="ml-n1 me-3">4</span>
             </figure>
           </div>
 
@@ -180,7 +180,7 @@
               bg-white
               border-0
               ml-1
-              pr-0
+              pe-0
             "
           >
             <figure class="avatar avatar-custom text-white bg-media-3">
@@ -199,12 +199,12 @@
                 f-size-14
               "
             >
-              <span class="ml-n1 mr-3">11</span>
+              <span class="ml-n1 me-3">11</span>
             </figure>
           </div>
         </div>
 
-        <div class="btn-group btn-group-sm mr-n3">
+        <div class="btn-group btn-group-sm me-n3">
           <button
             class="
               btn
@@ -232,7 +232,7 @@
         <div class="col-6">
           <div class="media align-items-center ml-2">
             <FeatherCalendar
-              class="mr-3 align-self-center f-icon-20 text-secondary"
+              class="me-3 align-self-center f-icon-20 text-secondary"
             />
             <div class="media-body overflow-hidden">
               <div class="text-truncate text-secondary f-size-13">
@@ -247,7 +247,7 @@
         <div class="col-6">
           <div class="media align-items-center">
             <FeatherUserHash
-              class="mr-3 align-self-center f-icon-20 text-secondary"
+              class="me-3 align-self-center f-icon-20 text-secondary"
             />
             <div class="media-body ml-n1 overflow-hidden">
               <div class="text-truncate text-secondary f-size-13">

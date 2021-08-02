@@ -49,7 +49,7 @@
         <div class="d-flex align-items-center">
           <div
             v-if="!conversation.isDirect"
-            class="avatar-group avatar-group-move mr-2"
+            class="avatar-group avatar-group-move me-2"
           >
             <a
               v-for="participant of conversation.participants.slice(0, 4)"

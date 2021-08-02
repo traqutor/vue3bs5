@@ -3,7 +3,7 @@
     <div class="image-figure-wrap">
       <div class="image-figure-inner">
         <div class="image-inner-content">
-          <div class="media pr-4 pt-2">
+          <div class="media pe-4 pt-2">
             <div class="media-body overflow-hidden px-3 pt-1">
               <div class="text-truncate font-weight-middle text-dark">Note</div>
             </div>

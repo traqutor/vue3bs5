@@ -7,7 +7,7 @@
   >
     <feather-briefcase1 v-if="participant.isRole" />
     <img
-      v-else-if="participant.avatar.includes('simona')"
+      v-else-if="participant.avatar && participant.avatar.includes('simona')"
       src="@/assets/images/simona.jpg"
       alt="S"
     />

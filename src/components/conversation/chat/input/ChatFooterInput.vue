@@ -126,13 +126,16 @@
               <!-- end::request acknowledge indicator icon toggle button -->
 
               <!-- start::message creator selector -->
-              <div class="input-group-append bg-transparent">
+              <div
+                v-if="availableMessageCreators.length > 1"
+                class="input-group-append bg-transparent"
+              >
                 <div class="btn-group dropup">
                   <button
                     type="button"
                     class="
                       btn btn-sm
-                      pr-1
+                      pe-1
                       pb-10px
                       btn-link
                       text-decoration-none

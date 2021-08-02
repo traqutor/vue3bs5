@@ -1,8 +1,8 @@
 <template>
   <div class="flex-fill d-flex flex-column">
     <perfect-scrollbar class="d-flex flex-column h-100 w-100 position-absolute">
-      <div class="mb-2 d-flex align-items-center pr-4">
-        <div class="overflow-hidden mr-auto">
+      <div class="mb-2 d-flex align-items-center pe-4">
+        <div class="overflow-hidden me-auto">
           <div class="text-truncate f-size-16 font-weight-middle">
             {{ getSelectedTemplate.name }}
           </div>
@@ -25,7 +25,7 @@
                   overflow-hidden
                   select-action-group
                   mt-2
-                  mr-4
+                  me-4
                 "
               >
                 <div v-for="(item, index) in getSelectedTemplate" :key="index">
@@ -43,7 +43,7 @@
                     >
                       <input type="checkbox" name="age" />
                       <div class="media text-primary">
-                        <FeatherPatient class="f-icon-20 mr-2" />
+                        <FeatherPatient class="f-icon-20 me-2" />
                         <div class="media-body">{{ item.name }}</div>
                       </div>
                       <span class="input-icon f-icon-20">
@@ -55,7 +55,7 @@
                     <div v-else class="media">
                       <span
                         class="
-                          mr-2
+                          me-2
                           f-icon-20 f-size-16
                           text-center text-primary
                         "

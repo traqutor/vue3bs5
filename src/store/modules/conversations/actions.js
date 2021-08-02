@@ -245,26 +245,59 @@ export default {
   },
 
   onMarkMessagesAsRead: ({ state, getters }) => {
+    let data = {
+      conversationId: state.selectedConversationId,
+      messagesIds: [],
+      activeRolesIds: [],
+    };
+    /**
+     * filter not read and not whispered messages Ids
+     **/
     const messagesIds = getters.getSelectedConversation.messages
       .filter((message) => {
-        return !message.watchedByUsers.some((watched) => {
-          return (
-            guidsAreEqual(watched.id, getters.getLoggedUser.id) ||
-            getters.getLoggedUser.SystemRoles.some((role) => {
-              return guidsAreEqual(role.Id, watched.id);
-            })
-          );
-        });
+        return (
+          !message.isWhisper &&
+          !message.watchedByUsers.some((watched) => {
+            return (
+              guidsAreEqual(watched.id, getters.getLoggedUser.id) ||
+              getters.getLoggedUser.SystemRoles.some((role) => {
+                return guidsAreEqual(role.Id, watched.id);
+              })
+            );
+          })
+        );
       })
       .map((message) => message.id);
 
-    if (messagesIds.length) {
+    /**
+     * filter whispered and not read messages
+     */
+    const whisperedMessages = getters.getSelectedConversation.messages.filter(
+      (message) => {
+        return (
+          message.isWhisper &&
+          !message.watchedByUsers.some((watched) => {
+            return (
+              guidsAreEqual(watched.id, getters.getLoggedUser.id) ||
+              getters.getLoggedUser.SystemRoles.some((role) => {
+                return guidsAreEqual(role.Id, watched.id);
+              })
+            );
+          })
+        );
+      }
+    );
+
+    /**
+     * update conversation messages as read by logged user
+     */
+    if (messagesIds.length > 0) {
       // user and all available roles in conversation read the message
       const roles = getters.getConversationAvailableCreationRoles
         .filter((role) => role.isRole)
         .map((role) => role.id.toLowerCase());
 
-      const data = {
+      data = {
         conversationId: state.selectedConversationId,
         messagesIds: messagesIds,
         activeRolesIds: roles,
@@ -282,6 +315,42 @@ export default {
         .catch((error) => {
           console.error("On ON_MESSAGE_READ error:", error);
         });
+    }
+
+    /**
+     * update whispered messages as read by logged user
+     */
+    if (whisperedMessages.length > 0) {
+      whisperedMessages.forEach((message) => {
+        data = {
+          conversationId: state.selectedConversationId,
+          messagesIds: [message.id],
+          activeRolesIds: message.whisperRecipients
+            .filter((whisperer) => {
+              return (
+                whisperer.isRole &&
+                getters.getLoggedUser &&
+                getters.getLoggedUser.SystemRoles.find(
+                  (role) => role.id === whisperer.id
+                )
+              );
+            })
+            .map((recipient) => recipient.id),
+        };
+
+        const url = `${process.env.VUE_APP_BASE_URL}/Messaging/ReadMessage`;
+
+        axiosWebApiInstance
+          .post(url, data)
+          .then(function (response) {
+            if (!response.data.isOk) {
+              console.error("On ON_MESSAGE_READ error:", response);
+            }
+          })
+          .catch((error) => {
+            console.error("On ON_MESSAGE_READ error:", error);
+          });
+      });
     }
   },
 

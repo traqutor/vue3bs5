@@ -1,7 +1,7 @@
 <template>
   <div class="flex-fill position-relative overflow-hidden pt-3">
     <perfect-scrollbar
-      class="d-flex flex-column position-absolute h-100 w-100 pr-3"
+      class="d-flex flex-column position-absolute h-100 w-100 pe-3"
     >
       <table
         class="
@@ -31,7 +31,7 @@
                     avatar-custom
                     text-white
                     bg-media-2
-                    mr-3
+                    me-3
                   "
                 >
                   <FeatherFileText />
@@ -60,7 +60,7 @@
                     avatar avatar-md avatar-custom
                     text-white
                     bg-media-1
-                    mr-3
+                    me-3
                   "
                 >
                   <FeatherMic />
@@ -81,21 +81,21 @@
                       d-flex
                       align-items-center
                       rounded-pill
-                      mr-2
+                      me-2
                       alert alert-primary
                       bg-media-type-2
                       on-hover
                       p-0
-                      pr-3
+                      pe-3
                       mb-0
                     "
                   >
                     <figure
-                      class="avatar avatar-custom text-white bg-media-1 mr-2"
+                      class="avatar avatar-custom text-white bg-media-1 me-2"
                     >
                       <FeatherPlay />
                     </figure>
-                    <div class="mr-n1">02:30</div>
+                    <div class="me-n1">02:30</div>
                   </div>
                 </div>
 
@@ -110,7 +110,7 @@
           >
             <td>
               <div class="media align-items-center on-hover">
-                <figure class="avatar avatar-md mr-3 rounded overflow-hidden">
+                <figure class="avatar avatar-md me-3 rounded overflow-hidden">
                   <img src="../../../../assets/files/video-1.png" alt="..." />
                   <figcaption>
                     <h6>
@@ -135,21 +135,21 @@
                       d-flex
                       align-items-center
                       rounded-pill
-                      mr-2
+                      me-2
                       alert alert-success
                       bg-media-type-5
                       on-hover
                       p-0
-                      pr-3
+                      pe-3
                       mb-0
                     "
                   >
                     <figure
-                      class="avatar avatar-custom text-white bg-media-5 mr-2"
+                      class="avatar avatar-custom text-white bg-media-5 me-2"
                     >
                       <FeatherPlay />
                     </figure>
-                    <div class="mr-n1">00:11</div>
+                    <div class="me-n1">00:11</div>
                   </div>
                 </div>
 
@@ -167,7 +167,7 @@
                     avatar-custom
                     text-white
                     bg-media-3
-                    mr-3
+                    me-3
                   "
                 >
                   <FeatherEdit />

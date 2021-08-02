@@ -28,7 +28,7 @@
             overflow-hidden
           "
         >
-          <div class="ps-scrollbar pr-3 ps">
+          <div class="ps-scrollbar pe-3 ps">
             <perfect-scrollbar
               class="
                 list-group list-group-flush

@@ -97,4 +97,49 @@ export default {
         !getters.getIsMessageAcknowledged(message)
     );
   },
+
+  getWatchedMessageParticipants: () => (message) => {
+    return message.watchedByUsers.filter((recipient) => {
+      return (
+        (!recipient.isRole && !guidsAreEqual(recipient.id, message.authorId)) ||
+        (recipient.isRole && !guidsAreEqual(recipient.id, message.activeRoleId))
+      );
+    });
+  },
+
+  getWhisperMessageParticipants: () => (message) => {
+    return message.whisperRecipients.filter((recipient) => {
+      return (
+        (!recipient.isRole && !guidsAreEqual(recipient.id, message.authorId)) ||
+        (recipient.isRole && !guidsAreEqual(recipient.id, message.activeRoleId))
+      );
+    });
+  },
+
+  getAcknowledgedByMessageParticipants: () => (message) => {
+    return message.acknowledgedByUsers.filter((recipient) => {
+      return (
+        (!recipient.isRole && !guidsAreEqual(recipient.id, message.authorId)) ||
+        (recipient.isRole && !guidsAreEqual(recipient.id, message.activeRoleId))
+      );
+    });
+  },
+
+  getSelectedConversationMessageParticipants: (state) => (message) => {
+    const idx = state.conversations.findIndex((conversation) =>
+      guidsAreEqual(conversation.id, message.conversationId)
+    );
+    if (idx !== -1) {
+      return state.conversations[idx].participants.filter((recipient) => {
+        return (
+          (!recipient.isRole &&
+            !guidsAreEqual(recipient.id, message.authorId)) ||
+          (recipient.isRole &&
+            !guidsAreEqual(recipient.id, message.activeRoleId))
+        );
+      });
+    }
+
+    return [];
+  },
 };

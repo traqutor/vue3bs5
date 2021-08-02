@@ -1,7 +1,7 @@
 <template>
   <div class="flex-fill position-relative overflow-hidden pt-3">
     <perfect-scrollbar
-      class="d-flex flex-column position-absolute h-100 w-100 pr-3"
+      class="d-flex flex-column position-absolute h-100 w-100 pe-3"
     >
       <table
         class="
@@ -11,7 +11,7 @@
           table-self-middle
           table-collapse-list
           table-todo-list
-          pr-3
+          pe-3
         "
       >
         <thead>
@@ -34,7 +34,7 @@
           >
             <td>
               <div class="media align-items-center on-hover">
-                <figure class="avatar avatar-lg mr-3 rounded">
+                <figure class="avatar avatar-lg me-3 rounded">
                   <img v-if="patient.avatar" :src="patient.avatar" />
                   <FeatherPatient v-else />
                 </figure>
@@ -74,7 +74,7 @@
                       d-flex
                       align-items-center
                       rounded-pill
-                      mr-2
+                      me-2
                       alert alert-warning
                       bg-media-type-3
                       on-hover
@@ -100,7 +100,7 @@
                       d-flex
                       align-items-center
                       rounded-pill
-                      mr-2
+                      me-2
                       alert alert-wait
                       bg-media-type-5
                       on-hover
@@ -126,7 +126,7 @@
                       d-flex
                       align-items-center
                       rounded-pill
-                      mr-2
+                      me-2
                       alert alert-success
                       bg-media-type-6
                       on-hover
@@ -152,7 +152,7 @@
                       d-flex
                       align-items-center
                       rounded-pill
-                      mr-2
+                      me-2
                       alert alert-primary
                       bg-media-type-2
                       on-hover
@@ -178,7 +178,7 @@
                       d-flex
                       align-items-center
                       rounded-pill
-                      mr-2
+                      me-2
                       alert alert-danger
                       bg-media-type-4
                       on-hover
@@ -196,7 +196,7 @@
                   </div>
                 </div>
 
-                <div class="btn-group btn-group-sm mr-n3">
+                <div class="btn-group btn-group-sm me-n3">
                   <button
                     class="
                       btn

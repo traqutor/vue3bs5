@@ -98,7 +98,7 @@
                             >Acknowledged</span
                           >
                           <feather-check-double
-                            class="mr-1"
+                            class="me-1"
                             :class="
                               isMessageWatchedByUser(item.id)
                                 ? 'text-success'

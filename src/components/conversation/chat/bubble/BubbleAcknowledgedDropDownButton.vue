@@ -7,17 +7,15 @@
     aria-expanded="false"
   >
     Acknowledged<span class="text-red ms-2">
-      <span v-if="item.acknowledgedByUsers">{{
-        item.acknowledgedByUsers.length
+      <span v-if="acknowledgedByMessageParticipants">{{
+        acknowledgedByMessageParticipants.length
       }}</span
       ><span v-else>0</span>/<span v-if="item.isWhisper">
-        <span v-if="item.whisperRecipients">{{
-          item.whisperRecipients.length
-        }}</span>
+        <span v-if="whisperRecipients">{{ whisperRecipients.length }}</span>
       </span>
       <span v-else>
-        <span v-if="selectedConversation.participants">{{
-          selectedConversation.participants.length
+        <span v-if="selectedConversationMessageParticipants">{{
+          selectedConversationMessageParticipants.length
         }}</span>
       </span>
     </span>
@@ -44,7 +42,9 @@
       @click="onMessageOpen"
     >
       Acknowledged ({{
-        item.acknowledgedByUsers ? item.acknowledgedByUsers.length : 0
+        acknowledgedByMessageParticipants
+          ? acknowledgedByMessageParticipants.length
+          : 0
       }})
       <feather-chevrons-right class="ms-auto" />
     </button>
@@ -55,7 +55,7 @@
       class="dropdown-menu-scroll-list mt-1 pe-3"
     >
       <div
-        v-for="(item, index) of item.whisperRecipients"
+        v-for="(item, index) of whisperRecipients"
         :key="index"
         class="dropdown-item d-flex align-items-center on-hover mb-1"
       >
@@ -74,11 +74,7 @@
             >
               <feather-check-double
                 class="ms-1"
-                :class="
-                  isMessageAcknowledgedByUser(item.id)
-                    ? 'text-success'
-                    : 'text-dark'
-                "
+                :class="item.isAcknowledged ? 'text-success' : 'text-dark'"
               />
             </div>
           </template>
@@ -90,7 +86,7 @@
     <!-- start:: dropdown menu for all conversation participants message -->
     <perfect-scrollbar v-else class="dropdown-menu-scroll-list mt-1 pe-3">
       <div
-        v-for="(item, index) of selectedConversation.participants"
+        v-for="(item, index) of selectedConversationMessageParticipants"
         :key="index"
         class="dropdown-item d-flex align-items-center on-hover mb-1"
       >
@@ -109,11 +105,7 @@
             >
               <feather-check-double
                 class="ms-1"
-                :class="
-                  isMessageAcknowledgedByUser(item.id)
-                    ? 'text-success'
-                    : 'text-dark'
-                "
+                :class="item.isAcknowledged ? 'text-success' : 'text-dark'"
               />
             </div>
           </template>
@@ -140,12 +132,12 @@
       @click="onMessageOpen"
     >
       Not acknowledged (<span v-if="item.isWhisper">{{
-        item.whisperRecipients.length -
-        (item.acknowledgedByUsers ? item.acknowledgedByUsers.length : 0)
+        whisperRecipients.length -
+        (acknowledgedByUsers ? acknowledgedByUsers.length : 0)
       }}</span
       ><span v-else>{{
-        selectedConversation.participants.length -
-        (item.acknowledgedByUsers ? item.acknowledgedByUsers.length : 0)
+        selectedConversationMessageParticipants.length -
+        (acknowledgedByUsers ? acknowledgedByUsers.length : 0)
       }}</span
       >) <feather-more-horizontal class="ms-auto ps-1" />
     </button>
@@ -160,6 +152,8 @@ import { CHAT_VIEW_MODES } from "@/const";
 import { useStore } from "vuex";
 import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
 import { guidsAreEqual } from "@/services/guids.service";
+import { computed } from "vue";
+import { sortByIsAcknowledged } from "@/services/sort.service";
 export default {
   components: {
     FeatherChevronsRight,
@@ -170,6 +164,34 @@ export default {
   props: ["item", "selectedConversation", "background"],
   setup(props) {
     const store = useStore();
+
+    const selectedConversationMessageParticipants = computed(() =>
+      store.getters
+        .getSelectedConversationMessageParticipants(props.item)
+        .map((participant) => {
+          return {
+            ...participant,
+            isAcknowledged: isMessageAcknowledgedByUser(participant.id),
+          };
+        })
+        .sort(sortByIsAcknowledged)
+    );
+
+    const whisperRecipients = computed(() =>
+      store.getters
+        .getWhisperMessageParticipants(props.item)
+        .map((participant) => {
+          return {
+            ...participant,
+            isAcknowledged: isMessageAcknowledgedByUser(participant.id),
+          };
+        })
+        .sort(sortByIsAcknowledged)
+    );
+
+    const acknowledgedByMessageParticipants = computed(() =>
+      store.getters.getAcknowledgedByMessageParticipants(props.item)
+    );
 
     const onMessageOpen = () => {
       store.commit("setSelectedMessageId", props.item.id);
@@ -185,7 +207,13 @@ export default {
       );
     };
 
-    return { onMessageOpen, isMessageAcknowledgedByUser };
+    return {
+      acknowledgedByMessageParticipants,
+      selectedConversationMessageParticipants,
+      whisperRecipients,
+      onMessageOpen,
+      isMessageAcknowledgedByUser,
+    };
   },
 };
 </script>

@@ -102,11 +102,20 @@ export default {
     if (!id || id === guidsGetNull()) return;
 
     let participant = null;
+
+    // if (getters.getLoggedUser.id === id) {
+    //   participant = {
+    //     ...getters.getLoggedUser,
+    //     isRole: false,
+    //   };
+    // }
+
     state.systemRoles.forEach((rle) => {
       if (guidsAreEqual(rle.id, id)) {
         participant = { ...rle, id: rle.id, isRole: true };
       }
     });
+
     state.systemUsers.forEach((usr) => {
       if (guidsAreEqual(usr.userId, id)) {
         participant = {
@@ -117,6 +126,7 @@ export default {
         };
       }
     });
+
     return participant;
   },
   getUserById: (state) => (id) => {

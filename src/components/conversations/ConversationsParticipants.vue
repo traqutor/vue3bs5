@@ -1,5 +1,5 @@
 <template>
-  <div class="col f-col-xl d-flex flex-column pr-2 overflow-hidden">
+  <div class="col f-col-xl d-flex flex-column pe-2 overflow-hidden">
     <conversations-participants-list-header></conversations-participants-list-header>
     <conversations-participants-list></conversations-participants-list>
   </div>

@@ -2,10 +2,7 @@
   <div class="flex-grow-1 position-relative">
     <div class="position-absolute text-nowrap overflow-hidden w-100">
       <div class="text-truncate w-100 d-inline-block text-white-75 f-size-12">
-        Whispered to
-        {{
-          item.whisperRecipients.map((recipient) => recipient.name).join(", ")
-        }}
+        Whispered to {{ whisperedTo }}
       </div>
     </div>
   </div>
@@ -47,13 +44,13 @@
         type="button"
         @click="onMessageOpen"
       >
-        Whisper to ({{ item.whisperRecipients.length }})
+        Whisper to ({{ whisperRecipients.length }})
         <feather-chevrons-right class="ms-auto" />
       </button>
 
       <perfect-scrollbar class="dropdown-menu-scroll-list pe-3">
         <div
-          v-for="(item, index) of item.whisperRecipients"
+          v-for="(item, index) of whisperRecipients"
           :key="index"
           class="dropdown-item d-flex align-items-center on-hover mb-1"
         >
@@ -73,6 +70,7 @@ import { guidsAreEqual } from "@/services/guids.service";
 import { CHAT_VIEW_MODES } from "@/const";
 import { useStore } from "vuex";
 import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
+import { computed } from "vue";
 
 export default {
   components: {
@@ -84,6 +82,16 @@ export default {
 
   setup(props) {
     const store = useStore();
+
+    const whisperRecipients = computed(() =>
+      store.getters.getWhisperMessageParticipants(props.item)
+    );
+
+    const whisperedTo = computed(() => {
+      return whisperRecipients.value
+        .map((recipient) => store.getters.getParticipantById(recipient.id).name)
+        .join(", ");
+    });
 
     const isMessageWatchedByUser = (id) => {
       return (
@@ -97,7 +105,12 @@ export default {
       store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
     };
 
-    return { onMessageOpen, isMessageWatchedByUser };
+    return {
+      whisperRecipients,
+      whisperedTo,
+      onMessageOpen,
+      isMessageWatchedByUser,
+    };
   },
 };
 </script>

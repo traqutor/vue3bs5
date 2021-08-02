@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex align-items-center me-4 dropdown">
+  <div
+    v-if="loggedUser && loggedUser.SystemRoles && loggedUser.SystemRoles.length > 1 "
+    class="d-flex align-items-center me-4 dropdown"
+  >
     <div
       class="d-flex align-items-center on-hover h-100 pe-1 dropdown-toggle"
       data-bs-toggle="dropdown"
@@ -15,7 +18,11 @@
       </figure>
     </div>
 
-    <div v-if="loggedUser" id="toggleHeaderRole" class="dropdown-menu dropdown-menu-end">
+    <div
+      v-if="loggedUser"
+      id="toggleHeaderRole"
+      class="dropdown-menu dropdown-menu-end"
+    >
       <div
         class="dropdown-item role-item d-flex align-items-center on-hover py-2"
       >

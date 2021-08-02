@@ -1,7 +1,7 @@
 <template>
   <div class="flex-fill position-relative overflow-hidden pt-3">
     <perfect-scrollbar
-      class="d-flex flex-column position-absolute h-100 w-100 pr-3"
+      class="d-flex flex-column position-absolute h-100 w-100 pe-3"
     >
       <table
         v-for="t in [1, 2, 3, 4, 5, 6, 7, 8]"
@@ -26,7 +26,7 @@
           <tr v-for="item of items" :key="item.id" @click="index = item.id">
             <td>
               <div class="d-flex align-items-center on-hover">
-                <figure class="avatar avatar-md mr-3 rounded overflow-hidden">
+                <figure class="avatar avatar-md me-3 rounded overflow-hidden">
                   <img :src="item.src" />
                   <figcaption>
                     <h6>

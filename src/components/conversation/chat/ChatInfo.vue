@@ -56,7 +56,7 @@
                 </div>
 
                 <button
-                  class="btn btn-primary btn-circle btn-sm f-icon-28 mr-2"
+                  class="btn btn-primary btn-circle btn-sm f-icon-28 me-2"
                   @click="onShowUserInfo"
                 >
                   <feather-message-square-line class="f-icon-18" />

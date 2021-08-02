@@ -40,13 +40,14 @@
         :class="$route.path === '/conversations' ? 'active' : ''"
       >
         <span
+          v-if="numberOfConversations > 0"
           class="
             badge badge-danger
             position-absolute
             badge-pill
             font-weight-normal
           "
-          >12</span
+          >{{ numberOfConversations }}</span
         >
         <feather-message-square-line class="nav-link-icon" />
         <span class="nav-link-text">Conversations</span>
@@ -86,6 +87,7 @@
         :class="$route.path === '/alarms' ? 'active' : ''"
       >
         <span
+            v-if="false"
           class="
             badge badge-danger
             position-absolute
@@ -172,6 +174,7 @@ import FeatherHeadphonesMic from "@/icons/FeatherHeadphonesMic";
 import FeatherUserCheck from "@/icons/FeatherUserCheck";
 import FeatherSettings from "@/icons/FeatherSettings";
 import FeatherPlay from "@/icons/FeatherPlay";
+import { computed } from "vue";
 
 export default {
   components: {
@@ -191,7 +194,12 @@ export default {
   setup() {
     const store = useStore();
     const visibilities = VISIBILITIES;
-
+    const numberOfConversations = computed(
+      () =>
+        store.getters.getConversations.filter(
+          (conversation) => conversation.unreadMessageCount > 0
+        ).length
+    );
     const onLeftAsideMouse = (visibility) => {
       if (store.getters.getAsideLeftVisibility !== visibilities.FIXED) {
         store.commit("setAsideLeftVisibility", visibility);
@@ -208,6 +216,7 @@ export default {
 
     return {
       visibilities,
+      numberOfConversations,
       onToggleLeftAsideFixed,
       onLeftAsideMouse,
     };
