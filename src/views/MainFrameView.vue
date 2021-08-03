@@ -8,6 +8,7 @@
     <main class="content">
       <router-view></router-view>
     </main>
+    <ModalMediaSelectionManager />
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 import AppHeader from "@/components/header/MainHeader";
 import AsideLeft from "@/components/aside/AsideLeft";
+import ModalMediaSelectionManager from "@/components/media/modals/ModalMediaSelectionManager";
 
 export default {
   setup() {
@@ -31,6 +33,7 @@ export default {
   },
   name: "MainFrameView",
   components: {
+    ModalMediaSelectionManager,
     AppHeader,
     AsideLeft,
   },

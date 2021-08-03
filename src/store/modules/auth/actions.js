@@ -5,7 +5,7 @@ import {
   saveTokenData,
 } from "@/services/jwt.service";
 import jwt_decode from "jwt-decode";
-import { Mutations } from "@/store/enums/EnumTypes";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 
 export default {
   onLogin: ({ commit }, authData) => {
@@ -80,6 +80,7 @@ export default {
 
         dispatch("getUsers");
         dispatch("onGetConversations", { refresh: true });
+        dispatch(Actions.onGetThumbnails);
 
         resolve(user);
       }

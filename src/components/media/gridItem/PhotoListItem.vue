@@ -6,31 +6,35 @@
           @click="index = 0"
           class="image-inner-content image-inner-img text-white"
         >
-          <img
-            src="https://www.belpressa.ru/media/filer_public/37/aa/37aab313-6a24-4d43-bf99-9975f7246d03/1cee90bfda11cd2c108f0d3749d1f5a4.jpg.640x480_q75_upscale.jpg"
-          />
+          <img :src="`data:image/png;base64,${item.dataBase64}`" />
           <FeatherZoomIn />
         </a>
 
         <figcaption>
-          <h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h6>
-          <div>12:48 <small>am</small> • Today</div>
+          <h6>{{ item.name }}</h6>
+          <div>
+            {{ timeHhMmaDotDdddFormat(item.created) }}
+          </div>
         </figcaption>
 
         <MediaListItemDropDown :item="item" />
       </div>
     </div>
-    <CoolLightBox :items="items" :index="index" @close="index = null">
-    </CoolLightBox>
   </figure>
 </template>
 <script>
 import FeatherZoomIn from "@/icons/FeatherZoomIn";
 import MediaListItemDropDown from "@/components/media/gridItem/MediaListItemDropDown";
+import { timeHhMmaDotDdddFormat } from "@/services/datetime.service";
 
 export default {
   name: "PhotoListItem",
   components: { MediaListItemDropDown, FeatherZoomIn },
+  setup() {
+    return {
+      timeHhMmaDotDdddFormat,
+    };
+  },
   data: function () {
     return {
       items: [

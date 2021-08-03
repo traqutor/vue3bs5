@@ -46,7 +46,8 @@
                   >
                     <button
                       class="dropdown-item"
-                      onclick="document.querySelector('.inputFile').click();"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalMediaSelectorManagerId"
                     >
                       Add Media
                     </button>

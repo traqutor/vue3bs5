@@ -22,4 +22,7 @@ export default {
   [Mutations.setMediaPatientItemSize]: (state, size) => {
     state.mediaPatientItemSize = size;
   },
+  [Mutations.setMediaThumbnails]: (state, thumbnails) => {
+    state.mediaThumbnails = thumbnails;
+  },
 };

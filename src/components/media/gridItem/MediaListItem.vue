@@ -1,26 +1,18 @@
 <template>
   <div
     class="list-media-item on-hover position-relative mb-4"
+    v-if="item"
     @click="onItemClick($event)"
   >
-    <AudioListItem
-      :item="item"
-      v-if="item && item.type === MEDIA_TYPES.AUDIO"
-    />
+    <PhotoListItem :item="item" v-if="item.blobType == MEDIA_TYPES.PHOTO" />
 
-    <DocListItem :item="item" v-if="item && item.type === MEDIA_TYPES.DOC" />
+    <AudioListItem :item="item" v-if="item.blobType === MEDIA_TYPES.AUDIO" />
 
-    <PhotoListItem
-      :item="item"
-      v-if="item && item.type === MEDIA_TYPES.PHOTO"
-    />
+    <DocListItem :item="item" v-if="item.blobType === MEDIA_TYPES.DOC" />
 
-    <VideoListItem
-      :item="item"
-      v-if="item && item.type === MEDIA_TYPES.VIDEO"
-    />
+    <VideoListItem :item="item" v-if="item.blobType === MEDIA_TYPES.VIDEO" />
 
-    <NoteListItem :item="item" v-if="item && item.type === MEDIA_TYPES.NOTE" />
+    <NoteListItem :item="item" v-if="item.blobType === MEDIA_TYPES.NOTE" />
 
     <div class="media py-1">
       <div class="media-body overflow-hidden">

@@ -110,6 +110,30 @@ input-group-sm > .form-control,
   max-width: 70% !important;
 }
 
+.p-25 {
+  padding: 0.75rem !important;
+}
+
+.pt-25,
+.py-25 {
+  padding-top: 0.75rem !important;
+}
+
+.pe-25,
+.px-25 {
+  padding-right: 0.75rem !important;
+}
+
+.pb-25,
+.py-25 {
+  padding-bottom: 0.75rem !important;
+}
+
+.ps-25,
+.px-25 {
+  padding-left: 0.75rem !important;
+}
+
 /* ============ desktop view ============ */
 @media all and (min-width: 992px) {
   .dropdown-menu li {
@@ -143,3 +167,14 @@ input-group-sm > .form-control,
   }
 }
 /* ============ small devices .end// ============ */
+
+/*
+  Modal Filemanager
+*/
+
+.modal-dialog-filemanager {
+  max-width: 1100px;
+}
+.modal-body-filemanager {
+  min-height: 530px;
+}

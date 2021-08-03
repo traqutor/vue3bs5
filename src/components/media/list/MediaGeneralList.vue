@@ -21,40 +21,42 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <div class="media align-items-center on-hover">
-                <figure
-                  class="
-                    avatar avatar-md
-                    rounded
-                    avatar-custom
-                    text-white
-                    bg-media-2
-                    me-3
-                  "
-                >
-                  <FeatherFileText />
-                </figure>
-                <div class="media-body overflow-hidden">
-                  <div class="text-truncate font-weight-middle">
-                    Examination result
+          <template v-for="item of thumbnails" :key="item.name">
+            <tr>
+              <td>
+                <div class="d-flex align-items-center on-hover">
+                  <figure
+                    class="
+                      avatar avatar-md
+                      rounded
+                      avatar-custom
+                      text-white
+                      bg-media-2
+                      me-3
+                    "
+                  >
+                    <FeatherFileText />
+                  </figure>
+                  <div class="media-body overflow-hidden">
+                    <div class="text-truncate font-weight-middle">
+                      Examination result
+                    </div>
                   </div>
                 </div>
-              </div>
-            </td>
-            <td class="text-nowrap">7:53 am 01/06/2000</td>
-            <td>
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="d-flex align-items-center">PDF</div>
+              </td>
+              <td class="text-nowrap">7:53 am 01/06/2000</td>
+              <td>
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center">PDF</div>
 
-                <media-item-drop-down :item="null" />
-              </div>
-            </td>
-          </tr>
+                  <media-item-drop-down :item="null" />
+                </div>
+              </td>
+            </tr>
+          </template>
           <tr>
             <td>
-              <div class="media align-items-center on-hover">
+              <div class="d-flex align-items-center on-hover">
                 <figure
                   class="
                     avatar avatar-md avatar-custom
@@ -109,9 +111,9 @@
             href="videos/video-01.mp4"
           >
             <td>
-              <div class="media align-items-center on-hover">
+              <div class="d-flex align-items-center on-hover">
                 <figure class="avatar avatar-md me-3 rounded overflow-hidden">
-                  <img src="../../../../assets/files/video-1.png" alt="..." />
+                  <img src="../../../assets/files/video-1.png" alt="..." />
                   <figcaption>
                     <h6>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit
@@ -159,7 +161,7 @@
           </tr>
           <tr>
             <td>
-              <div class="media align-items-center on-hover">
+              <div class="d-flex align-items-center on-hover">
                 <figure
                   class="
                     avatar avatar-md
@@ -199,6 +201,8 @@ import FeatherMic from "@/icons/FeatherMic";
 import FeatherPlay from "@/icons/FeatherPlay";
 import FeatherEdit from "@/icons/FeatherEdit";
 import MediaItemDropDown from "@/components/media/gridItem/MediaItemDropDown";
+import { useStore } from "vuex";
+import { computed } from "vue";
 export default {
   name: "MediaGeneralList",
   components: {
@@ -207,6 +211,17 @@ export default {
     FeatherPlay,
     FeatherMic,
     FeatherFileText,
+  },
+  setup() {
+    const store = useStore();
+    const itemSizeClass = computed(() => store.getters.getMediaItemClass);
+
+    const thumbnails = computed(() => store.getters.getMediaThumbnails);
+
+    return {
+      itemSizeClass,
+      thumbnails,
+    };
   },
 };
 </script>

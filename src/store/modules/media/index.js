@@ -29,6 +29,7 @@ const mediaModule = {
       mediaDrawerViewMode: MEDIA_DRAWER_VIEW_MODES.CLOSED,
       mediaItemSize: MEDIA_ITEM_SIZES.DEFAULT,
       mediaPatientItemSize: MEDIA_PATIENT_ITEM_SIZES.DEFAULT,
+      mediaThumbnails: [],
     };
   },
   mutations: Mutations,

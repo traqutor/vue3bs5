@@ -11,7 +11,7 @@
       >
         <MediaListItem :item="{ type: 'doc' }" />
         <MediaListItem :item="{ type: 'audio' }" />
-        <MediaListItem :item="{ type: 'photo' }" />
+        <MediaListItem :item="{ type: 'Picture' }" />
         <MediaListItem :item="{ type: 'video' }" />
         <MediaListItem :item="{ type: 'note' }" />
       </div>

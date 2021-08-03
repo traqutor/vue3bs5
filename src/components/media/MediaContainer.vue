@@ -5,7 +5,7 @@
         <media-nav-header />
 
         <media-recent v-if="tabActive === MEDIA_NAV_TABS.RECENT" />
-        <!--        <media-general v-else-if="tabActive === MEDIA_NAV_TABS.GENERAL" />-->
+        <media-general v-else-if="tabActive === MEDIA_NAV_TABS.GENERAL" />
         <!--        <media-patients v-else-if="tabActive === MEDIA_NAV_TABS.PATIENTS" />-->
         <!--        <media-undefined v-else-if="tabActive === MEDIA_NAV_TABS.UNDEFINED" />-->
       </div>
@@ -20,6 +20,7 @@ import { mapGetters } from "vuex";
 import { MEDIA_NAV_TABS } from "@/store/enums/EnumTypes";
 import MediaNavHeader from "@/components/media/MediaNavHeader";
 import MediaRecent from "@/components/media/MediaRecent";
+import MediaGeneral from "@/components/media/MediaGeneral";
 
 export default {
   name: "MediaContainer",
@@ -36,6 +37,7 @@ export default {
     }),
   },
   components: {
+    MediaGeneral,
     MediaRecent,
     MediaNavHeader,
   },

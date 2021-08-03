@@ -48,4 +48,7 @@ export default {
         return "list-group-md";
     }
   },
+  getMediaThumbnails: (state) => {
+    return state.mediaThumbnails;
+  },
 };

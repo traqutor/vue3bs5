@@ -1,4 +1,7 @@
-const Actions = {};
+const Actions = {
+  // media actions
+  onGetThumbnails: "onGetThumbnails"
+};
 
 const SocketReceivers = {
   ReceivedMessageNotification: "ReceivedMessageNotification",
@@ -35,8 +38,10 @@ const Mutations = {
   setMediaItemSize: "setMediaItemSize",
   setMediaPatientItemSize: "setMediaPatientItemSize",
   setMediaPatientSelected: "setMediaPatientSelected",
+  setMediaThumbnails: "setMediaThumbnails",
 };
 
+//messages
 const TEMPLATE_VIEW_MODES = {
   QUICK_MESSAGE: "Quick messages",
   TEMPLATES: "Templates",
@@ -44,7 +49,6 @@ const TEMPLATE_VIEW_MODES = {
   TEMPLATE_ADD_NEW: "New template",
   QUICK_MESSAGE_ADD_NEW: "Add new quick message",
 };
-
 const QUICK_MESSAGES = [
   "Are you available for a consultation?",
   "Please call me ASAP",
@@ -58,7 +62,6 @@ const QUICK_MESSAGES = [
   "What Is The Most Useful App On Your Phone?",
   "What Is A Controversial Opinion You Have?",
 ];
-
 const TEMPLATES = {
   ISBAR: {
     name: "ISBAR Report",
@@ -76,9 +79,7 @@ const TEMPLATES = {
 };
 
 // media
-
 const MEDIA_VIEW_MODES = { GRID: "GRID", TABLE: "TABLE" };
-
 const MEDIA_DRAWER_VIEW_MODES = {
   CLOSED: "Closed",
   PATIENT: "Patient",
@@ -96,7 +97,7 @@ const MEDIA_PATIENT_ITEM_SIZES = {
 const MEDIA_TYPES = {
   ALL: "all",
   AUDIO: "audio",
-  PHOTO: "photo",
+  PHOTO: "Picture",
   VIDEO: "video",
   DOC: "doc",
   NOTE: "note",
@@ -109,7 +110,6 @@ const MEDIA_NAV_TABS = {
 };
 
 //patients
-
 const PATIENTS_VIEW_MODES = { GRID: "GRID", TABLE: "TABLE" };
 const PATIENT_DRAWER_VIEW_MODES = {
   CLOSED: "Closed",

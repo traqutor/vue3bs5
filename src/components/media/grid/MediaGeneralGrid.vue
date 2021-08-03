@@ -8,26 +8,31 @@
         :class="itemSizeClass"
         id="patientMediaList"
       >
-        <MediaListItem :item="{ type: 'doc' }" />
-        <MediaListItem :item="{ type: 'audio' }" />
-        <MediaListItem :item="{ type: 'photo' }" />
-        <MediaListItem :item="{ type: 'video' }" />
-        <MediaListItem :item="{ type: 'note' }" />
+        <template v-for="item of thumbnails" :key="item.name">
+          <MediaListItem :item="item" />
+        </template>
       </div>
     </perfect-scrollbar>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { useStore } from "vuex";
 import MediaListItem from "@/components/media/gridItem/MediaListItem";
+import { computed } from "vue";
 
 export default {
   name: "MediaGeneralGrid",
   components: { MediaListItem },
-  computed: {
-    ...mapGetters({
-      itemSizeClass: "getMediaItemClass",
-    }),
+  setup() {
+    const store = useStore();
+    const itemSizeClass = computed(() => store.getters.getMediaItemClass);
+
+    const thumbnails = computed(() => store.getters.getMediaThumbnails);
+
+    return {
+      itemSizeClass,
+      thumbnails,
+    };
   },
 };
 </script>
