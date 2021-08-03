@@ -68,8 +68,8 @@
             >
               <span v-if="selectedConversation.isDirect"> Recipient </span>
               <span v-else>
-                Recipients ({{ selectedMessage.watchedByUsers.length }}/{{
-                  selectedConversation.participants.length
+                Recipients ({{ watchedMessageParticipants.length }}/{{
+                  selectedConversationParticipants.length
                 }})
               </span>
             </div>
@@ -93,16 +93,14 @@
                       <div class="text-right ms-auto">
                         <div class="text-nowrap f-size-13 text-dark">
                           <span
-                            v-if="isMessageAcknowledgedByUser(item.id)"
+                            v-if="item.isAcknowledged"
                             class="text-primary me-2 f-size-12"
                             >Acknowledged</span
                           >
                           <feather-check-double
                             class="me-1"
                             :class="
-                              isMessageWatchedByUser(item.id)
-                                ? 'text-success'
-                                : 'text-dark'
+                              item.isWatched ? 'text-success' : 'text-dark'
                             "
                           />
                           {{
@@ -129,9 +127,9 @@
                   <button
                     type="button"
                     class="btn btn-light px-1 shadow-none rounded"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="true"
+                    id="dropdownMessageDetailsParticipantsMenuButtonId"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
                     <feather-more-vertical class="f-icon-18" />
                   </button>
@@ -140,6 +138,7 @@
                       dropdown-menu dropdown-menu-right dropdown-menu-sm
                       shadow
                     "
+                    aria-labelledby="dropdownMessageDetailsParticipantsMenuButtonId"
                     x-placement="left-start"
                     style="
                       position: absolute;
@@ -177,6 +176,7 @@ import {
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
+import { sortByIsAcknowledged, sortByIsWatched } from "@/services/sort.service";
 
 export default {
   components: {
@@ -193,41 +193,46 @@ export default {
     const getAuthor = computed(() =>
       store.getters.getMessageAuthor(selectedMessage.value)
     );
-    const selectedConversationParticipants = computed(() => {
-      let participantsArray = [];
-      if (selectedMessage.value.isWhisper) {
-        participantsArray = selectedMessage.value.whisperRecipients;
-      } else {
-        participantsArray = store.getters.getSelectedConversation.participants;
-      }
-      return participantsArray.filter((participant) => {
-        let isParticipant = true;
-        if (selectedMessage.value) {
-          if (selectedMessage.value.activeRoleId) {
-            if (
-              guidsAreEqual(participant.id, selectedMessage.value.activeRoleId)
-            ) {
-              isParticipant = false;
-            }
-          } else {
-            if (guidsAreEqual(participant.id, selectedMessage.value.authorId)) {
-              isParticipant = false;
-            }
-          }
-        }
-        return isParticipant;
-      });
-    });
 
-    const isRoleById = (id) => {
-      let isRole = false;
-      store.getters.getSystemRoles.forEach((rle) => {
-        if (guidsAreEqual(rle.id, id)) {
-          isRole = true;
-        }
-      });
-      return isRole;
-    };
+    const watchedMessageParticipants = computed(() =>
+      store.getters.getWatchedMessageParticipants(selectedMessage.value)
+    );
+
+    const whisperRecipients = computed(() =>
+      store.getters
+        .getWhisperMessageParticipants(selectedMessage.value)
+        .map((participant) => {
+          return {
+            ...participant,
+            isWatched: isMessageWatchedByUser(participant.id),
+            isAcknowledged: isMessageAcknowledgedByUser(participant.id),
+          };
+        })
+        .sort(sortByIsAcknowledged)
+        .sort(sortByIsWatched)
+    );
+
+    const selectedConversationMessageParticipants = computed(() =>
+      store.getters
+        .getSelectedConversationMessageParticipants(selectedMessage.value)
+        .map((participant) => {
+          return {
+            ...participant,
+            isWatched: isMessageWatchedByUser(participant.id),
+            isAcknowledged: isMessageAcknowledgedByUser(participant.id),
+          };
+        })
+        .sort(sortByIsAcknowledged)
+        .sort(sortByIsWatched)
+    );
+
+    const selectedConversationParticipants = computed(() => {
+      if (selectedMessage.value.isWhisper) {
+        return whisperRecipients.value;
+      } else {
+        return selectedConversationMessageParticipants.value;
+      }
+    });
 
     const isMessageWatchedByUser = (id) => {
       return (
@@ -250,11 +255,10 @@ export default {
     return {
       selectedConversation,
       selectedMessage,
+      watchedMessageParticipants,
+      whisperRecipients,
       getAuthor,
       selectedConversationParticipants,
-      isMessageWatchedByUser,
-      isMessageAcknowledgedByUser,
-      isRoleById,
       timeHhMmaDotDdddFormat,
       timeOffsetFormat,
       timeMessagesDividerFormat,

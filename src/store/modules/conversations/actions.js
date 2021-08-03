@@ -247,8 +247,8 @@ export default {
   onMarkMessagesAsRead: ({ state, getters }) => {
     let data = {
       conversationId: state.selectedConversationId,
-      messagesIds: [],
-      activeRolesIds: [],
+      messagesIds: null,
+      activeRolesIds: null,
     };
     /**
      * filter not read and not whispered messages Ids
@@ -322,20 +322,21 @@ export default {
      */
     if (whisperedMessages.length > 0) {
       whisperedMessages.forEach((message) => {
+        const roles = message.whisperRecipients
+          .filter((whisperer) => {
+            return (
+              whisperer.isRole &&
+              getters.getLoggedUser &&
+              getters.getLoggedUser.SystemRoles.find(
+                (role) => role.id === whisperer.id
+              )
+            );
+          })
+          .map((recipient) => recipient.id);
         data = {
           conversationId: state.selectedConversationId,
           messagesIds: [message.id],
-          activeRolesIds: message.whisperRecipients
-            .filter((whisperer) => {
-              return (
-                whisperer.isRole &&
-                getters.getLoggedUser &&
-                getters.getLoggedUser.SystemRoles.find(
-                  (role) => role.id === whisperer.id
-                )
-              );
-            })
-            .map((recipient) => recipient.id),
+          activeRolesIds: roles,
         };
 
         const url = `${process.env.VUE_APP_BASE_URL}/Messaging/ReadMessage`;

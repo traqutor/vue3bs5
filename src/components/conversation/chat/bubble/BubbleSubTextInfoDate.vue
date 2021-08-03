@@ -63,7 +63,7 @@
                 "
               >
                 <feather-check-double
-                  class="me-1"
+                  class="ms-2"
                   :class="isMessageWatchedByUser(item.id) ? 'text-success' : ''"
                 />
               </div>
@@ -92,7 +92,7 @@
                 "
               >
                 <feather-check-double
-                  class="me-1"
+                  class="ms-2"
                   :class="isMessageWatchedByUser(item.id) ? 'text-success' : ''"
                 />
               </div>
@@ -152,6 +152,7 @@ import FeatherChevronDown from "@/icons/FeatherChevronDown";
 import FeatherMoreHorizontal from "@/icons/FeatherMoreHorizontal";
 import { guidsAreEqual } from "@/services/guids.service";
 import { computed } from "vue";
+import { sortByIsWatched } from "@/services/sort.service";
 
 export default {
   components: {
@@ -177,25 +178,29 @@ export default {
     );
 
     const selectedConversationMessageParticipants = computed(() =>
-      store.getters.getSelectedConversationMessageParticipants(props.item)
+      store.getters
+        .getSelectedConversationMessageParticipants(props.item)
+        .map((participant) => {
+          return {
+            ...participant,
+            isWatched: isMessageWatchedByUser(participant.id),
+          };
+        })
+        .sort(sortByIsWatched)
     );
 
     const isAllParticipantsReadMessage = computed(() => {
-      let isRead = false;
-      if (
-        props.item.isWhisper &&
-        props.item.watchedByUsers.length === props.item.whisperRecipients.length
-      ) {
-        isRead = true;
+      if (props.item.isWhisper) {
+        return (
+          watchedMessageParticipants.value.length ===
+          whisperRecipients.value.length
+        );
       } else {
-        if (
-          selectedConversationMessageParticipants.value.length ===
-          props.item.watchedByUsers.length
-        ) {
-          isRead = true;
-        }
+        return (
+          watchedMessageParticipants.value.length ===
+          selectedConversationMessageParticipants.value.length
+        );
       }
-      return isRead;
     });
 
     const isMessageWatchedByUser = (id) => {

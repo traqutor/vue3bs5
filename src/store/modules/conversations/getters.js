@@ -1,5 +1,4 @@
 import { guidsAreEqual } from "@/services/guids.service";
-import { computed } from "vue";
 
 export default {
   getChatViewMode: (state) => {
@@ -99,30 +98,45 @@ export default {
   },
 
   getWatchedMessageParticipants: () => (message) => {
-    return message.watchedByUsers.filter((recipient) => {
-      return (
-        (!recipient.isRole && !guidsAreEqual(recipient.id, message.authorId)) ||
-        (recipient.isRole && !guidsAreEqual(recipient.id, message.activeRoleId))
-      );
-    });
+    return (
+      message.watchedByUsers &&
+      message.watchedByUsers.filter((recipient) => {
+        return (
+          (!recipient.isRole &&
+            !guidsAreEqual(recipient.id, message.authorId)) ||
+          (recipient.isRole &&
+            !guidsAreEqual(recipient.id, message.activeRoleId))
+        );
+      })
+    );
   },
 
   getWhisperMessageParticipants: () => (message) => {
-    return message.whisperRecipients.filter((recipient) => {
-      return (
-        (!recipient.isRole && !guidsAreEqual(recipient.id, message.authorId)) ||
-        (recipient.isRole && !guidsAreEqual(recipient.id, message.activeRoleId))
-      );
-    });
+    return (
+      message.whisperRecipients &&
+      message.whisperRecipients.filter((recipient) => {
+        return (
+          (!recipient.isRole &&
+            !guidsAreEqual(recipient.id, message.authorId)) ||
+          (recipient.isRole &&
+            !guidsAreEqual(recipient.id, message.activeRoleId))
+        );
+      })
+    );
   },
 
   getAcknowledgedByMessageParticipants: () => (message) => {
-    return message.acknowledgedByUsers.filter((recipient) => {
-      return (
-        (!recipient.isRole && !guidsAreEqual(recipient.id, message.authorId)) ||
-        (recipient.isRole && !guidsAreEqual(recipient.id, message.activeRoleId))
-      );
-    });
+    return (
+      message.acknowledgedByUsers &&
+      message.acknowledgedByUsers.filter((recipient) => {
+        return (
+          (!recipient.isRole &&
+            !guidsAreEqual(recipient.id, message.authorId)) ||
+          (recipient.isRole &&
+            !guidsAreEqual(recipient.id, message.activeRoleId))
+        );
+      })
+    );
   },
 
   getSelectedConversationMessageParticipants: (state) => (message) => {

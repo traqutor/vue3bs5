@@ -133,11 +133,15 @@
     >
       Not acknowledged (<span v-if="item.isWhisper">{{
         whisperRecipients.length -
-        (acknowledgedByUsers ? acknowledgedByUsers.length : 0)
+        (acknowledgedByMessageParticipants
+          ? acknowledgedByMessageParticipants.length
+          : 0)
       }}</span
       ><span v-else>{{
         selectedConversationMessageParticipants.length -
-        (acknowledgedByUsers ? acknowledgedByUsers.length : 0)
+        (acknowledgedByMessageParticipants
+          ? acknowledgedByMessageParticipants.length
+          : 0)
       }}</span
       >) <feather-more-horizontal class="ms-auto ps-1" />
     </button>
