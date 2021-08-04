@@ -6,6 +6,7 @@ import {
   guidsGetOne,
 } from "@/services/guids.service";
 import { CHAT_VIEW_MODES } from "@/const";
+import { MEDIA_TYPES, Mutations } from "@/store/enums/EnumTypes";
 
 let getMessagesSource = null;
 
@@ -146,7 +147,7 @@ export default {
     });
   },
 
-  onCreateMessage: ({ commit, state, rootState }, payload) => {
+  onCreateMessage: ({ commit, state, getters }, payload) => {
     commit("setIsMessageCreating", true);
 
     const message = {
@@ -154,18 +155,22 @@ export default {
       activeRoleId: payload.activeRoleId,
       conversationId: state.selectedConversationId,
       messageText: state.messageText,
-      isWhisper: rootState.users.whisperToParticipants.length > 0,
+      isWhisper: getters.getWhisperToParticipants.length > 0,
       requiresAcknowledgement: payload.requiresAcknowledgement,
       pushNotification: {
         title: "Message title",
         body: "Message body text",
       },
-      attachements: [],
-      whisperRecipients: rootState.users.whisperToParticipants.map(
-        (whisper) => {
-          return { ...whisper, id: whisper.id.toLowerCase() };
-        }
-      ),
+      attachements: getters.getMediaShareGalleryItems.map((share) => {
+        return {
+          id: share.id,
+          blobType: MEDIA_TYPES.PHOTO,
+          aspectRatio: 0,
+        };
+      }),
+      whisperRecipients: getters.getWhisperToParticipants.map((whisper) => {
+        return { ...whisper, id: whisper.id.toLowerCase() };
+      }),
     };
 
     const url = `${process.env.VUE_APP_BASE_URL}/Messaging/SendMessage`;
@@ -176,6 +181,7 @@ export default {
         if (response.data.isOk) {
           commit("setMessageText", null);
           commit("purgeWhisperParticipants");
+          commit(Mutations.setMediaShareGalleryItems, []);
         } else {
           console.error("On CREATE_MESSAGE error:", response.data.message);
         }

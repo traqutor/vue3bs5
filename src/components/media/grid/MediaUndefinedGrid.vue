@@ -8,7 +8,7 @@
         :class="itemSizeClass"
         id="patientMediaList"
       >
-        <MediaListItem
+        <MediaGridItem
           v-for="i in [1, 2, 3, 4, 5]"
           :key="i"
           :item="{ type: 'photo' }"
@@ -19,11 +19,11 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import MediaListItem from "@/views/content/media/gridItem/MediaListItem";
+import MediaGridItem from "@/views/content/media/gridItem/MediaGridItem";
 
 export default {
   name: "MediaUndefinedGrid",
-  components: { MediaListItem },
+  components: { MediaGridItem },
   computed: {
     ...mapGetters({
       itemSizeClass: "getMediaItemClass",

@@ -1,8 +1,3 @@
-const Actions = {
-  // media actions
-  onGetThumbnails: "onGetThumbnails"
-};
-
 const SocketReceivers = {
   ReceivedMessageNotification: "ReceivedMessageNotification",
   UserAddedToConversationNotification: "UserAddedToConversationNotification",
@@ -16,6 +11,12 @@ const SocketReceivers = {
     "MessageQuickReactionRemovedNotification",
   ConversationCreatedNotification: "ConversationCreatedNotification",
   ConversationTopicChangedNotification: "ConversationTopicChangedNotification",
+};
+
+const Actions = {
+  // media actions
+  onGetThumbnails: "onGetThumbnails",
+  onShareGalleryItems: "onShareGalleryItems",
 };
 
 const Mutations = {
@@ -38,7 +39,12 @@ const Mutations = {
   setMediaItemSize: "setMediaItemSize",
   setMediaPatientItemSize: "setMediaPatientItemSize",
   setMediaPatientSelected: "setMediaPatientSelected",
+
   setMediaThumbnails: "setMediaThumbnails",
+
+  toggleMediaSelectedItem: "toggleMediaSelectedItem",
+  setMediaSelectedItems: "setMediaSelectedItems",
+  setMediaShareGalleryItems: "setMediaShareGalleryItems",
 };
 
 //messages

@@ -103,13 +103,6 @@ export default {
 
     let participant = null;
 
-    // if (getters.getLoggedUser.id === id) {
-    //   participant = {
-    //     ...getters.getLoggedUser,
-    //     isRole: false,
-    //   };
-    // }
-
     state.systemRoles.forEach((rle) => {
       if (guidsAreEqual(rle.id, id)) {
         participant = { ...rle, id: rle.id, isRole: true };
@@ -174,15 +167,15 @@ export default {
     });
   },
 
-  getMessageAuthor: (state, getters) => (message) => {
+  getMessageAuthor: (state) => (message) => {
     let author = { user: null, role: null };
     if (message.authorId) {
-      author.user = getters.getSystemUsers.find(
+      author.user = state.systemUsers.find(
         (usr) => usr.userId === message.authorId
       );
     }
     if (message.activeRoleId) {
-      author.role = getters.getSystemRoles.find(
+      author.role = state.systemRoles.find(
         (rle) => rle.id === message.activeRoleId
       );
     }

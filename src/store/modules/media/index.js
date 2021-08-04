@@ -30,6 +30,8 @@ const mediaModule = {
       mediaItemSize: MEDIA_ITEM_SIZES.DEFAULT,
       mediaPatientItemSize: MEDIA_PATIENT_ITEM_SIZES.DEFAULT,
       mediaThumbnails: [],
+      mediaSelectedItems: [],
+      mediaShareGalleryItems: [],
     };
   },
   mutations: Mutations,

@@ -116,7 +116,7 @@
             pe-4
           "
         >
-          <MediaListItem
+          <MediaGridItem
             v-for="i in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
             :key="i"
             :item="{ type: MEDIA_TYPES.AUDIO }"
@@ -135,7 +135,7 @@
             pe-4
           "
         >
-          <MediaListItem
+          <MediaGridItem
             v-for="i in [1, 2, 3, 4]"
             :key="i"
             :item="{ type: MEDIA_TYPES.PHOTO }"
@@ -154,7 +154,7 @@
             pe-4
           "
         >
-          <MediaListItem
+          <MediaGridItem
             v-for="i in [1, 2, 3, 4, 5, 6, 7, 8]"
             :key="i"
             :item="{ type: MEDIA_TYPES.VIDEO }"
@@ -173,7 +173,7 @@
             pe-4
           "
         >
-          <MediaListItem
+          <MediaGridItem
             v-for="i in [1, 2, 3]"
             :key="i"
             :item="{ type: MEDIA_TYPES.NOTE }"
@@ -192,7 +192,7 @@
             pe-4
           "
         >
-          <MediaListItem
+          <MediaGridItem
             v-for="i in [1, 2, 3, 4, 5, 6, 7]"
             :key="i"
             :item="{ type: MEDIA_TYPES.DOC }"
@@ -210,11 +210,11 @@ import {
   Mutations,
 } from "@/store/enums/EnumTypes";
 import FeatherPatient from "@/icons/FeatherPatient";
-import MediaListItem from "@/components/media/gridItem/MediaListItem";
+import MediaGridItem from "@/components/media/gridItem/MediaGridItem";
 
 export default {
   name: "MediaDrawer",
-  components: { MediaListItem, FeatherPatient },
+  components: { MediaGridItem, FeatherPatient },
   data() {
     return {
       MEDIA_TYPES,

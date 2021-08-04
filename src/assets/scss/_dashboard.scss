@@ -474,7 +474,9 @@ mark {
   width: 4rem !important;
   height: 4rem !important;
 }
-
+.f-col-xxs {
+  max-width: 200px !important;
+}
 .f-col-xs {
   max-width: 220px !important;
 }
@@ -503,8 +505,17 @@ mark {
   max-width: 520px !important;
 }
 
+.w-col-3xs {
+  width: 145px !important;
+}
+.w-col-xxs {
+  width: 190px !important;
+}
 .w-col-xs {
   width: 220px !important;
+}
+.w-col-s {
+  width: 275px !important;
 }
 .w-col-sm {
   width: 320px !important;
@@ -526,6 +537,19 @@ mark {
 }
 .w-col-2x {
   width: 520px !important;
+}
+
+.d-col-1 {
+  -ms-flex: 1;
+  flex: 1;
+}
+.d-col-2 {
+  -ms-flex: 2;
+  flex: 2;
+}
+.d-col-3 {
+  -ms-flex: 3;
+  flex: 3;
 }
 
 .rotate-45 {
@@ -2165,7 +2189,7 @@ textarea.no-resize {
   Side Nav Line
 ================= */
 
-.side-nav-line .nav-link {
+.side-nav-line .nav-link{
   padding: 6px 0;
   border: none !important;
   font-weight: 500;
@@ -2173,75 +2197,68 @@ textarea.no-resize {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  justify-content: left;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   transition: all 0.3s ease-in-out;
   outline: none;
 }
-.side-nav-line .nav-link:not(.btn-link) {
+.nav-line-center .nav-link{
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.side-nav-line .nav-link:not(.btn-link){
   color: $grey;
 }
-.bg-dark .side-nav-line .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+.bg-dark .side-nav-line .nav-link{
+  color: rgba(255,255,255,.5);
 }
-.nav-dark .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+.nav-dark .nav-link{
+  color: rgba(255,255,255,.5);
   outline: none !important;
 }
-.nav-pills-sm .nav-link {
-  padding: 0.25rem 1rem;
-  font-size: 0.875rem;
+.nav-pills-sm .nav-link{
+  padding: .25rem 1rem;
+  font-size: .875rem;
 }
-.side-nav-line-sm .nav-link {
-  padding: 0.7rem 0;
+.side-nav-line-sm .nav-link{
+  padding: .7rem 0;
+}
+
+.side-nav-line .nav-link:hover{
+  color: $grey-dark;
+}
+.nav-dark .nav-link:hover,
+.bg-dark .side-nav-line .nav-link:hover{
+  color: #fff;
+}
+.side-nav-line .nav-item + .nav-item{
+  margin-left: 1.25rem;
 }
 .side-nav-line-main {
   height: 65px;
 }
-
-.side-nav-line-main .nav-link {
+.side-nav-line-main .nav-link{
   padding: 0 0 1rem;
   font-size: 15px;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-.side-nav-line .nav-link:hover {
-  color: $grey-dark;
-}
-.nav-dark .nav-link:hover,
-.bg-dark .side-nav-line .nav-link:hover {
-  color: #fff;
-}
-.side-nav-line .nav-item + .nav-item {
-  margin-left: 1.25rem;
-}
-
-.side-nav-line-main .nav-link {
-  padding: 0 0 1rem;
-  font-size: 15px;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
   margin: 0 !important;
 }
-.side-nav-line .nav-link.active {
+.side-nav-line .nav-link.active{
   color: $dark;
   background: transparent;
   opacity: 1;
 }
-.bg-dark .side-nav-line .nav-link.active {
+.bg-dark .side-nav-line .nav-link.active{
   color: #fff;
 }
 
-.side-nav-line .nav-item > .nav-link {
-  height: 100%;
+.side-nav-line .nav-item > .nav-link{
+  height: 100%
 }
 
-.side-nav-line .nav-link.active::before {
-  content: "";
+.side-nav-line .nav-link.active::before{
+  content: '';
   height: 3px;
   width: 100%;
   display: block;
@@ -2256,7 +2273,7 @@ textarea.no-resize {
   margin-bottom: -2px;
 }
 
-.nav-item-more .btn {
+.nav-item-more .btn{
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -2266,20 +2283,16 @@ textarea.no-resize {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
   width: 34px;
   padding: 0;
   border: none;
   line-height: 1;
 }
 
-.nav-inline .nav-link.active::before {
-  display: none;
-}
-.nav-inline .nav-link.active {
-  color: $blue;
-}
+.nav-inline .nav-link.active::before{display: none}
+.nav-inline .nav-link.active{color: $blue}
 
 /* ============== Flex Menu */
 

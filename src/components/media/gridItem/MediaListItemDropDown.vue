@@ -10,23 +10,22 @@
   >
     <div
       class="avatar-group avatar-group-slide btn bg-white border-0"
-      id="dropdownMediaListItemMenuButtonId"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
       <figure class="avatar avatar-custom text-white" :class="getClass()">
-        <FeatherPlay v-if="item && item.type === MEDIA_TYPES.VIDEO" />
-        <FeatherMic v-if="item && item.type === MEDIA_TYPES.AUDIO" />
-        <FeatherEdit v-if="item && item.type === MEDIA_TYPES.NOTE" />
-        <FeatherCamera v-if="item && item.type === MEDIA_TYPES.PHOTO" />
-        <FeatherFileText v-if="item && item.type === MEDIA_TYPES.DOC" />
+        <FeatherPlay v-if="item && item.blobType === MEDIA_TYPES.VIDEO" />
+        <FeatherMic v-if="item && item.blobType === MEDIA_TYPES.AUDIO" />
+        <FeatherEdit v-if="item && item.blobType === MEDIA_TYPES.NOTE" />
+        <FeatherCamera v-if="item && item.blobType === MEDIA_TYPES.PHOTO" />
+        <FeatherFileText v-if="item && item.blobType === MEDIA_TYPES.DOC" />
       </figure>
       <figure class="avatar avatar-custom text-media-2">
         <FeatherMoreVertical class="f-icon-18" />
       </figure>
     </div>
 
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="#">Attach to patient</a></li>
       <li><a class="dropdown-item" href="#">Share in conversation</a></li>
       <li><hr class="dropdown-divider" /></li>
@@ -53,7 +52,7 @@ export default {
   methods: {
     getClass() {
       if (this.item) {
-        switch (this.item.type) {
+        switch (this.item.blobType) {
           case this.MEDIA_TYPES.VIDEO:
             return "bg-media-5";
           case this.MEDIA_TYPES.PHOTO:

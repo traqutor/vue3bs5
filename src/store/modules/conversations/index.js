@@ -16,7 +16,7 @@ const conversationsModule = {
       pageOfConversations: { skipConversations: 0, takeConversations: 20 },
       selectedConversationId: null,
       selectedCreator: null,
-      messageText: null,
+      messageText: "",
       selectedMessageId: null,
       isMessagesLoading: null,
       isMessageCreating: null,

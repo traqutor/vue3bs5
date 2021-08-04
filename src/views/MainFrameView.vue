@@ -17,7 +17,7 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 import AppHeader from "@/components/header/MainHeader";
 import AsideLeft from "@/components/aside/AsideLeft";
-import ModalMediaSelectionManager from "@/components/media/modals/ModalMediaSelectionManager";
+import ModalMediaSelectionManager from "@/components/media/manager/ModalMediaSelectionManager";
 
 export default {
   setup() {

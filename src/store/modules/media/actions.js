@@ -23,4 +23,21 @@ export default {
         console.error("On onGetThumbnails error:", error);
       });
   },
+
+  [Actions.onShareGalleryItems]: ({ commit }, requestPayload) => {
+    return new Promise((resolve) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/Gallery/ShareGalleryItem`;
+
+      axiosWebApiInstance
+        .post(url, requestPayload)
+        .then(function (response) {
+          const share = response.data.galleryItems;
+          commit(Mutations.setMediaShareGalleryItems, share);
+          resolve();
+        })
+        .catch((error) => {
+          console.error("On onShareGalleryItems error:", error);
+        });
+    });
+  },
 };

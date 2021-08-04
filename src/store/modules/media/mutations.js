@@ -25,4 +25,20 @@ export default {
   [Mutations.setMediaThumbnails]: (state, thumbnails) => {
     state.mediaThumbnails = thumbnails;
   },
+  [Mutations.toggleMediaSelectedItem]: (state, item) => {
+    const idx = state.mediaSelectedItems.findIndex(
+      (selected) => selected.name === item.name
+    );
+    if (idx !== -1) {
+      state.mediaSelectedItems.splice(idx, 1);
+    } else {
+      state.mediaSelectedItems.push(item);
+    }
+  },
+  [Mutations.setMediaSelectedItems]: (state, items) => {
+    state.mediaSelectedItems = items;
+  },
+  [Mutations.setMediaShareGalleryItems]: (state, share) => {
+    state.mediaShareGalleryItems = share;
+  },
 };

@@ -9,7 +9,7 @@
         id="patientMediaList"
       >
         <template v-for="item of thumbnails" :key="item.name">
-          <MediaListItem :item="item" />
+          <MediaGridItem :item="item" />
         </template>
       </div>
     </perfect-scrollbar>
@@ -17,12 +17,12 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import MediaListItem from "@/components/media/gridItem/MediaListItem";
+import MediaGridItem from "@/components/media/gridItem/MediaGridItem";
 import { computed } from "vue";
 
 export default {
   name: "MediaGeneralGrid",
-  components: { MediaListItem },
+  components: { MediaGridItem },
   setup() {
     const store = useStore();
     const itemSizeClass = computed(() => store.getters.getMediaItemClass);

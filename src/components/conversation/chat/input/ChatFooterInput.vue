@@ -30,7 +30,6 @@
                       align-items-center
                       text-secondary text-dark-hover
                       border-0
-                      pb-10px
                       btn-options
                       shadow-none
                     "
@@ -65,33 +64,8 @@
               </div>
               <!-- end::more vertical menu dropdown -->
 
-              <!-- start::message text area -->
-              <TextareaResizeAuto>
-                <template v-slot:default="{ resize }">
-                  <textarea
-                    class="
-                      form-control
-                      dialog-input-textarea
-                      chat-textarea-control
-                      f-size-14
-                      bg-transparent
-                      border-0
-                      rounded-0
-                      is-keyup-group-control
-                      shadow-none
-                      ps-2
-                      autoresize-textarea
-                      no-resize
-                    "
-                    rows="1"
-                    placeholder="Type a message ..."
-                    style="height: 42px; overflow-y: hidden"
-                    v-model.lazy="messageText"
-                    v-debounce="500"
-                    @keydown.enter.prevent="onSubmit"
-                  ></textarea>
-                </template>
-              </TextareaResizeAuto>
+              <ChatContentEditable v-model.lazy="messageText" />
+
               <!-- end::message text area -->
 
               <!-- start::request acknowledge indicator icon toggle button -->
@@ -294,7 +268,10 @@
                 "
                 type="button"
                 @click="onSubmit"
-                :disabled="onTrimMessageText(messageText) <= 0"
+                :disabled="
+                  onTrimMessageText(messageText) <= 0 &&
+                  shareGalleryItems.length <= 0
+                "
               >
                 <feather-arrow-up class="f-icon-22" />
               </button>
@@ -322,8 +299,12 @@ import EmojiPicker from "@/components/conversation/chat/chat-text-selector/Emoji
 import TextareaResizeAuto from "@/components/text/TextareaResizeAuto";
 import FeatherChevronsLeft from "@/icons/FeatherChevronsLeft";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
+import MediaThumbnailItem from "@/components/media/item/MediaThumbnailItem";
+import ChatContentEditable from "@/components/conversation/chat/input/ChatContentEditable";
 export default {
   components: {
+    ChatContentEditable,
+    MediaThumbnailItem,
     ParticipantAvatarNameItem,
     FeatherChevronsLeft,
     EmojiPicker,
@@ -354,6 +335,12 @@ export default {
         store.commit("setMessageText", value);
       },
     });
+
+    const thumbnails = computed(() => store.getters.getMediaThumbnails);
+
+    const shareGalleryItems = computed(
+      () => store.getters.getMediaShareGalleryItems
+    );
 
     function insertEmoji(emoji) {
       messageText.value = messageText.value ? messageText.value + emoji : emoji;
@@ -421,6 +408,8 @@ export default {
       availableMessageCreators,
       placeholder,
       requiresAcknowledgement,
+      thumbnails,
+      shareGalleryItems,
       onTrimMessageText,
       onShowTemplatesAndQuickMessages,
       insertEmoji,

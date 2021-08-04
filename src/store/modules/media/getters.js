@@ -51,4 +51,18 @@ export default {
   getMediaThumbnails: (state) => {
     return state.mediaThumbnails;
   },
+
+  getMediaSelectedItems: (state) => {
+    return state.mediaSelectedItems;
+  },
+
+  getIsMediaItemSelected: (state) => (item) => {
+    return state.mediaSelectedItems.find(
+      (selected) => selected.name === item.name
+    );
+  },
+
+  getMediaShareGalleryItems: (state) => {
+    return state.mediaShareGalleryItems
+  }
 };
