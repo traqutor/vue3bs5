@@ -8,7 +8,7 @@
     "
     style="min-width: 128px; min-height: 64px;"
   >
-    <MediaItem :item="item" :is-select="isSelect" />
+    <MediaItem :item="item" />
   </div>
 </template>
 <script>
