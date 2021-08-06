@@ -3,7 +3,7 @@
     class="list-media-item on-hover position-relative hover-action-group mb-4"
     v-if="item"
   >
-    <MediaItem :item="item" :is-select="isSelect" />
+    <MediaItem :item="item" :is-drop-down-menu="true" />
 
     <div
       v-if="

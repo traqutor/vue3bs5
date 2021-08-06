@@ -19,7 +19,9 @@
 
         <NoteItem :item="item" v-if="item.blobType === MEDIA_TYPES.NOTE" />
 
-        <MediaListItemDropDown v-if="!isSelect" :item="item" />
+        <MediaListItemDropDown v-if="isDropDownMenu" :item="item" />
+
+        <MediaItemSelectToggle v-if="isSelect" :item="item" />
       </div>
     </div>
   </figure>
@@ -32,13 +34,15 @@ import DocListItem from "@/components/media/item/DocListItem";
 import PhotoItem from "@/components/media/item/PhotoItem";
 import NoteItem from "@/components/media/item/NoteItem";
 import VideoItem from "@/components/media/item/VideoItem";
-import MediaListItemDropDown from "@/components/media/gridItem/MediaListItemDropDown";
+import MediaListItemDropDown from "@/components/media/item/MediaListItemDropDown";
 import { MEDIA_TYPES, Mutations } from "@/store/enums/EnumTypes";
+import MediaItemSelectToggle from "@/components/media/item/MediaItemSelectToggle";
 
 export default {
   props: {
     item: null,
     isSelect: null,
+    isDropDownMenu: null,
   },
   setup(props) {
     const store = useStore();
@@ -73,6 +77,7 @@ export default {
     };
   },
   components: {
+    MediaItemSelectToggle,
     MediaListItemDropDown,
     NoteItem,
     AudioListItem,

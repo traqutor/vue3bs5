@@ -4939,11 +4939,10 @@ figcaption {
   z-index: 2;
 }
 
-.list-media-card.toggle-action-show .image-inner-img::before,
-.list-media-card.toggle-action-show .image-inner-icon,
-.list-media-card.toggle-action-show .image-inner-dropdown {
-  opacity: 0;
-  visibility: hidden;
+.list-media-card.toggle-action-show:not(.on-visible-action) .image-inner-img::before,
+.list-media-card.toggle-action-show:not(.on-visible-action) .image-inner-icon,
+.list-media-card.toggle-action-show:not(.on-visible-action) .image-inner-dropdown {
+  opacity: 0; visibility: hidden;
 }
 
 .list-media-card .toggle-action-control {
@@ -4961,9 +4960,9 @@ figcaption {
   visibility: visible;
 }
 
-.image-inner-cnt {
-  z-index: 1;
-}
+.image-inner-cnt {z-index: 1;}
+
+
 
 .image-glass-effect:after {
   content: "";

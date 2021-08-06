@@ -200,7 +200,7 @@ import FeatherFileText from "@/icons/FeatherFileText";
 import FeatherMic from "@/icons/FeatherMic";
 import FeatherPlay from "@/icons/FeatherPlay";
 import FeatherEdit from "@/icons/FeatherEdit";
-import MediaItemDropDown from "@/components/media/gridItem/MediaItemDropDown";
+import MediaItemDropDown from "@/components/media/item/MediaItemDropDown";
 import { useStore } from "vuex";
 import { computed } from "vue";
 export default {

@@ -9,11 +9,11 @@
         class="d-flex flex-wrap list-media-group table-todo-list"
         :class="itemSizeClass"
       >
-        <MediaGridItem :item="{ type: 'doc' }" />
-        <MediaGridItem :item="{ type: 'audio' }" />
-        <MediaGridItem :item="{ type: 'Picture' }" />
-        <MediaGridItem :item="{ type: 'video' }" />
-        <MediaGridItem :item="{ type: 'note' }" />
+        <MediaGridItem :item="{ blobType: 'doc' }" />
+        <MediaGridItem :item="{ blobType: 'audio' }" />
+        <MediaGridItem :item="{ blobType: 'Picture' }" />
+        <MediaGridItem :item="{ blobType: 'video' }" />
+        <MediaGridItem :item="{ blobType: 'note' }" />
       </div>
 
       <div class="text-blue my-3 f-size-15">Yesterday</div>
@@ -22,7 +22,11 @@
         class="d-flex flex-wrap list-media-group table-todo-list"
         :class="itemSizeClass"
       >
-        <MediaGridItem v-for="i in [1, 2, 3]" :key="i" :item="{ type: 'doc' }">
+        <MediaGridItem
+          v-for="i in [1, 2, 3]"
+          :key="i"
+          :item="{ blobType: 'doc' }"
+        >
         </MediaGridItem>
       </div>
     </perfect-scrollbar>

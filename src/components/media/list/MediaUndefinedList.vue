@@ -59,7 +59,7 @@
   </div>
 </template>
 <script>
-import MediaItemDropDown from "@/components/media/gridItem/MediaItemDropDown";
+import MediaItemDropDown from "@/components/media/item/MediaItemDropDown";
 export default {
   name: "MediaUndefinedList",
   data: function () {
