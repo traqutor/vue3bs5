@@ -64,7 +64,7 @@
               </div>
               <!-- end::more vertical menu dropdown -->
 
-              <ChatContentEditable v-model="messageText" />
+              <ChatContentEditable v-model="messageText" @submitContent="onSubmit" />
 
               <!-- end::message text area -->
 

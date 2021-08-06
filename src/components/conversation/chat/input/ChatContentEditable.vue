@@ -28,7 +28,7 @@ import { Dropdown } from "bootstrap";
 
 export default {
   props: ["modelValue"],
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "submitContent"],
 
   setup(props, context) {
     let emojiDropDownMenu;
@@ -49,15 +49,19 @@ export default {
       console.log("emojiDropDownMenu", emojiDropDownMenu);
     };
 
-    const onEdit = (evt) => {
-      const src = evt.target.innerHTML;
+    const onEdit = (event) => {
+      const src = event.target.innerHTML;
       text.value = src;
       console.log("onEdit", text.value);
     };
 
-    const onEndEdit = () => {
-      console.log("onEndEdit", text);
-      divElement.value.blur();
+    const onEndEdit = (event) => {
+      if (event.shiftKey === true && event.key === "Enter") {
+        console.log("onEndEdit", text);
+      } else {
+        divElement.value.blur();
+        context.emit("submitContent", event);
+      }
     };
 
     watch(text, (txt) => {
@@ -74,10 +78,6 @@ export default {
       emojiDropDownMenu = new Dropdown(
         document.getElementById("dropdownEmojiMenuButtonId")
       );
-      var dropdownElementList = [].slice.call(
-        document.querySelectorAll(".dropdown-toggle")
-      );
-      console.log("dropdownElementList", dropdownElementList);
     });
 
     return { addSpan, divElement, text, onEdit, onEndEdit };

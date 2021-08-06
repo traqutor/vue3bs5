@@ -88,7 +88,6 @@ export default {
         });
         store.commit("setConversationViewMode", conversationViewModes.NEW);
       } else {
-        console.log("add part");
         store.dispatch("onAddUsersToConversation");
       }
     }

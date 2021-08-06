@@ -10,7 +10,6 @@ export default {
   mounted() {
     this.$nextTick(() => {
       if (this.$el) {
-        console.log("TextareaResizeAuto", this);
         this.$el.setAttribute("style", "height", `${this.$el.scrollHeight}px`);
       }
     });

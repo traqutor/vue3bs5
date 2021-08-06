@@ -382,7 +382,6 @@ export default {
       .map((role) => role.id.toLowerCase());
 
     roles.forEach((role) => {
-      console.log(role);
       data.activeRoleId = role;
 
       axiosWebApiInstance
