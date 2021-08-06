@@ -65,4 +65,8 @@ export default {
   getMediaShareGalleryItems: (state) => {
     return state.mediaShareGalleryItems;
   },
+
+  getIsMediaShareLoading: (state) => {
+    return state.isMediaShareLoading;
+  },
 };

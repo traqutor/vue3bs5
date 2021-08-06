@@ -542,7 +542,7 @@
 
             <div class="col ps-4">
               <div
-                v-if="selectMode"
+                v-if="selectMode && !isMediaShareLoading"
                 class="d-flex justify-content-between align-items-center"
               >
                 <!-- start:: confirm share dropdown button -->
@@ -669,6 +669,12 @@
                 </div>
                 <!-- end:: confirm delete dropdown button -->
               </div>
+              <div
+                v-if="isMediaShareLoading"
+                class="d-flex justify-content-between align-items-center"
+              >
+                Is preparing attachments...
+              </div>
             </div>
           </div>
         </div>
@@ -729,8 +735,10 @@ export default {
     const selectMode = ref();
     const store = useStore();
     const thumbnails = computed(() => store.getters.getMediaThumbnails);
-
     const selectedItems = computed(() => store.getters.getMediaSelectedItems);
+    const isMediaShareLoading = computed(
+      () => store.getters.getIsMediaShareLoading
+    );
 
     const onToggleSelectMode = () => {
       selectMode.value = !selectMode.value;
@@ -758,6 +766,7 @@ export default {
       selectMode,
       thumbnails,
       selectedItems,
+      isMediaShareLoading,
       onToggleSelectMode,
       onShareGalleryItems,
     };
