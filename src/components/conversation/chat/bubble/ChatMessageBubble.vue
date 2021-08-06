@@ -153,6 +153,19 @@
       </div>
       <!--end::whisper over text -->
 
+      <!--start::message attachments -->
+      <div
+        v-if="
+          item.attachments.length > 0 &&
+          item.thumbnails &&
+          item.thumbnails.length > 0
+        "
+        class="mw-55 position-relative"
+      >
+        <BubbleAttachments :item="item" />
+      </div>
+      <!--end::message attachments -->
+
       <!--start::message text -->
       <div class="d-inline show-white-space" v-html="item.text"></div>
       <!--end::message text -->
@@ -233,6 +246,19 @@
               <BubbleWhisperHeaderDropdown :item="item" />
             </div>
             <!--start::whisper over text-->
+
+            <!--start::message attachments -->
+            <div
+              v-if="
+                item.attachments.length > 0 &&
+                item.thumbnails &&
+                item.thumbnails.length > 0
+              "
+              class="mw-55 position-relative"
+            >
+              <BubbleAttachments :item="item" />
+            </div>
+            <!--end::message attachments -->
 
             <!--start::message text -->
             <div class="d-inline show-white-space" v-html="item.text"></div>
@@ -429,7 +455,7 @@
   <!--end::others Users bubble-->
 </template>
 <script>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
 import { guidsAreEqual } from "@/services/guids.service";
@@ -454,10 +480,13 @@ import emojisTemplate from "@/const/emojis";
 import { CHAT_VIEW_MODES } from "@/const";
 import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
 import ParticipantNameAndRolesItem from "@/components/participant/ParticipantNameAndRolesItem";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
+import BubbleAttachments from "@/components/conversation/chat/bubble/BubbleAttachments";
 
 export default {
   name: "ign-chat-message-bubble",
   components: {
+    BubbleAttachments,
     ParticipantNameAndRolesItem,
     FeatherChevronsRight,
     BubbleSubTextInfoDate,
@@ -639,6 +668,20 @@ export default {
       store.dispatch("onAcknowledgeMessage", props.item.id);
     };
 
+    onMounted(() => {
+      if (props.item.attachments.length > 0 && !props.item.thumbnails) {
+        const requestQuery = props.item.attachments
+          .map((atta) => `thumbnailsIds=${atta.id}`)
+          .join("&");
+        store
+          .dispatch(Actions.onGetAttachmentsThumbnails, requestQuery)
+          .then((response) => {
+            const msg = { ...props.item, thumbnails: response };
+            store.commit(Mutations.setMessage, msg);
+          });
+      }
+    });
+
     return {
       quickResponsesOptions,
       selectedConversation,
@@ -663,8 +706,8 @@ export default {
       onAcknowledgePost,
       timeOffsetFormat,
       timeHhMmaDotDdddFormat,
-      CHAT_VIEW_MODES,
       frequentlyUsedEmojis,
+      CHAT_VIEW_MODES,
     };
   },
 };

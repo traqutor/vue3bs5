@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-menu p-3" aria-labelledby="dropdownEmojiMenuButtonId">
+  <div class="dropdown-menu p-3">
     <div>
       <div class="input-group input-group-sm filter-control-group flex-grow-1">
         <input

@@ -41,4 +41,7 @@ export default {
   [Mutations.setMediaShareGalleryItems]: (state, share) => {
     state.mediaShareGalleryItems = share;
   },
+  [Mutations.setIsMediaShareLoading]: (state, flag) => {
+    state.isMediaShareLoading = flag;
+  },
 };

@@ -1,25 +1,34 @@
-function onDebounce(fn, delay) {
-  let timeoutID = null;
-  return function () {
-    clearTimeout(timeoutID);
-    const args = arguments;
-    const that = this;
-    timeoutID = setTimeout(function () {
-      fn.apply(that, args);
+import { ref, customRef } from "vue";
+
+const debounce = (fn, delay = 0, immediate = false) => {
+  let timeout;
+  return (...args) => {
+    if (immediate && !timeout) fn(...args);
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      fn(...args);
     }, delay);
   };
-}
-
-/**
- * this function receives the element where the directive
- * will be set in and also the value set in it
- * if the value has changed then it will rebind the event
- * it has a default timeout of 500 milliseconds
- */
-module.exports = function debounce(el, binding) {
-  if (binding.value !== binding.oldValue) {
-    el.oninput = onDebounce(function () {
-      el.dispatchEvent(new Event("change"));
-    }, parseInt(binding.value) || 500);
-  }
 };
+
+const useDebouncedRef = (initialValue, delay, immediate) => {
+  const state = ref(initialValue);
+  const debouncedRef = customRef((track, trigger) => ({
+    get() {
+      track();
+      return state.value;
+    },
+    set: debounce(
+      (value) => {
+        state.value = value;
+        trigger();
+      },
+      delay,
+      immediate
+    ),
+  }));
+  return debouncedRef;
+};
+
+export default useDebouncedRef;

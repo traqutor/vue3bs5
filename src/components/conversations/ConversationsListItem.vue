@@ -157,7 +157,7 @@
                 v-if="isLastMessageByLoggedUser"
                 :class="isWatchedByAllParticipants ? 'text-success' : ''"
               />
-              {{ conversation.lastMessage.text }}
+              {{ getTextFromHtmlContent(conversation.lastMessage.text) }}
             </div>
           </div>
           <span
@@ -277,6 +277,7 @@ import FeatherEyeOff from "@/icons/FeatherEyeOff";
 import DateToLastActivityLabel from "@/components/date/DateToLastActivityLabel";
 import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
 import { guidsAreEqual } from "@/services/guids.service";
+import { getTextFromHtmlContent } from "@/services/text.service";
 
 export default {
   components: {
@@ -363,6 +364,7 @@ export default {
       isLastMessageByLoggedUser,
       isWatchedByLoggedUser,
       onConversationSelect,
+      getTextFromHtmlContent,
     };
   },
 };

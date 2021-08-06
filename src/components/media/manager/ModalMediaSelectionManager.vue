@@ -509,7 +509,7 @@
                           select-action-group
                         "
                       >
-                        <template v-for="item of thumbnails" :key="item.name">
+                        <template v-for="item of thumbnails" :key="item.id">
                           <MediaThumbnailItem
                             :item="item"
                             :is-select="selectMode"
@@ -741,7 +741,7 @@ export default {
 
     const onShareGalleryItems = () => {
       const payload = {
-        ids: selectedItems.value.map((item) => item.name.substr(19, 36)),
+        ids: selectedItems.value.map((item) => item.id),
       };
       console.log("onShareGalleryItems", payload);
       store.dispatch(Actions.onShareGalleryItems, payload).then(() => {

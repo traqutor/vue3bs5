@@ -1,5 +1,6 @@
 import { CONVERSATION_VIEW_MODES } from "@/const";
 import { guidsAreEqual } from "@/services/guids.service";
+import { Mutations } from "@/store/enums/EnumTypes";
 
 export default {
   setConversations: (state, conversations) => {
@@ -98,5 +99,18 @@ export default {
   toggleQuickChatTextSelector: (state) => {
     state.isQuickChatTextSelectorVisible =
       !state.isQuickChatTextSelectorVisible;
+  },
+  [Mutations.setMessage]: (state, message) => {
+    const cIdx = state.conversations.findIndex(
+      (conv) => conv.id === message.conversationId
+    );
+    if (cIdx !== -1) {
+      const mIdx = state.conversations[cIdx].messages.findIndex(
+        (msg) => msg.id === message.id
+      );
+      if (mIdx !== -1) {
+        state.conversations[cIdx].messages[mIdx] = message;
+      }
+    }
   },
 };

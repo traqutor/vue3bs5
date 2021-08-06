@@ -64,7 +64,7 @@
               </div>
               <!-- end::more vertical menu dropdown -->
 
-              <ChatContentEditable v-model.lazy="messageText" />
+              <ChatContentEditable v-model="messageText" />
 
               <!-- end::message text area -->
 
@@ -220,7 +220,7 @@
                     "
                     id="dropdownEmojiMenuButtonId"
                     data-bs-toggle="dropdown"
-                    data-bs-auto-close="false"
+                    data-bs-auto-close="outside"
                     aria-expanded="false"
                   >
                     <feather-smile class="f-icon-26" />
@@ -296,15 +296,12 @@ import ChatRecordMessage from "@/components/conversation/chat/ChatRecordMessage"
 import ChatPlayMessage from "@/components/conversation/chat/ChatPlayMessage";
 import { CONVERSATION_VIEW_MODES } from "@/const";
 import EmojiPicker from "@/components/conversation/chat/chat-text-selector/EmojiPicker";
-import TextareaResizeAuto from "@/components/text/TextareaResizeAuto";
 import FeatherChevronsLeft from "@/icons/FeatherChevronsLeft";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
-import MediaThumbnailItem from "@/components/media/item/MediaThumbnailItem";
 import ChatContentEditable from "@/components/conversation/chat/input/ChatContentEditable";
 export default {
   components: {
     ChatContentEditable,
-    MediaThumbnailItem,
     ParticipantAvatarNameItem,
     FeatherChevronsLeft,
     EmojiPicker,
@@ -315,7 +312,6 @@ export default {
     FeatherSmile,
     FeatherMoreVertical,
     FeatherPointSquare,
-    TextareaResizeAuto,
   },
   setup() {
     const store = useStore();

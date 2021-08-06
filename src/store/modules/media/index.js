@@ -32,6 +32,7 @@ const mediaModule = {
       mediaThumbnails: [],
       mediaSelectedItems: [],
       mediaShareGalleryItems: [],
+      isMediaShareLoading: false,
     };
   },
   mutations: Mutations,

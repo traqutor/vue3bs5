@@ -2,13 +2,14 @@
   <div class="flex-fill position-relative">
     <div class="d-flex flex-column position-absolute w-100 h-100">
       <div class="flex-section-slide flex-fill mt-2">
-        <chat-body></chat-body>
-        <chat-drawer></chat-drawer>
+        <chat-body />
+        <chat-drawer />
       </div>
-      <chat-footer-user-is-typing></chat-footer-user-is-typing>
-      <chat-footer-acknowledge></chat-footer-acknowledge>
-      <chat-footer-whisper></chat-footer-whisper>
-      <chat-footer-input></chat-footer-input>
+      <chat-footer-user-is-typing />
+      <chat-footer-acknowledge />
+      <chat-footer-whisper />
+      <chat-footer-attachments />
+      <chat-footer-input />
     </div>
   </div>
 </template>
@@ -19,8 +20,10 @@ import ChatFooterAcknowledge from "@/components/conversation/chat/input/ChatFoot
 import ChatBody from "@/components/conversation/chat/ChatBody";
 import ChatDrawer from "@/components/conversation/chat/ChatDrawer";
 import ChatFooterUserIsTyping from "@/components/conversation/chat/input/ChatFooterUserIsTyping";
+import ChatFooterAttachments from "@/components/conversation/chat/input/ChatFooterAttachments";
 export default {
   components: {
+    ChatFooterAttachments,
     ChatFooterUserIsTyping,
     ChatDrawer,
     ChatBody,

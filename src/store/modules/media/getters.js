@@ -63,6 +63,6 @@ export default {
   },
 
   getMediaShareGalleryItems: (state) => {
-    return state.mediaShareGalleryItems
-  }
+    return state.mediaShareGalleryItems;
+  },
 };

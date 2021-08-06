@@ -161,7 +161,7 @@ export default {
         title: "Message title",
         body: "Message body text",
       },
-      attachements: getters.getMediaShareGalleryItems.map((share) => {
+      attachments: getters.getMediaShareGalleryItems.map((share) => {
         return {
           id: share.id,
           blobType: MEDIA_TYPES.PHOTO,

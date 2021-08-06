@@ -5,9 +5,9 @@ export default {
   [Actions.onGetThumbnails]: ({ commit }) => {
     const itemsQuantity = 10;
     const isGeneral = true;
-    const isMedatadaRequest = false;
+    const isMetadataRequest = false;
 
-    const url = `${process.env.VUE_APP_BASE_URL}/api/Gallery/GetThumbnails?ItemsQuantity=${itemsQuantity}&isGeneral=${isGeneral}&isMedatadaRequest=${isMedatadaRequest}`;
+    const url = `${process.env.VUE_APP_BASE_URL}/api/Gallery/GetThumbnails?ItemsQuantity=${itemsQuantity}&isGeneral=${isGeneral}&isMedatadaRequest=${isMetadataRequest}`;
 
     axiosWebApiInstance
       .get(url)
@@ -24,7 +24,31 @@ export default {
       });
   },
 
+  [Actions.onGetAttachmentsThumbnails]: (_, requestQuery) => {
+    return new Promise((resolve) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/Gallery/GetAttachmentsThumbnails?${requestQuery}`;
+
+      axiosWebApiInstance
+        .get(url)
+        .then(function (response) {
+          console.log("Actions.onGetAttachmentsThumbnails response:", response);
+          if (response.data.isOk) {
+            resolve(response.data.thumbnails);
+          } else {
+            console.error(
+              "On onGetAttachmentsThumbnails error:",
+              response.data.message
+            );
+          }
+        })
+        .catch((error) => {
+          console.error("On onGetAttachmentsThumbnails error:", error);
+        });
+    });
+  },
+
   [Actions.onShareGalleryItems]: ({ commit }, requestPayload) => {
+    commit(Mutations.setIsMediaShareLoading, true);
     return new Promise((resolve) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/Gallery/ShareGalleryItem`;
 
@@ -33,9 +57,11 @@ export default {
         .then(function (response) {
           const share = response.data.galleryItems;
           commit(Mutations.setMediaShareGalleryItems, share);
+          commit(Mutations.setIsMediaShareLoading, false);
           resolve();
         })
         .catch((error) => {
+          commit(Mutations.setIsMediaShareLoading, false);
           console.error("On onShareGalleryItems error:", error);
         });
     });

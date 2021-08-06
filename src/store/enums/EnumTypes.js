@@ -17,6 +17,7 @@ const Actions = {
   // media actions
   onGetThumbnails: "onGetThumbnails",
   onShareGalleryItems: "onShareGalleryItems",
+  onGetAttachmentsThumbnails: "onGetAttachmentsThumbnails",
 };
 
 const Mutations = {
@@ -30,6 +31,9 @@ const Mutations = {
   // templates mutation types
   setSelectedTemplateViewMode: "setSelectedTemplateViewMode",
   setSelectedTemplate: "setSelectedTemplate",
+
+  //conversation mutation types
+  setMessage: "setMessage",
 
   // media mutation types
   setMediaTypeSelected: "setMediaTypeSelected",
@@ -45,6 +49,8 @@ const Mutations = {
   toggleMediaSelectedItem: "toggleMediaSelectedItem",
   setMediaSelectedItems: "setMediaSelectedItems",
   setMediaShareGalleryItems: "setMediaShareGalleryItems",
+
+  setIsMediaShareLoading: "setIsMediaShareLoading",
 };
 
 //messages
