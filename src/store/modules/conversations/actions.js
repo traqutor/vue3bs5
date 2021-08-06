@@ -449,7 +449,7 @@ export default {
       commit("setMessages", messages);
     }
   },
-  onReceivedMessageNotification: ({ state, commit }, message) => {
+  onReceivedMessageNotification: ({ state, getters, commit }, message) => {
     const idx = state.conversations.findIndex((c) =>
       guidsAreEqual(c.id, message.conversationId)
     );
@@ -466,8 +466,10 @@ export default {
         tmpMessages.push(message);
         conversations[idx].messages = [...tmpMessages];
 
-        conversation.unreadMessageCount = conversation.unreadMessageCount + 1;
-        conversation.lastMessage = message;
+        if (!getters.getIsLoggedUserMessageAuthor(message)) {
+          conversation.unreadMessageCount = conversation.unreadMessageCount + 1;
+          conversation.lastMessage = message;
+        }
 
         conversations.splice(idx, 1);
         conversations.splice(0, 0, conversation);
@@ -481,7 +483,12 @@ export default {
       (c) => c.id === payload.conversationId
     );
     let conversation = { ...state.conversations[idx] };
-    if (conversation.unreadMessageCount > 0) {
+
+    const loggedUserRead = payload.participants.some((participant) =>
+      getters.getIsLoggedUserParticipant(participant)
+    );
+
+    if (loggedUserRead && conversation.unreadMessageCount > 0) {
       let count = conversation.unreadMessageCount;
       payload.messageIds.forEach(() => {
         count = count - 1;
