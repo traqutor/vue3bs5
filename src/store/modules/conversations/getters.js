@@ -98,7 +98,7 @@ export default {
   },
 
   getWatchedMessageParticipants: () => (message) => {
-    return (
+    const watchers =
       message.watchedByUsers &&
       message.watchedByUsers.filter((recipient) => {
         return (
@@ -107,8 +107,20 @@ export default {
           (recipient.isRole &&
             !guidsAreEqual(recipient.id, message.activeRoleId))
         );
-      })
-    );
+      });
+    if (message.isWhisper) {
+      return (
+        message.whisperRecipients &&
+        watchers &&
+        message.whisperRecipients.filter((whisper) =>
+          watchers.find((watcher) => {
+            return whisper.id === watcher.id;
+          })
+        )
+      );
+    } else {
+      return watchers;
+    }
   },
 
   getWhisperMessageParticipants: () => (message) => {

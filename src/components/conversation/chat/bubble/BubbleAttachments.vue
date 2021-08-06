@@ -9,7 +9,7 @@
     "
   >
     <template v-for="thumb of item.thumbnails" :key="thumb.id">
-      <ChatAttachmentItem :item="thumb" :is-select="true" />
+      <ChatAttachmentItem :item="thumb" />
     </template>
   </div>
 </template>
