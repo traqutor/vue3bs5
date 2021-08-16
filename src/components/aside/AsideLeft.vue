@@ -7,10 +7,10 @@
     <nav class="navbar bg-light p-0 shadow">
       <div class="navbar-brand w-100">
         <div class="d-flex align-items-center text-decoration-none main-logo">
-          <img class="main-logo-image" src="../../assets/logo.svg" alt="" />
+          <img class="main-logo-image" src="../../../public/images/logo.svg" alt="" />
           <img
             class="main-logo-title ms-2"
-            src="../../assets/meddy-dark.svg"
+            src="../../../public/images/meddy-dark.svg"
             alt=""
           />
           <button
