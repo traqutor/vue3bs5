@@ -61,19 +61,25 @@ const TEMPLATE_VIEW_MODES = {
   TEMPLATE_ADD_NEW: "New template",
   QUICK_MESSAGE_ADD_NEW: "Add new quick message",
 };
+
 const QUICK_MESSAGES = [
   "Are you available for a consultation?",
   "Please call me ASAP",
   "Need the whole team in consulting room",
-  "Rise And Shine Sunshine!",
   "Ready To Make The World A Better Place?",
-  "The Whole World Is Ours",
-  "So Let’s Rock It",
   "Good Morning!",
-  "What Was The Last Time You Worked Incredibly Hard?",
-  "What Is The Most Useful App On Your Phone?",
-  "What Is A Controversial Opinion You Have?",
 ];
+
+const QUICK_REACTIONS = [
+  { value: "Like", emoji: "👍" },
+  { value: "Dislike", emoji: "👎" },
+  { value: "Love", emoji: "💜" },
+  { value: "SmileyFace", emoji: "😄" },
+  { value: "SadFace", emoji: "😞" },
+  { value: "Question", emoji: "❓" },
+  { value: "Exclamation", emoji: "❗" },
+];
+
 const TEMPLATES = {
   ISBAR: {
     name: "ISBAR Report",
@@ -142,6 +148,7 @@ export {
   TEMPLATE_VIEW_MODES,
   TEMPLATES,
   QUICK_MESSAGES,
+  QUICK_REACTIONS,
   MEDIA_VIEW_MODES,
   MEDIA_DRAWER_VIEW_MODES,
   MEDIA_ITEM_SIZES,

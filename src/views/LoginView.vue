@@ -29,6 +29,7 @@
               </div>
               <input
                 v-model="authData.username"
+                @input="onInputChange"
                 type="text"
                 class="
                   form-control
@@ -52,6 +53,7 @@
               </div>
               <input
                 v-model="authData.password"
+                @input="onInputChange"
                 type="password"
                 class="
                   form-control
@@ -68,7 +70,9 @@
 
             <button
               type="submit"
-              :disabled="isLoadingLogin || !(authData.username && authData.password)"
+              :disabled="
+                isLoadingLogin || !(authData.username && authData.password)
+              "
               class="btn btn-primary btn-lg btn-block mt-4 f-size-16"
             >
               <div
@@ -273,7 +277,8 @@ import { useRouter } from "vue-router";
 import FeatherUser from "@/icons/FeatherUser";
 import FeatherUnlock from "@/icons/FeatherUnlock";
 import FeatherAtSign from "@/icons/FeatherAtSign";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { Mutations } from "@/store/enums/EnumTypes";
 
 export default {
   name: "Login",
@@ -288,8 +293,12 @@ export default {
     });
     const viewMode = ref("login");
 
-    const isLoadingLogin = store.getters.isLoadingLogin;
-    const errors = store.getters.getErrors;
+    const isLoadingLogin = computed(() => store.getters.getIsLoadingLogin);
+    const errors = computed(() => store.getters.getErrors);
+
+    const onInputChange = () => {
+      store.commit(Mutations.setLoggedError, null);
+    };
 
     const onLogIn = () => {
       store.dispatch("onLogin", authData.value).then(() => {
@@ -297,7 +306,14 @@ export default {
       });
     };
 
-    return { authData, viewMode, isLoadingLogin, errors, onLogIn };
+    return {
+      authData,
+      viewMode,
+      isLoadingLogin,
+      errors,
+      onLogIn,
+      onInputChange,
+    };
   },
 };
 </script>

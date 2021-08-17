@@ -9,6 +9,8 @@ import { Actions, Mutations } from "@/store/enums/EnumTypes";
 
 export default {
   onLogin: ({ commit }, authData) => {
+    commit(Mutations.setLoggedIsLoading, true);
+
     const params = {
       scope: "api1",
       client_id: "ro.client",
@@ -35,7 +37,6 @@ export default {
     });
 
     return new Promise((resolve) => {
-      commit(Mutations.setLoggedIsLoading, true);
       commit(Mutations.setLoggedError, null);
       instance(options)
         .then((response) => {

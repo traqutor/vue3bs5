@@ -193,6 +193,10 @@
       <!--end::message bub text acknowledge-->
     </div>
     <!--end::message content  -->
+
+    <!--start::message reactions -->
+    <BubbleReactionDropdown :item="item" />
+    <!--end::message reactions -->
   </div>
   <!--end::By logged User bubble-->
 
@@ -235,8 +239,9 @@
           mb-4
         "
       >
-        <!--start::message content  -->
+        <!--start::message content -->
         <div class="mw-70 position-relative">
+          <!--start::message -->
           <div
             class="dialog-group-message d-inline-block rounded pb-2"
             :class="getBubbleClass"
@@ -294,6 +299,11 @@
             </div>
             <!--end::message bub text acknowledge-->
           </div>
+          <!--end::message -->
+
+          <!--start::message reactions -->
+          <BubbleReactionDropdown :item="item" />
+          <!--end::message reactions -->
         </div>
         <!--end::message content  -->
 
@@ -482,10 +492,12 @@ import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
 import ParticipantNameAndRolesItem from "@/components/participant/ParticipantNameAndRolesItem";
 import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import BubbleAttachments from "@/components/conversation/chat/bubble/BubbleAttachments";
+import BubbleReactionDropdown from "@/components/conversation/chat/bubble/BubbleReactionDropdown";
 
 export default {
   name: "ign-chat-message-bubble",
   components: {
+    BubbleReactionDropdown,
     BubbleAttachments,
     ParticipantNameAndRolesItem,
     FeatherChevronsRight,

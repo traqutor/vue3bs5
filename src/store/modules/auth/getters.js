@@ -1,5 +1,5 @@
 export default {
-  isLoadingLogin(state) {
+  getIsLoadingLogin(state) {
     return state.isLoadingLogin;
   },
 
