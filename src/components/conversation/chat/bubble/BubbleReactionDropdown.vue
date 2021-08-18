@@ -1,10 +1,10 @@
 <template>
   <div
-      v-if="item.quickReactions"
+    v-if="item.quickReactions && item.quickReactions.length > 0"
     class="
       dialog-group-reactions
       position-absolute position-bottom-right
-      mr-1
+      me-1
       dropdown
     "
   >
@@ -16,36 +16,30 @@
         bg-white
         overflow-hidden
         on-hover
+        px-1
       "
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="true"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
     >
-      <div class="dialog-reaction d-inline-flex align-items-center">
-        <span class="f-size-13 joypixels-group">
-          <i
-            class="rounded-circle bg-white m-0 joypixels-icon on-hover"
-            data-joypixels="thumbsup"
-            ><img
-              class="joypixels"
-              alt="👍"
-              src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/1f44d.png"
-          /></i>
-        </span>
-        <span class="font-weight-middle f-size-13 text-secondary">2</span>
-      </div>
-      <div class="dialog-reaction d-inline-flex align-items-center">
-        <span class="f-size-13 joypixels-group">
-          <i
-            class="rounded-circle bg-white m-0 joypixels-icon on-hover"
-            data-joypixels="heart"
-            ><img
-              class="joypixels"
-              alt="❤️"
-              src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/2764.png"
-          /></i>
-        </span>
-      </div>
+      <template
+        v-for="reaction of emojiAndCounters"
+        :key="reaction.participant.id"
+      >
+        <div class="dialog-reaction d-inline-flex align-items-center">
+          <span class="f-size-16 joypixels-group">
+            <span class="rounded-circle bg-white m-0 joypixels-icon on-hover"
+              ><span class="joypixels"
+                >{{ getReaction(reaction.reaction) }}
+              </span>
+            </span>
+          </span>
+          <span
+            v-if="reaction.counter > 1"
+            class="font-weight-middle f-size-13 text-secondary me-2"
+            >{{ reaction.counter }}</span
+          >
+        </div>
+      </template>
     </div>
 
     <div
@@ -60,90 +54,71 @@
       "
     >
       <div class="dropdown-item-text text-secondary">Reactions (3)</div>
-      <div class="dropdown-menu-scroll-list ps-scrollbar mt-1 ps">
-        <div class="dropdown-item media align-items-center on-hover mb-1">
-          <figure
-            class="avatar avatar-lg mr-3 ml-n1 shadow-none"
-            data-initial="RT"
-          >
-            <img src="images/avatar/2.jpg" alt="" />
-          </figure>
-          <div class="media-body ml-n1">
-            <div class="font-weight-middle">Ruben Tillman</div>
-            <div class="text-secondary f-size-12">Cardiology Doctor</div>
-          </div>
-          <div class="ml-5 mr-n1 f-size-14">
-            <i data-joypixels="thumbsup" class="joypixels-icon on-hover"
-              ><img
-                class="joypixels"
-                alt="👍"
-                src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/1f44d.png"
-            /></i>
-          </div>
-        </div>
-
-        <div class="dropdown-item media align-items-center on-hover mb-1">
-          <figure
-            class="avatar avatar-lg mr-3 ml-n1 shadow-none"
-            data-initial="RT"
-          >
-            <img src="images/avatar/3.jpg" alt="" />
-          </figure>
-          <div class="media-body ml-n1">
-            <div class="font-weight-middle">Ruben Tillman</div>
-            <div class="text-secondary f-size-12">Cardiology Doctor</div>
-          </div>
-          <div class="ml-5 mr-n1 f-size-14">
-            <i data-joypixels="thumbsup" class="joypixels-icon on-hover"
-              ><img
-                class="joypixels"
-                alt="👍"
-                src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/1f44d.png"
-            /></i>
-          </div>
-        </div>
-
-        <div class="dropdown-item media align-items-center on-hover mb-1">
-          <figure
-            class="avatar avatar-lg mr-3 ml-n1 shadow-none"
-            data-initial="RT"
-          >
-            <img src="images/avatar/4.jpg" alt="" />
-          </figure>
-          <div class="media-body ml-n1">
-            <div class="font-weight-middle">Ruben Tillman</div>
-            <div class="text-secondary f-size-12">Cardiology Doctor</div>
-          </div>
-          <div class="ml-5 mr-n1 f-size-14">
-            <i data-joypixels="heart" class="joypixels-icon on-hover"
-              ><img
-                class="joypixels"
-                alt="❤️"
-                src="https://cdn.jsdelivr.net/joypixels/assets/6.0/png/unicode/64/2764.png"
-            /></i>
-          </div>
-        </div>
-
-        <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+      <perfect-scrollbar class="dropdown-menu-scroll-list mt-1">
+        <template
+          v-for="reaction of item.quickReactions"
+          :key="reaction.participant.id"
+        >
           <div
-            class="ps__thumb-x"
-            tabindex="0"
-            style="left: 0px; width: 0px"
-          ></div>
-        </div>
-        <div class="ps__rail-y" style="top: 0px; right: 0px">
-          <div
-            class="ps__thumb-y"
-            tabindex="0"
-            style="top: 0px; height: 0px"
-          ></div>
-        </div>
-      </div>
+            class="dropdown-item d-flex align-items-center on-hover mb-1"
+            @click="onRemoveReaction(reaction)"
+          >
+            <ParticipantAvatarNameItem
+              :participant-id="reaction.participant.id"
+            >
+              <template v-slot:secondary>
+                <div class="ms-5 f-size-16">
+                  <span class="joypixels-icon on-hover">
+                    {{ getReaction(reaction.reaction) }}
+                  </span>
+                </div>
+              </template>
+            </ParticipantAvatarNameItem>
+          </div>
+        </template>
+      </perfect-scrollbar>
     </div>
   </div>
 </template>
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { Actions, QUICK_REACTIONS } from "@/store/enums/EnumTypes";
+import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
+
 export default {
+  components: { ParticipantAvatarNameItem },
   props: ["item"],
+  setup(props) {
+    const store = useStore();
+    const emojiAndCounters = computed(() => {
+      const reactions = [];
+      props.item.quickReactions.forEach((quick) => {
+        const idx = reactions.findIndex((r) => r.reaction === quick.reaction);
+        if (idx === -1) {
+          reactions.push({ ...quick, counter: 1 });
+        } else {
+          reactions[idx].counter++;
+        }
+      });
+      console.log("reactions", reactions);
+      return reactions;
+    });
+
+    const getReaction = (reaction) => {
+      return QUICK_REACTIONS.find((r) => r.value === reaction).emoji;
+    };
+
+    const onRemoveReaction = (reaction) => {
+      if (store.getters.getLoggedUser.id === reaction.participant.id) {
+        store.dispatch(Actions.onRemoveQuickReaction, {
+          messageId: props.item.id,
+          quickReaction: reaction.reaction,
+        });
+      }
+    };
+
+    return { onRemoveReaction, emojiAndCounters, getReaction };
+  },
 };
 </script>

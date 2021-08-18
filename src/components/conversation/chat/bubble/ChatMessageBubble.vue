@@ -69,52 +69,7 @@
 
     <!--start::message quick reply emoji  -->
     <div class="on-hover-visible me-2 dropdown" role="group">
-      <button
-        type="button"
-        class="
-          btn
-          p-0
-          shadow-none
-          text-secondary text-dark-hover
-          toggle-action-active
-        "
-        :id="`dropdownMenuQuickReactionMessageUserId${item.id}`"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        <feather-smile class="f-icon-20" />
-      </button>
-
-      <div
-        class="
-          dropdown-menu dropdown-menu-sm dropdown-menu-right
-          shadow
-          cursor-default
-        "
-        :aria-labelledby="`dropdownMenuQuickReactionMessageUserId${item.id}`"
-      >
-        <div
-          class="
-            dropdown-item-text
-            px-2
-            py-0
-            f-size-16
-            joypixels-group
-            text-nowrap
-          "
-          v-for="(emojiGroup, category) in frequentlyUsedEmojis"
-          :key="category"
-        >
-          <span
-            class="f-size-26 ign-pointer"
-            v-for="(emoji, emojiName) in emojiGroup"
-            :key="emojiName"
-            @click="onMessageQuickReaction(emoji)"
-            :title="emojiName"
-            >{{ emoji }}
-          </span>
-        </div>
-      </div>
+      <BubbleQuckReactionDropdown :item="item" />
     </div>
     <!--end::message quick reply emoji  -->
 
@@ -331,52 +286,7 @@
 
         <!--start::message quick reply emoji  -->
         <div class="on-hover-visible ms-2 dropdown" role="group">
-          <button
-            type="button"
-            class="
-              btn
-              p-0
-              shadow-none
-              text-secondary text-dark-hover
-              toggle-action-active
-            "
-            :id="`dropdownMenuQuickReactionMessageId${item.id}`"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <FeatherSmile class="f-icon-20" />
-          </button>
-
-          <div
-            class="
-              dropdown-menu dropdown-menu-sm dropdown-menu-right
-              shadow
-              cursor-default
-            "
-            :aria-labelledby="`dropdownMenuQuickReactionMessageId${item.id}`"
-          >
-            <div
-              class="
-                dropdown-item-text
-                px-2
-                py-0
-                f-size-16
-                joypixels-group
-                text-nowrap
-              "
-              v-for="(emojiGroup, category) in frequentlyUsedEmojis"
-              :key="category"
-            >
-              <span
-                class="f-size-26 ign-pointer"
-                v-for="(emoji, emojiName) in emojiGroup"
-                :key="emojiName"
-                @click="onMessageQuickReaction(emoji)"
-                :title="emojiName"
-                >{{ emoji }}
-              </span>
-            </div>
-          </div>
+          <BubbleQuckReactionDropdown :item="item" />
         </div>
         <!--end::message quick reply emoji  -->
 
@@ -470,7 +380,6 @@ import { useStore } from "vuex";
 
 import { guidsAreEqual } from "@/services/guids.service";
 import FeatherArrowReplyDown from "@/icons/FeatherArrowReplyDown";
-import FeatherSmile from "@/icons/FeatherSmile";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 import FeatherArrowForward from "@/icons/FeatherArrowForward";
 import FeatherCopy from "@/icons/FeatherCopy";
@@ -486,17 +395,18 @@ import {
 import BubbleAcknowledgedDropDownButton from "@/components/conversation/chat/bubble/BubbleAcknowledgedDropDownButton";
 import BubbleWhisperHeaderDropdown from "@/components/conversation/chat/bubble/BubbleWhisperHeaderDropdown";
 import BubbleSubTextInfoDate from "@/components/conversation/chat/bubble/BubbleSubTextInfoDate";
-import emojisTemplate from "@/const/emojis";
 import { CHAT_VIEW_MODES } from "@/const";
 import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
 import ParticipantNameAndRolesItem from "@/components/participant/ParticipantNameAndRolesItem";
 import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import BubbleAttachments from "@/components/conversation/chat/bubble/BubbleAttachments";
 import BubbleReactionDropdown from "@/components/conversation/chat/bubble/BubbleReactionDropdown";
+import BubbleQuckReactionDropdown from "@/components/conversation/chat/bubble/BubbleQuckReactionDropdown";
 
 export default {
   name: "ign-chat-message-bubble",
   components: {
+    BubbleQuckReactionDropdown,
     BubbleReactionDropdown,
     BubbleAttachments,
     ParticipantNameAndRolesItem,
@@ -511,7 +421,6 @@ export default {
     FeatherCopy,
     FeatherArrowForward,
     FeatherMoreVertical,
-    FeatherSmile,
     FeatherArrowReplyDown,
   },
   props: ["item"],
@@ -631,22 +540,6 @@ export default {
       }
     });
 
-    const frequentlyUsedEmojis = computed(() => {
-      const obj = {};
-      for (const category in emojisTemplate) {
-        if (category === "Frequently used") {
-          obj[category] = {};
-          for (const emoji in emojisTemplate[category]) {
-            obj[category][emoji] = emojisTemplate[category][emoji];
-          }
-          if (Object.keys(obj[category]).length === 0) {
-            delete obj[category];
-          }
-        }
-      }
-      return obj;
-    });
-
     const onMessageOpen = () => {
       store.commit("setSelectedMessageId", props.item.id);
       store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
@@ -670,10 +563,6 @@ export default {
 
     const onMessageQuickText = (text) => {
       console.log("onMessageQuickText", props.item, text);
-    };
-
-    const onMessageQuickReaction = (reactionEmoji) => {
-      console.log("onMessageQuickReaction", props.item, reactionEmoji);
     };
 
     const onAcknowledgePost = () => {
@@ -710,7 +599,6 @@ export default {
       onMessageForward,
       onMessageOpen,
       onMessageReply,
-      onMessageQuickReaction,
       onMessageQuickText,
       isWatchedByAllParticipants,
       isMessageWatchedByUser,
@@ -718,7 +606,6 @@ export default {
       onAcknowledgePost,
       timeOffsetFormat,
       timeHhMmaDotDdddFormat,
-      frequentlyUsedEmojis,
       CHAT_VIEW_MODES,
     };
   },

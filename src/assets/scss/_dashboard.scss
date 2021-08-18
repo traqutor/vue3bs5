@@ -14,6 +14,7 @@ body {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+
 .has-transition {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
@@ -623,18 +624,13 @@ mark {
 .joypixels-icon:hover {
   background-color: $grey-light;
 }
-.joypixels-group .joypixels-icon:not(:nth-child(6n)) {
-  margin-right: 0.1rem;
-}
 
 .joypixels {
   font-size: inherit;
-  height: 3ex;
-  width: 3.1ex;
   min-height: 20px;
   min-width: 20px;
   display: inline-block;
-  margin: -0.2ex 0.15em 0.2ex;
+  margin: -0.2ex 0 0.2ex;
   line-height: normal;
   vertical-align: middle;
 }
@@ -3098,7 +3094,7 @@ textarea.no-resize {
 }
 
 .dialog-group-reactions {
-  margin-bottom: -20px;
+  margin-bottom: -26px;
 }
 .dialog-reaction + .dialog-reaction {
   margin-left: 3px;

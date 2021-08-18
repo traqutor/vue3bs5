@@ -14,10 +14,18 @@ const SocketReceivers = {
 };
 
 const Actions = {
+  // conversations actions
+  onMessageQuickReaction: "onMessageQuickReaction",
+  onRemoveQuickReaction: "onRemoveQuickReaction",
+
   // media actions
   onGetThumbnails: "onGetThumbnails",
   onShareGalleryItems: "onShareGalleryItems",
   onGetAttachmentsThumbnails: "onGetAttachmentsThumbnails",
+
+  // socket actions
+  onMessageQuickReactionNotification: "onMessageQuickReactionNotification",
+  onMessageQuickReactionRemovedNotification: "onMessageQuickReactionRemovedNotification"
 };
 
 const Mutations = {
@@ -73,11 +81,11 @@ const QUICK_MESSAGES = [
 const QUICK_REACTIONS = [
   { value: "Like", emoji: "👍" },
   { value: "Dislike", emoji: "👎" },
-  { value: "Love", emoji: "💜" },
+  { value: "Love", emoji: "💗" },
   { value: "SmileyFace", emoji: "😄" },
   { value: "SadFace", emoji: "😞" },
   { value: "Question", emoji: "❓" },
-  { value: "Exclamation", emoji: "❗" },
+  { value: "Exclamation", emoji: "❗❗" },
 ];
 
 const TEMPLATES = {

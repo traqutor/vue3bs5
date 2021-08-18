@@ -1,7 +1,7 @@
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 
 import { getTokenData } from "@/services/jwt.service";
-import { SocketReceivers } from "@/store/enums/EnumTypes";
+import { Actions, Mutations, SocketReceivers } from "@/store/enums/EnumTypes";
 
 export default {
   onCreateHubConnection: ({ state, commit, dispatch, rootState }) => {
@@ -111,9 +111,7 @@ export default {
       SocketReceivers.MessageQuickReactionNotification,
       (response) => {
         const message = JSON.parse(response);
-        console.log("MessageQuickReactionNotification", message);
-
-        dispatch("onMessageQuickReactionNotification", message);
+        dispatch(Actions.onMessageQuickReactionNotification, message);
       }
     );
 
@@ -121,9 +119,7 @@ export default {
       SocketReceivers.MessageQuickReactionRemovedNotification,
       (response) => {
         const message = JSON.parse(response);
-        console.log("MessageQuickReactionRemovedNotification", message);
-
-        dispatch("onMessageQuickReactionRemovedNotification", message);
+        dispatch(Actions.onMessageQuickReactionRemovedNotification, message);
       }
     );
 
@@ -150,5 +146,53 @@ export default {
   onSocketConnectionClose: ({ state }) => {
     console.log("onSocketConnectionClose");
     state.hubConnection.stop();
+  },
+
+  [Actions.onMessageQuickReactionNotification]: (
+    { commit, getters },
+    reaction
+  ) => {
+    console.log("onMessageQuickReactionNotification", reaction);
+    if (getters.getSelectedConversation.id === reaction.conversationId) {
+      const message = getters.getSelectedConversation.messages.find(
+        (msg) => msg.id === reaction.messageId
+      );
+      if (message) {
+        const idx = message.quickReactions.findIndex(
+          (r) => r.participant.id === reaction.participant.id
+        );
+        if (idx !== -1) {
+          message.quickReactions[idx].reaction = reaction.reaction;
+        } else {
+          message.quickReactions.push({
+            participant: reaction.participant,
+            reaction: reaction.reaction,
+          });
+        }
+
+        commit(Mutations.setMessage, message);
+      }
+    }
+  },
+  [Actions.onMessageQuickReactionRemovedNotification]: (
+    { commit, getters },
+    reaction
+  ) => {
+    console.log("MessageQuickReactionRemovedNotification", reaction);
+    if (getters.getSelectedConversation.id === reaction.conversationId) {
+      const message = getters.getSelectedConversation.messages.find(
+        (msg) => msg.id === reaction.messageId
+      );
+      if (message) {
+        const idx = message.quickReactions.findIndex(
+          (r) => r.participant.id === reaction.participant.id
+        );
+        if (idx !== -1) {
+          message.quickReactions.splice(idx, 1);
+        }
+
+        commit(Mutations.setMessage, message);
+      }
+    }
   },
 };

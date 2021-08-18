@@ -6,7 +6,7 @@ import {
   guidsGetOne,
 } from "@/services/guids.service";
 import { CHAT_VIEW_MODES } from "@/const";
-import { MEDIA_TYPES, Mutations } from "@/store/enums/EnumTypes";
+import { Actions, MEDIA_TYPES, Mutations } from "@/store/enums/EnumTypes";
 
 let getMessagesSource = null;
 
@@ -393,6 +393,48 @@ export default {
     });
   },
 
+  [Actions.onMessageQuickReaction]: (
+    { getters },
+    { messageId, quickReaction }
+  ) => {
+    const data = {
+      conversationId: getters.getSelectedConversationId,
+      messageId: messageId,
+      quickReaction: quickReaction,
+      activeRoleId: null,
+    };
+
+    const url = `${process.env.VUE_APP_BASE_URL}/Messaging/MessageQuickReaction`;
+
+    axiosWebApiInstance
+      .post(url, data)
+      .then(function () {})
+      .catch((error) => {
+        console.error("On message quick reaction error:", error);
+      });
+  },
+
+  [Actions.onRemoveQuickReaction]: (
+    { getters },
+    { messageId, quickReaction }
+  ) => {
+    const data = {
+      conversationId: getters.getSelectedConversationId,
+      messageId: messageId,
+      quickReaction: quickReaction,
+      activeRoleId: null,
+    };
+
+    const url = `${process.env.VUE_APP_BASE_URL}/Messaging/RemoveQuickReaction`;
+
+    axiosWebApiInstance
+      .delete(url, { data })
+      .then(function () {})
+      .catch((error) => {
+        console.error("On message remove quick reaction error:", error);
+      });
+  },
+
   onUserAddedToConversationNotification: (
     { state, commit, dispatch },
     payload
@@ -427,6 +469,7 @@ export default {
     }
     commit("setConversations", conversations);
   },
+
   onMessageAcknowledgedNotification: ({ state, commit, getters }, message) => {
     console.log("ON_MESSAGE_ACKNOWLEDGED_NOTIFICATION", message);
     if (guidsAreEqual(state.selectedConversationId, message.conversationId)) {
@@ -448,6 +491,7 @@ export default {
       commit("setMessages", messages);
     }
   },
+
   onReceivedMessageNotification: ({ state, getters, commit }, message) => {
     const idx = state.conversations.findIndex((c) =>
       guidsAreEqual(c.id, message.conversationId)
@@ -477,6 +521,7 @@ export default {
       }
     }
   },
+
   onMessageReadNotification: ({ state, commit, getters }, payload) => {
     const idx = state.conversations.findIndex(
       (c) => c.id === payload.conversationId
@@ -518,6 +563,7 @@ export default {
       commit("setMessages", messages);
     }
   },
+
   onUserIsTypingNotification: ({ state, commit }, whoIsTyping) => {
     const idx = state.conversations.findIndex(
       (c) => c.id === whoIsTyping.conversationId
