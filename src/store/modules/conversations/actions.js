@@ -216,7 +216,9 @@ export default {
       requiresAcknowledgement: false,
       repliedId: getters.getLoggedUser.id,
       replyText: payload.message.text,
-      repliedFrom: payload.message.authorId,
+      repliedFrom: payload.message.activeRoleId
+        ? payload.message.activeRoleId
+        : payload.message.authorId,
       pushNotification: {
         title: "Quick Reply Message",
         body: payload.quickMessageText,
