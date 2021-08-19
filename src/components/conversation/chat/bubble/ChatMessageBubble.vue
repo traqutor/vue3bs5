@@ -7,7 +7,7 @@
       align-items-center
       justify-content-end
       hover-visible-group hover-action-group
-      mb-4
+      mb-5
     "
   >
     <!--start::message more-vertical dropdown menu -->
@@ -102,6 +102,10 @@
       "
       :class="getBubbleClass"
     >
+      <!--start::reply text-->
+      <BubbleReplyElement :item="item" />
+      <!--end::reply text-->
+
       <!--start::whisper over text -->
       <div class="d-flex" v-if="item.isWhisper">
         <BubbleWhisperHeaderDropdown :item="item" />
@@ -201,6 +205,10 @@
             class="dialog-group-message d-inline-block rounded pb-2"
             :class="getBubbleClass"
           >
+            <!--start::reply text-->
+            <BubbleReplyElement :item="item" />
+            <!--end::reply text-->
+
             <!--start::whisper over text-->
             <div class="d-flex" v-if="item.isWhisper">
               <BubbleWhisperHeaderDropdown :item="item" />
@@ -402,10 +410,12 @@ import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import BubbleAttachments from "@/components/conversation/chat/bubble/BubbleAttachments";
 import BubbleReactionDropdown from "@/components/conversation/chat/bubble/BubbleReactionDropdown";
 import BubbleQuckReactionDropdown from "@/components/conversation/chat/bubble/BubbleQuckReactionDropdown";
+import BubbleReplyElement from "@/components/conversation/chat/bubble/BubbleReplyElement";
 
 export default {
   name: "ign-chat-message-bubble",
   components: {
+    BubbleReplyElement,
     BubbleQuckReactionDropdown,
     BubbleReactionDropdown,
     BubbleAttachments,
