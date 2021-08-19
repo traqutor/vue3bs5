@@ -91,6 +91,7 @@ export default {
   props: ["item"],
   setup(props) {
     const store = useStore();
+
     const emojiAndCounters = computed(() => {
       const reactions = [];
       props.item.quickReactions.forEach((quick) => {
@@ -101,7 +102,6 @@ export default {
           reactions[idx].counter++;
         }
       });
-      console.log("reactions", reactions);
       return reactions;
     });
 

@@ -575,6 +575,11 @@ export default {
 
     const onMessageQuickText = (text) => {
       console.log("onMessageQuickText", props.item, text);
+      const payload = {
+        quickMessageText: text,
+        message: props.item,
+      };
+      store.dispatch(Actions.onQuickMessageResponse, payload);
     };
 
     const onAcknowledgePost = () => {

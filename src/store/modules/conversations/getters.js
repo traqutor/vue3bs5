@@ -60,7 +60,8 @@ export default {
       return state.conversations[idx].participants
         .filter(
           (prt) =>
-            guidsAreEqual(prt.id, getters.getLoggedUser.id) ||
+            (getters.getLoggedUser &&
+              guidsAreEqual(prt.id, getters.getLoggedUser.id)) ||
             getters.getLoggedUser.SystemRoles.some((role) => {
               return guidsAreEqual(role.Id, prt.id);
             })

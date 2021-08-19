@@ -299,6 +299,7 @@ import EmojiPicker from "@/components/conversation/chat/chat-text-selector/Emoji
 import FeatherChevronsLeft from "@/icons/FeatherChevronsLeft";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import ChatContentEditable from "@/components/conversation/chat/input/ChatContentEditable";
+import {Actions} from "@/store/enums/EnumTypes";
 export default {
   components: {
     ChatContentEditable,
@@ -366,7 +367,7 @@ export default {
             requiresAcknowledgement: requiresAcknowledgement.value,
             activeRoleId: activeRoleId,
           };
-          store.dispatch("onCreateMessage", payload).then(() => {
+          store.dispatch(Actions.onCreateMessage, payload).then(() => {
             requiresAcknowledgement.value = false;
           });
         }

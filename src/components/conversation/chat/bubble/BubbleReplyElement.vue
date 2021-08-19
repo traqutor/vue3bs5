@@ -10,7 +10,7 @@
         <span
           class="font-weight-middle"
           :class="loggedUserMessage ? 'text-light' : 'text-primary'"
-          >Reply: {{ repliedBy }}</span
+          >{{ repliedBy }}</span
         >
       </div>
       <div
@@ -41,7 +41,7 @@ export default {
 
     const repliedBy = computed(() => {
       if (store.getters.getLoggedUser.id === props.item.repliedFrom) {
-        return "Me";
+        return "Reply: Me";
       } else {
         return store.getters.getParticipantById(props.item.repliedFrom).name;
       }

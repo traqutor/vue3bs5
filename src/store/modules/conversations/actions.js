@@ -50,6 +50,7 @@ export default {
     commit("setSelectedConversationId", conversationId);
     commit("purgeWhisperParticipants");
     commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
+    commit(Mutations.setReplyMessage, null);
     dispatch("onGetMessages", {
       conversationId: conversationId,
       refresh: true,
@@ -138,7 +139,7 @@ export default {
               const message = {
                 messageText: state.messageText,
               };
-              dispatch("onCreateMessage", message);
+              dispatch(Actions.onCreateMessage, message);
             }
             resolve();
           });
@@ -147,7 +148,7 @@ export default {
     });
   },
 
-  onCreateMessage: ({ commit, state, getters }, payload) => {
+  [Actions.onCreateMessage]: ({ commit, state, getters }, payload) => {
     commit("setIsMessageCreating", true);
 
     const message = {
@@ -199,6 +200,40 @@ export default {
       })
       .catch((error) => {
         commit("setIsMessageCreating", false);
+        console.error("On CREATE_MESSAGE error:", error);
+      });
+  },
+
+  [Actions.onQuickMessageResponse]: ({ state, getters }, payload) => {
+    const message = {
+      id: guidsGetOne(),
+      activeRoleId: null,
+      conversationId: state.selectedConversationId,
+      messageText: payload.quickMessageText,
+      isWhisper: false,
+      requiresAcknowledgement: false,
+      repliedId: getters.getLoggedUser.id,
+      replyText: payload.message.text,
+      repliedFrom: payload.message.authorId,
+      pushNotification: {
+        title: "Quick Reply Message",
+        body: payload.quickMessageText,
+      },
+    };
+
+    const url = `${process.env.VUE_APP_BASE_URL}/Messaging/SendMessage`;
+
+    axiosWebApiInstance
+      .post(url, message)
+      .then(function (response) {
+        if (!response.data.isOk) {
+          console.error(
+            "On QuickMessageResponse error:",
+            response.data.message
+          );
+        }
+      })
+      .catch((error) => {
         console.error("On CREATE_MESSAGE error:", error);
       });
   },

@@ -15,6 +15,8 @@ const SocketReceivers = {
 
 const Actions = {
   // conversations actions
+  onCreateMessage: "onCreateMessage",
+  onQuickMessageResponse: "onQuickMessageResponse",
   onMessageQuickReaction: "onMessageQuickReaction",
   onRemoveQuickReaction: "onRemoveQuickReaction",
 
