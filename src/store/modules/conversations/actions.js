@@ -159,13 +159,15 @@ export default {
       isWhisper: getters.getWhisperToParticipants.length > 0,
       requiresAcknowledgement: payload.requiresAcknowledgement,
       repliedId: getters.getSelectedReplyMessage
-        ? getters.getSelectedReplyMessage.id
+        ? getters.getLoggedUser.id
         : "",
       replyText: getters.getSelectedReplyMessage
         ? getters.getSelectedReplyMessage.text
         : "",
       repliedFrom: getters.getSelectedReplyMessage
-        ? getters.getLoggedUser.id
+        ? getters.getSelectedReplyMessage.activeRoleId
+          ? getters.getSelectedReplyMessage.activeRoleId
+          : getters.getSelectedReplyMessage.authorId
         : "",
       pushNotification: {
         title: "Message title",
