@@ -17,6 +17,7 @@ const conversationsModule = {
       selectedConversationId: null,
       selectedCreator: null,
       messageText: "",
+      replyMessage: null,
       selectedMessageId: null,
       isMessagesLoading: null,
       isMessageCreating: null,

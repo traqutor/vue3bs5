@@ -40,6 +40,9 @@ export default {
       );
     }
   },
+  getSelectedReplyMessage: (state) => {
+    return state.replyMessage;
+  },
   getSelectedCreator: (state) => {
     return state.selectedCreator;
   },

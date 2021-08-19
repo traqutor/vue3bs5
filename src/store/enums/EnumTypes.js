@@ -25,7 +25,8 @@ const Actions = {
 
   // socket actions
   onMessageQuickReactionNotification: "onMessageQuickReactionNotification",
-  onMessageQuickReactionRemovedNotification: "onMessageQuickReactionRemovedNotification"
+  onMessageQuickReactionRemovedNotification:
+    "onMessageQuickReactionRemovedNotification",
 };
 
 const Mutations = {
@@ -42,6 +43,7 @@ const Mutations = {
 
   //conversation mutation types
   setMessage: "setMessage",
+  setReplyMessage: "setReplyMessage",
 
   // media mutation types
   setMediaTypeSelected: "setMediaTypeSelected",

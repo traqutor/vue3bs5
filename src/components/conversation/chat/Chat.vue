@@ -5,6 +5,7 @@
         <chat-body />
         <chat-drawer />
       </div>
+      <chat-reply-message />
       <chat-footer-user-is-typing />
       <chat-footer-acknowledge />
       <chat-footer-whisper />
@@ -21,8 +22,10 @@ import ChatBody from "@/components/conversation/chat/ChatBody";
 import ChatDrawer from "@/components/conversation/chat/ChatDrawer";
 import ChatFooterUserIsTyping from "@/components/conversation/chat/input/ChatFooterUserIsTyping";
 import ChatFooterAttachments from "@/components/conversation/chat/input/ChatFooterAttachments";
+import ChatReplyMessage from "@/components/conversation/chat/input/ChatReplyMessage";
 export default {
   components: {
+    ChatReplyMessage,
     ChatFooterAttachments,
     ChatFooterUserIsTyping,
     ChatDrawer,

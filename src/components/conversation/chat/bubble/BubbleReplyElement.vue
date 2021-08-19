@@ -1,22 +1,30 @@
 <template>
   <div v-if="item.repliedId" class="d-flex f-col-sm on-hover pb-1">
-    <div class="me-2 mt-1 text-primary">
+    <div class="me-2 mt-1 text-primary"
+         :class="loggedUserMessage ? 'text-white-75' : 'text-primary'"
+    >
       <feather-corner-down-right />
     </div>
     <div class="media-body overflow-hidden">
       <div class="text-truncate">
-        <span class="text-primary font-weight-middle"
+        <span
+          class="font-weight-middle"
+          :class="loggedUserMessage ? 'text-light' : 'text-primary'"
           >Reply: {{ repliedBy }}</span
         >
       </div>
-      <div class="text-truncate text-secondary">
-        {{ item.replyText }}
+      <div
+        class="text-truncate"
+        :class="loggedUserMessage ? 'text-white-75' : 'text-secondary'"
+        v-html="item.replyText"
+      >
       </div>
     </div>
   </div>
   <div
     v-if="item.repliedId"
-    class="border-top border-secondary-light my-2"
+    class="border-top my-2"
+    :class="loggedUserMessage ? 'border-white' : 'border-secondary-light'"
   ></div>
 </template>
 <script>
@@ -24,7 +32,7 @@ import FeatherCornerDownRight from "@/icons/FeatherCornerDownRight";
 import { useStore } from "vuex";
 import { computed } from "vue";
 export default {
-  props: ["item"],
+  props: ["item", "loggedUserMessage"],
   components: {
     FeatherCornerDownRight,
   },
@@ -32,7 +40,11 @@ export default {
     const store = useStore();
 
     const repliedBy = computed(() => {
-      return store.getters.getParticipantById(props.item.repliedFrom).name;
+      if (store.getters.getLoggedUser.id === props.item.repliedFrom) {
+        return "Me";
+      } else {
+        return store.getters.getParticipantById(props.item.repliedFrom).name;
+      }
     });
 
     return { repliedBy };

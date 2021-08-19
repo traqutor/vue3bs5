@@ -99,11 +99,12 @@
         bg-primary
         rounded
         pb-2
+        text-w
       "
       :class="getBubbleClass"
     >
       <!--start::reply text-->
-      <BubbleReplyElement :item="item" />
+      <BubbleReplyElement :item="item" loggedUserMessage="true" />
       <!--end::reply text-->
 
       <!--start::whisper over text -->
@@ -569,6 +570,7 @@ export default {
 
     const onMessageReply = () => {
       console.log("onMessageReply", props.item);
+      store.commit(Mutations.setReplyMessage, props.item);
     };
 
     const onMessageQuickText = (text) => {

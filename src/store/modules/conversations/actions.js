@@ -157,6 +157,15 @@ export default {
       messageText: state.messageText,
       isWhisper: getters.getWhisperToParticipants.length > 0,
       requiresAcknowledgement: payload.requiresAcknowledgement,
+      repliedId: getters.getSelectedReplyMessage
+        ? getters.getSelectedReplyMessage.id
+        : "",
+      replyText: getters.getSelectedReplyMessage
+        ? getters.getSelectedReplyMessage.text
+        : "",
+      repliedFrom: getters.getSelectedReplyMessage
+        ? getters.getLoggedUser.id
+        : "",
       pushNotification: {
         title: "Message title",
         body: "Message body text",
@@ -182,6 +191,7 @@ export default {
           commit("setMessageText", null);
           commit("purgeWhisperParticipants");
           commit(Mutations.setMediaShareGalleryItems, []);
+          commit(Mutations.setReplyMessage, null);
         } else {
           console.error("On CREATE_MESSAGE error:", response.data.message);
         }

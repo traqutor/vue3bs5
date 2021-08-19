@@ -100,6 +100,7 @@ export default {
     state.isQuickChatTextSelectorVisible =
       !state.isQuickChatTextSelectorVisible;
   },
+
   [Mutations.setMessage]: (state, message) => {
     const cIdx = state.conversations.findIndex(
       (conv) => conv.id === message.conversationId
@@ -112,5 +113,9 @@ export default {
         state.conversations[cIdx].messages[mIdx] = message;
       }
     }
+  },
+
+  [Mutations.setReplyMessage]: (state, message) => {
+    state.replyMessage = message;
   },
 };
