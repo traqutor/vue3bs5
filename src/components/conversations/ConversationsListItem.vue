@@ -319,11 +319,13 @@ export default {
         )
       );
     });
+
     const isWatchedByLoggedUser = computed(() => {
       return props.conversation.lastMessage.watchedByUsers.some(
         (usr) => loggedUser.value && guidsAreEqual(usr.id, loggedUser.value.id)
       );
     });
+
     const isWatchedByAllParticipants = computed(() => {
       return (
         (props.conversation.lastMessage.watchedByUsers &&

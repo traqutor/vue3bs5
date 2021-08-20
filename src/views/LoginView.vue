@@ -247,7 +247,7 @@
         <div
           class="d-flex align-items-center justify-content-center h-100 w-100"
         >
-          <img src="images/login/img-dentist-2.png" class="mw-100 h-80" />
+          <img src="images/login/img-dentist-2.png" class="mw-100" />
         </div>
       </div>
 
@@ -255,7 +255,7 @@
         <div
           class="d-flex align-items-center justify-content-center h-100 w-100"
         >
-          <img src="images/login/img-dentist-3.png" class="mw-100 h-80" />
+          <img src="images/login/img-dentist-3.png" class="mw-100" />
         </div>
       </div>
 
@@ -263,7 +263,7 @@
         <div
           class="d-flex align-items-center justify-content-center h-100 w-100"
         >
-          <img src="images/login/img-dentist-1.png" class="mw-100 h-80" />
+          <img src="images/login/img-dentist-1.png" class="mw-100" />
         </div>
       </div>
     </div>

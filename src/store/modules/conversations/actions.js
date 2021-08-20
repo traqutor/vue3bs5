@@ -7,6 +7,7 @@ import {
 } from "@/services/guids.service";
 import { CHAT_VIEW_MODES } from "@/const";
 import { Actions, MEDIA_TYPES, Mutations } from "@/store/enums/EnumTypes";
+import { subtractNotLessTenZero } from "@/services/counter.service";
 
 let getMessagesSource = null;
 
@@ -553,18 +554,21 @@ export default {
     if (idx !== -1) {
       const conversations = [...state.conversations];
       const conversation = { ...conversations[idx] };
-      const isMessage = conversation.messages.some((msg) => {
+
+      const isNewMessage = !conversation.messages.some((msg) => {
         return guidsAreEqual(msg.id, message.id);
       });
 
-      if (!isMessage) {
+      if (isNewMessage) {
+        conversation.lastMessage = message;
+
         const tmpMessages = conversations[idx].messages;
         tmpMessages.push(message);
         conversations[idx].messages = [...tmpMessages];
 
+        // update counters
         if (!getters.getIsLoggedUserMessageAuthor(message)) {
           conversation.unreadMessageCount = conversation.unreadMessageCount + 1;
-          conversation.lastMessage = message;
 
           const unReadCounter = getters.getTotalMissedCounter + 1;
           commit(Mutations.setTotalMissedCounter, unReadCounter);
@@ -588,21 +592,42 @@ export default {
       getters.getIsLoggedUserParticipant(participant)
     );
 
-    if (loggedUserRead && conversation.unreadMessageCount > 0) {
-      let count = conversation.unreadMessageCount;
-      let unReadCounter = getters.getTotalMissedCounter;
+    if (loggedUserRead) {
+      let totalCounter = getters.getTotalMissedCounter;
+      let conversationCounter = conversation.unreadMessageCount;
       payload.messageIds.forEach(() => {
-        count = count - 1;
-        unReadCounter = unReadCounter - 1;
+        //update counters
+        totalCounter = subtractNotLessTenZero(totalCounter, 1);
+        conversationCounter = subtractNotLessTenZero(conversationCounter, 1);
       });
-      conversation.unreadMessageCount = count >= 0 ? count : 0;
-      commit(Mutations.setTotalMissedCounter, unReadCounter);
+      commit(Mutations.setTotalMissedCounter, totalCounter);
+      conversation.unreadMessageCount = conversationCounter;
     }
+
+    //update conversation last message watchedByUsers array
+    payload.messageIds.forEach((messageId) => {
+      console.log(
+        "messageId === conversation.lastMessage.id",
+        messageId,
+        conversation.lastMessage.id
+      );
+      if (guidsAreEqual(messageId, conversation.lastMessage.id)) {
+        payload.participants.forEach((participant) => {
+          console.log("participant", participant);
+          if (
+            !conversation.lastMessage.watchedByUsers.find((watcher) =>
+              guidsAreEqual(watcher.id, participant.id)
+            )
+          ) {
+            conversation.lastMessage.watchedByUsers.push(participant);
+          }
+        });
+      }
+    });
 
     const tmpConversations = state.conversations.map((conv) =>
       conv.id !== conversation.id ? conv : { ...conversation }
     );
-
     commit("setConversations", tmpConversations);
 
     //update messages watched by users
