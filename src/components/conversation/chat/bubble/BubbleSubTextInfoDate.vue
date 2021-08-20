@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!selectedConversation.isDirect" class="dropdown">
+  <div class="dropdown">
     <feather-check-double
       v-if="isUserPost"
       class="me-1"
@@ -7,6 +7,7 @@
     />
 
     <span
+      v-if="!selectedConversation.isDirect"
       class="dialog-message-action ign-pointer"
       :id="`dropdownMenuBubbleWatchersId${item.id}`"
       data-bs-toggle="dropdown"
