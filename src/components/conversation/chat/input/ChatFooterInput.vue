@@ -15,6 +15,7 @@
                 rounded
                 bg-light
               "
+              :class="requiresAcknowledgement ? 'bg-primary-clear' : ''"
             >
               <!-- start::more vertical menu dropdown -->
               <div class="input-group-prepend">
@@ -64,7 +65,10 @@
               </div>
               <!-- end::more vertical menu dropdown -->
 
-              <ChatContentEditable v-model="messageText" @submitContent="onSubmit" />
+              <ChatContentEditable
+                v-model="messageText"
+                @submitContent="onSubmit"
+              />
 
               <!-- end::message text area -->
 
@@ -299,7 +303,7 @@ import EmojiPicker from "@/components/conversation/chat/chat-text-selector/Emoji
 import FeatherChevronsLeft from "@/icons/FeatherChevronsLeft";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import ChatContentEditable from "@/components/conversation/chat/input/ChatContentEditable";
-import {Actions} from "@/store/enums/EnumTypes";
+import { Actions } from "@/store/enums/EnumTypes";
 export default {
   components: {
     ChatContentEditable,
