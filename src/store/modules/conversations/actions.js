@@ -39,6 +39,10 @@ export default {
       .get(url)
       .then(function (response) {
         commit("setConversations", response.data.conversations);
+        commit(
+          Mutations.setTotalMissedCounter,
+          response.data.totalMissedCounter
+        );
         commit("setIsConversationsLoading", false);
       })
       .catch((error) => {
@@ -561,6 +565,9 @@ export default {
         if (!getters.getIsLoggedUserMessageAuthor(message)) {
           conversation.unreadMessageCount = conversation.unreadMessageCount + 1;
           conversation.lastMessage = message;
+
+          const unReadCounter = getters.getTotalMissedCounter + 1;
+          commit(Mutations.setTotalMissedCounter, unReadCounter);
         }
 
         conversations.splice(idx, 1);
@@ -583,10 +590,13 @@ export default {
 
     if (loggedUserRead && conversation.unreadMessageCount > 0) {
       let count = conversation.unreadMessageCount;
+      let unReadCounter = getters.getTotalMissedCounter;
       payload.messageIds.forEach(() => {
         count = count - 1;
+        unReadCounter = unReadCounter - 1;
       });
       conversation.unreadMessageCount = count >= 0 ? count : 0;
+      commit(Mutations.setTotalMissedCounter, unReadCounter);
     }
 
     const tmpConversations = state.conversations.map((conv) =>

@@ -7,7 +7,11 @@
     <nav class="navbar bg-light p-0 shadow">
       <div class="navbar-brand w-100">
         <div class="d-flex align-items-center text-decoration-none main-logo">
-          <img class="main-logo-image" src="../../../public/images/logo.svg" alt="" />
+          <img
+            class="main-logo-image"
+            src="../../../public/images/logo.svg"
+            alt=""
+          />
           <img
             class="main-logo-title ms-2"
             src="../../../public/images/meddy-dark.svg"
@@ -87,7 +91,7 @@
         :class="$route.path === '/alarms' ? 'active' : ''"
       >
         <span
-            v-if="false"
+          v-if="false"
           class="
             badge badge-danger
             position-absolute
@@ -195,10 +199,7 @@ export default {
     const store = useStore();
     const visibilities = VISIBILITIES;
     const numberOfConversations = computed(
-      () =>
-        store.getters.getConversations.filter(
-          (conversation) => conversation.unreadMessageCount > 0
-        ).length
+      () => store.getters.getTotalMissedCounter
     );
     const onLeftAsideMouse = (visibility) => {
       if (store.getters.getAsideLeftVisibility !== visibilities.FIXED) {

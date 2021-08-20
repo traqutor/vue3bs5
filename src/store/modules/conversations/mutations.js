@@ -118,4 +118,7 @@ export default {
   [Mutations.setReplyMessage]: (state, message) => {
     state.replyMessage = message;
   },
+  [Mutations.setTotalMissedCounter]: (state, counter) => {
+    state.totalMissedCounter = counter;
+  },
 };

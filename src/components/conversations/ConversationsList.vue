@@ -15,7 +15,9 @@
           >
             <a class="nav-item nav-link nav-filter-control shadow-none active">
               Conversations
-              <span v-if="numberOfConversations > 0" class="badge badge-primary badge-pill ms-2"
+              <span
+                v-if="numberOfConversations > 0"
+                class="badge badge-primary badge-pill ms-2"
                 >{{ numberOfConversations }}
               </span>
             </a>
@@ -115,10 +117,7 @@ export default {
     const store = useStore();
     const conversations = computed(() => store.getters.getConversations);
     const numberOfConversations = computed(
-      () =>
-        store.getters.getConversations.filter(
-          (conversation) => conversation.unreadMessageCount > 0
-        ).length
+      () => store.getters.getTotalMissedCounter
     );
     return { conversations, numberOfConversations };
   },

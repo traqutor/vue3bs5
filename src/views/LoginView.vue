@@ -17,7 +17,7 @@
             <div class="pb-3">
               <div class="h1 text-primary-dark">Welcome to Olinqua</div>
               <div class="text-secondary f-size-18">
-                Get more things done with most powerful platform
+                Helping staff to help patients
               </div>
             </div>
 

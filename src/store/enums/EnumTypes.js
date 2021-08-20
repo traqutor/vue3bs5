@@ -46,6 +46,7 @@ const Mutations = {
   //conversation mutation types
   setMessage: "setMessage",
   setReplyMessage: "setReplyMessage",
+  setTotalMissedCounter: "setTotalMissedCounter",
 
   // media mutation types
   setMediaTypeSelected: "setMediaTypeSelected",

@@ -172,4 +172,8 @@ export default {
 
     return [];
   },
+
+  getTotalMissedCounter: (state) => {
+    return state.totalMissedCounter;
+  },
 };
