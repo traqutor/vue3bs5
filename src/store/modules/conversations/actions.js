@@ -277,6 +277,18 @@ export default {
       });
   },
 
+  onCheckConversationMessagesMessages: (_, conversationId) => {
+    return new Promise((resolve) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetMessages?ConversationId=${conversationId}`;
+
+      axiosWebApiInstance.get(url).then(function (response) {
+        if (response.data.response.isOk) {
+          resolve(response.data.messages);
+        }
+      });
+    });
+  },
+
   onGetDirectConversation: (_, requestPayload) => {
     return new Promise((resolve) => {
       const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetDirectConversation`;

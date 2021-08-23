@@ -1,18 +1,21 @@
 <template>
   <div class="flex-slide-content">
     <div class="d-flex flex-column h-100 w-100 position-absolute">
-      <perfect-scrollbar ref="chatContainer" class="pe-3 ign-scroll-smooth">
-        <div v-for="(msg, idx) of messages" :key="msg.id">
-          <!-- time divider-->
-          <div
-            v-if="idx === 0 || getIfPeriodToDisplay(idx)"
-            class="dialog-group-strip text-primary"
-          >
-            {{ timeMessagesDividerFormat(msg.createdTime.seconds) }}
+      <template v-if="isLoading"> Is loading... </template>
+      <template v-else>
+        <perfect-scrollbar ref="chatContainer" class="pe-3 ign-scroll-smooth">
+          <div v-for="(msg, idx) of messages" :key="msg.id">
+            <!-- time divider-->
+            <div
+              v-if="idx === 0 || getIfPeriodToDisplay(idx)"
+              class="dialog-group-strip text-primary"
+            >
+              {{ timeMessagesDividerFormat(msg.createdTime.seconds) }}
+            </div>
+            <ign-chat-message-bubble :item="msg"></ign-chat-message-bubble>
           </div>
-          <ign-chat-message-bubble :item="msg"></ign-chat-message-bubble>
-        </div>
-      </perfect-scrollbar>
+        </perfect-scrollbar>
+      </template>
     </div>
   </div>
 </template>
@@ -35,6 +38,8 @@ export default {
     const tmpScrollTop = ref(0);
 
     const messages = computed(() => store.getters.getMessages);
+
+    const isLoading = computed(() => store.getters.getIsMessagesLoading);
 
     const selectedConversation = computed(
       () => store.getters.getSelectedConversation
@@ -131,6 +136,7 @@ export default {
       chatContainer,
       messages,
       isScrollUp,
+      isLoading,
       tmpScrollTop,
       onScroll,
       onSendMessage,

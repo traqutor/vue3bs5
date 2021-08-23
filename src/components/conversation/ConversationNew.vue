@@ -54,7 +54,7 @@
               aria-expanded="false"
             >
               Creator:<span class="ms-1 role-name">
-                {{ getSelectedCreator.name }}</span
+                {{ selectedCreator.name }}</span
               >
             </button>
 
@@ -71,15 +71,15 @@
                   on-hover
                   py-2
                 "
-                @click="onSelectCreator(getLoggedUser.id)"
+                @click="onSelectCreator(loggedUser.id)"
               >
                 <participant-avatar-name-item
-                  :participant-id="getLoggedUser.id"
+                  :participant-id="loggedUser.id"
                 ></participant-avatar-name-item>
               </div>
 
               <div
-                v-for="role of getLoggedUser.SystemRoles"
+                v-for="role of loggedUser.SystemRoles"
                 :key="role.Id"
                 class="
                   dropdown-item
@@ -398,13 +398,12 @@
 <script>
 import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
+import { CONVERSATION_VIEW_MODES } from "@/const";
 import FeatherSquare from "@/icons/FeatherSquare";
 import FeatherCheckSquare from "@/icons/FeatherCheckSquare";
 import FeatherMessageSquareGroup from "@/icons/FeatherMessageSquareGroup";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
-import { CONVERSATION_VIEW_MODES } from "@/const";
-import { Mutations } from "@/store/enums/EnumTypes";
 import TextareaResizeAuto from "@/components/text/TextareaResizeAuto";
 import FeatherArrowUp from "@/icons/FeatherArrowUp";
 import FeatherSmile from "@/icons/FeatherSmile";
@@ -415,12 +414,15 @@ export default {
   setup() {
     const conversationViewModes = CONVERSATION_VIEW_MODES;
     const store = useStore();
+    const selectedCreator = ref(
+      store.getters.getParticipantById(store.getters.getLoggedUser.id)
+    );
     const isCreationStep = ref(0);
-    const getLoggedUser = computed(() => store.getters.getLoggedUser);
+    const loggedUser = computed(() => store.getters.getLoggedUser);
     const getSelectedParticipants = computed(
       () => store.getters.getSelectedParticipants
     );
-    const getSelectedCreator = computed(() => store.getters.getSelectedCreator);
+
     const conversationTopic = computed({
       get: () => {
         return store.getters.getConversationTopic;
@@ -444,7 +446,30 @@ export default {
         messageText.value = messageText.value + `\n`;
       } else {
         if (getSelectedParticipants.value.length === 1) {
-          isCreationStep.value = 1;
+          if (getSelectedParticipants.value.length === 1) {
+            const params = {
+              user: selectedCreator.value,
+              recipient: getSelectedParticipants.value[0],
+            };
+            store
+              .dispatch("onGetDirectConversation", params)
+              .then((response) => {
+                console.log("onGetDirectConversation", response);
+                store
+                  .dispatch("onCheckConversationMessagesMessages", response.id)
+                  .then((messages) => {
+                    console.log(
+                      "onCheckConversationMessagesMessages",
+                      messages
+                    );
+                    if (messages.length > 0) {
+                      isCreationStep.value = 1;
+                    } else {
+                      isCreationStep.value = 2;
+                    }
+                  });
+              });
+          }
         } else {
           isCreationStep.value = 2;
         }
@@ -461,8 +486,7 @@ export default {
     }
 
     function onSelectCreator(id) {
-      const creator = store.getters.getParticipantById(id);
-      store.commit(Mutations.setActiveRole, creator);
+      selectedCreator.value = store.getters.getParticipantById(id);
     }
 
     function onSelect(id) {
@@ -507,8 +531,8 @@ export default {
       onSubmitFirstStep,
       onSubmitSecondStep,
       conversationViewModes,
-      getLoggedUser,
-      getSelectedCreator,
+      loggedUser,
+      selectedCreator,
       getSelectedParticipants,
       onSelect,
       onCreateConversation,
