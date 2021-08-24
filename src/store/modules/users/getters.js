@@ -169,14 +169,13 @@ export default {
 
   getMessageAuthor: (state) => (message) => {
     let author = { user: null, role: null };
-    if (message.authorId) {
-      author.user = state.systemUsers.find(
-        (usr) => usr.userId === message.authorId
-      );
-    }
     if (message.activeRoleId) {
       author.role = state.systemRoles.find(
         (rle) => rle.id === message.activeRoleId
+      );
+    } else {
+      author.user = state.systemUsers.find(
+        (usr) => usr.userId === message.authorId
       );
     }
     return author;

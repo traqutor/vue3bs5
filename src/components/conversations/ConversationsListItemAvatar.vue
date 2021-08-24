@@ -10,7 +10,12 @@
     <participant-avatar
       v-if="showAuthorOfLastMessage"
       class="avatar-icon"
-      :participant-id="conversation.lastMessage.authorId"
+      :class="conversation.lastMessage.activeRoleId ? '' : 'fs-4'"
+      :participant-id="
+        conversation.lastMessage.activeRoleId
+          ? conversation.lastMessage.activeRoleId
+          : conversation.lastMessage.authorId
+      "
     />
   </figure>
 </template>

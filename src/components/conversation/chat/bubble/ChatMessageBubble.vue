@@ -175,7 +175,9 @@
         alt=""
       />
     </figure>
-    <div v-else class="avatar-lg me-3 ms-1"></div>
+    <div v-else class="avatar avatar-lg me-3 ms-1">
+      <feather-briefcase1 />
+    </div>
     <!--end::User avatar-->
 
     <div class="media-body">
@@ -414,10 +416,14 @@ import BubbleAttachments from "@/components/conversation/chat/bubble/BubbleAttac
 import BubbleReactionDropdown from "@/components/conversation/chat/bubble/BubbleReactionDropdown";
 import BubbleQuckReactionDropdown from "@/components/conversation/chat/bubble/BubbleQuckReactionDropdown";
 import BubbleReplyElement from "@/components/conversation/chat/bubble/BubbleReplyElement";
+import FeatherUserGroup from "@/icons/FeatherUserGroup";
+import FeatherBriefcase1 from "@/icons/FeatherBriefcase1";
 
 export default {
   name: "ign-chat-message-bubble",
   components: {
+    FeatherBriefcase1,
+    FeatherUserGroup,
     BubbleReplyElement,
     BubbleQuckReactionDropdown,
     BubbleReactionDropdown,

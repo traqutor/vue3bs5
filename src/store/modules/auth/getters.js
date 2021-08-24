@@ -19,7 +19,7 @@ export default {
     return (
       message.authorId === state.user.id ||
       (message.activeRoleId &&
-        state.user.SystemRoles((role) => role.Id === message.activeRoleId))
+        state.user.SystemRoles.some((role) => role.Id === message.activeRoleId))
     );
   },
 
@@ -27,7 +27,7 @@ export default {
     return (
       participant.id === state.user.id ||
       (participant.isRole &&
-        state.user.SystemRoles((role) => role.Id === participant.id))
+        state.user.SystemRoles.some((role) => role.Id === participant.id))
     );
   },
 };
