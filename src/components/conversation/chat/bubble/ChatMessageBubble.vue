@@ -116,6 +116,7 @@
       <!--start::message attachments -->
       <div
         v-if="
+          item.attachments &&
           item.attachments.length > 0 &&
           item.thumbnails &&
           item.thumbnails.length > 0
@@ -219,6 +220,7 @@
             <!--start::message attachments -->
             <div
               v-if="
+                item.attachments &&
                 item.attachments.length > 0 &&
                 item.thumbnails &&
                 item.thumbnails.length > 0
@@ -587,7 +589,11 @@ export default {
     };
 
     onMounted(() => {
-      if (props.item.attachments.length > 0 && !props.item.thumbnails) {
+      if (
+        props.item.attachments &&
+        props.item.attachments.length > 0 &&
+        !props.item.thumbnails
+      ) {
         const requestQuery = props.item.attachments
           .map((atta) => `thumbnailsIds=${atta.id}`)
           .join("&");
