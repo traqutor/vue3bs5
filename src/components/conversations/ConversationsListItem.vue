@@ -278,6 +278,7 @@ import DateToLastActivityLabel from "@/components/date/DateToLastActivityLabel";
 import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
 import { guidsAreEqual } from "@/services/guids.service";
 import { getTextFromHtmlContent } from "@/services/text.service";
+import { Actions } from "@/store/enums/EnumTypes";
 
 export default {
   components: {
@@ -353,7 +354,7 @@ export default {
     }
 
     function onConversationSelect() {
-      store.dispatch("onSelectConversation", props.conversation.id);
+      store.dispatch(Actions.onSelectConversation, props.conversation.id);
     }
 
     return {

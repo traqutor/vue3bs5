@@ -95,7 +95,7 @@ export default {
     };
 
     const scrollToEnd = () => {
-      if (!isScrollUp.value) {
+      if (!isScrollUp.value && chatContainer.value) {
         const container = chatContainer.value.$el;
         for (let i = container.scrollTop; i < container.scrollHeight; i++) {
           container.scrollTop = i;
@@ -116,7 +116,7 @@ export default {
           },
         })
         .then((conversation) => {
-          this.$store.dispatch("onSelectConversation", conversation);
+          this.$store.dispatch(Actions.onSelectConversation, conversation);
         });
     };
 

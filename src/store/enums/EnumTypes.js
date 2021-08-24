@@ -18,6 +18,7 @@ const Actions = {
   onCreateMessage: "onCreateMessage",
   onQuickMessageResponse: "onQuickMessageResponse",
   onMessageQuickReaction: "onMessageQuickReaction",
+  onSelectConversation: "onSelectConversation",
   onRemoveQuickReaction: "onRemoveQuickReaction",
 
   // media actions

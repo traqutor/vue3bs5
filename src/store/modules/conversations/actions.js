@@ -51,11 +51,13 @@ export default {
       });
   },
 
-  onSelectConversation: ({ commit, dispatch }, conversationId) => {
+  [Actions.onSelectConversation]: ({ commit, dispatch }, conversationId) => {
     commit("setSelectedConversationId", conversationId);
     commit("purgeWhisperParticipants");
     commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
     commit(Mutations.setReplyMessage, null);
+    commit(Mutations.setMediaShareGalleryItems, []);
+    commit(Mutations.setMediaSelectedItems, []);
     dispatch("onGetMessages", {
       conversationId: conversationId,
       refresh: true,
@@ -99,6 +101,9 @@ export default {
             commit("setConversationTopic", null);
             commit("purgeSelectedParticipants");
             commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
+            commit(Mutations.setMediaShareGalleryItems, []);
+            commit(Mutations.setMediaSelectedItems, []);
+
             const conversation = state.conversations.find(
               (item) => item.id === response.data.result
             );
