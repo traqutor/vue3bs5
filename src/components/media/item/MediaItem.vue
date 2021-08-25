@@ -2,7 +2,7 @@
   <figure
     class="image-figure mb-1 alert alert-wait p-0"
     :class="getItemClass"
-    @click="onItemClick($event)"
+    @click="onItemClick"
   >
     <div class="image-figure-wrap">
       <div class="image-figure-inner">
@@ -46,13 +46,9 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    const onItemClick = (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+    const onItemClick = () => {
       if (props.isSelect) {
         store.commit(Mutations.toggleMediaSelectedItem, props.item);
-      } else {
-        console.log("onItemClick Open");
       }
     };
 

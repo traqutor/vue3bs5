@@ -8,7 +8,7 @@
     "
     style="min-width: 128px; min-height: 64px;"
   >
-    <MediaItem :item="item" />
+    <MediaItem :item="thumbnail" />
   </div>
 </template>
 <script>
@@ -17,7 +17,7 @@ import MediaItem from "@/components/media/item/MediaItem";
 
 export default {
   props: {
-    item: null,
+    thumbnail: null,
     isSelect: null,
   },
   setup() {

@@ -47,6 +47,25 @@ export default {
     });
   },
 
+  [Actions.onGetItem]: ({ commit, getters }, itemId) => {
+    if (!getters.getMediaItemById(itemId)) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/Gallery/GetItem?itemId=${itemId}`;
+      axiosWebApiInstance
+        .get(url)
+        .then(function (response) {
+          console.log("Actions.onGetItem response:", response);
+          if (response.data.isOk) {
+            commit(Mutations.setMediaItem, response.data);
+          } else {
+            console.error("On onGetItem error:", response.data.message);
+          }
+        })
+        .catch((error) => {
+          console.error("On onGetItem error:", error);
+        });
+    }
+  },
+
   [Actions.onShareGalleryItems]: ({ commit }, requestPayload) => {
     commit(Mutations.setIsMediaShareLoading, true);
     return new Promise((resolve) => {
@@ -65,5 +84,17 @@ export default {
           console.error("On onShareGalleryItems error:", error);
         });
     });
+  },
+
+  [Actions.onShowMessageAttachments]: (
+    { commit, dispatch },
+    { message, index }
+  ) => {
+    message.thumbnails.forEach((thumb) => {
+      dispatch(Actions.onGetItem, thumb.id);
+    });
+    commit(Mutations.setLightBoxViewFiles, message.thumbnails);
+    commit(Mutations.setMediaIndex, index);
+    commit(Mutations.setIsLightBoxVisible, true);
   },
 };

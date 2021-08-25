@@ -2,6 +2,7 @@ import {
   MEDIA_ITEM_SIZES,
   MEDIA_PATIENT_ITEM_SIZES,
 } from "@/store/enums/EnumTypes";
+import { guidsAreEqual } from "@/services/guids.service";
 
 export default {
   getMediaNavTabSelected: (state) => {
@@ -68,5 +69,25 @@ export default {
 
   getIsMediaShareLoading: (state) => {
     return state.isMediaShareLoading;
+  },
+
+  getIsLightBoxVisible: (state) => {
+    return state.isLightBoxVisible;
+  },
+
+  getLightBoxViewFiles: (state) => {
+    return state.lightBoxViewFiles;
+  },
+
+  getMediaIndex: (state) => {
+    return state.mediaIndex;
+  },
+
+  getMediaItems: (state) => {
+    return state.mediaItems;
+  },
+
+  getMediaItemById: (state) => (itemId) => {
+    return state.mediaItems.find((item) => guidsAreEqual(item.id, itemId));
   },
 };

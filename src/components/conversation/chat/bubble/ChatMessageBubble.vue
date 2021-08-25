@@ -390,7 +390,10 @@
 <script>
 import { computed, ref, onMounted } from "vue";
 import { useStore } from "vuex";
-
+import {
+  timeOffsetFormat,
+  timeHhMmaDotDdddFormat,
+} from "@/services/datetime.service";
 import { guidsAreEqual } from "@/services/guids.service";
 import FeatherArrowReplyDown from "@/icons/FeatherArrowReplyDown";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
@@ -400,10 +403,6 @@ import FeatherEdit3 from "@/icons/FeatherEdit3";
 import FeatherLink2 from "@/icons/FeatherLink2";
 import FeatherArrowForwardDown from "@/icons/FeatherArrowForwardDown";
 import FeatherMessageCircle from "@/icons/FeatherMessageCircle";
-import {
-  timeOffsetFormat,
-  timeHhMmaDotDdddFormat,
-} from "@/services/datetime.service";
 
 import BubbleAcknowledgedDropDownButton from "@/components/conversation/chat/bubble/BubbleAcknowledgedDropDownButton";
 import BubbleWhisperHeaderDropdown from "@/components/conversation/chat/bubble/BubbleWhisperHeaderDropdown";
@@ -416,14 +415,12 @@ import BubbleAttachments from "@/components/conversation/chat/bubble/BubbleAttac
 import BubbleReactionDropdown from "@/components/conversation/chat/bubble/BubbleReactionDropdown";
 import BubbleQuckReactionDropdown from "@/components/conversation/chat/bubble/BubbleQuckReactionDropdown";
 import BubbleReplyElement from "@/components/conversation/chat/bubble/BubbleReplyElement";
-import FeatherUserGroup from "@/icons/FeatherUserGroup";
 import FeatherBriefcase1 from "@/icons/FeatherBriefcase1";
 
 export default {
   name: "ign-chat-message-bubble",
   components: {
     FeatherBriefcase1,
-    FeatherUserGroup,
     BubbleReplyElement,
     BubbleQuckReactionDropdown,
     BubbleReactionDropdown,
@@ -456,7 +453,6 @@ export default {
     const selectedConversation = computed(
       () => store.getters.getSelectedConversation
     );
-
     const selectedCreator = computed(() => store.getters.getSelectedCreator);
 
     const getConversationAvailableCreationRoles = computed(
@@ -594,6 +590,10 @@ export default {
       store.dispatch("onAcknowledgeMessage", props.item.id);
     };
 
+    const onShowAttachments = () => {
+      store.commit(Mutations.setIsLightBoxVisible, true);
+    };
+
     onMounted(() => {
       if (
         props.item.attachments &&
@@ -629,6 +629,7 @@ export default {
       onMessageOpen,
       onMessageReply,
       onMessageQuickText,
+      onShowAttachments,
       isWatchedByAllParticipants,
       isMessageWatchedByUser,
       isMessageAcknowledgedByUser,

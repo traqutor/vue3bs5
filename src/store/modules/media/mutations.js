@@ -44,4 +44,16 @@ export default {
   [Mutations.setIsMediaShareLoading]: (state, flag) => {
     state.isMediaShareLoading = flag;
   },
+  [Mutations.setIsLightBoxVisible]: (state, flag) => {
+    state.isLightBoxVisible = flag;
+  },
+  [Mutations.setLightBoxViewFiles]: (state, files) => {
+    state.lightBoxViewFiles = files;
+  },
+  [Mutations.setMediaIndex]: (state, index) => {
+    state.mediaIndex = index;
+  },
+  [Mutations.setMediaItem]: (state, mediaItem) => {
+    state.mediaItems.push(mediaItem);
+  },
 };

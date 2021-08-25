@@ -30,9 +30,13 @@ const mediaModule = {
       mediaItemSize: MEDIA_ITEM_SIZES.DEFAULT,
       mediaPatientItemSize: MEDIA_PATIENT_ITEM_SIZES.DEFAULT,
       mediaThumbnails: [],
+      mediaItems: [],
+      mediaIndex: null,
       mediaSelectedItems: [],
       mediaShareGalleryItems: [],
       isMediaShareLoading: false,
+      isLightBoxVisible: false,
+      lightBoxViewFiles: [],
     };
   },
   mutations: Mutations,
