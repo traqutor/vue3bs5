@@ -16,7 +16,7 @@
       <div class="d-flex flex-nowrap mb-2">
         <template v-for="item of mediaSelectedItems" :key="item.id">
           <div class="me-25">
-            <ChatAttachmentItem :item="item" :is-select="true" />
+            <ChatAttachmentItem :thumbnail="item" :is-select="true" />
           </div>
         </template>
       </div>

@@ -1,4 +1,5 @@
 import { Mutations } from "@/store/enums/EnumTypes";
+import { guidsAreEqual } from "@/services/guids.service";
 
 export default {
   [Mutations.setMediaNavTabSelected]: (state, nav) => {
@@ -54,6 +55,14 @@ export default {
     state.mediaIndex = index;
   },
   [Mutations.setMediaItem]: (state, mediaItem) => {
-    state.mediaItems.push(mediaItem);
+    const items = [...state.mediaItems];
+    const idx = items.findIndex((item) =>
+      guidsAreEqual(item.fileName, mediaItem.fileName)
+    );
+    if (idx !== -1) {
+      items.splice(idx, 1);
+    }
+    items.push(mediaItem);
+    state.mediaItems = [...items];
   },
 };

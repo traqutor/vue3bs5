@@ -1,32 +1,21 @@
 <template>
-  <div
-    class="
-      list-media-item list-media-card
-      on-hover
-      position-relative
-      hover-action-group
-    "
-    style="min-width: 128px; min-height: 64px;"
-  >
-    <MediaItem :item="thumbnail" />
-  </div>
+  <picture class="has-zoom has-inner-icon rounded">
+    <feather-zoom-in class="f-icon-30 image-inner-icon text-white" />
+
+    <img :src="`data:image/png;base64,${thumbnail.dataBase64}`" />
+  </picture>
 </template>
 <script>
-import { MEDIA_TYPES } from "@/store/enums/EnumTypes";
-import MediaItem from "@/components/media/item/MediaItem";
+import FeatherZoomIn from "@/icons/FeatherZoomIn";
 
 export default {
+  components: { FeatherZoomIn },
   props: {
     thumbnail: null,
     isSelect: null,
   },
   setup() {
-    return {
-      MEDIA_TYPES,
-    };
-  },
-  components: {
-    MediaItem,
+    return {};
   },
 };
 </script>

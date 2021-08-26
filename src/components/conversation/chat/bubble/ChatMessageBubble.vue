@@ -169,8 +169,9 @@
       class="avatar avatar-lg me-3 ms-1"
       :data-initial="getAuthor(item).user.userName.substr(0, 1).toUpperCase()"
     >
+      <!-- todo: add real user avatar when backend returns it -->
       <img
-        v-if="getAuthor(item).user.avatar"
+        v-if="getAuthor(item).user.avatar === 'simona.jpg'"
         :src="`images/${getAuthor(item).user.avatar}`"
         alt=""
       />
