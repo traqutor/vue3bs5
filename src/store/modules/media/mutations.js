@@ -51,8 +51,8 @@ export default {
   [Mutations.setLightBoxViewFiles]: (state, files) => {
     state.lightBoxViewFiles = files;
   },
-  [Mutations.setMediaIndex]: (state, index) => {
-    state.mediaIndex = index;
+  [Mutations.setMediaSelectedItem]: (state, item) => {
+    state.mediaSelectedItem = item;
   },
   [Mutations.setMediaItem]: (state, mediaItem) => {
     const items = [...state.mediaItems];

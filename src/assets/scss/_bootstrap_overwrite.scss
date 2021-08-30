@@ -83,7 +83,7 @@ input-group-sm > .form-control,
 }
 
 .bg-primary-clear {
-  background-color: rgba(213, 235, 255, .45) !important;
+  background-color: rgba(213, 235, 255, 0.45) !important;
 }
 
 .btn-secondary-light {
@@ -112,6 +112,17 @@ input-group-sm > .form-control,
 .badge-primary {
   color: #fff;
   background-color: $blue;
+}
+
+.badge-danger {
+  color: #fff;
+  background-color: #dc3545;
+}
+
+.badge-pill {
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  border-radius: 10rem;
 }
 
 .mw-70 {
@@ -166,7 +177,6 @@ input-group-sm > .form-control,
   margin-left: 0.75rem !important;
 }
 
-
 /* ============ desktop view ============ */
 @media all and (min-width: 992px) {
   .dropdown-menu li {
@@ -211,7 +221,6 @@ input-group-sm > .form-control,
 .modal-body-filemanager {
   min-height: 530px;
 }
-
 
 .shadow-sm {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;

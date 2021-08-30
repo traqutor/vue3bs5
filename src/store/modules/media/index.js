@@ -31,7 +31,7 @@ const mediaModule = {
       mediaPatientItemSize: MEDIA_PATIENT_ITEM_SIZES.DEFAULT,
       mediaThumbnails: [],
       mediaItems: [],
-      mediaIndex: null,
+      mediaSelectedItem: null,
       mediaSelectedItems: [],
       mediaShareGalleryItems: [],
       isMediaShareLoading: false,

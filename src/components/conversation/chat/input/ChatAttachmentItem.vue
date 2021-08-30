@@ -1,5 +1,5 @@
 <template>
-  <picture class="has-zoom has-inner-icon rounded">
+  <picture class="mw-100 mh-100 has-zoom has-inner-icon rounded">
     <feather-zoom-in class="f-icon-30 image-inner-icon text-white" />
 
     <img :src="`data:image/png;base64,${thumbnail.dataBase64}`" />
@@ -12,7 +12,6 @@ export default {
   components: { FeatherZoomIn },
   props: {
     thumbnail: null,
-    isSelect: null,
   },
   setup() {
     return {};

@@ -15,8 +15,8 @@
     <perfect-scrollbar>
       <div class="d-flex flex-nowrap mb-2">
         <template v-for="item of mediaSelectedItems" :key="item.id">
-          <div class="me-25">
-            <ChatAttachmentItem :thumbnail="item" :is-select="true" />
+          <div class="me-25" style="max-height: 86px; max-width: 154px">
+            <ChatAttachmentItem :thumbnail="item" />
           </div>
         </template>
       </div>

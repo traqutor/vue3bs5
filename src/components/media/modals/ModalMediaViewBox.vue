@@ -1,56 +1,123 @@
 <template>
   <!-- template for the modal component -->
   <transition name="modal">
-    <div v-if="showModal" class="modal-mask">
-      <button
-        class="fancybox-button position-absolute position-right m-2"
-        title="Close"
-        @click="onCloseModal"
-      >
-        <feather-x class="f-icon-24" />
-      </button>
+    <div v-if="showModal" class="modal-box">
+      <div class="modal-thumbs--drawer" :style="modalBoxDrawerStyle">
+        <div class="modal-box--list">
+          <button
+            type="button"
+            class="modal-box--thumb modal-box--button"
+            v-for="(thumb, index) of thumbnailsOfViewFiles"
+            :key="index"
+            @click="onSelectPicture(thumb)"
+          >
+            <!---->
+            <img :src="`data:image/jpeg;base64, ${thumb.dataBase64}`" alt="" />
+          </button>
+        </div>
+      </div>
 
-      <div class="vel-img-wrapper" style="cursor: grab; top: calc(50% + 0px); left: calc(50% + 0px); transform: translate(-50%, -50%) scale(1) rotate(0deg);"><img draggable="false" class="vel-img" src="data:image/jpeg;base64, "></div>
+      <div class="modal-box--inner" :style="modalBoxInnerStyle">
+        <div class="d-flex align-items-center justify-content-center mt-1">
+          <button class="fancybox-button">
+            <feather-point-stroke class="f-icon-24" /></button
+          ><button class="fancybox-button mr-3">
+            <feather-eye-open class="f-icon-24" /></button
+          ><button class="fancybox-button" title="Zoom" disabled="">
+            <feather-zoom-in class="f-icon-24" /></button
+          ><button
+            class="fancybox-button"
+            title="Thumbnails"
+            @click="onToggleGalleryView"
+          >
+            <feather-grid class="f-icon-24" /></button
+          ><button
+            class="fancybox-button position-absolute position-right mr-2"
+            title="Close"
+            @click="onCloseModal"
+          >
+            <feather-x class="f-icon-24" />
+          </button>
+        </div>
+
+        <PictureItem />
+      </div>
     </div>
   </transition>
 </template>
 <script>
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { Mutations } from "@/store/enums/EnumTypes";
 import FeatherX from "@/icons/FeatherX";
+import PictureItem from "@/components/media/modals/PictureItem";
+import FeatherPointStroke from "@/icons/FeatherPointStroke";
+import FeatherZoomIn from "@/icons/FeatherZoomIn";
+import FeatherGrid from "@/icons/FeatherGrid";
+import FeatherEyeOpen from "@/icons/FeatherEyeOpen";
 
 export default {
-  components: { FeatherX },
+  components: {
+    FeatherEyeOpen,
+    FeatherGrid,
+    FeatherZoomIn,
+    FeatherPointStroke,
+    PictureItem,
+    FeatherX,
+  },
   setup() {
     const store = useStore();
 
+    const isGalleryVisible = ref(true);
+
     const showModal = computed(() => store.getters.getIsLightBoxVisible);
-    const index = computed(() => store.getters.getMediaIndex);
-    const files = computed(() =>
-      store.getters.getMediaItems.map((item) => {
-        return {
-          src: `data:image/jpeg;base64, ${item.fileDataBase64}`,
-          title: item.fileName,
-        };
-      })
+    const thumbnailsOfViewFiles = computed(
+      () => store.getters.getLightBoxViewFiles
     );
+
+    const modalBoxInnerStyle = computed(() => {
+      const value = isGalleryVisible.value ? 212 : 0;
+      console.log("modalBoxInnerStyles", value);
+      return {
+        right: `${value}px`,
+      };
+    });
+
+    const modalBoxDrawerStyle = computed(() => {
+      const value = isGalleryVisible.value ? 0 : -212;
+      console.log("modalBoxDrawerStyles", value);
+      return {
+        right: `${value}px`,
+      };
+    });
+
+    const onSelectPicture = (item) => {
+      console.log("item", item);
+      store.commit(Mutations.setMediaSelectedItem, item);
+    };
 
     const onCloseModal = () => {
       store.commit(Mutations.setIsLightBoxVisible, false);
     };
 
+    const onToggleGalleryView = () => {
+      isGalleryVisible.value = !isGalleryVisible.value;
+    };
+
     return {
       showModal,
-      index,
-      files,
+      thumbnailsOfViewFiles,
+      modalBoxInnerStyle,
+      modalBoxDrawerStyle,
+      onToggleGalleryView,
+      onSelectPicture,
       onCloseModal,
     };
   },
 };
 </script>
 <style scoped>
-.modal-mask {
+.modal-box {
   z-index: 9998;
   position: fixed;
   top: 0;
@@ -58,50 +125,66 @@ export default {
   right: 0;
   bottom: 0;
   margin: 0;
-  width: 100%;
-  height: 100%;
-  display: table;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
   background: rgba(30, 30, 30, 0.9);
   transition: opacity 0.3s ease;
 }
 
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
+.modal-thumbs--drawer {
+  position: absolute;
+  height: 100vh;
+  width: 212px;
+  overflow-y: auto;
+  right: 0px;
+  top: 0;
+  overflow-x: hidden;
+  transition: none;
+  background-color: #ddd;
 }
 
-.modal-container {
-  width: 300px;
-  margin: 0px auto;
-  background-color: rgba(0, 0, 0, 0.33);
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-  transition: all 0.3s ease;
-  font-family: Helvetica, Arial, sans-serif;
+.modal-box--inner {
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  -webkit-transition: none;
+  transition: none;
 }
 
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
+.modal-box--list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2px 0 2px 2px;
 }
 
-.modal-body {
-  margin: 20px 0;
-}
-
-.modal-default-button {
+.modal-box--thumb {
+  background-color: #000;
+  width: calc(50% - 2px);
+  margin-right: 2px;
+  margin-bottom: 2px;
   display: block;
-  margin-top: 1rem;
+  height: 75px;
+  position: relative;
+  padding: 0;
 }
 
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
+.modal-box--button {
+  background: 0 0;
+  border: none;
+  cursor: pointer;
+  outline: 0;
+}
+
+.modal-box--thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 .modal-enter {
   opacity: 0;

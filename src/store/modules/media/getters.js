@@ -79,8 +79,8 @@ export default {
     return state.lightBoxViewFiles;
   },
 
-  getMediaIndex: (state) => {
-    return state.mediaIndex;
+  getMediaSelectedItem: (state) => {
+    return state.mediaSelectedItem;
   },
 
   getMediaItems: (state) => {

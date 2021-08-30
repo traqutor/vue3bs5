@@ -1,9 +1,9 @@
 <template>
   <div class="image-figure-grid mb-2">
-    <template v-for="(thumb, index) of item.thumbnails" :key="thumb.id">
+    <template v-for="(thumb) of item.thumbnails" :key="thumb.id">
       <ChatAttachmentItem
         :thumbnail="thumb"
-        @click="onShowAttachments(index)"
+        @click="onShowAttachments(thumb)"
       />
     </template>
   </div>
@@ -17,10 +17,10 @@ export default {
   props: ["item"],
   setup(props) {
     const store = useStore();
-    const onShowAttachments = (index) => {
-      store.dispatch(Actions.onShowMessageAttachments, {
-        message: props.item,
-        index,
+    const onShowAttachments = (item) => {
+      store.dispatch(Actions.onShowMediaFilesInLightBox, {
+        media: props.item.thumbnails,
+        item,
       });
     };
     return { onShowAttachments };

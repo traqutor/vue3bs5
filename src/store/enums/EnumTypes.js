@@ -26,7 +26,7 @@ const Actions = {
   onShareGalleryItems: "onShareGalleryItems",
   onGetAttachmentsThumbnails: "onGetAttachmentsThumbnails",
   onGetItem: "onGetItem",
-  onShowMessageAttachments: "onShowMessageAttachments",
+  onShowMediaFilesInLightBox: "onShowMediaFilesInLightBox",
 
   // socket actions
   onMessageQuickReactionNotification: "onMessageQuickReactionNotification",
@@ -60,7 +60,7 @@ const Mutations = {
   setMediaPatientItemSize: "setMediaPatientItemSize",
   setMediaPatientSelected: "setMediaPatientSelected",
   setMediaItem: "setMediaItem",
-  setMediaIndex: "setMediaIndex",
+  setMediaSelectedItem: "setMediaSelectedItem",
   setMediaThumbnails: "setMediaThumbnails",
 
   toggleMediaSelectedItem: "toggleMediaSelectedItem",

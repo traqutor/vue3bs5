@@ -121,7 +121,7 @@
           item.thumbnails &&
           item.thumbnails.length > 0
         "
-        class="mw-55 position-relative"
+        class="mw-100 position-relative"
       >
         <BubbleAttachments :item="item" />
       </div>
@@ -228,7 +228,7 @@
                 item.thumbnails &&
                 item.thumbnails.length > 0
               "
-              class="mw-55 position-relative"
+              class="mw-100 position-relative"
             >
               <BubbleAttachments :item="item" />
             </div>

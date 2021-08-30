@@ -86,15 +86,9 @@ export default {
     });
   },
 
-  [Actions.onShowMessageAttachments]: (
-    { commit, dispatch },
-    { message, index }
-  ) => {
-    message.thumbnails.forEach((thumb) => {
-      dispatch(Actions.onGetItem, thumb.id);
-    });
-    commit(Mutations.setLightBoxViewFiles, message.thumbnails);
-    commit(Mutations.setMediaIndex, index);
+  [Actions.onShowMediaFilesInLightBox]: ({ commit }, { media, item }) => {
+    commit(Mutations.setMediaSelectedItem, item);
+    commit(Mutations.setLightBoxViewFiles, media);
     commit(Mutations.setIsLightBoxVisible, true);
   },
 };
