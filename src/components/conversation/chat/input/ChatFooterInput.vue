@@ -399,8 +399,15 @@ export default {
     );
 
     onMounted(() => {
-      selectedSender.value =
-        store.getters.getConversationAvailableCreationRoles[0];
+      let sender = null;
+      store.getters.getConversationAvailableCreationRoles.forEach((s) => {
+        if (!s.isRole) {
+          sender = s;
+        }
+      });
+      selectedSender.value = sender
+        ? sender
+        : store.getters.getConversationAvailableCreationRoles[0];
     });
 
     return {

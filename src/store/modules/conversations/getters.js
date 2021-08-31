@@ -66,7 +66,8 @@ export default {
               return guidsAreEqual(role.Id, prt.id);
             })
         )
-        .map((participant) => getters.getParticipantById(participant.id));
+        .map((participant) => getters.getParticipantById(participant.id))
+        .sort((a, b) => a.isRole - b.isRole);
     }
   },
   getIsQuickChatTextSelectorVisible: (state) => {
