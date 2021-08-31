@@ -19,19 +19,34 @@
 
       <div class="modal-box--inner" :style="modalBoxInnerStyle">
         <div class="d-flex align-items-center justify-content-center mt-1">
-          <button class="fancybox-button">
-            <feather-point-stroke class="f-icon-24" /></button
-          ><button class="fancybox-button mr-3">
-            <feather-eye-open class="f-icon-24" /></button
-          ><button class="fancybox-button" title="Zoom" disabled="">
-            <feather-zoom-in class="f-icon-24" /></button
-          ><button
+          <button v-show="!isMarkerEnabled" class="fancybox-button">
+            <feather-point-stroke class="f-icon-24" />
+          </button>
+
+          <button v-show="!isMarkerEnabled" class="fancybox-button mr-3">
+            <feather-eye-open class="f-icon-24" />
+          </button>
+
+          <button
+            v-show="!isMarkerEnabled"
+            class="fancybox-button"
+            title="Zoom"
+            disabled=""
+          >
+            <feather-zoom-in class="f-icon-24" />
+          </button>
+
+          <button
+            v-show="!isMarkerEnabled"
             class="fancybox-button"
             title="Thumbnails"
             @click="onToggleGalleryView"
           >
-            <feather-grid class="f-icon-24" /></button
-          ><button
+            <feather-grid class="f-icon-24" />
+          </button>
+
+          <button
+            v-show="!isMarkerEnabled"
             class="fancybox-button position-absolute position-right mr-2"
             title="Close"
             @click="onCloseModal"
@@ -40,7 +55,10 @@
           </button>
         </div>
 
-        <PictureItem />
+        <PictureItem
+          :showLayerIndex="isShowLayer"
+          @onMarkerEnabled="onMarkerEnabled"
+        />
       </div>
     </div>
   </transition>
@@ -69,6 +87,8 @@ export default {
     const store = useStore();
 
     const isGalleryVisible = ref(true);
+    const isMarkerEnabled = ref(false);
+    const isShowLayer = ref(true);
 
     const showModal = computed(() => store.getters.getIsLightBoxVisible);
     const thumbnailsOfViewFiles = computed(
@@ -101,14 +121,22 @@ export default {
       isGalleryVisible.value = !isGalleryVisible.value;
     };
 
+    const onMarkerEnabled = (flag) => {
+      isMarkerEnabled.value = flag;
+      isGalleryVisible.value = !flag;
+    };
+
     return {
       showModal,
       thumbnailsOfViewFiles,
       modalBoxInnerStyle,
       modalBoxDrawerStyle,
+      isMarkerEnabled,
+      isShowLayer,
       onToggleGalleryView,
       onSelectPicture,
       onCloseModal,
+      onMarkerEnabled,
     };
   },
 };

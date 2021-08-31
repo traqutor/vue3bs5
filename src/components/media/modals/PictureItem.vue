@@ -14,7 +14,7 @@
       ref="imgRef"
       draggable="false"
       class="vel-img"
-      :src="`data:svg;base64, ${item}`"
+      :src="`data:svg;base64, ${showLayerIndex ? item.fileDataBase64 : ''}`"
       crossorigin="anonymous"
       @click="showMarkerArea"
     />
@@ -24,20 +24,19 @@
   </div>
 </template>
 <script>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
 import * as markerjs2 from "markerjs2";
 import { Actions } from "@/store/enums/EnumTypes";
 
 export default {
-  setup() {
-    const isShowLayer = ref(true);
+  props: ["showLayerIndex"],
+  emits: ["onMarkerEnabled"],
+  setup(_, context) {
     const store = useStore();
     const selected = computed(() => store.getters.getMediaSelectedItem);
-    const item = computed(
-      () =>
-        store.getters.getMediaItemById(selected.value.id) &&
-        store.getters.getMediaItemById(selected.value.id).fileDataBase64
+    const item = computed(() =>
+      store.getters.getMediaItemById(selected.value.id)
     );
 
     const showMarkerArea = () => {
@@ -46,9 +45,14 @@ export default {
       );
       // markerArea.settings.displayMode = 'popup';
       markerArea.addRenderEventListener((imgURL) => {
-        this.$refs.imgRef.src = imgURL;
+        console.log("addRenderEventListener", imgURL);
+      });
+      markerArea.addCloseEventListener(() => {
+        console.log("addCloseEventListener");
+        context.emit("onMarkerEnabled", false);
       });
       markerArea.show();
+      context.emit("onMarkerEnabled", true);
     };
 
     watch(
@@ -64,7 +68,6 @@ export default {
 
     return {
       item,
-      isShowLayer,
       showMarkerArea,
     };
   },
