@@ -1,7 +1,13 @@
 <template>
   <div class="flex-slide-content">
     <div class="d-flex flex-column h-100 w-100 position-absolute">
-      <template v-if="isLoading"> Is loading... </template>
+      <template v-if="isLoading">
+        <div
+          class="d-flex justify-content-center align-content-center fs-5 mt-3"
+        >
+          Is loading...
+        </div>
+      </template>
       <template v-else>
         <perfect-scrollbar ref="chatContainer" class="pe-3 ign-scroll-smooth">
           <div v-for="(msg, idx) of messages" :key="msg.id">
@@ -14,6 +20,14 @@
             </div>
             <ign-chat-message-bubble :item="msg"></ign-chat-message-bubble>
           </div>
+          <div
+            v-if="
+              !isLoading && !messages.length && !getIfUserIsConversationAuthor
+            "
+            class="d-flex justify-content-center align-content-center fs-5 mt-3"
+          >
+            You were added to the conversation
+          </div>
         </perfect-scrollbar>
       </template>
     </div>
@@ -25,6 +39,7 @@ import { useStore } from "vuex";
 import { timeMessagesDividerFormat } from "@/services/datetime.service";
 import { guidsAreEqual } from "@/services/guids.service";
 import IgnChatMessageBubble from "@/components/conversation/chat/bubble/ChatMessageBubble";
+import { Actions } from "@/store/enums/EnumTypes";
 export default {
   name: "ign-chat-mode",
   components: {
@@ -48,6 +63,16 @@ export default {
       () => store.getters.getIsMessagesLoading
     );
     const loggedUser = computed(() => store.getters.getLoggedUser);
+
+    const getIfUserIsConversationAuthor = computed(() => {
+      return (
+        selectedConversation.value &&
+        selectedConversation.value.creatorId === loggedUser.value.id ||
+        loggedUser.value.SystemRoles.some(
+          (role) => role.Id === selectedConversation.value.creatorId
+        )
+      );
+    });
 
     const isRoleById = (id) =>
       computed(() => {
@@ -144,6 +169,7 @@ export default {
       getIfPeriodToDisplay,
       getIfUserInfoToDisplay,
       timeMessagesDividerFormat,
+      getIfUserIsConversationAuthor,
     };
   },
 };
