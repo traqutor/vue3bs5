@@ -88,6 +88,6 @@ export default {
   },
 
   getMediaItemById: (state) => (itemId) => {
-    return state.mediaItems.find((item) => guidsAreEqual(item.id, itemId));
+    return state.mediaItems.find((item) => item.fileName.includes(itemId));
   },
 };

@@ -698,8 +698,9 @@ export default {
 
     axiosWebApiInstance
       .post(url, values)
-      .then(function () {
+      .then(() => {
         commit("purgeSelectedParticipants");
+        commit("setChatViewMode", CHAT_VIEW_MODES.INFO);
       })
       .catch((error) => {
         console.error("On onAddUsersToConversation error:", error);
