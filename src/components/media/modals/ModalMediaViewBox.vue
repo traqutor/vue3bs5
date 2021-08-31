@@ -77,7 +77,6 @@ export default {
 
     const modalBoxInnerStyle = computed(() => {
       const value = isGalleryVisible.value ? 212 : 0;
-      console.log("modalBoxInnerStyles", value);
       return {
         right: `${value}px`,
       };
@@ -85,14 +84,12 @@ export default {
 
     const modalBoxDrawerStyle = computed(() => {
       const value = isGalleryVisible.value ? 0 : -212;
-      console.log("modalBoxDrawerStyles", value);
       return {
         right: `${value}px`,
       };
     });
 
     const onSelectPicture = (item) => {
-      console.log("item", item);
       store.commit(Mutations.setMediaSelectedItem, item);
     };
 
