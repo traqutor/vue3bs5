@@ -8,16 +8,25 @@
       transform: translate(-50%, -50%) scale(1) rotate(0deg);
     "
   >
-    <img
-      v-if="item"
-      id="imgAnnotateId"
-      ref="imgRef"
-      draggable="false"
-      class="vel-img"
-      :src="`data:svg;base64, ${showLayerIndex ? item.fileDataBase64 : ''}`"
-      crossorigin="anonymous"
-      @click="showMarkerArea"
-    />
+    <div v-if="item" class="position-relative, w-100 h-100">
+      <img
+        id="imgAnnotateId"
+        draggable="false"
+        class="picture-over-picture"
+        :src="`data:svg;base64, ${item.fileDataBase64}`"
+        crossorigin="anonymous"
+      />
+      <template v-if="showLayerIndex">
+        <img
+          v-for="(layer, index) of item.layers"
+          :key="index"
+          draggable="false"
+          class="picture-over-picture"
+          :src="`data:svg;base64, ${layer.data}`"
+          crossorigin="anonymous"
+        />
+      </template>
+    </div>
     <div v-else class="spinner-border text-light" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
@@ -26,34 +35,17 @@
 <script>
 import { computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-import * as markerjs2 from "markerjs2";
 import { Actions } from "@/store/enums/EnumTypes";
 
 export default {
   props: ["showLayerIndex"],
   emits: ["onMarkerEnabled"],
-  setup(_, context) {
+  setup() {
     const store = useStore();
     const selected = computed(() => store.getters.getMediaSelectedItem);
     const item = computed(() =>
       store.getters.getMediaItemById(selected.value.id)
     );
-
-    const showMarkerArea = () => {
-      const markerArea = new markerjs2.MarkerArea(
-        document.getElementById("imgAnnotateId")
-      );
-      // markerArea.settings.displayMode = 'popup';
-      markerArea.addRenderEventListener((imgURL) => {
-        console.log("addRenderEventListener", imgURL);
-      });
-      markerArea.addCloseEventListener(() => {
-        console.log("addCloseEventListener");
-        context.emit("onMarkerEnabled", false);
-      });
-      markerArea.show();
-      context.emit("onMarkerEnabled", true);
-    };
 
     watch(
       () => selected.value,
@@ -68,8 +60,23 @@ export default {
 
     return {
       item,
-      showMarkerArea,
     };
   },
 };
 </script>
+<style>
+.picture-over-picture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  max-width: 80vw;
+  max-height: 80vh;
+  display: block;
+  box-shadow: 0 5px 20px 2px rgb(0 0 0 / 70%);
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
+}
+</style>

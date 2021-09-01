@@ -19,12 +19,21 @@
 
       <div class="modal-box--inner" :style="modalBoxInnerStyle">
         <div class="d-flex align-items-center justify-content-center mt-1">
-          <button v-show="!isMarkerEnabled" class="fancybox-button">
+          <button
+            v-show="!isMarkerEnabled"
+            class="fancybox-button"
+            @click="onShowMarkerArea"
+          >
             <feather-point-stroke class="f-icon-24" />
           </button>
 
-          <button v-show="!isMarkerEnabled" class="fancybox-button mr-3">
-            <feather-eye-open class="f-icon-24" />
+          <button
+            v-show="!isMarkerEnabled"
+            @click="onToggleShowLayers"
+            class="fancybox-button mr-3"
+          >
+            <feather-eye-open v-if="isShowLayer" class="f-icon-24" />
+            <feather-eye-off v-else class="f-icon-24" />
           </button>
 
           <button
@@ -55,10 +64,7 @@
           </button>
         </div>
 
-        <PictureItem
-          :showLayerIndex="isShowLayer"
-          @onMarkerEnabled="onMarkerEnabled"
-        />
+        <PictureItem :showLayerIndex="isShowLayer" />
       </div>
     </div>
   </transition>
@@ -73,9 +79,12 @@ import FeatherPointStroke from "@/icons/FeatherPointStroke";
 import FeatherZoomIn from "@/icons/FeatherZoomIn";
 import FeatherGrid from "@/icons/FeatherGrid";
 import FeatherEyeOpen from "@/icons/FeatherEyeOpen";
+import FeatherEyeOff from "@/icons/FeatherEyeOff";
+import * as markerjs2 from "markerjs2";
 
 export default {
   components: {
+    FeatherEyeOff,
     FeatherEyeOpen,
     FeatherGrid,
     FeatherZoomIn,
@@ -121,9 +130,29 @@ export default {
       isGalleryVisible.value = !isGalleryVisible.value;
     };
 
+    const onToggleShowLayers = () => {
+      isShowLayer.value = !isShowLayer.value;
+    };
+
     const onMarkerEnabled = (flag) => {
       isMarkerEnabled.value = flag;
       isGalleryVisible.value = !flag;
+    };
+
+    const onShowMarkerArea = () => {
+      const markerArea = new markerjs2.MarkerArea(
+        document.getElementById("imgAnnotateId")
+      );
+      // markerArea.settings.displayMode = 'popup';
+      markerArea.addRenderEventListener((imgURL) => {
+        console.log("addRenderEventListener", imgURL);
+      });
+      markerArea.addCloseEventListener(() => {
+        console.log("addCloseEventListener");
+        onMarkerEnabled(false);
+      });
+      markerArea.show();
+      onMarkerEnabled(true);
     };
 
     return {
@@ -134,9 +163,11 @@ export default {
       isMarkerEnabled,
       isShowLayer,
       onToggleGalleryView,
+      onToggleShowLayers,
       onSelectPicture,
       onCloseModal,
       onMarkerEnabled,
+      onShowMarkerArea,
     };
   },
 };
