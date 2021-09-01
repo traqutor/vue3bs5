@@ -32,6 +32,9 @@ const Actions = {
   onMessageQuickReactionNotification: "onMessageQuickReactionNotification",
   onMessageQuickReactionRemovedNotification:
     "onMessageQuickReactionRemovedNotification",
+
+  // taskTypes actions types
+  onGetTaskTypes: "onGetTaskTypes",
 };
 
 const Mutations = {
@@ -71,6 +74,9 @@ const Mutations = {
 
   setIsLightBoxVisible: "setIsLightBoxVisible",
   setLightBoxViewFiles: "setLightBoxViewFiles",
+
+  // taskTypes mutations types
+  setTaskTypes: "setTaskTypes",
 };
 
 //messages

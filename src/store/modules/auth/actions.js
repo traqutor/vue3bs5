@@ -82,6 +82,7 @@ export default {
         dispatch("getUsers");
         dispatch("onGetConversations", { refresh: true });
         dispatch(Actions.onGetThumbnails);
+        dispatch(Actions.onGetTaskTypes);
 
         resolve(user);
       }

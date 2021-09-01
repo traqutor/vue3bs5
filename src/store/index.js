@@ -6,6 +6,7 @@ import mediaModule from "@/store/modules/media";
 import usersModule from "@/store/modules/users";
 import socketModule from "@/store/modules/socket";
 import templateModule from "@/store/modules/templates";
+import taskTypesModule from "@/store/modules/taskTypes";
 
 const store = createStore({
   modules: {
@@ -16,6 +17,7 @@ const store = createStore({
     users: usersModule,
     socket: socketModule,
     templates: templateModule,
+    taskTypes: taskTypesModule,
   },
 });
 

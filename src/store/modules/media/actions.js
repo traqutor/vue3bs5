@@ -12,7 +12,6 @@ export default {
     axiosWebApiInstance
       .get(url)
       .then(function (response) {
-        console.log("Actions.onGetThumbnails response:", response);
         if (response.data.isOk) {
           commit(Mutations.setMediaThumbnails, response.data.thumbnails);
         } else {
