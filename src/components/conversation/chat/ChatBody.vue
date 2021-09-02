@@ -9,7 +9,11 @@
         </div>
       </template>
       <template v-else>
-        <perfect-scrollbar ref="chatContainer" class="pe-3 ign-scroll-smooth">
+        <div
+          ref="chatContainer"
+          class="h-100 mh-100 pe-3 ign-scroll-smooth"
+          style="display: flex; flex-direction: column-reverse"
+        >
           <div v-for="(msg, idx) of messages" :key="msg.id">
             <!-- time divider-->
             <div
@@ -18,7 +22,7 @@
             >
               {{ timeMessagesDividerFormat(msg.createdTime.seconds) }}
             </div>
-            <ign-chat-message-bubble :item="msg"></ign-chat-message-bubble>
+            <chat-message-bubble :item="msg"></chat-message-bubble>
           </div>
           <div
             v-if="
@@ -28,22 +32,22 @@
           >
             You were added to the conversation
           </div>
-        </perfect-scrollbar>
+        </div>
       </template>
     </div>
   </div>
 </template>
 <script>
-import { computed, ref, watch, nextTick } from "vue";
+import { computed, ref, watch, nextTick, onRenderTracked } from "vue";
 import { useStore } from "vuex";
 import { timeMessagesDividerFormat } from "@/services/datetime.service";
 import { guidsAreEqual } from "@/services/guids.service";
-import IgnChatMessageBubble from "@/components/conversation/chat/bubble/ChatMessageBubble";
+import ChatMessageBubble from "@/components/conversation/chat/bubble/ChatMessageBubble";
 import { Actions } from "@/store/enums/EnumTypes";
 export default {
   name: "ign-chat-mode",
   components: {
-    IgnChatMessageBubble,
+    ChatMessageBubble,
   },
 
   setup() {
@@ -66,8 +70,8 @@ export default {
 
     const getIfUserIsConversationAuthor = computed(() => {
       return (
-        selectedConversation.value &&
-        selectedConversation.value.creatorId === loggedUser.value.id ||
+        (selectedConversation.value &&
+          selectedConversation.value.creatorId === loggedUser.value.id) ||
         loggedUser.value.SystemRoles.some(
           (role) => role.Id === selectedConversation.value.creatorId
         )
@@ -156,6 +160,10 @@ export default {
         store.dispatch("onMarkMessagesAsRead");
       }
     );
+
+    onRenderTracked(() => {
+      console.log("onRenderTracked");
+    });
 
     return {
       chatContainer,

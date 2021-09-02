@@ -272,7 +272,7 @@ export default {
       .get(url, { cancelToken: getMessagesSource.token })
       .then(function (response) {
         getMessagesSource = null;
-        let arr = response.data.messages.reverse();
+        let arr = response.data.messages;
         console.log("on get messages response", arr);
         let messages = refresh ? [] : getters.getMessages;
         messages = arr.concat(messages);
@@ -580,7 +580,7 @@ export default {
         conversation.lastMessage = message;
 
         const tmpMessages = conversations[idx].messages;
-        tmpMessages.push(message);
+        tmpMessages.unshift(message);
         conversations[idx].messages = [...tmpMessages];
 
         // update counters

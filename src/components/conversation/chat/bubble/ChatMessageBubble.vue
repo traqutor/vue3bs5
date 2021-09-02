@@ -115,12 +115,7 @@
 
       <!--start::message attachments -->
       <div
-        v-if="
-          item.attachments &&
-          item.attachments.length > 0 &&
-          item.thumbnails &&
-          item.thumbnails.length > 0
-        "
+        v-if="item.attachments && item.attachments.length > 0"
         class="mw-100 position-relative"
       >
         <BubbleAttachments :item="item" />
