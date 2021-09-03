@@ -273,7 +273,6 @@ export default {
       .then(function (response) {
         getMessagesSource = null;
         let arr = response.data.messages;
-        console.log("on get messages response", arr);
         let messages = refresh ? [] : getters.getMessages;
         messages = arr.concat(messages);
 

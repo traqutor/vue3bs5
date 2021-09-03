@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import { computed, ref, watch, nextTick, onRenderTracked } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { timeMessagesDividerFormat } from "@/services/datetime.service";
 import { guidsAreEqual } from "@/services/guids.service";
@@ -123,15 +123,6 @@ export default {
       );
     };
 
-    const scrollToEnd = () => {
-      if (!isScrollUp.value && chatContainer.value) {
-        const container = chatContainer.value.$el;
-        for (let i = container.scrollTop; i < container.scrollHeight; i++) {
-          container.scrollTop = i;
-        }
-      }
-    };
-
     const onSendMessage = (msg) => {
       this.$store
         .dispatch("onGetDirectConversation", {
@@ -149,22 +140,6 @@ export default {
         });
     };
 
-    watch(
-      () => messages.value.length,
-      (after, before) => {
-        if (after > before && !isScrollUp.value) {
-          nextTick(() => {
-            scrollToEnd();
-          });
-        }
-        store.dispatch("onMarkMessagesAsRead");
-      }
-    );
-
-    onRenderTracked(() => {
-      console.log("onRenderTracked");
-    });
-
     return {
       chatContainer,
       messages,
@@ -173,7 +148,6 @@ export default {
       tmpScrollTop,
       onScroll,
       onSendMessage,
-      scrollToEnd,
       getIfPeriodToDisplay,
       getIfUserInfoToDisplay,
       timeMessagesDividerFormat,

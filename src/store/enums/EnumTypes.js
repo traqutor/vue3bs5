@@ -77,6 +77,14 @@ const Mutations = {
 
   // taskTypes mutations types
   setTaskTypes: "setTaskTypes",
+  setSelectedTaskType: "setSelectedTaskType",
+  setTaskTypesViewMode: "setTaskTypesViewMode",
+};
+
+//taskTypes
+const TASK_TYPES_VIEW_MODES = {
+  LIST: "List",
+  ADD_NEW: "Add ",
 };
 
 //messages
@@ -171,6 +179,7 @@ export {
   Actions,
   Mutations,
   SocketReceivers,
+  TASK_TYPES_VIEW_MODES,
   TEMPLATE_VIEW_MODES,
   TEMPLATES,
   QUICK_MESSAGES,

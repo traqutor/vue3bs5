@@ -1,90 +1,112 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import MainFrameView from '@/views/MainFrameView.vue';
-import LoginView from '@/views/LoginView';
-import NotFoundView from '@/views/NotFoundView';
-import { isSignedIn } from '@/services/jwt.service';
+import { createRouter, createWebHistory } from "vue-router";
+import MainFrameView from "@/views/MainFrameView.vue";
+import LoginView from "@/views/LoginView";
+import NotFoundView from "@/views/NotFoundView";
+import { isSignedIn } from "@/services/jwt.service";
 
 const routes = [
   {
-    path: '/',
-    redirect: '/conversations',
+    path: "/",
+    redirect: "/conversations",
     component: MainFrameView,
     children: [
       {
-        path: '/tasks',
-        name: 'Tasks',
+        path: "/tasks",
+        name: "Tasks",
         meta: { auth: true },
-        component: () => import('@/views/TasksView'),
+        component: () => import("@/views/TasksView"),
       },
       {
-        path: '/conversations',
-        name: 'Conversations',
+        path: "/conversations",
+        name: "Conversations",
         meta: { auth: true },
-        component: () => import('@/views/ConversationsView'),
+        component: () => import("@/views/ConversationsView"),
       },
       {
-        path: '/incidents',
-        name: 'Incidents',
+        path: "/incidents",
+        name: "Incidents",
         meta: { auth: true },
-        component: () => import('@/views/IncidentsView'),
+        component: () => import("@/views/IncidentsView"),
       },
       {
-        path: '/locate',
-        name: 'Locate',
+        path: "/locate",
+        name: "Locate",
         meta: { auth: true },
-        component: () => import('@/views/LocateView'),
+        component: () => import("@/views/LocateView"),
       },
       {
-        path: '/alarms',
-        name: 'Alarms',
+        path: "/alarms",
+        name: "Alarms",
         meta: { auth: true },
-        component: () => import('@/views/AlarmsView'),
+        component: () => import("@/views/AlarmsView"),
       },
       {
-        path: '/media',
-        name: 'Media',
+        path: "/media",
+        name: "Media",
         meta: { auth: true },
-        component: () => import('@/views/MediaView'),
+        component: () => import("@/views/MediaView"),
       },
       {
-        path: '/patients',
-        name: 'Patients',
+        path: "/patients",
+        name: "Patients",
         meta: { auth: true },
-        component: () => import('@/views/PatientsView'),
+        component: () => import("@/views/PatientsView"),
       },
       {
-        path: '/sentinel',
-        name: 'Sentinel',
+        path: "/sentinel",
+        name: "Sentinel",
         meta: { auth: true },
-        component: () => import('@/views/SentinelView'),
+        component: () => import("@/views/SentinelView"),
       },
       {
-        path: '/switchboard',
-        name: 'Switchboard',
+        path: "/switchboard",
+        name: "Switchboard",
         meta: { auth: true },
-        component: () => import('@/views/SwitchBoardView'),
+        component: () => import("@/views/SwitchBoardView"),
       },
       {
-        path: '/role_management',
-        name: 'Role Management',
+        path: "/role_management",
+        name: "Role Management",
         meta: { auth: true },
-        component: () => import('@/views/RoleManagementView'),
+        component: () => import("@/views/RoleManagementView"),
       },
       {
-        path: '/settings',
-        name: 'Settings',
+        path: "/settings",
+        name: "Settings",
         meta: { auth: true },
-        component: () => import('@/views/SettingsView'),
+        component: () => import("@/views/SettingsView"),
+        children: [
+          {
+            path: "/settings/roles",
+            name: "Roles",
+            component: () => import("@/views/settings/Roles"),
+          },
+          {
+            path: "/settings/users",
+            name: "Users",
+            component: () => import("@/views/settings/Users"),
+          },
+          {
+            path: "/settings/taskTypes",
+            name: "Task Types",
+            component: () => import("@/views/settings/TaskTypes"),
+          },
+          {
+            path: "/settings/locations",
+            name: "Locations",
+            component: () => import("@/views/settings/Locations"),
+          },
+        ],
       },
     ],
   },
   {
-    path: '/login',
-    name: 'Login',
+    path: "/login",
+    name: "Login",
     component: LoginView,
   },
   {
-    path: '/:catchAll(.*)',
+    path: "/:catchAll(.*)",
     component: NotFoundView,
   },
 ];
@@ -98,7 +120,7 @@ router.beforeEach((to, from, next) => {
   const authRequired = to.matched.some((route) => route.meta.auth);
   const IsSignedIn = isSignedIn();
   if (authRequired && !IsSignedIn) {
-    next('/login');
+    next("/login");
   } else {
     next();
   }

@@ -30,7 +30,6 @@ export default {
       axiosWebApiInstance
         .get(url)
         .then(function (response) {
-          console.log("Actions.onGetAttachmentsThumbnails response:", response);
           if (response.data.isOk) {
             resolve(response.data.thumbnails);
           } else {
