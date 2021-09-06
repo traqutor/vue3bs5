@@ -67,6 +67,7 @@ import ConversationsParticipantsListItem from "@/components/conversations/Conver
 import { useStore } from "vuex";
 import { computed } from "vue";
 import { CONVERSATION_VIEW_MODES } from "@/const";
+import { Actions } from "@/store/enums/EnumTypes";
 
 export default {
   setup() {
@@ -88,7 +89,7 @@ export default {
         });
         store.commit("setConversationViewMode", conversationViewModes.NEW);
       } else {
-        store.dispatch("onAddUsersToConversation");
+        store.dispatch(Actions.onAddUsersToConversation);
       }
     }
 

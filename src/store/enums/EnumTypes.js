@@ -15,12 +15,29 @@ const SocketReceivers = {
 
 const Actions = {
   // conversations actions
+  onGetConversations: "onGetConversations",
+  onCreateConversation: "onCreateConversation",
+  onDirectConversationUpdate: "onDirectConversationUpdate",
+  onCheckConversationMessages: "onCheckConversationMessages",
+  onGetDirectConversation: "onGetDirectConversation",
+  onAcknowledgeMessage: "onAcknowledgeMessage",
   onCreateMessage: "onCreateMessage",
   onQuickMessageResponse: "onQuickMessageResponse",
   onMessageQuickReaction: "onMessageQuickReaction",
   onSelectConversation: "onSelectConversation",
   onRemoveQuickReaction: "onRemoveQuickReaction",
   onMarkMessagesAsRead: "onMarkMessagesAsRead",
+  onGetMessages: "onGetMessages",
+  onUserIsTyping: "onUserIsTyping",
+  onUserAddedToConversationNotification:
+    "onUserAddedToConversationNotification",
+  onConversationCreatedNotification: "onConversationCreatedNotification",
+  onMessageAcknowledgedNotification: "onMessageAcknowledgedNotification",
+  onReceivedMessageNotification: "onReceivedMessageNotification",
+  onMessageReadNotification: "onMessageReadNotification",
+  onUserIsTypingNotification: "onUserIsTypingNotification",
+  onAddUsersToConversation: "onAddUsersToConversation",
+  onRemoveUsersFromConversation: "onRemoveUsersFromConversation",
 
   // media actions
   onGetThumbnails: "onGetThumbnails",

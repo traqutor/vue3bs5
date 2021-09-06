@@ -386,7 +386,7 @@ export default {
     }
 
     function onAcknowledgePost(message) {
-      this.$store.dispatch("onAcknowledgeMessage", message.id);
+      store.dispatch(Actions.onAcknowledgeMessage, message.id);
     }
 
     watch(

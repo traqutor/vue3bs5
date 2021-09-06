@@ -32,7 +32,7 @@ export default {
       const message = JSON.parse(response);
       console.log("ReceivedMessageNotification", message);
 
-      dispatch("onReceivedMessageNotification", message);
+      dispatch(Actions.onReceivedMessageNotification, message);
       commit("purgeUserIsTyping", {
         userId: message.authorId,
         conversationId: message.conversationId,
@@ -45,7 +45,7 @@ export default {
         const data = JSON.parse(payload);
         console.log("UserAddedToConversationNotification", data);
 
-        dispatch("onUserAddedToConversationNotification", data);
+        dispatch(Actions.onUserAddedToConversationNotification, data);
       }
     );
 
@@ -81,14 +81,14 @@ export default {
         }, 3000);
 
       if (rootState.auth.user.id !== whoIsTyping.userId) {
-        dispatch("onUserIsTypingNotification", whoIsTyping);
+        dispatch(Actions.onUserIsTypingNotification, whoIsTyping);
       }
     });
 
     connection.on(SocketReceivers.MessageReadNotification, (payload) => {
       const readMessage = JSON.parse(payload);
       console.log("MessageReadNotification", readMessage);
-      dispatch("onMessageReadNotification", readMessage);
+      dispatch(Actions.onMessageReadNotification, readMessage);
     });
 
     connection.on(SocketReceivers.MessageUpdatedNotification, (response) => {
@@ -103,7 +103,7 @@ export default {
         const message = JSON.parse(response);
         console.log("MessageAcknowledgedNotification", message);
 
-        dispatch("onMessageAcknowledgedNotification", message);
+        dispatch(Actions.onMessageAcknowledgedNotification, message);
       }
     );
 
@@ -129,7 +129,7 @@ export default {
         const conversation = JSON.parse(payload);
         console.log("ConversationCreatedNotification", conversation);
 
-        dispatch("onConversationCreatedNotification", conversation);
+        dispatch(Actions.onConversationCreatedNotification, conversation);
       }
     );
 

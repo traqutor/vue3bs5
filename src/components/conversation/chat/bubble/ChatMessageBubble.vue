@@ -583,7 +583,7 @@ export default {
     };
 
     const onAcknowledgePost = () => {
-      store.dispatch("onAcknowledgeMessage", props.item.id);
+      store.dispatch(Actions.onAcknowledgeMessage, props.item.id);
     };
 
     const onShowAttachments = () => {

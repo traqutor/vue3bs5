@@ -71,6 +71,7 @@
 import { useStore } from "vuex";
 import { computed } from "vue";
 import ParticipantNameAndRolesItem from "@/components/participant/ParticipantNameAndRolesItem";
+import {Actions} from "@/store/enums/EnumTypes";
 
 export default {
   components: { ParticipantNameAndRolesItem },
@@ -85,7 +86,7 @@ export default {
     );
 
     const onAcknowledgePost = (item) => {
-      store.dispatch("onAcknowledgeMessage", item.id);
+      store.dispatch(Actions.onAcknowledgeMessage, item.id);
     };
 
     return {

@@ -80,7 +80,7 @@ export default {
         commit("setSelectedCreator", user);
 
         dispatch("getUsers");
-        dispatch("onGetConversations", { refresh: true });
+        dispatch(Actions.onGetConversations, { refresh: true });
         dispatch(Actions.onGetThumbnails);
         dispatch(Actions.onGetTaskTypes);
 

@@ -11,8 +11,8 @@
       <template v-else>
         <div
           ref="chatContainer"
-          class="h-100 mh-100 pe-3 ign-scroll-smooth"
-          style="display: flex; flex-direction: column-reverse"
+          class="chat-container-reverse-scroller pe-3 ign-scroll-smooth"
+          @scroll="onScroll"
         >
           <div v-for="(msg, idx) of messages" :key="msg.id">
             <!-- time divider-->
@@ -53,8 +53,8 @@ export default {
   setup() {
     const store = useStore();
     const chatContainer = ref();
-    const isScrollUp = ref(false);
     const tmpScrollTop = ref(0);
+    const isTmpGettingMoreMessages = ref(false);
 
     const messages = computed(() => store.getters.getMessages);
 
@@ -66,6 +66,7 @@ export default {
     const isMessagesLoading = computed(
       () => store.getters.getIsMessagesLoading
     );
+
     const loggedUser = computed(() => store.getters.getLoggedUser);
 
     const getIfUserIsConversationAuthor = computed(() => {
@@ -89,22 +90,24 @@ export default {
         return isRole;
       });
 
-    const onScroll = (e) => {
-      const container = this.$refs.chatContainer.$el;
+    const onScroll = () => {
+      const scrollHeight = chatContainer.value.scrollHeight / 2;
+      const scrollTop = chatContainer.value.scrollTop * -2;
 
-      if (tmpScrollTop.value > e.target.scrollTop) {
-        isScrollUp.value = true;
-        if (!isMessagesLoading.value && e.target.scrollTop <= 200) {
-          const { id } = selectedConversation;
-          store.dispatch("onGetMessages", { conversationId: id });
+      if (tmpScrollTop.value < scrollTop) {
+        if (!isTmpGettingMoreMessages.value && scrollHeight < scrollTop) {
+          isTmpGettingMoreMessages.value = true;
+          store
+            .dispatch(Actions.onGetMessages, {
+              refresh: false,
+              showLoading: false,
+            })
+            .then(() => {
+              isTmpGettingMoreMessages.value = false;
+            });
         }
-      } else if (
-        container.clientHeight + e.target.scrollTop >=
-        container.scrollHeight - 50
-      ) {
-        this.isScrollUp = false;
       }
-      this.tmpScrollTop = e.target.scrollTop;
+      tmpScrollTop.value = scrollTop;
     };
 
     const getIfPeriodToDisplay = (index) => {
@@ -125,7 +128,7 @@ export default {
 
     const onSendMessage = (msg) => {
       this.$store
-        .dispatch("onGetDirectConversation", {
+        .dispatch(Actions.onGetDirectConversation, {
           user: {
             isRole: false,
             id: loggedUser.value.id,
@@ -143,7 +146,6 @@ export default {
     return {
       chatContainer,
       messages,
-      isScrollUp,
       isLoading,
       tmpScrollTop,
       onScroll,
@@ -156,3 +158,11 @@ export default {
   },
 };
 </script>
+<style>
+.chat-container-reverse-scroller {
+  display: flex;
+  height: 100% !important;
+  max-height: 100% !important;
+  flex-direction: column-reverse;
+}
+</style>

@@ -409,6 +409,7 @@ import FeatherArrowUp from "@/icons/FeatherArrowUp";
 import FeatherSmile from "@/icons/FeatherSmile";
 import EmojiPicker from "@/components/conversation/chat/chat-text-selector/EmojiPicker";
 import FeatherPaper from "@/icons/FeatherPaper";
+import { Actions } from "@/store/enums/EnumTypes";
 
 export default {
   setup() {
@@ -452,16 +453,11 @@ export default {
               recipient: getSelectedParticipants.value[0],
             };
             store
-              .dispatch("onGetDirectConversation", params)
+              .dispatch(Acions.onGetDirectConversation, params)
               .then((response) => {
-                console.log("onGetDirectConversation", response);
                 store
-                  .dispatch("onCheckConversationMessagesMessages", response.id)
+                  .dispatch(Actions.onCheckConversationMessages, response.id)
                   .then((messages) => {
-                    console.log(
-                      "onCheckConversationMessagesMessages",
-                      messages
-                    );
                     if (messages.length > 0) {
                       isCreationStep.value = 1;
                     } else {
@@ -494,7 +490,7 @@ export default {
     }
 
     function onCreateConversation() {
-      store.dispatch("onCreateConversation").then(() => {
+      store.dispatch(Actions.onCreateConversation).then(() => {
         store.commit("setMessageText", null);
         store.commit("setConversationTopic", null);
         store.commit("setConversationViewMode", conversationViewModes.VIEW);
@@ -502,7 +498,7 @@ export default {
     }
 
     function onDirectConversationUpdate() {
-      store.dispatch("onDirectConversationUpdate").then(() => {
+      store.dispatch(Actions.onDirectConversationUpdate).then(() => {
         store.commit("setConversationViewMode", conversationViewModes.VIEW);
       });
     }

@@ -190,6 +190,7 @@ import { CHAT_VIEW_MODES } from "@/const";
 import ParticipantAvatar from "@/components/participant/ParticipantAvatar";
 import FeatherMessageSquareLine from "@/icons/FeatherMessageSquareLine";
 import { guidsAreEqual } from "@/services/guids.service";
+import {Actions} from "@/store/enums/EnumTypes";
 
 export default {
   setup() {
@@ -230,7 +231,7 @@ export default {
         .map((p) => {
           return { id: p.id.toLowerCase(), isRole: p.isRole };
         });
-      store.dispatch("onRemoveUsersFromConversation", participants);
+      store.dispatch(Actions.onRemoveUsersFromConversation, participants);
     }
 
     function onParticipantsEditModeChange(mode) {

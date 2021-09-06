@@ -12,7 +12,7 @@ import { subtractNotLessTenZero } from "@/services/counter.service";
 let getMessagesSource = null;
 
 export default {
-  onGetConversations: (
+  [Actions.onGetConversations]: (
     { state, commit, rootState },
     { refresh = false, silent = false }
   ) => {
@@ -58,16 +58,13 @@ export default {
     commit(Mutations.setReplyMessage, null);
     commit(Mutations.setMediaShareGalleryItems, []);
     commit(Mutations.setMediaSelectedItems, []);
-    dispatch("onGetMessages", {
-      conversationId: conversationId,
+    dispatch(Actions.onGetMessages, {
       refresh: true,
       showLoading: true,
-    }).then(() => {
-      dispatch(Actions.onMarkMessagesAsRead);
     });
   },
 
-  onCreateConversation: ({ commit, state, rootState, getters }) => {
+  [Actions.onCreateConversation]: ({ commit, state, rootState, getters }) => {
     commit("setIsConversationCreating", true);
 
     return new Promise((resolve) => {
@@ -97,7 +94,6 @@ export default {
       axiosWebApiInstance
         .post(url, values)
         .then((response) => {
-          console.log("CreateConversation", response);
           if (response.data.isOk) {
             commit("setIsConversationCreating", false);
             commit("setConversationTopic", null);
@@ -127,14 +123,14 @@ export default {
     });
   },
 
-  onDirectConversationUpdate: ({ commit, dispatch, state, getters }) => {
+  [Actions.onDirectConversationUpdate]: ({ commit, dispatch, state, getters }) => {
     commit("setIsConversationCreating", true);
     const requestPayload = {
       user: { id: getters.getLoggedUser.id, isRole: false },
       recipient: getters.getSelectedParticipants[0],
     };
     return new Promise((resolve) => {
-      dispatch("onGetDirectConversation", requestPayload).then(
+      dispatch(Actions.onGetDirectConversation, requestPayload).then(
         (conversation) => {
           commit("setIsConversationCreating", false);
           commit("setConversationTopic", null);
@@ -142,8 +138,7 @@ export default {
           commit("setConversation", conversation);
           commit("setSelectedConversationId", conversation.id);
 
-          dispatch("onGetMessages", {
-            conversationId: conversation.id,
+          dispatch(Actions.onGetMessages, {
             refresh: true,
             showLoading: true,
           }).then(() => {
@@ -254,36 +249,45 @@ export default {
       });
   },
 
-  onGetMessages: (
-    { commit, getters },
-    { conversationId, refresh = false, showLoading = false }
+  [Actions.onGetMessages]: (
+    { commit, getters, dispatch },
+    { refresh = false, showLoading = false }
   ) => {
-    if (showLoading) commit("setIsMessagesLoading", true);
+    return new Promise((resolve) => {
+      if (showLoading) commit("setIsMessagesLoading", true);
 
-    const lastMessageId = refresh ? "" : getters.getMessages[0].id;
+      const conversationId = getters.getSelectedConversationId;
+      const lastMessageId = refresh
+        ? ""
+        : getters.getMessages[getters.getMessages.length - 1].id;
 
-    if (getMessagesSource) {
-      if (refresh) {
-        getMessagesSource.cancel("Cancel old get messages. Start new one.");
+      if (getMessagesSource) {
+        if (refresh) {
+          getMessagesSource.cancel("Cancel old get messages. Start new one.");
+        }
       }
-    }
-    getMessagesSource = axios.CancelToken.source();
-    const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetMessages?ConversationId=${conversationId}&lastMessageId=${lastMessageId}`;
+      getMessagesSource = axios.CancelToken.source();
+      const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetMessages?ConversationId=${conversationId}&lastMessageId=${lastMessageId}`;
 
-    axiosWebApiInstance
-      .get(url, { cancelToken: getMessagesSource.token })
-      .then(function (response) {
-        getMessagesSource = null;
-        let arr = response.data.messages;
-        let messages = refresh ? [] : getters.getMessages;
-        messages = arr.concat(messages);
+      axiosWebApiInstance
+        .get(url, { cancelToken: getMessagesSource.token })
+        .then(function (response) {
+          getMessagesSource = null;
+          let arr = response.data.messages;
+          let messages = refresh ? [] : getters.getMessages;
+          messages = messages.concat(arr);
 
-        commit("setMessages", messages);
-        commit("setIsMessagesLoading", false);
-      });
+          commit("setMessages", messages);
+          commit("setIsMessagesLoading", false);
+
+          dispatch(Actions.onMarkMessagesAsRead);
+
+          resolve();
+        });
+    });
   },
 
-  onCheckConversationMessagesMessages: (_, conversationId) => {
+  [Actions.onCheckConversationMessages]: (_, conversationId) => {
     return new Promise((resolve) => {
       const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetMessages?ConversationId=${conversationId}`;
 
@@ -295,7 +299,7 @@ export default {
     });
   },
 
-  onGetDirectConversation: (_, requestPayload) => {
+  [Actions.onGetDirectConversation]: (_, requestPayload) => {
     return new Promise((resolve) => {
       const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetDirectConversation`;
 
@@ -312,9 +316,8 @@ export default {
     });
   },
 
-  onUserIsTyping: ({ state, rootState }) => {
+  [Actions.onUserIsTyping]: ({ state, rootState }) => {
     const conversationId = state.selectedConversationId;
-    console.log("UserIsTyping");
     rootState.socket.hubConnection
       .invoke("UserIsTyping", conversationId)
       .catch((error) => {
@@ -346,8 +349,6 @@ export default {
         );
       })
       .map((message) => message.id);
-
-    console.log("Actions.onMarkMessagesAsRead messagesIds: ", messagesIds);
 
     /**
      * filter whispered and not read messages
@@ -435,7 +436,7 @@ export default {
     }
   },
 
-  onAcknowledgeMessage: ({ getters }, messageId) => {
+  [Actions.onAcknowledgeMessage]: ({ getters }, messageId) => {
     const data = {
       conversationId: getters.getSelectedConversationId,
       messageId: messageId,
@@ -448,7 +449,7 @@ export default {
       .post(url, data)
       .then(function () {})
       .catch((error) => {
-        console.log("On read message error:", error);
+        console.error("On read message error:", error);
       });
 
     const roles = getters.getConversationAvailableCreationRoles
@@ -462,7 +463,7 @@ export default {
         .post(url, data)
         .then(function () {})
         .catch((error) => {
-          console.log("On read message error:", error);
+          console.error("On read message error:", error);
         });
     });
   },
@@ -509,7 +510,7 @@ export default {
       });
   },
 
-  onUserAddedToConversationNotification: (
+  [Actions.onUserAddedToConversationNotification]: (
     { state, commit, dispatch },
     payload
   ) => {
@@ -528,11 +529,11 @@ export default {
       commit("setSelectedConversationId", conversation.id);
       commit("setConversations", [...conversations]);
     } else {
-      dispatch("onGetConversations", { refresh: false });
+      dispatch(Actions.onGetConversations, { refresh: false });
     }
   },
 
-  onConversationCreatedNotification: ({ state, commit }, payload) => {
+  [Actions.onConversationCreatedNotification]: ({ state, commit }, payload) => {
     const conversations = [...state.conversations];
     const idx = conversations.findIndex((c) => c.id === payload.id);
     if (idx !== -1) {
@@ -544,8 +545,7 @@ export default {
     commit("setConversations", conversations);
   },
 
-  onMessageAcknowledgedNotification: ({ state, commit, getters }, message) => {
-    console.log("ON_MESSAGE_ACKNOWLEDGED_NOTIFICATION", message);
+  [Actions.onMessageAcknowledgedNotification]: ({ state, commit, getters }, message) => {
     if (guidsAreEqual(state.selectedConversationId, message.conversationId)) {
       const messages = [...getters.getMessages];
       const idx = messages.findIndex((msg) => msg.id === message.messageId);
@@ -566,7 +566,7 @@ export default {
     }
   },
 
-  onReceivedMessageNotification: ({ state, getters, commit }, message) => {
+  [Actions.onReceivedMessageNotification]: ({ state, getters, commit }, message) => {
     const idx = state.conversations.findIndex((c) =>
       guidsAreEqual(c.id, message.conversationId)
     );
@@ -602,7 +602,7 @@ export default {
     }
   },
 
-  onMessageReadNotification: ({ state, commit, getters }, payload) => {
+  [Actions.onMessageReadNotification]: ({ state, commit, getters }, payload) => {
     const idx = state.conversations.findIndex(
       (c) => c.id === payload.conversationId
     );
@@ -626,14 +626,8 @@ export default {
 
     //update conversation last message watchedByUsers array
     payload.messageIds.forEach((messageId) => {
-      console.log(
-        "messageId === conversation.lastMessage.id",
-        messageId,
-        conversation.lastMessage.id
-      );
       if (guidsAreEqual(messageId, conversation.lastMessage.id)) {
         payload.participants.forEach((participant) => {
-          console.log("participant", participant);
           if (
             !conversation.lastMessage.watchedByUsers.find((watcher) =>
               guidsAreEqual(watcher.id, participant.id)
@@ -668,7 +662,7 @@ export default {
     }
   },
 
-  onUserIsTypingNotification: ({ state, commit }, whoIsTyping) => {
+  [Actions.onUserIsTypingNotification]: ({ state, commit }, whoIsTyping) => {
     const idx = state.conversations.findIndex(
       (c) => c.id === whoIsTyping.conversationId
     );
@@ -691,7 +685,7 @@ export default {
     commit("setConversations", [...tmpConversations]);
   },
 
-  onAddUsersToConversation: ({ commit, getters }) => {
+  [Actions.onAddUsersToConversation]: ({ commit, getters }) => {
     const values = {
       conversationId: getters.getSelectedConversationId,
       participants: getters.getSelectedParticipants,
@@ -710,7 +704,7 @@ export default {
       });
   },
 
-  onRemoveUsersFromConversation: ({ commit, getters }, participants) => {
+  [Actions.onRemoveUsersFromConversation]: ({ commit, getters }, participants) => {
     const values = {
       activeRoleId: null,
       conversationId: getters.getSelectedConversationId,
@@ -727,7 +721,6 @@ export default {
           (conv) =>
             participants.filter((p) => guidsAreEqual(p.id, conv.id)).length <= 0
         );
-        console.log("tmpParticipants", tmpParticipants);
         conversation.participants = [...tmpParticipants];
 
         commit("setConversation", conversation);
