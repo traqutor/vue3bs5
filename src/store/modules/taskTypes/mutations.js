@@ -10,4 +10,10 @@ export default {
   [Mutations.setSelectedTaskType]: (state, taskType) => {
     state.selectedTaskType = taskType;
   },
+  [Mutations.setTaskTypesCustomFields]: (state, fields) => {
+    state.customFields = fields;
+  },
+  [Mutations.setTaskTypesRequiredActions]: (state, actions) => {
+    state.requiredActions = actions;
+  },
 };

@@ -62,6 +62,8 @@ export default {
       conversationId: conversationId,
       refresh: true,
       showLoading: true,
+    }).then(() => {
+      dispatch(Actions.onMarkMessagesAsRead);
     });
   },
 
@@ -320,7 +322,7 @@ export default {
       });
   },
 
-  onMarkMessagesAsRead: ({ state, getters }) => {
+  [Actions.onMarkMessagesAsRead]: ({ state, getters }) => {
     let data = {
       conversationId: state.selectedConversationId,
       messagesIds: null,
@@ -344,6 +346,8 @@ export default {
         );
       })
       .map((message) => message.id);
+
+    console.log("Actions.onMarkMessagesAsRead messagesIds: ", messagesIds);
 
     /**
      * filter whispered and not read messages

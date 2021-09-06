@@ -8,4 +8,10 @@ export default {
   getSelectedTaskType: (state) => {
     return state.selectedTaskType;
   },
+  getCustomFields: (state) => {
+    return state.customFields;
+  },
+  getRequiredActions: (state) => {
+    return state.requiredActions;
+  },
 };

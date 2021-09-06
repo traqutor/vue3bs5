@@ -46,7 +46,7 @@
           />
           <div class="media-body">
             <div class="text-secondary mb-2">Swatch colour</div>
-            <div class="media">
+            <div class="d-flex">
               <figure
                 class="avatar f-icon-30 me-2 todo-label-7 rounded on-hover"
               >
@@ -900,7 +900,7 @@
 
     <div class="collapse" id="field-list-4">
       <div class="card bg-grey-light border-secondary-light mt-3 f-col-2x">
-        <div class="media">
+        <div class="d-flex">
           <div class="media-body py-2 px-3">
             <div class="row align-items-center mb-2">
               <div class="col-2">Code</div>

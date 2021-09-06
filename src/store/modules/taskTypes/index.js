@@ -7,6 +7,8 @@ const taskTypesModule = {
   state() {
     return {
       taskTypes: [],
+      customFields: [],
+      requiredActions: [],
       selectedTaskType: null,
       viewMode: TASK_TYPES_VIEW_MODES.LIST,
     };

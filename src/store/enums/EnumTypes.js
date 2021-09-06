@@ -20,6 +20,7 @@ const Actions = {
   onMessageQuickReaction: "onMessageQuickReaction",
   onSelectConversation: "onSelectConversation",
   onRemoveQuickReaction: "onRemoveQuickReaction",
+  onMarkMessagesAsRead: "onMarkMessagesAsRead",
 
   // media actions
   onGetThumbnails: "onGetThumbnails",
@@ -35,6 +36,24 @@ const Actions = {
 
   // taskTypes actions types
   onGetTaskTypes: "onGetTaskTypes",
+  onCreateTaskType: "onCreateTaskType",
+  onUpdateTaskType: "onUpdateTaskType",
+  onSearchTaskType: "onSearchTaskType",
+  onDeleteTaskType: "onDeleteTaskType",
+  onUpdateRequiredParticipantsToType: "onUpdateRequiredParticipantsToType",
+  onAddCustomFieldsToType: "onAddCustomFieldsToType",
+  onAddRequiredActionsToType: "onAddRequiredActionsToType",
+  onAddRequiredActions: "onAddRequiredActions",
+  onAddCustomFields: "onAddCustomFields",
+  onRemoveRequiredParticipantsFromType: "onRemoveRequiredParticipantsFromType",
+  onRemoveCustomFieldsFromType: "onRemoveCustomFieldsFromType",
+  onRemoveRequiredActionsFromType: "onRemoveRequiredActionsFromType",
+  onDeleteRequiredActions: "onDeleteRequiredActions",
+  onDeleteCustomFields: "onDeleteCustomFields",
+  onSearchRequiredActions: "onSearchRequiredActions",
+  onSearchCustomFields: "onSearchCustomFields",
+  onGetCustomFields: "onGetCustomFields",
+  onGetRequiredActions: "onGetRequiredActions",
 };
 
 const Mutations = {
@@ -79,6 +98,8 @@ const Mutations = {
   setTaskTypes: "setTaskTypes",
   setSelectedTaskType: "setSelectedTaskType",
   setTaskTypesViewMode: "setTaskTypesViewMode",
+  setTaskTypesCustomFields: "setTaskTypesCustomFields",
+  setTaskTypesRequiredActions: "setTaskTypesRequiredActions",
 };
 
 //taskTypes
