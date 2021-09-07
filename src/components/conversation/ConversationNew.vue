@@ -453,7 +453,7 @@ export default {
               recipient: getSelectedParticipants.value[0],
             };
             store
-              .dispatch(Acions.onGetDirectConversation, params)
+              .dispatch(Actions.onGetDirectConversation, params)
               .then((response) => {
                 store
                   .dispatch(Actions.onCheckConversationMessages, response.id)
