@@ -52,11 +52,11 @@ const Actions = {
     "onMessageQuickReactionRemovedNotification",
 
   // taskTypes actions types
-  onGetTaskTypes: "onGetTaskTypes",
-  onCreateTaskType: "onCreateTaskType",
-  onUpdateTaskType: "onUpdateTaskType",
-  onSearchTaskType: "onSearchTaskType",
-  onDeleteTaskType: "onDeleteTaskType",
+  onGetTypes: "onGetTypes",
+  onCreateType: "onCreateType",
+  onUpdateType: "onUpdateType",
+  onSearchTypes: "onSearchTypes",
+  onDeleteTypes: "onDeleteTypes",
   onUpdateRequiredParticipantsToType: "onUpdateRequiredParticipantsToType",
   onAddCustomFieldsToType: "onAddCustomFieldsToType",
   onAddRequiredActionsToType: "onAddRequiredActionsToType",
@@ -80,6 +80,8 @@ const Mutations = {
   setLogOutUser: "setLogOutUser",
   setLoggedIsLoading: "setLoggedIsLoading",
   setActiveRole: "setActiveRole",
+  setIsTypesLoading: "setIsTypesLoading",
+  setIsTypePost: "setIsTypePost",
 
   // templates mutation types
   setSelectedTemplateViewMode: "setSelectedTemplateViewMode",
@@ -123,6 +125,44 @@ const Mutations = {
 const TASK_TYPES_VIEW_MODES = {
   LIST: "List",
   ADD_NEW: "Add ",
+};
+const TASK_TYPE_EMPTY = {
+  id: "",
+  minimumRequiredParticipants: 0,
+  deadlineCountdownInterval: 0,
+  locationId: "",
+  title: "",
+  badgeColour: "",
+  allowUserToChooseParticipantsOnTaskCreation: true,
+  isIncident: true,
+  isLocationRequired: true,
+  isDeadlineRequired: true,
+  allowRisingOffDuty: true,
+  createConversationOnRising: true,
+  sendNotificationOnRising: true,
+  sendNotificationOnChangeStatus: true,
+  sendNotificationOnDeadlinePassed: true,
+  sendNotificationOnCountdownStarted: true,
+  requiredActions: [
+    {
+      id: 0,
+      name: "",
+    },
+  ],
+  customFields: [
+    {
+      id: 0,
+      name: "",
+    },
+  ],
+  requiredParticipants: [
+    {
+      id: "",
+      userId: "",
+      isRole: true,
+      minimumRequiredQuantity: 0,
+    },
+  ],
 };
 
 //messages
@@ -218,6 +258,7 @@ export {
   Mutations,
   SocketReceivers,
   TASK_TYPES_VIEW_MODES,
+  TASK_TYPE_EMPTY,
   TEMPLATE_VIEW_MODES,
   TEMPLATES,
   QUICK_MESSAGES,

@@ -14,4 +14,10 @@ export default {
   getRequiredActions: (state) => {
     return state.requiredActions;
   },
+  getIsTypesLoading: (state) => {
+    return state.isTypesLoading;
+  },
+  getIsTypePost: (state) => {
+    return state.isTypePost;
+  },
 };

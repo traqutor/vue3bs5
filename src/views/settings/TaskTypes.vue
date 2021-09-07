@@ -1,11 +1,7 @@
 <template>
   <div class="section-content">
     <nav class="side-nav-line side-nav-line-main nav-line-center">
-      <div
-        class="nav nav-tabs nav-fill border-secondary-light"
-        role="tablist"
-        id="main-nav-group"
-      >
+      <div class="nav nav-tabs nav-fill border-secondary-light">
         <span
           class="nav-item nav-link on-hover"
           role="tab"
@@ -24,8 +20,8 @@
       </div>
     </nav>
   </div>
-  <div class="tab-content d-flex flex-column position-relative flex-fill">
-    <div class="tab-content d-flex flex-column position-absolute w-100 h-100">
+  <div class="d-flex flex-column position-relative flex-fill">
+    <div class="d-flex flex-column position-absolute w-100 h-100">
       <TaskTypesListTab v-if="viewMode === TASK_TYPES_VIEW_MODES.LIST" />
       <TaskTypesAddNewTab v-if="viewMode === TASK_TYPES_VIEW_MODES.ADD_NEW" />
     </div>

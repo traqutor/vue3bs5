@@ -16,4 +16,12 @@ export default {
   [Mutations.setTaskTypesRequiredActions]: (state, actions) => {
     state.requiredActions = actions;
   },
+
+  [Mutations.setIsTypesLoading]: (state, flag) => {
+    state.isTypesLoading = flag;
+  },
+
+  [Mutations.setIsTypePost]: (state, flag) => {
+    state.isTypePost = flag;
+  },
 };

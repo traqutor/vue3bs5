@@ -10,6 +10,8 @@ const taskTypesModule = {
       customFields: [],
       requiredActions: [],
       selectedTaskType: null,
+      isTypesLoading: false,
+      isTypePost: false,
       viewMode: TASK_TYPES_VIEW_MODES.LIST,
     };
   },

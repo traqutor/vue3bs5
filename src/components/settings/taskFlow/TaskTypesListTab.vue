@@ -122,11 +122,11 @@
                           <span class="f-icon me-3"
                             ><i
                               class="f-icon f-icon-24 rounded"
-                              :style="`background-color: ${item.badgeColour}`"
+                              :style="`background-color: #${item.badgeColour.match(/\b[0-9A-Fa-f]{6}\b/g) }`"
                             ></i
                           ></span>
                           <div class="media-body font-weight-middle">
-                            {{ item.title }}
+                            {{ item.title }} {{item.badgeColour.match(/\b[0-9A-F]{6}\b/gi)}}
                           </div>
                         </div>
                       </td>
@@ -248,7 +248,7 @@
                 <span class="f-icon me-3"
                   ><i
                     class="f-icon f-icon-24 rounded"
-                    :style="`background-color: ${selectedTaskType.badgeColour}`"
+                    :style="`background-color: #${selectedTaskType.badgeColour.match(/\b[0-9A-Fa-f]{6}\b/g)}`"
                   ></i
                 ></span>
                 <div class="overflow-hidden ms-n1">
