@@ -1,3 +1,5 @@
+import { guidsGetOne } from "@/services/guids.service";
+
 const SocketReceivers = {
   ReceivedMessageNotification: "ReceivedMessageNotification",
   UserAddedToConversationNotification: "UserAddedToConversationNotification",
@@ -127,15 +129,15 @@ const TASK_TYPES_VIEW_MODES = {
   ADD_NEW: "Add ",
 };
 const TASK_TYPE_EMPTY = {
-  id: "",
+  id: guidsGetOne(),
   minimumRequiredParticipants: 0,
   deadlineCountdownInterval: 0,
   locationId: "",
   title: "",
-  badgeColour: "",
+  badgeColour: "751dc4",
   allowUserToChooseParticipantsOnTaskCreation: true,
-  isIncident: true,
-  isLocationRequired: true,
+  isIncident: false,
+  isLocationRequired: false,
   isDeadlineRequired: true,
   allowRisingOffDuty: true,
   createConversationOnRising: true,
@@ -143,26 +145,9 @@ const TASK_TYPE_EMPTY = {
   sendNotificationOnChangeStatus: true,
   sendNotificationOnDeadlinePassed: true,
   sendNotificationOnCountdownStarted: true,
-  requiredActions: [
-    {
-      id: 0,
-      name: "",
-    },
-  ],
-  customFields: [
-    {
-      id: 0,
-      name: "",
-    },
-  ],
-  requiredParticipants: [
-    {
-      id: "",
-      userId: "",
-      isRole: true,
-      minimumRequiredQuantity: 0,
-    },
-  ],
+  requiredActions: [],
+  customFields: [],
+  requiredParticipants: [],
 };
 
 //messages

@@ -5,10 +5,13 @@ export default {
   [Actions.onGetTypes]: ({ commit }) => {
     commit(Mutations.setIsTypesLoading, true);
 
-    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/GetTypes?Page=1`;
+    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/SearchTypes`;
 
     axiosWebApiInstance
-      .get(url)
+      .post(url, {
+        page: 1,
+        query: "",
+      })
       .then(function (response) {
         if (response.data.response.isOk) {
           commit(Mutations.setTaskTypes, response.data.taskTypes);

@@ -11,8 +11,8 @@ axiosWebApiInstance.interceptors.request.use(
     const token = await getTokenData();
     config.headers = {
       Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
     };
     return config;
   },

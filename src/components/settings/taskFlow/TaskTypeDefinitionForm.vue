@@ -1,6 +1,9 @@
 <template>
   <!-- start::task type definition  -->
-  <perfect-scrollbar class="position-absolute h-100 w-100 pe-3">
+  <perfect-scrollbar
+    v-if="modelValue"
+    class="position-absolute h-100 w-100 pe-3"
+  >
     <div
       class="
         d-flex
@@ -31,6 +34,8 @@
             </div>
             <div class="input-group input-group-sm border-0">
               <input
+                @input="onFormChange($event, 'title')"
+                :value="modelValue.title"
                 type="text"
                 class="form-control form-control-sm bg-light shadow-none"
               />
@@ -1106,6 +1111,8 @@ import FeatherUsers from "@/icons/FeatherUsers";
 import FeatherToggleLeft from "@/icons/FeatherToggleLeft";
 import FeatherToggleRight from "@/icons/FeatherToggleRight";
 export default {
+  props: ["modelValue"],
+  emits: ["update:modelValue"],
   components: {
     FeatherToggleRight,
     FeatherToggleLeft,
@@ -1114,6 +1121,18 @@ export default {
     FeatherFlag,
     FeatherChevronDown,
     FeatherBookmark,
+  },
+  setup(props, { emit }) {
+    const onFormChange = (event, property) => {
+      console.log("update:modelValue", event.target.value);
+      const form = { ...props.modelValue };
+      form[property] = event.target.value;
+      emit("update:modelValue", form);
+    };
+
+    return {
+      onFormChange,
+    };
   },
 };
 </script>

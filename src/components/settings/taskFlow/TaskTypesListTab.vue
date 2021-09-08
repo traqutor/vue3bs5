@@ -122,11 +122,11 @@
                           <span class="f-icon me-3"
                             ><i
                               class="f-icon f-icon-24 rounded"
-                              :style="`background-color: #${item.badgeColour.match(/\b[0-9A-Fa-f]{6}\b/g) }`"
+                              :style="`background-color: #${item.badgeColour }`"
                             ></i
                           ></span>
                           <div class="media-body font-weight-middle">
-                            {{ item.title }} {{item.badgeColour.match(/\b[0-9A-F]{6}\b/gi)}}
+                            {{ item.title }} {{item.badgeColour}}
                           </div>
                         </div>
                       </td>
