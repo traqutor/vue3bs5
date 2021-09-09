@@ -4,6 +4,7 @@
     v-if="modelValue"
     class="position-absolute h-100 w-100 pe-3"
   >
+    <!-- start:: collapse general -->
     <div
       class="
         d-flex
@@ -15,14 +16,14 @@
         font-weight-middle
         f-col-2x
       "
-      data-toggle="collapse"
-      data-target="#field-list-1"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseTypeGeneral"
       aria-expanded="true"
-      aria-controls="field-list-1"
     >
       General<feather-chevron-down class="text-secondary" />
     </div>
-    <div class="collapse show" id="field-list-1">
+    <div class="collapse show" id="collapseTypeGeneral">
+      <!-- start::Task type title -->
       <div class="d-flex mt-3">
         <div class="d-flex align-items-center w-100 f-col-2x">
           <FeatherBookmark
@@ -34,16 +35,19 @@
             </div>
             <div class="input-group input-group-sm border-0">
               <input
-                @input="onFormChange($event, 'title')"
+                @input="onFormChange($event.target.value, 'title')"
                 :value="modelValue.title"
                 type="text"
+                :disabled="readOnly"
                 class="form-control form-control-sm bg-light shadow-none"
               />
             </div>
           </div>
         </div>
       </div>
+      <!-- end::Task type title -->
 
+      <!-- start::Swatch colour select -->
       <div class="d-flex mt-3">
         <div class="d-flex w-100 f-col-2x">
           <feather-flag
@@ -53,43 +57,36 @@
             <div class="text-secondary mb-2">Swatch colour</div>
             <div class="d-flex">
               <figure
-                class="avatar f-icon-30 me-2 todo-label-7 rounded on-hover"
+                v-for="(palette, index) of swatchColors"
+                :key="index"
+                @click="onFormChange(palette.color, 'badgeColour')"
+                class="avatar f-icon-30 me-2 rounded on-hover"
+                :class="palette.className"
               >
                 <feather-check
+                  v-if="modelValue.badgeColour === palette.color"
                   class="avatar-presence avatar-icon-top bg-success f-icon-18"
                 />
               </figure>
-              <figure
-                class="avatar f-icon-30 me-2 todo-label-1 rounded on-hover"
-              ></figure>
-              <figure
-                class="avatar f-icon-30 me-2 todo-label-2 rounded on-hover"
-              ></figure>
-              <figure
-                class="avatar f-icon-30 me-2 todo-label-3 rounded on-hover"
-              ></figure>
-              <figure
-                class="avatar f-icon-30 me-2 todo-label-4 rounded on-hover"
-              ></figure>
-              <figure
-                class="avatar f-icon-30 me-2 todo-label-5 rounded on-hover"
-              ></figure>
-              <figure
-                class="avatar f-icon-30 me-2 todo-label-6 rounded on-hover"
-              ></figure>
 
               <div class="media-body input-group input-group-sm flex-nowrap">
                 <!--
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="addon-wrapping">@</span>
                 </div>-->
-                <input type="text" class="form-control bg-light shadow-none" />
+                <input
+                  type="text"
+                  :disabled="readOnly"
+                  class="form-control bg-light shadow-none"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- end::Swatch colour select -->
 
+      <!-- start::max respondents select -->
       <div class="d-flex mt-3 pb-2">
         <div class="d-flex align-items-center w-100 f-col-2x">
           <feather-users class="me-3 f-icon-20 text-secondary" />
@@ -103,587 +100,219 @@
                 filter-control-group
               "
             >
-              <input
-                type="text"
-                class="
-                  form-control
-                  bg-light
-                  dropdown-input-control
-                  is-filter-control
-                  shadow-none
+              <select
+                class="form-select bg-light shadow-none"
+                aria-label="Max respondents"
+                :disabled="readOnly"
+                @input="
+                  onFormChange(
+                    +$event.target.value,
+                    'minimumRequiredParticipants'
+                  )
                 "
-                filter-content="#respondents-group-type"
-                filter-item=".dropdown-item"
-              />
-              <div class="input-group-append">
-                <button
-                  type="button"
-                  class="
-                    btn btn-light
-                    border-left-0
-                    text-secondary text-dark-hover
-                    dropdown-toggle dropdown-toggle-split
-                  "
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                ></button>
-
-                <div
-                  class="
-                    dropdown-menu dropdown-menu-sm dropdown-menu-right
-                    w-100
-                    shadow
-                    dropdown-insert-click
-                  "
-                  id="respondents-group-type"
-                >
-                  <button class="dropdown-item px-3">One person</button>
-                  <button class="dropdown-item px-3">All hands</button>
-                </div>
-              </div>
+                :value="modelValue.minimumRequiredParticipants"
+              >
+                <option selected value="1">One person</option>
+                <option value="0">All hands</option>
+              </select>
             </div>
           </div>
         </div>
       </div>
+      <!-- end::max respondents select -->
 
+      <!-- start::boolean selector allowUserToChooseParticipantsOnTaskCreation -->
       <div class="mt-2">
         <label class="toggle-input toggle-input-success f-size-14">
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            @change="
+              onFormChange(
+                $event.target.checked,
+                'allowUserToChooseParticipantsOnTaskCreation'
+              )
+            "
+            :checked="modelValue.allowUserToChooseParticipantsOnTaskCreation"
+            :disabled="readOnly"
+          />
           <span class="input-icon f-icon-20 me-3"
             ><feather-toggle-left /> <feather-toggle-right /> </span
-          >Track task overdue
+          >Allow user to choose participants on task creation
         </label>
       </div>
+      <!-- end::boolean selector allowUserToChooseParticipantsOnTaskCreation -->
 
+      <!-- start::boolean selector isIncident -->
       <div class="mt-2">
         <label class="toggle-input toggle-input-success f-size-14">
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            @change="onFormChange($event.target.checked, 'isIncident')"
+            :checked="modelValue.isIncident"
+            :disabled="readOnly"
+          />
           <span class="input-icon f-icon-20 me-3"
-            ><feather-toggle-left /> <feather-toggle-right /></span
-          >Allow priority boost
+            ><feather-toggle-left /> <feather-toggle-right /> </span
+          >Is it incident
         </label>
       </div>
+      <!-- end::boolean selector isIncident -->
 
-      <div class="my-2">
+      <!-- start::boolean selector isLocationRequired -->
+      <div class="mt-2">
         <label class="toggle-input toggle-input-success f-size-14">
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            @change="onFormChange($event.target.checked, 'isLocationRequired')"
+            :checked="modelValue.isLocationRequired"
+            :disabled="readOnly"
+          />
           <span class="input-icon f-icon-20 me-3"
-            ><feather-toggle-left /> <feather-toggle-right /></span
-          >Create conversation
+            ><feather-toggle-left /> <feather-toggle-right /> </span
+          >Is Location Required
         </label>
       </div>
-    </div>
+      <!-- end::boolean selector isLocationRequired -->
 
-    <div class="border-top border-secondary-light f-col-2x my-3"></div>
-
-    <div
-      class="
-        d-flex
-        align-self-center
-        justify-content-between
-        text-primary
-        on-hover
-        f-size-15
-        font-weight-middle
-        f-col-2x
-      "
-      data-toggle="collapse"
-      data-target="#field-list-2"
-      aria-expanded="true"
-      aria-controls="field-list-2"
-    >
-      Locations<svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-chevron-down text-secondary"
-      >
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </div>
-
-    <div class="collapse" id="field-list-2">
-      <div class="mt-3 pb-1 map-pin-line position-relative">
-        <div class="d-flex">
-          <div class="d-flex align-items-center w-100 f-col-2x">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-map-pin me-3 f-icon-20 text-secondary"
-            >
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-            <div class="media-body">
-              <div class="text-secondary mb-2">Source locations</div>
-              <div
-                class="
-                  input-group input-group-sm
-                  dropdown dropdown-input-group
-                  filter-control-group
-                "
-              >
-                <input
-                  type="text"
-                  class="
-                    form-control
-                    bg-light
-                    dropdown-input-control
-                    is-filter-control
-                    shadow-none
-                  "
-                  filter-content="#location-group-type"
-                  filter-item=".dropdown-item"
-                />
-                <div class="input-group-append">
-                  <button
-                    type="button"
-                    class="
-                      btn btn-light
-                      border-left-0
-                      text-secondary text-dark-hover
-                      dropdown-toggle dropdown-toggle-split
-                      shadow-none
-                    "
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  ></button>
-                  <div
-                    class="
-                      dropdown-menu dropdown-menu-sm dropdown-menu-right
-                      w-100
-                      shadow
-                      dropdown-insert-click
-                    "
-                    id="location-group-type"
-                  >
-                    <div class="dropdown-item px-3">
-                      <label
-                        class="
-                          mb-0
-                          toggle-input toggle-input-success
-                          f-size-13
-                          is-filtered
-                        "
-                      >
-                        <input type="radio" name="age" />
-                        <span class="input-icon f-icon-20"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-circle"
-                          >
-                            <circle cx="12" cy="12" r="10"></circle></svg
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-circle"
-                          >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline
-                              points="22 4 12 14.01 9 11.01"
-                            ></polyline></svg
-                        ></span>
-                        <span class="is-filtered">Room IPC.001</span>
-                      </label>
-                    </div>
-                    <div class="dropdown-item px-3">
-                      <label
-                        class="mb-0 toggle-input toggle-input-success f-size-13"
-                      >
-                        <input type="radio" name="age" />
-                        <span class="input-icon f-icon-20"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-circle"
-                          >
-                            <circle cx="12" cy="12" r="10"></circle></svg
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-circle"
-                          >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline
-                              points="22 4 12 14.01 9 11.01"
-                            ></polyline></svg
-                        ></span>
-                        <span class="is-filtered">Room IPC.002</span>
-                      </label>
-                    </div>
-                    <div class="dropdown-item px-3">
-                      <label
-                        class="mb-0 toggle-input toggle-input-success f-size-13"
-                      >
-                        <input type="radio" name="age" />
-                        <span class="input-icon f-icon-20"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-circle"
-                          >
-                            <circle cx="12" cy="12" r="10"></circle></svg
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-circle"
-                          >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline
-                              points="22 4 12 14.01 9 11.01"
-                            ></polyline></svg
-                        ></span>
-                        <span class="is-filtered">Room IPC.003</span>
-                      </label>
-                    </div>
-                    <div class="dropdown-item px-3">
-                      <label
-                        class="mb-0 toggle-input toggle-input-success f-size-13"
-                      >
-                        <input type="radio" name="age" />
-                        <span class="input-icon f-icon-20"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-circle"
-                          >
-                            <circle cx="12" cy="12" r="10"></circle></svg
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-circle"
-                          >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline
-                              points="22 4 12 14.01 9 11.01"
-                            ></polyline></svg
-                        ></span>
-                        <span class="is-filtered">Room IPC.004</span>
-                      </label>
-                    </div>
-                    <div class="no-filter-results is-hidden">
-                      <div class="dropdown-item px-3">No results</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="d-flex mt-3">
-          <div class="d-flex align-items-center w-100 f-col-2x">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-map-pin me-3 f-icon-20 text-secondary"
-            >
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-            <div class="media-body">
-              <div class="text-secondary mb-2">Destination locations</div>
-              <div
-                class="
-                  input-group input-group-sm
-                  dropdown dropdown-input-group
-                  filter-control-group
-                "
-              >
-                <input
-                  type="text"
-                  class="
-                    form-control
-                    bg-light
-                    dropdown-input-control
-                    is-filter-control
-                    shadow-none
-                  "
-                  filter-content="#destination-group-type"
-                  filter-item=".dropdown-item"
-                />
-                <div class="input-group-append">
-                  <button
-                    type="button"
-                    class="
-                      btn btn-light
-                      border-left-0
-                      text-secondary text-dark-hover
-                      dropdown-toggle dropdown-toggle-split
-                    "
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  ></button>
-                  <div
-                    class="
-                      dropdown-menu dropdown-menu-sm dropdown-menu-right
-                      w-100
-                      shadow
-                      dropdown-insert-click
-                    "
-                    id="destination-group-type"
-                  >
-                    <div class="dropdown-item px-3">
-                      <label
-                        class="
-                          mb-0
-                          toggle-input toggle-input-success
-                          f-size-13
-                          is-filtered
-                        "
-                      >
-                        <input type="radio" name="age" />
-                        <span class="input-icon f-icon-20"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-circle"
-                          >
-                            <circle cx="12" cy="12" r="10"></circle></svg
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-circle"
-                          >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline
-                              points="22 4 12 14.01 9 11.01"
-                            ></polyline></svg
-                        ></span>
-                        <span class="is-filtered">Room IPC.001</span>
-                      </label>
-                    </div>
-                    <div class="dropdown-item px-3">
-                      <label
-                        class="mb-0 toggle-input toggle-input-success f-size-13"
-                      >
-                        <input type="radio" name="age" />
-                        <span class="input-icon f-icon-20"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-circle"
-                          >
-                            <circle cx="12" cy="12" r="10"></circle></svg
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-circle"
-                          >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline
-                              points="22 4 12 14.01 9 11.01"
-                            ></polyline></svg
-                        ></span>
-                        <span class="is-filtered">Room IPC.002</span>
-                      </label>
-                    </div>
-                    <div class="dropdown-item px-3">
-                      <label
-                        class="mb-0 toggle-input toggle-input-success f-size-13"
-                      >
-                        <input type="radio" name="age" />
-                        <span class="input-icon f-icon-20"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-circle"
-                          >
-                            <circle cx="12" cy="12" r="10"></circle></svg
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-circle"
-                          >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline
-                              points="22 4 12 14.01 9 11.01"
-                            ></polyline></svg
-                        ></span>
-                        <span class="is-filtered">Room IPC.003</span>
-                      </label>
-                    </div>
-                    <div class="dropdown-item px-3">
-                      <label
-                        class="mb-0 toggle-input toggle-input-success f-size-13"
-                      >
-                        <input type="radio" name="age" />
-                        <span class="input-icon f-icon-20"
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-circle"
-                          >
-                            <circle cx="12" cy="12" r="10"></circle></svg
-                          ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-circle"
-                          >
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline
-                              points="22 4 12 14.01 9 11.01"
-                            ></polyline></svg
-                        ></span>
-                        <span class="is-filtered">Room IPC.004</span>
-                      </label>
-                    </div>
-                    <div class="no-filter-results is-hidden">
-                      <div class="dropdown-item px-3">No results</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="pl-4 f-size-12 text-muted align-self-end f-col-mx">
-            If no destination location groups are added, then users will not be
-            prompted to select a destination location when raising a task of
-            this type.
-          </div>
-        </div>
+      <!-- start::boolean selector isDeadlineRequired -->
+      <div class="mt-2">
+        <label class="toggle-input toggle-input-success f-size-14">
+          <input
+            type="checkbox"
+            @change="onFormChange($event.target.checked, 'isDeadlineRequired')"
+            :checked="modelValue.isDeadlineRequired"
+            :disabled="readOnly"
+          />
+          <span class="input-icon f-icon-20 me-3"
+            ><feather-toggle-left /> <feather-toggle-right /> </span
+          >Is deadline required
+        </label>
       </div>
+      <!-- end::boolean selector isDeadlineRequired -->
+
+      <!-- start::boolean selector allowRisingOffDuty -->
+      <div class="mt-2">
+        <label class="toggle-input toggle-input-success f-size-14">
+          <input
+            type="checkbox"
+            @change="onFormChange($event.target.checked, 'allowRisingOffDuty')"
+            :checked="modelValue.allowRisingOffDuty"
+            :disabled="readOnly"
+          />
+          <span class="input-icon f-icon-20 me-3"
+            ><feather-toggle-left /> <feather-toggle-right /> </span
+          >Allow rising off duty
+        </label>
+      </div>
+      <!-- end::boolean selector allowRisingOffDuty -->
+
+      <!-- start::boolean selector createConversationOnRising -->
+      <div class="mt-2">
+        <label class="toggle-input toggle-input-success f-size-14">
+          <input
+            type="checkbox"
+            @change="
+              onFormChange($event.target.checked, 'createConversationOnRising')
+            "
+            :checked="modelValue.createConversationOnRising"
+            :disabled="readOnly"
+          />
+          <span class="input-icon f-icon-20 me-3"
+            ><feather-toggle-left /> <feather-toggle-right /> </span
+          >Create conversation on rising
+        </label>
+      </div>
+      <!-- end::boolean selector createConversationOnRising -->
+
+      <!-- start::boolean selector sendNotificationOnRising -->
+      <div class="mt-2">
+        <label class="toggle-input toggle-input-success f-size-14">
+          <input
+            type="checkbox"
+            @change="
+              onFormChange($event.target.checked, 'sendNotificationOnRising')
+            "
+            :checked="modelValue.sendNotificationOnRising"
+            :disabled="readOnly"
+          />
+          <span class="input-icon f-icon-20 me-3"
+            ><feather-toggle-left /> <feather-toggle-right /> </span
+          >Send notification on rising
+        </label>
+      </div>
+      <!-- end::boolean selector sendNotificationOnRising -->
+
+      <!-- start::boolean selector sendNotificationOnChangeStatus -->
+      <div class="mt-2">
+        <label class="toggle-input toggle-input-success f-size-14">
+          <input
+            type="checkbox"
+            @change="
+              onFormChange(
+                $event.target.checked,
+                'sendNotificationOnChangeStatus'
+              )
+            "
+            :checked="modelValue.sendNotificationOnChangeStatus"
+            :disabled="readOnly"
+          />
+          <span class="input-icon f-icon-20 me-3"
+            ><feather-toggle-left /> <feather-toggle-right /> </span
+          >Send notification on change status
+        </label>
+      </div>
+      <!-- end::boolean selector sendNotificationOnChangeStatus -->
+
+      <!-- start::boolean selector sendNotificationOnDeadlinePassed -->
+      <div class="mt-2">
+        <label class="toggle-input toggle-input-success f-size-14">
+          <input
+            type="checkbox"
+            @change="
+              onFormChange(
+                $event.target.checked,
+                'sendNotificationOnDeadlinePassed'
+              )
+            "
+            :checked="modelValue.sendNotificationOnDeadlinePassed"
+            :disabled="readOnly"
+          />
+          <span class="input-icon f-icon-20 me-3"
+            ><feather-toggle-left /> <feather-toggle-right /> </span
+          >Send notification on deadline passed
+        </label>
+      </div>
+      <!-- end::boolean selector sendNotificationOnDeadlinePassed -->
+
+      <!-- start::boolean selector sendNotificationOnCountdownStarted -->
+      <div class="mt-2">
+        <label class="toggle-input toggle-input-success f-size-14">
+          <input
+            type="checkbox"
+            @change="
+              onFormChange(
+                $event.target.checked,
+                'sendNotificationOnCountdownStarted'
+              )
+            "
+            :checked="modelValue.sendNotificationOnCountdownStarted"
+            :disabled="readOnly"
+          />
+          <span class="input-icon f-icon-20 me-3"
+            ><feather-toggle-left /> <feather-toggle-right /> </span
+          >Send notification on countdown started
+        </label>
+      </div>
+      <!-- end::boolean selector sendNotificationOnCountdownStarted -->
     </div>
+    <!-- start:: collapse general -->
 
     <div class="border-top border-secondary-light f-col-2x my-3"></div>
 
+    <!-- start:: collapse locations -->
     <div
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseTypeLocations"
       class="
         d-flex
         align-self-center
@@ -694,52 +323,63 @@
         font-weight-middle
         f-col-2x
       "
-      data-toggle="collapse"
-      data-target="#field-list-3"
-      aria-expanded="true"
-      aria-controls="field-list-3"
     >
-      Operation names<svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-chevron-down text-secondary"
-      >
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
+      Locations
+      <feather-chevron-down class="text-secondary" />
     </div>
-
-    <div class="collapse" id="field-list-3">
+    <div class="collapse" id="collapseTypeLocations">
+      <!-- start::type location -->
       <div class="d-flex mt-3">
         <div class="d-flex align-items-center w-100 f-col-2x">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="
-              feather feather-phone
-              me-3
-              align-self-center
-              f-icon-20
-              text-secondary
-            "
-          >
-            <path
-              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-            ></path>
-          </svg>
+          <feather-map-pin
+            class="me-3 align-self-center f-icon-20 text-secondary"
+          />
+          <div class="media-body">
+            <div class="text-secondary mb-2">
+              Location <span class="text-danger">*</span>
+            </div>
+            <div class="input-group input-group-sm border-0">
+              <input
+                @input="onFormChange($event.target.value, 'locationId')"
+                :value="modelValue.locationId"
+                type="text"
+                :disabled="readOnly"
+                class="form-control form-control-sm bg-light shadow-none"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- start::type location -->
+    </div>
+    <!-- end:: collapse locations -->
+
+    <div class="border-top border-secondary-light f-col-2x my-3"></div>
+
+    <!-- start:: collapse operations -->
+    <div
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseTypeOperations"
+      class="
+        d-flex
+        align-self-center
+        justify-content-between
+        text-primary
+        on-hover
+        f-size-15
+        font-weight-middle
+        f-col-2x
+      "
+    >
+      Operation names
+      <feather-chevron-down class="text-secondary" />
+    </div>
+    <div class="collapse" id="collapseTypeOperations">
+      <div class="d-flex mt-3">
+        <div class="d-flex align-items-center w-100 f-col-2x">
+          <feather-phone
+            class="me-3 align-self-center f-icon-20 text-secondary"
+          />
           <div class="media-body">
             <div class="text-secondary mb-2">Accept call</div>
             <div class="input-group input-group-sm border-0">
@@ -868,10 +508,14 @@
         </div>
       </div>
     </div>
+    <!-- end:: collapse operations -->
 
     <div class="border-top border-secondary-light f-col-2x my-3"></div>
 
+    <!-- start:: collapse custom fields -->
     <div
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseTypeCustomFields"
       class="
         d-flex
         align-self-center
@@ -902,8 +546,7 @@
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
     </div>
-
-    <div class="collapse" id="field-list-4">
+    <div class="collapse" id="collapseTypeCustomFields">
       <div class="card bg-grey-light border-secondary-light mt-3 f-col-2x">
         <div class="d-flex">
           <div class="media-body py-2 px-3">
@@ -1099,10 +742,12 @@
         >
       </div>
     </div>
+    <!-- end:: collapse custom fields -->
   </perfect-scrollbar>
   <!-- end::task type definition  -->
 </template>
 <script>
+import { ref } from "vue";
 import FeatherBookmark from "@/icons/FeatherBookmark";
 import FeatherChevronDown from "@/icons/FeatherChevronDown";
 import FeatherFlag from "@/icons/FeatherFlag";
@@ -1110,10 +755,13 @@ import FeatherCheck from "@/icons/FeatherCheck";
 import FeatherUsers from "@/icons/FeatherUsers";
 import FeatherToggleLeft from "@/icons/FeatherToggleLeft";
 import FeatherToggleRight from "@/icons/FeatherToggleRight";
+import { SWATCH_COLORS } from "@/store/enums/EnumTypes";
+import FeatherMapPin from "@/icons/FeatherMapPin";
 export default {
-  props: ["modelValue"],
+  props: ["modelValue", "readOnly"],
   emits: ["update:modelValue"],
   components: {
+    FeatherMapPin,
     FeatherToggleRight,
     FeatherToggleLeft,
     FeatherUsers,
@@ -1123,14 +771,16 @@ export default {
     FeatherBookmark,
   },
   setup(props, { emit }) {
-    const onFormChange = (event, property) => {
-      console.log("update:modelValue", event.target.value);
+    const swatchColors = ref(SWATCH_COLORS);
+    const onFormChange = (value, property) => {
+      console.log("update:modelValue", value);
       const form = { ...props.modelValue };
-      form[property] = event.target.value;
+      form[property] = value;
       emit("update:modelValue", form);
     };
 
     return {
+      swatchColors,
       onFormChange,
     };
   },

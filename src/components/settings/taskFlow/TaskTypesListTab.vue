@@ -115,18 +115,18 @@
                       v-for="item of taskTypes"
                       :key="item.id"
                       class="task-item on-hover hover-action-group"
-                      @click="onSelectTaskType(item)"
+                      @click="onToggleSelectTaskType(item)"
                     >
                       <td class="ps-2">
                         <div class="d-flex align-items-center overflow-hidden">
                           <span class="f-icon me-3"
                             ><i
                               class="f-icon f-icon-24 rounded"
-                              :style="`background-color: #${item.badgeColour }`"
+                              :style="`background-color: #${item.badgeColour}`"
                             ></i
                           ></span>
                           <div class="media-body font-weight-middle">
-                            {{ item.title }} {{item.badgeColour}}
+                            {{ item.title }}
                           </div>
                         </div>
                       </td>
@@ -248,7 +248,7 @@
                 <span class="f-icon me-3"
                   ><i
                     class="f-icon f-icon-24 rounded"
-                    :style="`background-color: #${selectedTaskType.badgeColour.match(/\b[0-9A-Fa-f]{6}\b/g)}`"
+                    :style="`background-color: #${selectedTaskType.badgeColour}`"
                   ></i
                 ></span>
                 <div class="overflow-hidden ms-n1">
@@ -259,36 +259,57 @@
 
                 <button
                   class="btn btn-sm btn-secondary-light shadow-none ms-auto"
-                  @click="onSelectTaskType(selectedTaskType)"
+                  @click="onToggleSelectTaskType(selectedTaskType)"
                 >
                   <feather-x />
                 </button>
               </div>
 
-              <div class="d-flex flex-column flex-fill mt-3">
-                <div
-                  class="
-                    position-relative
-                    overflow-hidden
-                    d-flex
-                    flex-column flex-fill
-                  "
+              <div class="flex-fill position-relative overflow-hidden mt-4">
+                <perfect-scrollbar
+                  class="d-flex flex-column position-absolute h-100 w-100 pr-3"
                 >
-                  <task-type-definition-form />
-                </div>
+                  <TaskTypeDefinitionForm v-if="editType" v-model="editType" />
+                  <TaskTypeDefinitionForm v-else v-model="selectedTaskType" :read-only="true" />
+                </perfect-scrollbar>
               </div>
 
+              <!-- start:: type drawer actions buttons -->
               <div class="btn-group btn-group-sm mt-3">
                 <button
+                  v-if="editType"
                   type="button"
                   class="btn btn-sm rounded w-50 btn-primary me-4"
+                  @click="onSaveTaskType"
+                >
+                  Save
+                </button>
+                <button
+                  v-else
+                  type="button"
+                  class="btn btn-sm rounded w-50 btn-primary me-4"
+                  @click="onEditTaskType"
                 >
                   Edit
                 </button>
-                <button type="button" class="btn btn-sm rounded w-50 btn-info">
+                <button
+                  v-if="editType"
+                  @click="onCancelEditTaskType"
+                  type="button"
+                  class="btn btn-sm rounded w-50 btn-secondary-light"
+                >
+                  Cancel
+                </button>
+                <button
+                  v-else
+                  type="button"
+                  class="btn btn-sm rounded w-50 btn-info"
+                >
                   Clone
                 </button>
               </div>
+              <!-- end:: type drawer actions buttons -->
+
             </div>
           </div>
         </div>
@@ -299,8 +320,8 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { computed } from "vue";
-import { Mutations } from "@/store/enums/EnumTypes";
+import { computed, ref } from "vue";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import FeatherX from "@/icons/FeatherX";
 import FeatherChevronsLeft from "@/icons/FeatherChevronsLeft";
 import FeatherChevronRight from "@/icons/FeatherChevronRight";
@@ -320,11 +341,12 @@ export default {
     FeatherX,
   },
   setup() {
+    const editType = ref();
     const store = useStore();
     const taskTypes = computed(() => store.getters.getTaskTypes);
     const selectedTaskType = computed(() => store.getters.getSelectedTaskType);
 
-    const onSelectTaskType = (item) => {
+    const onToggleSelectTaskType = (item) => {
       if (!selectedTaskType.value || selectedTaskType.value.id !== item.id) {
         store.commit(Mutations.setSelectedTaskType, item);
       } else {
@@ -340,12 +362,32 @@ export default {
       console.log(select);
     };
 
+    const onEditTaskType = () => {
+      editType.value = Object.assign({}, selectedTaskType.value);
+    };
+
+    const onCancelEditTaskType = () => {
+      editType.value = null;
+    };
+
+    const onSaveTaskType = () => {
+      store.dispatch(Actions.onUpdateType, editType.value).then(() => {
+        store.dispatch(Actions.onGetTypes);
+        onToggleSelectTaskType(selectedTaskType.value);
+        onCancelEditTaskType();
+      });
+    };
+
     return {
       selectedTaskType,
       taskTypes,
+      editType,
       onSelectPagination,
-      onSelectTaskType,
+      onToggleSelectTaskType,
       onSelectPerPage,
+      onEditTaskType,
+      onCancelEditTaskType,
+      onSaveTaskType,
     };
   },
 };

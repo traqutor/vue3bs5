@@ -26,7 +26,7 @@ export default {
       });
   },
 
-  [Actions.onCreateType]: ({ commit, getters }, type) => {
+  [Actions.onCreateType]: ({ commit }, type) => {
     return new Promise((resolve) => {
       commit(Mutations.setIsTypePost, true);
 
@@ -35,11 +35,7 @@ export default {
       axiosWebApiInstance
         .post(url, type)
         .then(function (response) {
-          console.log("onCreateType response:", response);
           if (response.data.isOk) {
-            const types = getters.getTaskTypes;
-            types.unshift(response.data);
-            commit(Mutations.setTaskTypes, types);
             resolve();
           } else {
             console.error("onCreateType error:", response.data.message);
@@ -53,7 +49,7 @@ export default {
     });
   },
 
-  [Actions.onUpdateType]: ({ commit, getters }, type) => {
+  [Actions.onUpdateType]: ({ commit }, type) => {
     return new Promise((resolve) => {
       commit(Mutations.setIsTypePost, true);
 
@@ -62,16 +58,7 @@ export default {
       axiosWebApiInstance
         .post(url, type)
         .then(function (response) {
-          console.log("onUpdateType response:", response);
           if (response.data.isOk) {
-            type = response.data.type; // todo check type
-            const types = getters.getTaskTypes;
-            const idx = types.indexOf((typ) => typ.id === type.id);
-            if (idx !== -1) {
-              types.splice(idx, 1, type);
-              commit(Mutations.setTaskTypes, types);
-            }
-
             resolve();
           } else {
             console.error("onUpdateType error:", response.data.message);
