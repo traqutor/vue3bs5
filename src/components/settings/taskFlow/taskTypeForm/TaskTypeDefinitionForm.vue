@@ -354,181 +354,19 @@
     </div>
     <!-- end:: collapse locations -->
 
-    <div class="border-top border-secondary-light f-col-2x my-3"></div>
-
     <!-- start:: collapse operations -->
-    <div
-      data-bs-toggle="collapse"
-      data-bs-target="#collapseTypeOperations"
-      class="
-        d-flex
-        align-self-center
-        justify-content-between
-        text-primary
-        on-hover
-        f-size-15
-        font-weight-middle
-        f-col-2x
-      "
-    >
-      Operation names
-      <feather-chevron-down class="text-secondary" />
-    </div>
-    <div class="collapse" id="collapseTypeOperations">
-      <div
-        class="d-flex mt-3"
-        v-for="(action, index) of modelValue.requiredActions"
-        :key="action.id"
-      >
-        <div class="d-flex align-items-center w-100 f-col-2x">
-          <feather-phone
-            class="me-3 align-self-center f-icon-20 text-secondary"
-          />
-          <div class="media-body">
-            <div class="text-secondary mb-2">{{ action.title }}</div>
-          </div>
-          <feather-move class="f-icon-18 cursor-move" />
-          <feather-trash2
-            class="f-icon-18 mx-3 on-hover text-danger"
-            @click="onRemoveActionFromType(index)"
-          />
-        </div>
-      </div>
-
-      <!-- start:: add required actions dropdown-->
-      <div class="my-3 text-right f-col-2x dropup">
-        <span class="text-primary on-hover" data-bs-toggle="dropdown">
-          <div
-            v-if="isAddingAction"
-            class="spinner-border spinner-border-sm"
-            role="status"
-          >
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <span>
-            <feather-plus class="f-icon-18 me-1" />
-            <span>Add action</span>
-          </span>
-        </span>
-        <ul class="dropdown-menu">
-          <li v-for="action of requiredActions" :key="action.id">
-            <button
-              class="dropdown-item"
-              type="button"
-              :disabled="
-                modelValue.requiredActions.find(
-                  (required) => required.id === action.id
-                )
-              "
-              @click="onAddActionToType(action)"
-            >
-              {{ action.title }}
-            </button>
-          </li>
-        </ul>
-      </div>
-      <!-- end:: add required actions dropdown-->
-    </div>
+    <RequiredActionsCollapse :task-type="modelValue" />
     <!-- end:: collapse operations -->
 
-    <div class="border-top border-secondary-light f-col-2x my-3"></div>
-
     <!-- start:: collapse custom fields -->
-    <div
-      data-bs-toggle="collapse"
-      data-bs-target="#collapseTypeCustomFields"
-      class="
-        d-flex
-        align-self-center
-        justify-content-between
-        text-primary
-        on-hover
-        f-size-15
-        font-weight-middle
-        f-col-2x
-      "
-      data-toggle="collapse"
-      data-target="#field-list-4"
-      aria-expanded="true"
-      aria-controls="field-list-4"
-    >
-      Custom Fields<svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-chevron-down text-secondary"
-      >
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </div>
-    <div class="collapse" id="collapseTypeCustomFields">
-      <div
-        class="d-flex mt-3"
-        v-for="(field, index) of modelValue.customFields"
-        :key="field.id"
-      >
-        <div class="d-flex align-items-center w-100 f-col-2x">
-          <feather-phone
-            class="me-3 align-self-center f-icon-20 text-secondary"
-          />
-          <div class="media-body">
-            <div class="text-secondary mb-2">{{ field.title }}</div>
-          </div>
-          <feather-move class="f-icon-18 cursor-move" />
-
-          <feather-trash2
-            class="f-icon-18 mx-3 text-danger"
-            :disabled="isAddingAction"
-            @click="onRemoveFieldFromType(index)"
-          />
-        </div>
-      </div>
-
-      <!-- start:: add custom fields dropdown-->
-      <div class="my-3 text-right f-col-2x dropup">
-        <span class="text-primary on-hover" data-bs-toggle="dropdown">
-          <div
-            v-if="isAddingField"
-            class="spinner-border spinner-border-sm"
-            role="status"
-          >
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <span>
-            <feather-plus class="f-icon-18 me-1" />
-            <span>Add field</span>
-          </span></span
-        >
-
-        <ul class="dropdown-menu">
-          <li v-for="field of customFields" :key="field.id">
-            <button
-              class="dropdown-item"
-              type="button"
-              :disabled="
-                modelValue.customFields.find((custom) => custom.id === field.id)
-              "
-              @click="onAddFieldToType(field)"
-            >
-              {{ field.title }}
-            </button>
-          </li>
-        </ul>
-      </div>
-      <!-- end:: add custom fields dropdown-->
-    </div>
+    <CustomFieldsCollapse :task-type="modelValue" />
     <!-- end:: collapse custom fields -->
   </perfect-scrollbar>
   <!-- end::task type definition  -->
 </template>
 <script>
-import { computed, ref } from "vue";
+import { ref } from "vue";
+import { SWATCH_COLORS } from "@/store/enums/EnumTypes";
 import FeatherBookmark from "@/icons/FeatherBookmark";
 import FeatherChevronDown from "@/icons/FeatherChevronDown";
 import FeatherFlag from "@/icons/FeatherFlag";
@@ -536,21 +374,16 @@ import FeatherCheck from "@/icons/FeatherCheck";
 import FeatherUsers from "@/icons/FeatherUsers";
 import FeatherToggleLeft from "@/icons/FeatherToggleLeft";
 import FeatherToggleRight from "@/icons/FeatherToggleRight";
-import { Actions, SWATCH_COLORS } from "@/store/enums/EnumTypes";
 import FeatherMapPin from "@/icons/FeatherMapPin";
-import FeatherPhone from "@/icons/FeatherPhone";
-import FeatherPlus from "@/icons/FeatherPlus";
-import FeatherTrash2 from "@/icons/FeatherTrash2";
-import { useStore } from "vuex";
-import FeatherMove from "@/icons/FeatherMove";
+import RequiredActionsCollapse from "@/components/settings/taskFlow/taskTypeForm/RequiredActionsCollapse";
+import CustomFieldsCollapse from "@/components/settings/taskFlow/taskTypeForm/CustomFieldsCollapse";
+
 export default {
   props: ["modelValue", "readOnly"],
   emits: ["update:modelValue"],
   components: {
-    FeatherMove,
-    FeatherTrash2,
-    FeatherPlus,
-    FeatherPhone,
+    CustomFieldsCollapse,
+    RequiredActionsCollapse,
     FeatherMapPin,
     FeatherToggleRight,
     FeatherToggleLeft,
@@ -562,104 +395,16 @@ export default {
   },
   setup(props, { emit }) {
     const swatchColors = ref(SWATCH_COLORS);
-    const isAddingAction = ref(false);
-    const isAddingField = ref(false);
-
-    const store = useStore();
-    const requiredActions = computed(() => store.getters.getRequiredActions);
-    const customFields = computed(() => store.getters.getCustomFields);
 
     const onFormChange = (value, property) => {
-      console.log("update:modelValue", value);
       const form = { ...props.modelValue };
       form[property] = value;
       emit("update:modelValue", form);
     };
 
-    const onAddActionToType = (action) => {
-      isAddingAction.value = true;
-      const form = { ...props.modelValue };
-      form.requiredActions.push(action);
-      store
-        .dispatch(Actions.onAddRequiredActionsToType, {
-          typeId: +props.modelValue.id,
-          ids: props.modelValue.requiredActions.map((action) => action.id),
-        })
-        .then(() => {
-          emit("update:modelValue", form);
-          isAddingAction.value = false;
-        })
-        .catch(() => {
-          isAddingAction.value = false;
-        });
-    };
-
-    const onRemoveActionFromType = (index) => {
-      isAddingAction.value = true;
-      const form = { ...props.modelValue };
-      form.requiredActions.splice(index, 1);
-      store
-        .dispatch(Actions.onRemoveRequiredActionsFromType, {
-          typeId: +props.modelValue.id,
-          ids: props.modelValue.requiredActions.map((action) => action.id),
-        })
-        .then(() => {
-          emit("update:modelValue", form);
-          isAddingAction.value = false;
-        })
-        .catch(() => {
-          isAddingAction.value = false;
-        });
-    };
-
-    const onAddFieldToType = (field) => {
-      isAddingField.value = true;
-      const form = { ...props.modelValue };
-      form.customFields.push(field);
-      store
-        .dispatch(Actions.onAddCustomFieldsToType, {
-          typeId: +props.modelValue.id,
-          ids: props.modelValue.customFields.map((field) => field.id),
-        })
-        .then(() => {
-          emit("update:modelValue", form);
-          isAddingField.value = false;
-        })
-        .catch(() => {
-          isAddingField.value = false;
-        });
-      emit("update:modelValue", form);
-    };
-
-    const onRemoveFieldFromType = (index) => {
-      const form = { ...props.modelValue };
-      form.customFields.splice(index, 1);
-      store
-        .dispatch(Actions.onRemoveCustomFieldsFromType, {
-          typeId: +props.modelValue.id,
-          ids: props.modelValue.customFields.map((field) => field.id),
-        })
-        .then(() => {
-          emit("update:modelValue", form);
-          isAddingField.value = false;
-        })
-        .catch(() => {
-          isAddingField.value = false;
-        });
-      emit("update:modelValue", form);
-    };
-
     return {
-      isAddingAction,
-      isAddingField,
       swatchColors,
-      requiredActions,
-      customFields,
       onFormChange,
-      onAddActionToType,
-      onRemoveActionFromType,
-      onAddFieldToType,
-      onRemoveFieldFromType,
     };
   },
 };

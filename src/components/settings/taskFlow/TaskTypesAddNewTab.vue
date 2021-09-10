@@ -26,7 +26,7 @@
   <!-- end::task types add new tab component -->
 </template>
 <script>
-import TaskTypeDefinitionForm from "@/components/settings/taskFlow/TaskTypeDefinitionForm";
+import TaskTypeDefinitionForm from "@/components/settings/taskFlow/taskTypeForm/TaskTypeDefinitionForm";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import {

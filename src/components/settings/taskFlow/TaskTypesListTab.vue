@@ -328,7 +328,7 @@ import FeatherChevronRight from "@/icons/FeatherChevronRight";
 import FeatherMoreHorizontal from "@/icons/FeatherMoreHorizontal";
 import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
 import FeatherSearch from "@/icons/FeatherSearch";
-import TaskTypeDefinitionForm from "@/components/settings/taskFlow/TaskTypeDefinitionForm";
+import TaskTypeDefinitionForm from "@/components/settings/taskFlow/taskTypeForm/TaskTypeDefinitionForm";
 
 export default {
   components: {

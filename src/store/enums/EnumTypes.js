@@ -71,6 +71,15 @@ const Actions = {
   onSearchCustomFields: "onSearchCustomFields",
   onGetCustomFields: "onGetCustomFields",
   onGetRequiredActions: "onGetRequiredActions",
+
+  // tasks actions types
+  onGetTaskList: "onGetTaskList",
+  onCreateTask: "onCreateTask",
+  onStartTask: "onStartTask",
+  onOnHoldTask: "onOnHoldTask",
+  onQueueTask: "onQueueTask",
+  onCompleteTask: "onCompleteTask",
+  onReturnTask: "onReturnTask",
 };
 
 const Mutations = {
