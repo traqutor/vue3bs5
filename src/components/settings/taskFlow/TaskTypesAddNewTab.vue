@@ -35,7 +35,6 @@ import {
   TASK_TYPE_EMPTY,
   TASK_TYPES_VIEW_MODES,
 } from "@/store/enums/EnumTypes";
-import { guidsGetOne } from "@/services/guids.service";
 export default {
   components: { TaskTypeDefinitionForm },
   setup() {
@@ -43,7 +42,6 @@ export default {
     const taskType = ref(Object.assign({}, TASK_TYPE_EMPTY));
     const store = useStore();
     const onCreateTaskType = () => {
-      taskType.value.id = guidsGetOne();
       store
         .dispatch(Actions.onCreateType, taskType.value)
         .then(() => {

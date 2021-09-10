@@ -1,5 +1,3 @@
-import { guidsGetOne } from "@/services/guids.service";
-
 const SocketReceivers = {
   ReceivedMessageNotification: "ReceivedMessageNotification",
   UserAddedToConversationNotification: "UserAddedToConversationNotification",
@@ -129,7 +127,7 @@ const TASK_TYPES_VIEW_MODES = {
   ADD_NEW: "Add ",
 };
 const TASK_TYPE_EMPTY = {
-  id: guidsGetOne(),
+  id: "",
   minimumRequiredParticipants: 0,
   deadlineCountdownInterval: 0,
   locationId: "",

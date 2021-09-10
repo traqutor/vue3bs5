@@ -83,6 +83,8 @@ export default {
         dispatch(Actions.onGetConversations, { refresh: true });
         dispatch(Actions.onGetThumbnails);
         dispatch(Actions.onGetTypes);
+        dispatch(Actions.onSearchRequiredActions);
+        dispatch(Actions.onSearchCustomFields);
 
         resolve(user);
       }

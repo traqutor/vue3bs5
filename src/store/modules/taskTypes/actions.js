@@ -145,75 +145,50 @@ export default {
     });
   },
 
-  [Actions.onAddCustomFieldsToType]: ({ commit, getters }, { typeId, ids }) => {
-    return new Promise((resolve) => {
-      commit(Mutations.setIsTypePost, true);
-
+  [Actions.onAddCustomFieldsToType]: (_, { typeId, ids }) => {
+    return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/AddCustomFieldsToType`;
 
       axiosWebApiInstance
         .post(url, { typeId, ids })
         .then(function (response) {
-          console.log("onAddCustomFieldsToType response:", response);
           if (response.data.isOk) {
-            const types = getters.getTaskTypes;
-            const idx = types.indexOf((typ) => typ.id === typeId);
-            if (idx !== -1) {
-              types[idx].customFields = response.data.customFields;
-
-              commit(Mutations.setTaskTypes, types);
-            }
-
             resolve();
           } else {
             console.error(
               "onAddCustomFieldsToType error:",
               response.data.message
             );
+            reject();
           }
-          commit(Mutations.setIsTypePost, false);
         })
         .catch((error) => {
-          commit(Mutations.setIsTypePost, false);
           console.error("onAddCustomFieldsToType error:", error);
+          reject();
         });
     });
   },
 
-  [Actions.onAddRequiredActionsToType]: (
-    { commit, getters },
-    { typeId, ids }
-  ) => {
-    return new Promise((resolve) => {
-      commit(Mutations.setIsTypePost, true);
-
+  [Actions.onAddRequiredActionsToType]: (_, { typeId, ids }) => {
+    return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/AddRequiredActionsToType`;
 
       axiosWebApiInstance
         .post(url, { typeId, ids })
         .then(function (response) {
-          console.log("onAddRequiredActionsToType response:", response);
           if (response.data.isOk) {
-            const types = getters.getTaskTypes;
-            const idx = types.indexOf((typ) => typ.id === typeId);
-            if (idx !== -1) {
-              types[idx].requiredActions = response.data.requiredActions;
-
-              commit(Mutations.setTaskTypes, types);
-            }
-
             resolve();
           } else {
             console.error(
               "onAddRequiredActionsToType error:",
               response.data.message
             );
+            reject();
           }
-          commit(Mutations.setIsTypePost, false);
         })
         .catch((error) => {
-          commit(Mutations.setIsTypePost, false);
           console.error("onAddRequiredActionsToType error:", error);
+          reject();
         });
     });
   },
@@ -269,13 +244,8 @@ export default {
     });
   },
 
-  [Actions.onRemoveCustomFieldsFromType]: (
-    { commit, getters },
-    { typeId, ids }
-  ) => {
-    return new Promise((resolve) => {
-      commit(Mutations.setIsTypePost, true);
-
+  [Actions.onRemoveCustomFieldsFromType]: (_, { typeId, ids }) => {
+    return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/RemoveCustomFieldsFromType`;
 
       axiosWebApiInstance
@@ -284,42 +254,24 @@ export default {
           console.log("onRemoveCustomFieldsFromType response:", response);
 
           if (response.data.isOk) {
-            const types = getters.getTaskTypes;
-            const idx = types.indexOf((typ) => typ.id === typeId);
-
-            if (idx !== -1) {
-              types[idx].customFields = types[idx].customFields.filter(
-                (field) => {
-                  return ids.filter((id) => id !== field.id);
-                }
-              );
-
-              commit(Mutations.setTaskTypes, types);
-            }
-
             resolve();
           } else {
             console.error(
               "onRemoveCustomFieldsFromType error:",
               response.data.message
             );
+            reject();
           }
-          commit(Mutations.setIsTypePost, false);
         })
         .catch((error) => {
-          commit(Mutations.setIsTypePost, false);
           console.error("onRemoveCustomFieldsFromType error:", error);
+          reject();
         });
     });
   },
 
-  [Actions.onRemoveRequiredActionsFromType]: (
-    { commit, getters },
-    { typeId, ids }
-  ) => {
-    return new Promise((resolve) => {
-      commit(Mutations.setIsTypePost, true);
-
+  [Actions.onRemoveRequiredActionsFromType]: (_, { typeId, ids }) => {
+    return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/RemoveRequiredActionsFromType`;
 
       axiosWebApiInstance
@@ -328,31 +280,18 @@ export default {
           console.log("onRemoveRequiredActionsFromType response:", response);
 
           if (response.data.isOk) {
-            const types = getters.getTaskTypes;
-            const idx = types.indexOf((typ) => typ.id === typeId);
-
-            if (idx !== -1) {
-              types[idx].requiredActions = types[idx].requiredActions.filter(
-                (field) => {
-                  return ids.filter((id) => id !== field.id);
-                }
-              );
-
-              commit(Mutations.setTaskTypes, types);
-            }
-
             resolve();
           } else {
             console.error(
               "onRemoveRequiredActionsFromType error:",
               response.data.message
             );
+            reject();
           }
-          commit(Mutations.setIsTypePost, false);
         })
         .catch((error) => {
-          commit(Mutations.setIsTypePost, false);
           console.error("onRemoveRequiredActionsFromType error:", error);
+          reject();
         });
     });
   },
@@ -464,9 +403,57 @@ export default {
     });
   },
 
-  [Actions.onSearchRequiredActions]: () => {},
+  [Actions.onSearchRequiredActions]: ({ commit }) => {
+    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/SearchRequiredActions`;
 
-  [Actions.onSearchCustomFields]: () => {},
+    axiosWebApiInstance
+      .post(url, {
+        page: 1,
+        query: "",
+      })
+      .then(function (response) {
+        if (response.data.response.isOk) {
+          commit(
+            Mutations.setTaskTypesRequiredActions,
+            response.data.requiredActions
+          );
+        } else {
+          console.error(
+            "onSearchRequiredActions error:",
+            response.data.response.message
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("onSearchRequiredActions error:", error);
+      });
+  },
+
+  [Actions.onSearchCustomFields]: ({ commit }) => {
+    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/SearchCustomFields`;
+
+    axiosWebApiInstance
+      .post(url, {
+        page: 1,
+        query: "",
+      })
+      .then(function (response) {
+        if (response.data.response.isOk) {
+          commit(
+            Mutations.setTaskTypesCustomFields,
+            response.data.customFields
+          );
+        } else {
+          console.error(
+            "onSearchCustomFields error:",
+            response.data.response.message
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("onSearchCustomFields error:", error);
+      });
+  },
 
   [Actions.onGetCustomFields]: ({ commit }) => {
     const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/GetCustomFields?Page=1`;
