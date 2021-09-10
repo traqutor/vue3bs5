@@ -85,6 +85,7 @@ export default {
         dispatch(Actions.onGetTypes);
         dispatch(Actions.onSearchRequiredActions);
         dispatch(Actions.onSearchCustomFields);
+        dispatch(Actions.onGetTaskList);
 
         resolve(user);
       }

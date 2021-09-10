@@ -1,6 +1,6 @@
-import Mutations from "./mutations";
-import Actions from "./actions";
-import Getters from "./getters";
+import Mutations from "./settingsMutations";
+import Actions from "./settingsActions";
+import Getters from "./settingsGetters";
 
 const settingsModule = {
   state() {

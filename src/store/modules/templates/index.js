@@ -1,6 +1,6 @@
-import Mutations from "./mutations";
-import Actions from "./actions";
-import Getters from "./getters";
+import Mutations from "./templateMutations";
+import Actions from "./templatesActions";
+import Getters from "./templateGetters";
 import {
   QUICK_MESSAGES,
   TEMPLATE_VIEW_MODES,

@@ -1,6 +1,6 @@
-import Mutations from "./mutations";
-import Getters from "./getters";
-import Actions from "./actions";
+import Mutations from "./mediaMutations";
+import Getters from "./mediaGetters";
+import Actions from "./mediaActions";
 import {
   MEDIA_DRAWER_VIEW_MODES,
   MEDIA_ITEM_SIZES,

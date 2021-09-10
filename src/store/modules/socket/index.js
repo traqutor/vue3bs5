@@ -1,6 +1,6 @@
-import Mutations from "./mutations";
-import Actions from "./actions";
-import Getters from "./getters";
+import Mutations from "./socketMutations";
+import Actions from "./socketActions";
+import Getters from "./socketGetters";
 
 const socketModule = {
   state() {

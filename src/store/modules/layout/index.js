@@ -1,6 +1,6 @@
-import Mutations from "./mutations.js";
-import Actions from "./actions.js";
-import Getters from "./getters.js";
+import Mutations from "./layoutMutations.js";
+import Actions from "./layoutActions.js";
+import Getters from "./layoutGetters.js";
 
 import { VISIBILITIES } from "@/const";
 

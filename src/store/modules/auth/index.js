@@ -1,6 +1,6 @@
-import Mutations from "./mutations";
-import Actions from "./actions";
-import Getters from "./getters";
+import Mutations from "./authMutations";
+import Actions from "./authActions";
+import Getters from "./authGetters";
 
 const authModule = {
   state() {

@@ -1,6 +1,6 @@
-import Mutations from "./mutations";
-import Actions from "./actions";
-import Getters from "./getters";
+import Mutations from "./typesMutations";
+import Actions from "./typesActions";
+import Getters from "./typeGetters";
 import { TASK_TYPES_VIEW_MODES } from "@/store/enums/EnumTypes";
 
 const taskTypesModule = {

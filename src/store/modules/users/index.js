@@ -1,6 +1,6 @@
-import Mutations from "./mutations";
-import Getters from "./getters";
-import Actions from "./actions";
+import Mutations from "./userMutations";
+import Getters from "./userGetters";
+import Actions from "./userActions";
 
 const usersModule = {
   state() {

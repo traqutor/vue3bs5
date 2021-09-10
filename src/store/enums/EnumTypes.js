@@ -128,6 +128,12 @@ const Mutations = {
   setTaskTypesViewMode: "setTaskTypesViewMode",
   setTaskTypesCustomFields: "setTaskTypesCustomFields",
   setTaskTypesRequiredActions: "setTaskTypesRequiredActions",
+
+  // tasks mutation types
+
+  setTasksList: "setTasksList",
+  setIsTasksLoading: "setIsTasksLoading",
+  setTasksViewMode: "setTasksViewMode",
 };
 
 //taskTypes
@@ -166,6 +172,16 @@ const SWATCH_COLORS = [
   { color: "f2f81b", className: "todo-label-6" },
   { color: "1c2ef8", className: "todo-label-7" },
 ];
+
+//taskTypes
+const TASKS_VIEW_MODES = {
+  LIST: "List",
+  BOARD: "Board",
+  MAP: "Board",
+  RAISE: "Raise",
+  MANAGE: "Manage",
+  PROGRESS: "Progress",
+};
 
 //messages
 const TEMPLATE_VIEW_MODES = {
@@ -262,6 +278,7 @@ export {
   TASK_TYPES_VIEW_MODES,
   TASK_TYPE_EMPTY,
   SWATCH_COLORS,
+  TASKS_VIEW_MODES,
   TEMPLATE_VIEW_MODES,
   TEMPLATES,
   QUICK_MESSAGES,

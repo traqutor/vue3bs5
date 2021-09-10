@@ -1,6 +1,6 @@
-import Mutations from "./mutations";
-import Actions from "./actions";
-import Getters from "./getters";
+import Mutations from "./conversationsMutations";
+import Actions from "./conversationsActions";
+import Getters from "./conversationsGetters";
 import { CHAT_VIEW_MODES, CONVERSATION_VIEW_MODES } from "@/const";
 
 const conversationsModule = {

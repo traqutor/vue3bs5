@@ -7,6 +7,7 @@ import usersModule from "@/store/modules/users";
 import socketModule from "@/store/modules/socket";
 import templateModule from "@/store/modules/templates";
 import taskTypesModule from "@/store/modules/taskTypes";
+import tasksModule from "@/store/modules/tasks";
 
 const store = createStore({
   modules: {
@@ -18,6 +19,7 @@ const store = createStore({
     socket: socketModule,
     templates: templateModule,
     taskTypes: taskTypesModule,
+    tasks: tasksModule,
   },
 });
 
