@@ -134,6 +134,7 @@ const Mutations = {
   setTasksList: "setTasksList",
   setIsTasksLoading: "setIsTasksLoading",
   setTasksViewMode: "setTasksViewMode",
+  setIsTaskDrawerVisible: "setIsTaskDrawerVisible",
 };
 
 //taskTypes

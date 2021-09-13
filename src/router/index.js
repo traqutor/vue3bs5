@@ -13,8 +13,47 @@ const routes = [
       {
         path: "/tasks",
         name: "Tasks",
+        redirect: "/tasks/taskList",
         meta: { auth: true },
         component: () => import("@/views/TasksView"),
+        children: [
+          {
+            path: "/tasks/taskList",
+            name: "Task List",
+            meta: { auth: true },
+            component: () => import("@/views/tasks/TaskListTab"),
+          },
+          {
+            path: "/tasks/taskBoard",
+            name: "Board",
+            meta: { auth: true },
+            component: () => import("@/views/tasks/TaskBoardTab"),
+          },
+          {
+            path: "/tasks/taskMap",
+            name: "Map",
+            meta: { auth: true },
+            component: () => import("@/views/tasks/TaskMapTab"),
+          },
+          {
+            path: "/tasks/taskRaise",
+            name: "Raise Task",
+            meta: { auth: true },
+            component: () => import("@/views/tasks/TaskRaiseTab"),
+          },
+          {
+            path: "/tasks/taskManage",
+            name: "Manage",
+            meta: { auth: true },
+            component: () => import("@/views/tasks/TaskManageTab"),
+          },
+          {
+            path: "/tasks/taskProgress",
+            name: "Progress",
+            meta: { auth: true },
+            component: () => import("@/views/tasks/TaskProgressTab"),
+          },
+        ],
       },
       {
         path: "/conversations",

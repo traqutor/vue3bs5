@@ -8,4 +8,7 @@ export default {
   getTasksViewMode: (state) => {
     return state.viewMode;
   },
+  getIsTaskDrawerVisible: (state) => {
+    return state.isTaskDrawerVisible;
+  },
 };

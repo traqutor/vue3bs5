@@ -9,6 +9,7 @@ const taskTypesModule = {
       tasks: [],
       isTasksLoading: false,
       viewMode: TASKS_VIEW_MODES.LIST,
+      isTaskDrawerVisible: false,
     };
   },
   mutations: Mutations,
