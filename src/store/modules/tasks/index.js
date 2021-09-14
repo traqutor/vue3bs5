@@ -10,6 +10,7 @@ const taskTypesModule = {
       isTasksLoading: false,
       viewMode: TASKS_VIEW_MODES.LIST,
       isTaskDrawerVisible: false,
+      selectedTaskTypeCreation: null
     };
   },
   mutations: Mutations,

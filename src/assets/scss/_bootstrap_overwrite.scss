@@ -5,6 +5,16 @@
   transform: translate(-50%, -50%) scale(1) rotate(0deg) !important;
 }
 
+.invalid label {
+  color: red;
+}
+
+.invalid input,
+.invalid textarea,
+.invalid .input-group-append button {
+  border: 1px solid red;
+}
+
 .show-white-space {
   white-space: pre-wrap;
 }

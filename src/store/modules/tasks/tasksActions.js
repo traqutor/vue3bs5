@@ -27,4 +27,24 @@ export default {
         console.error("onGetTaskList error:", error);
       });
   },
+  [Actions.onCreateTask]: (_, payload) => {
+    return new Promise((resolve, reject) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/CreateTask`;
+
+      axiosWebApiInstance
+        .post(url, payload)
+        .then(function (response) {
+          if (response.data.isOk) {
+            resolve();
+          } else {
+            console.error("onCreateTask error:", response.data.message);
+            reject();
+          }
+        })
+        .catch((error) => {
+          console.error("onCreateTask error:", error);
+          reject();
+        });
+    });
+  },
 };

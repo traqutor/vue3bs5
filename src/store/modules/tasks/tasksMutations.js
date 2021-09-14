@@ -12,5 +12,8 @@ export default {
   },
   [Mutations.setIsTaskDrawerVisible]: (state, flag) => {
     state.isTaskDrawerVisible = flag;
-  }
+  },
+  [Mutations.setSelectedTaskTypeCreation]: (state, type) => {
+    state.selectedTaskTypeCreation = type;
+  },
 };

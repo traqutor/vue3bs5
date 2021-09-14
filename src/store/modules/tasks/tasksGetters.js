@@ -11,4 +11,7 @@ export default {
   getIsTaskDrawerVisible: (state) => {
     return state.isTaskDrawerVisible;
   },
+  getSelectedTaskTypeCreation: (state) => {
+    return state.selectedTaskTypeCreation;
+  },
 };
