@@ -14,4 +14,7 @@ export default {
   getSelectedTaskTypeCreation: (state) => {
     return state.selectedTaskTypeCreation;
   },
+  setSelectedTask: (state) => {
+    return state.selectedTask;
+  },
 };

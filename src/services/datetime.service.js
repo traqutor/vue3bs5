@@ -64,3 +64,27 @@ export const timeHhMmaDotDdddFormat = (value) => {
   }
   return momentValue.format("h:mm a [ • ] ") + text;
 };
+
+export const timeTaskCreationFormat = (value) => {
+  let momentValue;
+
+  if (typeof value === "number") {
+    momentValue = moment.unix(value);
+  } else {
+    momentValue = moment(value);
+  }
+
+  return momentValue.fromNow();
+};
+
+export const timeTaskDueFormat = (value) => {
+  let momentValue;
+
+  if (typeof value === "number") {
+    momentValue = moment.unix(value);
+  } else {
+    momentValue = moment(value);
+  }
+
+  return momentValue.format("h:mm");
+};

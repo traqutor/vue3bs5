@@ -47,388 +47,30 @@
               ></i>
 
               <!-- start::fromLocation -->
-              <div class="d-flex mt-3 align-items-center">
-                <feather-map-pin class="me-3 f-icon-20 text-secondary" />
-
-                <div
-                  class="media-body"
-                  :class="{ invalid: !fromLocation.isValid }"
-                >
-                  <div class="text-secondary mb-2">
-                    Destination <span class="text-danger">*</span>
-                  </div>
-                  <div
-                    class="
-                      input-group input-group-sm
-                      dropdown dropdown-input-group
-                      filter-control-group
-                    "
-                  >
-                    <input
-                      type="text"
-                      class="
-                        form-control
-                        bg-light
-                        dropdown-input-control
-                        is-filter-control
-                        shadow-none
-                      "
-                      v-model="fromLocation.val"
-                      @blur="clearValidity('fromLocation')"
-                    />
-                    <div class="input-group-append">
-                      <button
-                        type="button"
-                        class="
-                          btn btn-light
-                          border-left-0
-                          text-secondary text-dark-hover
-                          dropdown-toggle dropdown-toggle-split
-                        "
-                        datab-bs-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      ></button>
-                      <div
-                        class="
-                          dropdown-menu dropdown-menu-sm dropdown-menu-right
-                          w-100
-                          shadow
-                          dropdown-insert-click
-                        "
-                        id="destination-group-type"
-                        x-placement="bottom-end"
-                        style="
-                          position: absolute;
-                          will-change: transform;
-                          top: 0px;
-                          left: 0px;
-                          transform: translate3d(0px, 31px, 0px);
-                        "
-                      >
-                        <div class="dropdown-item px-3">
-                          <label
-                            class="
-                              mb-0
-                              toggle-input toggle-input-success
-                              f-size-13
-                              is-filtered
-                            "
-                          >
-                            <input type="radio" name="age" />
-                            <span class="input-icon f-icon-20"
-                              ><feather-circle /> <feather-check-circle
-                            /></span>
-                            <span class="is-filtered">Room IPC.001</span>
-                          </label>
-                        </div>
-                        <div class="dropdown-item px-3">
-                          <label
-                            class="
-                              mb-0
-                              toggle-input toggle-input-success
-                              f-size-13
-                            "
-                          >
-                            <input type="radio" name="age" />
-                            <span class="input-icon f-icon-20"
-                              ><feather-circle /> <feather-check-circle
-                            /></span>
-                            <span class="is-filtered">Room IPC.002</span>
-                          </label>
-                        </div>
-                        <div class="dropdown-item px-3">
-                          <label
-                            class="
-                              mb-0
-                              toggle-input toggle-input-success
-                              f-size-13
-                            "
-                          >
-                            <input type="radio" name="age" />
-                            <span class="input-icon f-icon-20"
-                              ><feather-circle /> <feather-check-circle
-                            /></span>
-                            <span class="is-filtered">Room IPC.003</span>
-                          </label>
-                        </div>
-                        <div class="dropdown-item px-3">
-                          <label
-                            class="
-                              mb-0
-                              toggle-input toggle-input-success
-                              f-size-13
-                            "
-                          >
-                            <input type="radio" name="age" />
-                            <span class="input-icon f-icon-20"
-                              ><feather-circle /> <feather-check-circle
-                            /></span>
-                            <span class="is-filtered">Room IPC.004</span>
-                          </label>
-                        </div>
-                        <div class="no-filter-results is-hidden">
-                          <div class="dropdown-item px-3">No results</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <TaskLocationFormField
+                v-model="fromLocation.val"
+                label="Location"
+                :is-valid="fromLocation.isValid"
+              />
               <!-- start::fromLocation -->
 
               <!-- start::toLocation -->
-              <div class="d-flex align-items-center">
-                <feather-map-pin
-                  class="me-3 align-self-center f-icon-20 text-secondary"
-                />
-
-                <div
-                  class="media-body"
-                  :class="{ invalid: !toLocation.isValid }"
-                >
-                  <label for="toLocation" class="mb-2">
-                    Location <span class="text-danger">*</span>
-                  </label>
-                  <div
-                    class="
-                      input-group input-group-sm
-                      dropdown dropdown-input-group
-                      filter-control-group
-                    "
-                  >
-                    <input
-                      id="toLocation"
-                      v-model.trim="toLocation.val"
-                      @blur="clearValidity('toLocation')"
-                      type="text"
-                      class="
-                        form-control
-                        bg-light
-                        dropdown-input-control
-                        is-filter-control
-                        shadow-none
-                      "
-                    />
-                    <div class="input-group-append">
-                      <button
-                        type="button"
-                        class="
-                          btn btn-light
-                          border-left-0
-                          text-secondary text-dark-hover
-                          dropdown-toggle dropdown-toggle-split
-                          shadow-none
-                        "
-                        data-bs-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      ></button>
-                      <div
-                        class="
-                          dropdown-menu dropdown-menu-sm dropdown-menu-right
-                          w-100
-                          shadow
-                          dropdown-insert-click
-                        "
-                        id="location-group-type"
-                        x-placement="bottom-end"
-                        style="
-                          position: absolute;
-                          will-change: transform;
-                          top: 0px;
-                          left: 0px;
-                          transform: translate3d(0px, 31px, 0px);
-                        "
-                      >
-                        <div class="dropdown-item px-3">
-                          <label
-                            class="
-                              mb-0
-                              toggle-input toggle-input-success
-                              f-size-13
-                              is-filtered
-                            "
-                          >
-                            <input type="radio" name="age" />
-                            <span class="input-icon f-icon-20">
-                              <feather-circle /> <feather-check-circle />
-                            </span>
-                            <span class="is-filtered">Room IPC.001</span>
-                          </label>
-                        </div>
-                        <div class="dropdown-item px-3">
-                          <label
-                            class="
-                              mb-0
-                              toggle-input toggle-input-success
-                              f-size-13
-                            "
-                          >
-                            <input type="radio" name="age" />
-                            <span class="input-icon f-icon-20"
-                              ><svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="feather feather-circle"
-                              >
-                                <circle cx="12" cy="12" r="10"></circle></svg
-                              ><svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="feather feather-check-circle"
-                              >
-                                <path
-                                  d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
-                                ></path>
-                                <polyline
-                                  points="22 4 12 14.01 9 11.01"
-                                ></polyline></svg
-                            ></span>
-                            <span class="is-filtered">Room IPC.002</span>
-                          </label>
-                        </div>
-                        <div class="dropdown-item px-3">
-                          <label
-                            class="
-                              mb-0
-                              toggle-input toggle-input-success
-                              f-size-13
-                            "
-                          >
-                            <input type="radio" name="age" />
-                            <span class="input-icon f-icon-20"
-                              ><svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="feather feather-circle"
-                              >
-                                <circle cx="12" cy="12" r="10"></circle></svg
-                              ><svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="feather feather-check-circle"
-                              >
-                                <path
-                                  d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
-                                ></path>
-                                <polyline
-                                  points="22 4 12 14.01 9 11.01"
-                                ></polyline></svg
-                            ></span>
-                            <span class="is-filtered">Room IPC.003</span>
-                          </label>
-                        </div>
-                        <div class="dropdown-item px-3">
-                          <label
-                            class="
-                              mb-0
-                              toggle-input toggle-input-success
-                              f-size-13
-                            "
-                          >
-                            <input type="radio" name="age" />
-                            <span class="input-icon f-icon-20"
-                              ><svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="feather feather-circle"
-                              >
-                                <circle cx="12" cy="12" r="10"></circle></svg
-                              ><svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="feather feather-check-circle"
-                              >
-                                <path
-                                  d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
-                                ></path>
-                                <polyline
-                                  points="22 4 12 14.01 9 11.01"
-                                ></polyline></svg
-                            ></span>
-                            <span class="is-filtered">Room IPC.004</span>
-                          </label>
-                        </div>
-                        <div class="no-filter-results is-hidden">
-                          <div class="dropdown-item px-3">No results</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <TaskLocationFormField
+                v-model="toLocation.val"
+                label="Destination"
+                :is-valid="toLocation.isValid"
+              />
               <!-- end::toLocation -->
             </div>
 
             <div class="border-top border-secondary-light mt-4 mb-3"></div>
 
             <!-- start::taskRequiredParticipants -->
-            <div class="d-flex">
-              <feather-user-plus
-                class="me-3 align-self-center f-icon-20 text-secondary"
-              />
-
-              <div
-                class="media-body"
-                :class="{ invalid: !taskRequiredParticipants.isValid }"
-              >
-                <div class="text-secondary mb-2">
-                  Available To <span class="text-danger">*</span>
-                </div>
-                <div class="input-group input-group-sm border-0">
-                  <input
-                    type="text"
-                    class="form-control form-control-sm bg-light shadow-none"
-                    readonly=""
-                    data-toggle="modal"
-                    data-target="#ModalAvailableTo"
-                  />
-                </div>
-              </div>
-            </div>
+            <TaskRequiredParticipantsFormField
+              v-model="taskRequiredParticipants.val"
+              :is-valid="taskRequiredParticipants.isValid"
+              label="Available To"
+            />
             <!-- end::taskRequiredParticipants -->
 
             <!-- start::deadlineDate -->
@@ -509,7 +151,11 @@
         </div>
       </div>
       <!-- end:: created task fields -->
-
+      <div>
+        {{ toLocation }}
+        {{ fromLocation }}
+        {{ taskRequiredParticipants }}
+      </div>
       <div class="pt-2 text-danger" v-if="!isFormValid">
         Please fix the above errors and submit again.
       </div>
@@ -534,29 +180,28 @@ import { useStore } from "vuex";
 import { DatePicker } from "v-calendar";
 import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import FeatherChevronLeft from "@/icons/FeatherChevronLeft";
-import FeatherMapPin from "@/icons/FeatherMapPin";
 import FeatherFileText from "@/icons/FeatherFileText";
-import FeatherCircle from "@/icons/FeatherCircle";
-import FeatherCheckCircle from "@/icons/FeatherCheckCircle";
 import FeatherClock from "@/icons/FeatherClock";
 import FeatherUser from "@/icons/FeatherUser";
-import FeatherUserPlus from "@/icons/FeatherUserPlus";
+import TaskLocationFormField from "@/components/tasks/TaskLocationFormField";
+import TaskRequiredParticipantsFormField from "@/components/tasks/TaskRequiredParticipantsFormField";
+import router from "@/router";
+import { useRouter } from "vue-router";
 
 export default {
   components: {
+    TaskRequiredParticipantsFormField,
+    TaskLocationFormField,
     DatePicker,
-    FeatherUserPlus,
     FeatherUser,
     FeatherClock,
-    FeatherCheckCircle,
-    FeatherCircle,
     FeatherFileText,
-    FeatherMapPin,
     FeatherChevronLeft,
   },
   props: ["selectedType"],
   setup(props) {
     const store = useStore();
+    const router = useRouter();
 
     const event = reactive({
       isFormSaving: false,
@@ -601,7 +246,7 @@ export default {
       }
 
       const payload = {
-        taskTypeId: computed(() => props.selectedType.id),
+        taskTypeId: +props.selectedType.id,
         activeRoleId: event.activeRoleId.val,
         subjectId: event.subjectId.val,
         fromLocation: event.fromLocation.val,
@@ -612,19 +257,31 @@ export default {
         customFields: [],
         taskRequiredParticipants: event.taskRequiredParticipants.val.map(
           (participant) => {
-            return {
-              id: "",
-              userId: participant.id,
-              isRole: participant.isRole,
-              minimumRequiredQuantity: 0,
-            };
+            if (participant.isRole) {
+              return {
+                id: "",
+                userId: participant.id,
+                isRole: true,
+                minimumRequiredQuantity: 0,
+              };
+            } else {
+              return {
+                id: "",
+                userId: participant.userId,
+                isRole: participant.isRole,
+                minimumRequiredQuantity: 0,
+              };
+            }
           }
         ),
       };
 
       store
         .dispatch(Actions.onCreateTask, payload)
-        .then(() => {})
+        .then(() => {
+          store.dispatch(Actions.onGetTaskList);
+          router.push({ path: "/tasks/taskList" });
+        })
         .catch(() => {});
     };
 
