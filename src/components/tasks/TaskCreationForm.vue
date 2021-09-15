@@ -175,7 +175,7 @@
   </div>
 </template>
 <script>
-import { computed, reactive, toRefs } from "vue";
+import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 import { DatePicker } from "v-calendar";
 import { Actions, Mutations } from "@/store/enums/EnumTypes";
@@ -185,7 +185,6 @@ import FeatherClock from "@/icons/FeatherClock";
 import FeatherUser from "@/icons/FeatherUser";
 import TaskLocationFormField from "@/components/tasks/TaskLocationFormField";
 import TaskRequiredParticipantsFormField from "@/components/tasks/TaskRequiredParticipantsFormField";
-import router from "@/router";
 import { useRouter } from "vue-router";
 
 export default {
