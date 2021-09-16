@@ -22,7 +22,9 @@
               shadow-none
             "
           >
-            New<span class="f-size-24 font-weight-middle ms-auto">3</span>
+            New<span class="f-size-24 font-weight-middle ms-auto">{{
+              getTasksCountOfStatuses("New")
+            }}</span>
           </button>
           <button
             class="
@@ -42,7 +44,9 @@
               shadow-none
             "
           >
-            Started<span class="f-size-24 font-weight-middle ms-auto">2</span>
+            Started<span class="f-size-24 font-weight-middle ms-auto">{{
+              getTasksCountOfStatuses("InProgress")
+            }}</span>
           </button>
           <button
             class="
@@ -63,7 +67,9 @@
             "
             filter-value="3"
           >
-            Queued<span class="f-size-24 font-weight-middle ms-auto">1</span>
+            Queued<span class="f-size-24 font-weight-middle ms-auto">{{
+              getTasksCountOfStatuses("Queued")
+            }}</span>
           </button>
           <button
             class="
@@ -82,9 +88,10 @@
               toggle-filter-control
               shadow-none
             "
-            filter-value="4"
           >
-            On Hold<span class="f-size-24 font-weight-middle ms-auto">0</span>
+            On Hold<span class="f-size-24 font-weight-middle ms-auto">{{
+              getTasksCountOfStatuses("OnHold")
+            }}</span>
           </button>
           <button
             class="
@@ -103,9 +110,10 @@
               toggle-filter-control
               shadow-none
             "
-            filter-value="5"
           >
-            Overdue<span class="f-size-24 font-weight-middle ms-auto">0</span>
+            Overdue<span class="f-size-24 font-weight-middle ms-auto">{{
+              getTasksCountOfStatuses("Overdue")
+            }}</span>
           </button>
           <button
             class="
@@ -124,9 +132,10 @@
               toggle-filter-control
               shadow-none
             "
-            filter-value="6"
           >
-            Completed<span class="f-size-24 font-weight-middle ms-auto">0</span>
+            Completed<span class="f-size-24 font-weight-middle ms-auto">{{
+              getTasksCountOfStatuses("Completed")
+            }}</span>
           </button>
 
           <div class="btn-group-vertical btn-group-vertical-separate ms-3">
@@ -180,7 +189,7 @@
                   >
                     <td class="ps-2">
                       <div class="d-flex align-items-center overflow-hidden">
-                        <TaskColorIndicator :task="task "/>
+                        <TaskColorIndicator :task="task" />
                         <div
                           class="
                             media-body
@@ -301,9 +310,14 @@ export default {
       }
     };
 
+    const getTasksCountOfStatuses = (status) => {
+      return tasks.value.filter((task) => task.taskStatus === status).length;
+    };
+
     return {
       isDrawerVisible,
       tasks,
+      getTasksCountOfStatuses,
       timeTaskCreationFormat,
       onTaskSelect,
     };
