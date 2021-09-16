@@ -180,12 +180,7 @@
                   >
                     <td class="ps-2">
                       <div class="d-flex align-items-center overflow-hidden">
-                        <span class="f-icon me-3"
-                          ><i
-                            class="f-icon f-icon-24 rounded"
-                            :style="`background-color: #${task.badgeColour}`"
-                          ></i
-                        ></span>
+                        <TaskColorIndicator :task="task "/>
                         <div
                           class="
                             media-body
@@ -219,38 +214,13 @@
                       <span>{{ task.taskRequiredParticipants.length }}</span>
                     </td>
                     <td>
-                      <div class="dropdown mw-6xl">
-                        <span
-                          class="
-                            text-white
-                            px-2
-                            py-1
-                            f-size-12
-                            badge badge-pill
-                            bg-task-new
-                            shadow-none
-                            font-weight-middle
-                          "
-                        >
-                          New
-                        </span>
+                      <div class="mw-6xl">
+                        <TaskStatusBadge :task="task" />
                       </div>
                     </td>
                     <td>
                       <div class="d-flex align-items-center">
-                        <span
-                          class="
-                            badge badge-pill badge-danger
-                            me-4
-                            px-2
-                            py-1
-                            f-size-13
-                            font-weight-middle
-                            text-spacing text-monospace
-                            timer
-                          "
-                          >{{ dueTime(task.dateDeadline.seconds) }}</span
-                        >
+                        <TaskDueTimeBadge :task="task" />
                       </div>
                     </td>
                   </tr>
@@ -283,7 +253,9 @@
           overflow-hidden
           border-secondary-light border-left
         "
-      ></div>
+      >
+        <TaskDrawerDetails />
+      </div>
     </div>
     <!-- end::drawer -->
   </div>
@@ -291,17 +263,22 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import {
-  timeTaskCreationFormat,
-  timeTaskDueFormat,
-} from "@/services/datetime.service";
+import { timeTaskCreationFormat } from "@/services/datetime.service";
 import FeatherRefreshCw from "@/icons/FeatherRefreshCw";
 import FeatherFilter from "@/icons/FeatherFilter";
 import FeatherArrowRight from "@/icons/FeatherArrowRight";
 import { Mutations } from "@/store/enums/EnumTypes";
+import TaskDrawerDetails from "@/components/tasks/TaskDrawerDetails";
+import TaskStatusBadge from "@/components/tasks/TaskStatusBadge";
+import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
+import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
 
 export default {
   components: {
+    TaskColorIndicator,
+    TaskDueTimeBadge,
+    TaskStatusBadge,
+    TaskDrawerDetails,
     FeatherArrowRight,
     FeatherFilter,
     FeatherRefreshCw,
@@ -311,20 +288,22 @@ export default {
     const isDrawerVisible = computed(
       () => store.getters.getIsTaskDrawerVisible
     );
-
     const tasks = computed(() => store.getters.getTasks);
-
-    const dueTime = (time) => timeTaskDueFormat(time);
+    const selectedTask = computed(() => store.getters.getSelectedTask);
 
     const onTaskSelect = (task) => {
-      store.commit(Mutations.setSelectedTask, task);
-      store.commit(Mutations.setIsTaskDrawerVisible, !isDrawerVisible.value);
+      if (selectedTask.value && selectedTask.value.id === task.id) {
+        store.commit(Mutations.setSelectedTask, task);
+        store.commit(Mutations.setIsTaskDrawerVisible, !isDrawerVisible.value);
+      } else {
+        store.commit(Mutations.setSelectedTask, task);
+        store.commit(Mutations.setIsTaskDrawerVisible, true);
+      }
     };
 
     return {
       isDrawerVisible,
       tasks,
-      dueTime,
       timeTaskCreationFormat,
       onTaskSelect,
     };

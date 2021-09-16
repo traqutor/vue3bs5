@@ -47,4 +47,114 @@ export default {
         });
     });
   },
+
+  [Actions.onStartTask]: (_, payload) => {
+    return new Promise((resolve, reject) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/StartTask`;
+
+      axiosWebApiInstance
+        .post(url, payload)
+        .then(function (response) {
+          console.log(response);
+          if (response.data.isOk) {
+            resolve();
+          } else {
+            console.error("onStartTask error:", response.data.message);
+            reject();
+          }
+        })
+        .catch((error) => {
+          console.error("onStartTask error:", error);
+          reject();
+        });
+    });
+  },
+
+  [Actions.onOnHoldTask]: (_, payload) => {
+    return new Promise((resolve, reject) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/OnHoldTask`;
+
+      axiosWebApiInstance
+        .post(url, payload)
+        .then(function (response) {
+          console.log(response);
+          if (response.data.isOk) {
+            resolve();
+          } else {
+            console.error("onOnHoldTask error:", response.data.message);
+            reject();
+          }
+        })
+        .catch((error) => {
+          console.error("onOnHoldTask error:", error);
+          reject();
+        });
+    });
+  },
+
+  [Actions.onQueueTask]: (_, payload) => {
+    return new Promise((resolve, reject) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/QueueTask`;
+
+      axiosWebApiInstance
+        .post(url, payload)
+        .then(function (response) {
+          console.log(response);
+          if (response.data.isOk) {
+            resolve();
+          } else {
+            console.error("onQueueTask error:", response.data.message);
+            reject();
+          }
+        })
+        .catch((error) => {
+          console.error("onQueueTask error:", error);
+          reject();
+        });
+    });
+  },
+
+  [Actions.onCompleteTask]: (_, payload) => {
+    return new Promise((resolve, reject) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/CompleteTask`;
+
+      axiosWebApiInstance
+        .post(url, payload)
+        .then(function (response) {
+          console.log(response);
+          if (response.data.isOk) {
+            resolve();
+          } else {
+            console.error("onCompleteTask error:", response.data.message);
+            reject();
+          }
+        })
+        .catch((error) => {
+          console.error("onCompleteTask error:", error);
+          reject();
+        });
+    });
+  },
+
+  [Actions.onReturnTask]: (_, payload) => {
+    return new Promise((resolve, reject) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/ReturnTask`;
+
+      axiosWebApiInstance
+        .post(url, payload)
+        .then(function (response) {
+          console.log(response);
+          if (response.data.isOk) {
+            resolve();
+          } else {
+            console.error("onReturnTask error:", response.data.message);
+            reject();
+          }
+        })
+        .catch((error) => {
+          console.error("onReturnTask error:", error);
+          reject();
+        });
+    });
+  },
 };

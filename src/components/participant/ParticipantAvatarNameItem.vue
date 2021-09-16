@@ -6,7 +6,7 @@
         :is-active-indicator="isActiveIndicator"
         avatar-classes="avatar-lg me-3"
       ></participant-avatar>
-      <div class="media-body">
+      <div class="media-body" >
         <div class="d-flex align-items-center">
           <div class="text-truncate text-dark font-weight-middle f-size-15">
             <span v-if="isHighlighted">
