@@ -9,9 +9,36 @@
         {{ label }} <span class="text-danger">*</span>
       </div>
       <div class="input-group input-group-sm border-0">
+        <div
+          class="
+            d-flex
+            flex-column
+            form-select form-control form-control-sm
+            bg-light
+            f-size-13
+            shadow-none
+          "
+          @click="onOpenModalSelector"
+        >
+          <template
+            v-for="participant of selectedParticipants"
+            :key="participant.userId"
+          >
+            <ParticipantAvatarNameItem
+              class="pb-1"
+              :participant-id="participant.userId"
+            />
+          </template>
+        </div>
+
+        <ParticipantSelectorDialog
+          ref="modalRef"
+          v-model="selectedParticipants"
+        />
+
         <Multiselect
           class="multiselect-blue"
-          v-model="fieldValue"
+          v-model="selectedParticipants"
           @change="onValueChange"
           mode="tags"
           :closeOnSelect="false"
@@ -34,33 +61,60 @@
   </div>
 </template>
 <script>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
+import { useStore } from "vuex";
+import { Modal } from "bootstrap";
 import Multiselect from "@vueform/multiselect";
 import FeatherUserPlus from "@/icons/FeatherUserPlus";
-import { useStore } from "vuex";
+import ParticipantSelectorDialog from "@/components/participant/ParticipantSelectorDialog";
+import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 export default {
-  components: { FeatherUserPlus, Multiselect },
+  components: {
+    ParticipantAvatarNameItem,
+    ParticipantSelectorDialog,
+    FeatherUserPlus,
+    Multiselect,
+  },
   props: ["modelValue", "label", "isValid"],
   emits: ["update:modelValue"],
   setup(props, { emit }) {
-    const fieldValue = ref(props.modelValue);
+    let modalSelector;
+    const selectedParticipants = ref(props.modelValue);
     const store = useStore();
+
     const systemUsers = computed(() =>
       store.getters.getSystemUsers.map((user) => {
         return { value: { ...user, isRole: false }, label: user.userName };
       })
     );
+
     const systemRoles = computed(() =>
       store.getters.getSystemRoles.map((role) => {
         return { value: { ...role, isRole: true }, label: role.name };
       })
     );
+
+    const onOpenModalSelector = () => {
+      modalSelector.toggle();
+    };
+
     const onValueChange = (event) => {
       console.log(event);
       emit("update:modelValue", event);
     };
 
-    return { fieldValue, systemUsers, systemRoles, onValueChange };
+    onMounted(() => {
+      const modalEl = document.querySelector("#participantSelectorModal");
+      modalSelector = Modal.getOrCreateInstance(modalEl);
+    });
+
+    return {
+      selectedParticipants,
+      systemUsers,
+      systemRoles,
+      onOpenModalSelector,
+      onValueChange,
+    };
   },
 };
 </script>

@@ -74,32 +74,10 @@
             <!-- end::taskRequiredParticipants -->
 
             <!-- start::deadlineDate -->
-            <div class="d-flex mt-3">
-              <feather-clock
-                class="me-3 align-self-center f-icon-20 text-secondary"
-              />
-
-              <div
-                class="media-body"
-                :class="{ invalid: !deadlineDate.isValid }"
-              >
-                <div class="text-secondary mb-2">Due Time</div>
-                <div class="input-group input-group-sm border-0">
-                  <DatePicker
-                    v-model="deadlineDate.val"
-                    mode="dateTime"
-                    :timezone="timezone"
-                  />
-                  <input
-                    type="text"
-                    class="form-control form-control-sm bg-light shadow-none"
-                    readonly=""
-                    data-toggle="modal"
-                    data-target="#ModalDueTime"
-                  />
-                </div>
-              </div>
-            </div>
+            <TaskDueDateFormField
+              v-model="deadlineDate.val"
+              :is-valid="deadlineDate.isValid"
+            />
             <!-- end::deadlineDate -->
 
             <div class="border-top border-secondary-light mt-4 mb-3"></div>
@@ -151,11 +129,7 @@
         </div>
       </div>
       <!-- end:: created task fields -->
-      <div>
-        {{ toLocation }}
-        {{ fromLocation }}
-        {{ taskRequiredParticipants }}
-      </div>
+
       <div class="pt-2 text-danger" v-if="!isFormValid">
         Please fix the above errors and submit again.
       </div>
@@ -177,23 +151,21 @@
 <script>
 import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
-import { DatePicker } from "v-calendar";
 import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import FeatherChevronLeft from "@/icons/FeatherChevronLeft";
 import FeatherFileText from "@/icons/FeatherFileText";
-import FeatherClock from "@/icons/FeatherClock";
 import FeatherUser from "@/icons/FeatherUser";
 import TaskLocationFormField from "@/components/tasks/TaskLocationFormField";
 import TaskRequiredParticipantsFormField from "@/components/tasks/TaskRequiredParticipantsFormField";
 import { useRouter } from "vue-router";
+import TaskDueDateFormField from "@/components/tasks/TaskDueDateFormField";
 
 export default {
   components: {
+    TaskDueDateFormField,
     TaskRequiredParticipantsFormField,
     TaskLocationFormField,
-    DatePicker,
     FeatherUser,
-    FeatherClock,
     FeatherFileText,
     FeatherChevronLeft,
   },
@@ -205,7 +177,6 @@ export default {
     const event = reactive({
       isFormSaving: false,
       isFormValid: true,
-      timezone: "",
       activeRoleId: { val: "", isValid: true },
       subjectId: { val: "", isValid: true },
       fromLocation: { val: "", isValid: true },
