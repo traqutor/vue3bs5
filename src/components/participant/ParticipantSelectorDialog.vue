@@ -170,13 +170,6 @@ export default {
       props.selectionChange([...participants.value]);
     };
 
-    watch(
-      () => props.selectedParticipants,
-      (values) => {
-        console.log("watch values:", values);
-      }
-    );
-
     return {
       searchText,
       systemParticipants,
