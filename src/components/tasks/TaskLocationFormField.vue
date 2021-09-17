@@ -27,7 +27,13 @@ import { computed } from "vue";
 import FeatherMapPin from "@/icons/FeatherMapPin";
 export default {
   components: { FeatherMapPin },
-  props: ["modelValue", "label", "isValid"],
+  props: ["modelValue", "name", "label", "isValid", "clearValidity"],
+  // props: {
+  //   modelValue: { type: String },
+  //   label: { type: String },
+  //   isValid: { type: Boolean },
+  //   clearValidity: { type: Function },
+  // },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
     const locations = computed(() => {
@@ -35,6 +41,7 @@ export default {
     });
 
     const onUpdateValue = (event) => {
+      props.clearValidity(props.name);
       console.log(event.target.value);
       emit("update:modelValue", event.target.value);
     };

@@ -8,7 +8,13 @@
         <date-picker v-model="dueDate" mode="dateTime">
           <template v-slot="{ inputValue, inputEvents }">
             <input
-              class="d-flex form-control form-control-sm bg-light shadow-none"
+              class="
+                d-flex
+                form-control form-control-sm
+                bg-light
+                shadow-none
+                field-require-validation
+              "
               :value="inputValue"
               v-on="inputEvents"
             />
@@ -24,7 +30,7 @@ import { DatePicker } from "v-calendar";
 import FeatherClock from "@/icons/FeatherClock";
 
 export default {
-  props: ["modelValue", "isValid"],
+  props: ["modelValue", "isValid", "name", "clearValidity"],
   emits: ["update:modelValue"],
   components: {
     DatePicker,
@@ -36,6 +42,7 @@ export default {
 
     watch(dueDate, (value) => {
       console.log(value);
+      props.clearValidity(props.name)
       emit("update:modelValue", value);
     });
     return {

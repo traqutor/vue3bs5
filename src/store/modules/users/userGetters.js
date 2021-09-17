@@ -83,6 +83,21 @@ export default {
         .sort(sortByName);
     }
   },
+  getAllPossibleParticipants: (state) => {
+    return [
+      ...state.systemUsers.map((user) => {
+        return {
+          id: user.userId,
+          userId: user.userId,
+          isRole: false,
+          name: user.userName,
+        };
+      }),
+      ...state.systemRoles.map((role) => {
+        return { id: role.id, userId: role.id, isRole: true, name: role.name };
+      }),
+    ];
+  },
   getSelectedParticipants: (state) => {
     return state.selectedParticipants;
   },

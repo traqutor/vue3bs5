@@ -12,6 +12,7 @@
 .invalid input,
 .invalid textarea,
 .invalid select,
+.invalid .field-require-validation,
 .invalid .input-group-append button {
   border: 1px solid red;
 }

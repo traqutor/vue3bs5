@@ -15,46 +15,33 @@
             flex-column
             form-select form-control form-control-sm
             bg-light
-            f-size-13
             shadow-none
+            rounded-2
+            field-require-validation
           "
           @click="onOpenModalSelector"
         >
           <template
-            v-for="participant of selectedParticipants"
+            v-for="(participant, index) of selectedParticipants"
             :key="participant.userId"
           >
             <ParticipantAvatarNameItem
               class="pb-1"
               :participant-id="participant.userId"
-            />
+            >
+              <template v-slot:secondary>
+                <feather-x
+                  class="f-icon-20 text-secondary on-hover"
+                  @click.stop="onRemoveParticipant(index)"
+                />
+              </template>
+            </ParticipantAvatarNameItem>
           </template>
         </div>
 
         <ParticipantSelectorDialog
           ref="modalRef"
           v-model="selectedParticipants"
-        />
-
-        <Multiselect
-          class="multiselect-blue"
-          v-model="selectedParticipants"
-          @change="onValueChange"
-          mode="tags"
-          :closeOnSelect="false"
-          :searchable="true"
-          :createTag="true"
-          :groups="true"
-          :options="[
-            {
-              label: 'Users',
-              options: systemUsers,
-            },
-            {
-              label: 'Roles',
-              options: systemRoles,
-            },
-          ]"
         />
       </div>
     </div>
@@ -64,16 +51,16 @@
 import { computed, ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { Modal } from "bootstrap";
-import Multiselect from "@vueform/multiselect";
 import FeatherUserPlus from "@/icons/FeatherUserPlus";
 import ParticipantSelectorDialog from "@/components/participant/ParticipantSelectorDialog";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
+import FeatherX from "@/icons/FeatherX";
 export default {
   components: {
+    FeatherX,
     ParticipantAvatarNameItem,
     ParticipantSelectorDialog,
     FeatherUserPlus,
-    Multiselect,
   },
   props: ["modelValue", "label", "isValid"],
   emits: ["update:modelValue"],
@@ -99,8 +86,12 @@ export default {
     };
 
     const onValueChange = (event) => {
-      console.log(event);
       emit("update:modelValue", event);
+    };
+
+    const onRemoveParticipant = (index) => {
+      selectedParticipants.value.splice(index, 1);
+      onValueChange(selectedParticipants);
     };
 
     onMounted(() => {
@@ -113,6 +104,7 @@ export default {
       systemUsers,
       systemRoles,
       onOpenModalSelector,
+      onRemoveParticipant,
       onValueChange,
     };
   },
