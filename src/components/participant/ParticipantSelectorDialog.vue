@@ -121,7 +121,7 @@
   </div>
 </template>
 <script>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import FeatherX from "@/icons/FeatherX";
 import FeatherSearch from "@/icons/FeatherSearch";
@@ -136,18 +136,18 @@ export default {
     FeatherSearch,
     FeatherX,
   },
-  props: ["modelValue"],
-  emits: ["update:modelValue"],
-
-  setup(props, { emit }) {
+  props: ["selectedParticipants", "selectionChange"],
+  setup(props) {
     const searchText = ref();
     const store = useStore();
-    const participants = ref([...props.modelValue]);
+    const participants = ref([...props.selectedParticipants]);
 
     const systemParticipants = computed(() =>
       searchText.value
         ? store.getters.getAllPossibleParticipants.filter((participant) =>
-            participant.name.includes(searchText.value)
+            participant.name
+              .toLowerCase()
+              .includes(searchText.value.toLowerCase())
           )
         : store.getters.getAllPossibleParticipants
     );
@@ -167,8 +167,15 @@ export default {
     };
 
     const onConfirm = () => {
-      emit("update:modelValue", participants.value);
+      props.selectionChange([...participants.value]);
     };
+
+    watch(
+      () => props.selectedParticipants,
+      (values) => {
+        console.log("watch values:", values);
+      }
+    );
 
     return {
       searchText,

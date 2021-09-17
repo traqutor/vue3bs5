@@ -41,7 +41,8 @@
 
         <ParticipantSelectorDialog
           ref="modalRef"
-          v-model="selectedParticipants"
+          :selected-participants="selectedParticipants"
+          :selection-change="onValueChange"
         />
       </div>
     </div>
@@ -85,13 +86,14 @@ export default {
       modalSelector.toggle();
     };
 
-    const onValueChange = (event) => {
-      emit("update:modelValue", event);
+    const onValueChange = (participants) => {
+      selectedParticipants.value = [...participants];
+      emit("update:modelValue", [...participants]);
     };
 
     const onRemoveParticipant = (index) => {
       selectedParticipants.value.splice(index, 1);
-      onValueChange(selectedParticipants);
+      emit("update:modelValue", [...selectedParticipants.value]);
     };
 
     onMounted(() => {
