@@ -33,7 +33,7 @@
       <!-- start:: created task fields -->
       <div class="flex-fill position-relative d-flex flex-column">
         <div class="d-flex flex-column position-absolute w-100 h-100">
-          <perfect-scrollbar class="pe-3 pb-1">
+          <perfect-scrollbar class="w-100 h-100 pe-3 pb-1">
             <div class="position-relative mt-2">
               <i
                 class="
@@ -169,10 +169,10 @@ import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import FeatherChevronLeft from "@/icons/FeatherChevronLeft";
 import FeatherFileText from "@/icons/FeatherFileText";
 import FeatherUser from "@/icons/FeatherUser";
-import TaskLocationFormField from "@/components/tasks/TaskLocationFormField";
-import TaskRequiredParticipantsFormField from "@/components/tasks/TaskRequiredParticipantsFormField";
+import TaskLocationFormField from "@/components/tasks/taskRaise/TaskLocationFormField";
+import TaskRequiredParticipantsFormField from "@/components/tasks/taskRaise/TaskRequiredParticipantsFormField";
 import { useRouter } from "vue-router";
-import TaskDueDateFormField from "@/components/tasks/TaskDueDateFormField";
+import TaskDueDateFormField from "@/components/tasks/taskRaise/TaskDueDateFormField";
 
 export default {
   components: {

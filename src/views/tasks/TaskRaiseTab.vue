@@ -25,8 +25,8 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import TaskCreationForm from "@/components/tasks/TaskCreationForm";
-import TaskCreationTypeSelector from "@/components/tasks/TaskCreationTypeSelector";
+import TaskCreationForm from "@/components/tasks/taskRaise/TaskCreationForm";
+import TaskCreationTypeSelector from "@/components/tasks/taskRaise/TaskCreationTypeSelector";
 export default {
   components: { TaskCreationTypeSelector, TaskCreationForm },
   setup() {

@@ -18,5 +18,13 @@ export default {
   },
   [Mutations.setSelectedTask]: (state, task) => {
     state.selectedTask = task;
-  }
+  },
+  [Mutations.setUpdatedTask]: (state, task) => {
+    const tasks = [...state.tasks];
+    const idx = tasks.findIndex((item) => item.id === task.id);
+    if (idx !== -1) {
+      tasks[idx] = task;
+      state.tasks = [...tasks];
+    }
+  },
 };

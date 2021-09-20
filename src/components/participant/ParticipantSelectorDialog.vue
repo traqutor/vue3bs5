@@ -121,7 +121,7 @@
   </div>
 </template>
 <script>
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import FeatherX from "@/icons/FeatherX";
 import FeatherSearch from "@/icons/FeatherSearch";
