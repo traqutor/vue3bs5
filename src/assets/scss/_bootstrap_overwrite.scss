@@ -5,6 +5,18 @@
   transform: translate(-50%, -50%) scale(1) rotate(0deg) !important;
 }
 
+.drop-zone {
+  padding-top: 12px;
+  padding-bottom: 24px;
+  min-height: 24px;
+}
+.drag-el {
+  transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -webkit-transform: rotate(3deg);
+}
+
+
 .invalid label {
   color: red;
 }

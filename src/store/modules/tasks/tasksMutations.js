@@ -20,6 +20,7 @@ export default {
     state.selectedTask = task;
   },
   [Mutations.setUpdatedTask]: (state, task) => {
+    console.log("setUpdatedTask", task);
     const tasks = [...state.tasks];
     const idx = tasks.findIndex((item) => item.id === task.id);
     if (idx !== -1) {

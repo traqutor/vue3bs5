@@ -13,9 +13,7 @@
       class="d-flex px-3 py-2 align-items-center dropdown hover-action-group"
     >
       <div class="d-flex align-items-center overflow-hidden me-auto">
-        <span class="f-icon me-3"
-          ><i class="f-icon f-icon-24 rounded todo-label-6"></i
-        ></span>
+        <task-color-indicator :task="task" />
         <div
           class="
             media-body
@@ -25,7 +23,7 @@
             text-dark text-truncate
           "
         >
-          Patient Transfer
+          {{ task.title }}
         </div>
       </div>
 
@@ -155,7 +153,9 @@
 <script>
 import FeatherMapPin from "@/icons/FeatherMapPin";
 import FeatherClock from "@/icons/FeatherClock";
+import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
 export default {
-  components: { FeatherClock, FeatherMapPin },
+  props: ["task"],
+  components: { TaskColorIndicator, FeatherClock, FeatherMapPin },
 };
 </script>

@@ -103,7 +103,7 @@
               >
                 <template v-for="task of getList('New')" :key="task.id">
                   <TaskBoardItem
-                    class="drag-el"
+                    :id="task.id"
                     draggable="true"
                     :task="task"
                     @dragstart="startDrag($event, task)"
@@ -208,9 +208,9 @@
                 <!-- start:task drag element -->
                 <template v-for="task of getList('InProgress')" :key="task.id">
                   <TaskBoardItem
-                    class="drag-el"
-                    draggable="true"
+                    :id="task.id"
                     :task="task"
+                    draggable="true"
                     @dragstart="startDrag($event, task)"
                   />
                 </template>
@@ -246,11 +246,15 @@ export default {
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("taskId", item.id);
+      const el = document.getElementById(`${item.id}`);
+      event.dataTransfer.setDragImage(el, 50, 50);
     };
 
-    const onDrop = (event, status) => {
+    const onDrop = async (event, status) => {
       const taskId = event.dataTransfer.getData("taskId");
-      const task = store.getters.getTasks.find((item) => item.id === taskId);
+      const task = await store.getters.getTasks.find(
+        (item) => +item.id === +taskId
+      );
       store.commit(Mutations.setUpdatedTask, { ...task, taskStatus: status });
     };
 
@@ -262,15 +266,3 @@ export default {
   },
 };
 </script>
-<style>
-.drop-zone {
-  padding-top: 12px;
-  padding-bottom: 24px;
-  min-height: 24px;
-}
-.drag-el {
-  transform: rotate(3deg);
-  -moz-transform: rotate(3deg);
-  -webkit-transform: rotate(3deg);
-}
-</style>
