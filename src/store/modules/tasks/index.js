@@ -11,7 +11,7 @@ const taskTypesModule = {
       viewMode: TASKS_VIEW_MODES.LIST,
       isTaskDrawerVisible: false,
       selectedTaskTypeCreation: null,
-      selectedTask: null,
+      selectedTaskId: null,
     };
   },
   mutations: Mutations,

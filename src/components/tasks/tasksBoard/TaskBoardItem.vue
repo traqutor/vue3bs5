@@ -1,13 +1,8 @@
 <template>
   <div
-    class="
-      card
-      bg-grey-light
-      mt-3
-      sortable-item
-      hover-visible-group
-      collapse-list-open
-    "
+    class="card bg-grey-light mt-3 sortable-item hover-visible-group on-hover"
+    :class="selectedTaskId === task.id && 'collapse-list-open'"
+    @click="onTaskSelect"
   >
     <div
       class="d-flex px-3 py-2 align-items-center dropdown hover-action-group"
@@ -60,11 +55,11 @@
 
         <div class="d-flex align-items-center">
           <feather-map-pin class="me-2 ms-1 text-secondary" />
-          <div class="media-body">ICU Pod 1, Bed 5</div>
+          <div class="media-body">{{ task.fromLocation }}</div>
         </div>
         <div class="d-flex align-items-center mt-2">
           <feather-map-pin class="me-2 ms-1 text-secondary" />
-          <div class="media-body">Bed 1, Oxley South</div>
+          <div class="media-body">{{ task.toLocation }}</div>
         </div>
       </div>
 
@@ -73,12 +68,12 @@
           <feather-clock class="me-2 ms-1 text-secondary" />
 
           <div class="media-body text-nowrap">
-            Raised 2 <small>min ago</small>
+            Raised {{ timeTaskCreationFormat(task.created.seconds) }}
           </div>
         </div>
 
         <div class="d-flex align-items-center ms-auto">
-          <span class="text-secondary ms-2">#121</span>
+          <span class="text-secondary ms-2">#{{ task.id }}</span>
         </div>
       </div>
 
@@ -132,30 +127,51 @@
           <div class="f-size-10 text-uppercase text-secondary mb-1">
             Time Remaining
           </div>
-          <span
-            class="
-              badge badge-pill badge-danger
-              px-2
-              py-1
-              f-size-12
-              font-weight-middle
-              text-spacing text-monospace
-              timer
-            "
-            data-starttimer="10"
-            >09:11</span
-          >
+          <TaskDueTimeBadge class="me-0" :task="task" />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
 import FeatherMapPin from "@/icons/FeatherMapPin";
 import FeatherClock from "@/icons/FeatherClock";
 import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
+import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
+import { timeTaskCreationFormat } from "@/services/datetime.service";
+import { Mutations } from "@/store/enums/EnumTypes";
+
 export default {
   props: ["task"],
-  components: { TaskColorIndicator, FeatherClock, FeatherMapPin },
+  components: {
+    TaskDueTimeBadge,
+    TaskColorIndicator,
+    FeatherClock,
+    FeatherMapPin,
+  },
+  setup(props) {
+    const store = useStore();
+    const selectedTaskId = computed(() => store.getters.getSelectedTaskId);
+    const isDrawerVisible = computed(
+      () => store.getters.getIsTaskDrawerVisible
+    );
+
+    const onTaskSelect = () => {
+      if (selectedTaskId.value === props.task.id) {
+        store.commit(Mutations.setIsTaskDrawerVisible, !isDrawerVisible.value);
+      } else {
+        store.commit(Mutations.setIsTaskDrawerVisible, true);
+      }
+      store.commit(Mutations.setSelectedTaskId, props.task.id);
+    };
+
+    return {
+      selectedTaskId,
+      onTaskSelect,
+      timeTaskCreationFormat,
+    };
+  },
 };
 </script>

@@ -185,6 +185,7 @@
                 <template v-for="task of tasks" :key="task.id">
                   <tr
                     class="task-item on-hover hover-action-group"
+                    :class="task.id === selectedTaskId && 'collapse-list-open'"
                     @click="onTaskSelect(task)"
                   >
                     <td class="ps-2">
@@ -298,14 +299,14 @@ export default {
       () => store.getters.getIsTaskDrawerVisible
     );
     const tasks = computed(() => store.getters.getTasks);
-    const selectedTask = computed(() => store.getters.getSelectedTask);
+    const selectedTaskId = computed(() => store.getters.getSelectedTaskId);
 
     const onTaskSelect = (task) => {
-      if (selectedTask.value && selectedTask.value.id === task.id) {
-        store.commit(Mutations.setSelectedTask, task);
+      store.commit(Mutations.setSelectedTaskId, task.id);
+
+      if (selectedTaskId.value === task.id) {
         store.commit(Mutations.setIsTaskDrawerVisible, !isDrawerVisible.value);
       } else {
-        store.commit(Mutations.setSelectedTask, task);
         store.commit(Mutations.setIsTaskDrawerVisible, true);
       }
     };
@@ -317,6 +318,7 @@ export default {
     return {
       isDrawerVisible,
       tasks,
+      selectedTaskId,
       getTasksCountOfStatuses,
       timeTaskCreationFormat,
       onTaskSelect,

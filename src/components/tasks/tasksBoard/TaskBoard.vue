@@ -220,6 +220,430 @@
             </div>
           </div>
           <!-- end::task column InProgress -->
+
+          <!-- start::task column Queued -->
+          <div
+            class="
+              group-todo-board
+              position-relative
+              d-inline-block
+              sortable-group
+              me-2
+            "
+          >
+            <div
+              class="d-flex flex-column list-group-board sortable-group-content"
+            >
+              <!-- start::column header -->
+              <div class="list-header-board pe-3 sortable-ignore">
+                <div
+                  class="
+                    d-flex
+                    align-items-center
+                    flex-fill
+                    rounded
+                    ps-3
+                    pe-0
+                    py-2
+                    bg-task-queue
+                    text-white
+                  "
+                >
+                  Queued<span
+                    class="
+                      f-size-20
+                      font-weight-middle
+                      ms-auto
+                      sortable-counter
+                    "
+                    >{{ getList("Queued").length }}</span
+                  >
+
+                  <div class="btn-group btn-group-sm">
+                    <button
+                      type="button"
+                      class="
+                        btn
+                        text-white-75 text-white-hover
+                        border-0
+                        px-2
+                        shadow-none
+                        rounded
+                      "
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <feather-more-vertical class="f-icon-20" />
+                    </button>
+                    <div
+                      class="
+                        dropdown-menu dropdown-menu-sm dropdown-menu-right
+                        shadow
+                      "
+                    >
+                      <button
+                        class="dropdown-item px-3 d-flex align-items-center"
+                      >
+                        <feather-arrow-sort-vertical
+                          class="text-secondary f-icon-18 me-3"
+                        />
+
+                        <span class="ms-n1">Show newest</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end::column header -->
+
+              <!-- start::column scroll -->
+              <perfect-scrollbar
+                class="
+                  list-content-board
+                  sortable-group-list
+                  flex-fill
+                  pe-3
+                  mt-1
+                  drop-zone
+                "
+                @drop="onDrop($event, 'Queued')"
+                @dragenter.prevent
+                @dragover.prevent
+              >
+                <!-- start:task drag element -->
+                <template v-for="task of getList('Queued')" :key="task.id">
+                  <TaskBoardItem
+                    :id="task.id"
+                    :task="task"
+                    draggable="true"
+                    @dragstart="startDrag($event, task)"
+                  />
+                </template>
+                <!-- end:task drag element -->
+              </perfect-scrollbar>
+              <!-- end::column scroll -->
+            </div>
+          </div>
+          <!-- end::task column Queued -->
+
+          <!-- start::task column OnHold -->
+          <div
+            class="
+              group-todo-board
+              position-relative
+              d-inline-block
+              sortable-group
+              me-2
+            "
+          >
+            <div
+              class="d-flex flex-column list-group-board sortable-group-content"
+            >
+              <!-- start::column header -->
+              <div class="list-header-board pe-3 sortable-ignore">
+                <div
+                  class="
+                    d-flex
+                    align-items-center
+                    flex-fill
+                    rounded
+                    ps-3
+                    pe-0
+                    py-2
+                    bg-task-hold
+                    text-white
+                  "
+                >
+                  On Hold<span
+                    class="
+                      f-size-20
+                      font-weight-middle
+                      ms-auto
+                      sortable-counter
+                    "
+                    >{{ getList("OnHold").length }}</span
+                  >
+
+                  <div class="btn-group btn-group-sm">
+                    <button
+                      type="button"
+                      class="
+                        btn
+                        text-white-75 text-white-hover
+                        border-0
+                        px-2
+                        shadow-none
+                        rounded
+                      "
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <feather-more-vertical class="f-icon-20" />
+                    </button>
+                    <div
+                      class="
+                        dropdown-menu dropdown-menu-sm dropdown-menu-right
+                        shadow
+                      "
+                    >
+                      <button
+                        class="dropdown-item px-3 d-flex align-items-center"
+                      >
+                        <feather-arrow-sort-vertical
+                          class="text-secondary f-icon-18 me-3"
+                        />
+
+                        <span class="ms-n1">Show newest</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end::column header -->
+
+              <!-- start::column scroll -->
+              <perfect-scrollbar
+                class="
+                  list-content-board
+                  sortable-group-list
+                  flex-fill
+                  pe-3
+                  mt-1
+                  drop-zone
+                "
+                @drop="onDrop($event, 'OnHold')"
+                @dragenter.prevent
+                @dragover.prevent
+              >
+                <!-- start:task drag element -->
+                <template v-for="task of getList('OnHold')" :key="task.id">
+                  <TaskBoardItem
+                    :id="task.id"
+                    :task="task"
+                    draggable="true"
+                    @dragstart="startDrag($event, task)"
+                  />
+                </template>
+                <!-- end:task drag element -->
+              </perfect-scrollbar>
+              <!-- end::column scroll -->
+            </div>
+          </div>
+          <!-- end::task column OnHold -->
+
+          <!-- start::task column Overdue -->
+          <div
+            class="
+              group-todo-board
+              position-relative
+              d-inline-block
+              sortable-group
+              me-2
+            "
+          >
+            <div
+              class="d-flex flex-column list-group-board sortable-group-content"
+            >
+              <!-- start::column header -->
+              <div class="list-header-board pe-3 sortable-ignore">
+                <div
+                  class="
+                    d-flex
+                    align-items-center
+                    flex-fill
+                    rounded
+                    ps-3
+                    pe-0
+                    py-2
+                    bg-task-overdue
+                    text-white
+                  "
+                >
+                  Overdue<span
+                    class="
+                      f-size-20
+                      font-weight-middle
+                      ms-auto
+                      sortable-counter
+                    "
+                    >{{ getList("Overdue").length }}</span
+                  >
+
+                  <div class="btn-group btn-group-sm">
+                    <button
+                      type="button"
+                      class="
+                        btn
+                        text-white-75 text-white-hover
+                        border-0
+                        px-2
+                        shadow-none
+                        rounded
+                      "
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <feather-more-vertical class="f-icon-20" />
+                    </button>
+                    <div
+                      class="
+                        dropdown-menu dropdown-menu-sm dropdown-menu-right
+                        shadow
+                      "
+                    >
+                      <button
+                        class="dropdown-item px-3 d-flex align-items-center"
+                      >
+                        <feather-arrow-sort-vertical
+                          class="text-secondary f-icon-18 me-3"
+                        />
+
+                        <span class="ms-n1">Show newest</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end::column header -->
+
+              <!-- start::column scroll -->
+              <perfect-scrollbar
+                class="
+                  list-content-board
+                  sortable-group-list
+                  flex-fill
+                  pe-3
+                  mt-1
+                  drop-zone
+                "
+                @drop="onDrop($event, 'Overdue')"
+                @dragenter.prevent
+                @dragover.prevent
+              >
+                <!-- start:task drag element -->
+                <template v-for="task of getList('Overdue')" :key="task.id">
+                  <TaskBoardItem
+                    :id="task.id"
+                    :task="task"
+                    draggable="true"
+                    @dragstart="startDrag($event, task)"
+                  />
+                </template>
+                <!-- end:task drag element -->
+              </perfect-scrollbar>
+              <!-- end::column scroll -->
+            </div>
+          </div>
+          <!-- end::task column Overdue -->
+
+          <!-- start::task column Completed -->
+          <div
+            class="
+              group-todo-board
+              position-relative
+              d-inline-block
+              sortable-group
+              me-2
+            "
+          >
+            <div
+              class="d-flex flex-column list-group-board sortable-group-content"
+            >
+              <!-- start::column header -->
+              <div class="list-header-board pe-3 sortable-ignore">
+                <div
+                  class="
+                    d-flex
+                    align-items-center
+                    flex-fill
+                    rounded
+                    ps-3
+                    pe-0
+                    py-2
+                    bg-task-complete
+                    text-white
+                  "
+                >
+                  Completed<span
+                    class="
+                      f-size-20
+                      font-weight-middle
+                      ms-auto
+                      sortable-counter
+                    "
+                    >{{ getList("Completed").length }}</span
+                  >
+
+                  <div class="btn-group btn-group-sm">
+                    <button
+                      type="button"
+                      class="
+                        btn
+                        text-white-75 text-white-hover
+                        border-0
+                        px-2
+                        shadow-none
+                        rounded
+                      "
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <feather-more-vertical class="f-icon-20" />
+                    </button>
+                    <div
+                      class="
+                        dropdown-menu dropdown-menu-sm dropdown-menu-right
+                        shadow
+                      "
+                    >
+                      <button
+                        class="dropdown-item px-3 d-flex align-items-center"
+                      >
+                        <feather-arrow-sort-vertical
+                          class="text-secondary f-icon-18 me-3"
+                        />
+
+                        <span class="ms-n1">Show newest</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end::column header -->
+
+              <!-- start::column scroll -->
+              <perfect-scrollbar
+                class="
+                  list-content-board
+                  sortable-group-list
+                  flex-fill
+                  pe-3
+                  mt-1
+                  drop-zone
+                "
+                @drop="onDrop($event, 'Completed')"
+                @dragenter.prevent
+                @dragover.prevent
+              >
+                <!-- start:task drag element -->
+                <template v-for="task of getList('Completed')" :key="task.id">
+                  <TaskBoardItem
+                    :id="task.id"
+                    :task="task"
+                    draggable="true"
+                    @dragstart="startDrag($event, task)"
+                  />
+                </template>
+                <!-- end:task drag element -->
+              </perfect-scrollbar>
+              <!-- end::column scroll -->
+            </div>
+          </div>
+          <!-- end::task column Completed -->
         </perfect-scrollbar>
       </div>
     </div>

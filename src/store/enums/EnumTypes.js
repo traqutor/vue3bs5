@@ -136,7 +136,7 @@ const Mutations = {
   setTasksViewMode: "setTasksViewMode",
   setIsTaskDrawerVisible: "setIsTaskDrawerVisible",
   setSelectedTaskTypeCreation: "selectedTaskTypeCreation",
-  setSelectedTask: "setSelectedTask",
+  setSelectedTaskId: "setSelectedTaskId",
   setUpdatedTask: "setUpdatedTask",
 };
 

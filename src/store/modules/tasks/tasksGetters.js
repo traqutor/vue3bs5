@@ -14,7 +14,13 @@ export default {
   getSelectedTaskTypeCreation: (state) => {
     return state.selectedTaskTypeCreation;
   },
-  getSelectedTask: (state) => {
-    return state.selectedTask;
+  getSelectedTaskId: (state) => {
+    return state.selectedTaskId;
+  },
+  getSelectedTask: (state, getters) => {
+    return state.tasks.find(
+      (task) =>
+        getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
+    );
   },
 };

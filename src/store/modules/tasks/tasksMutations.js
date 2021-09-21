@@ -16,8 +16,8 @@ export default {
   [Mutations.setSelectedTaskTypeCreation]: (state, type) => {
     state.selectedTaskTypeCreation = type;
   },
-  [Mutations.setSelectedTask]: (state, task) => {
-    state.selectedTask = task;
+  [Mutations.setSelectedTaskId]: (state, taskId) => {
+    state.selectedTaskId = taskId;
   },
   [Mutations.setUpdatedTask]: (state, task) => {
     console.log("setUpdatedTask", task);

@@ -2,7 +2,6 @@
   <span
     class="
       badge badge-pill badge-danger
-      me-4
       px-2
       py-1
       f-size-13
@@ -10,18 +9,28 @@
       text-spacing text-monospace
       timer
     "
-    >{{ dueTime(task.dateDeadline.seconds) }}</span
+    >{{ timeTaskDueFormat(task.dateDeadline.seconds) }}</span
   >
 </template>
 <script>
+import { ref, onMounted } from "vue";
 import { timeTaskDueFormat } from "@/services/datetime.service";
 
 export default {
   props: ["task"],
   setup() {
-    const dueTime = (time) => timeTaskDueFormat(time);
+    const MILLISECONDS_SECOND = 1000;
+    const MILLISECONDS_MINUTE = 60 * MILLISECONDS_SECOND;
+    const MILLISECONDS_HOUR = 60 * MILLISECONDS_MINUTE;
+    const MILLISECONDS_DAY = 24 * MILLISECONDS_HOUR;
+
+    const remainingMilliseconds = ref(0);
+
+    onMounted(() => {});
+
     return {
-      dueTime,
+      remainingMilliseconds,
+      timeTaskDueFormat,
     };
   },
 };
