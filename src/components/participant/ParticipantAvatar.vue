@@ -3,7 +3,9 @@
     v-if="participant"
     class="avatar"
     :class="avatarClasses"
-    :data-initial="participant.name.substring(0, 1).toUpperCase()"
+    :data-initial="
+      participant.isRole ? null : participant.name.substring(0, 1).toUpperCase()
+    "
   >
     <feather-briefcase1 v-if="participant.isRole" />
     <img

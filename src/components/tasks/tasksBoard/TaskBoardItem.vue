@@ -89,19 +89,36 @@
                 on-hover
                 opacity-50 opacity-hover-1
               "
-              data-toggle="dropdown"
+              data-bs-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <figure class="avatar avatar-md me-3" data-initial="YZ">
-                <img src="images/avatar/2.jpg" alt="..." draggable="false" />
-              </figure>
-              <div class="media-body overflow-hidden ms-n1">
-                <div class="text-truncate font-weight-middle">James Dean</div>
-                <div class="text-truncate text-secondary f-size-12">
-                  Porter #2
+              <template v-if="task.taskRequiredParticipants.length === 1">
+                <ParticipantAvatarNameItem
+                  :participant-id="task.taskRequiredParticipants[0].userId"
+                />
+              </template>
+              <template v-if="task.taskRequiredParticipants.length > 1">
+                <div class="avatar-group avatar-group-move me-2">
+                  <ParticipantAvatar
+                    class="avatar-lg"
+                    v-for="participant of task.taskRequiredParticipants.slice(
+                      0,
+                      4
+                    )"
+                    :key="participant.userId"
+                    :participant-id="participant.userId"
+                  />
+                  <a
+                    v-if="task.taskRequiredParticipants.length > 4"
+                    class="avatar avatar-lg btn bg-primary"
+                  >
+                    <small
+                      >+{{ task.taskRequiredParticipants.length - 4 }}</small
+                    >
+                  </a>
                 </div>
-              </div>
+              </template>
             </div>
             <div
               class="dropdown-menu dropdown-menu-sm shadow pt-0 cursor-default"
@@ -142,10 +159,14 @@ import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
 import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
 import { timeTaskCreationFormat } from "@/services/datetime.service";
 import { Mutations } from "@/store/enums/EnumTypes";
+import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
+import ParticipantAvatar from "@/components/participant/ParticipantAvatar";
 
 export default {
   props: ["task"],
   components: {
+    ParticipantAvatar,
+    ParticipantAvatarNameItem,
     TaskDueTimeBadge,
     TaskColorIndicator,
     FeatherClock,

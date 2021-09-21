@@ -11,19 +11,10 @@
     "
   >
     <div class="d-flex flex-column flex-fill position-relative">
-      <div
-        class="
-          position-absolute
-          h-100
-          w-100
-          ps-scrollbar
-          pr-3
-          media-type-group
-          ps
-        "
+      <perfect-scrollbar
+        class="position-absolute h-100 w-100 pr-3 media-type-group"
       >
-        <a
-          href="index.php?page=task&amp;type=1#main-nav-tab-1"
+        <button
           class="
             media-type-item
             btn btn-block
@@ -43,10 +34,9 @@
               Tasks
             </div>
           </div>
-        </a>
+        </button>
 
-        <a
-          href="index.php?page=task&amp;type=2#main-nav-tab-1"
+        <button
           class="
             media-type-item
             btn btn-block
@@ -63,10 +53,9 @@
               My requests
             </div>
           </div>
-        </a>
+        </button>
 
-        <a
-          href="index.php?page=task&amp;type=3#main-nav-tab-1"
+        <button
           class="
             media-type-item
             btn btn-block
@@ -83,23 +72,15 @@
               Scheduled
             </div>
           </div>
-        </a>
-
-        <div class="ps__rail-x" style="left: 0px; bottom: 0px">
-          <div
-            class="ps__thumb-x"
-            tabindex="0"
-            style="left: 0px; width: 0px"
-          ></div>
-        </div>
-        <div class="ps__rail-y" style="top: 0px; right: 0px">
-          <div
-            class="ps__thumb-y"
-            tabindex="0"
-            style="top: 0px; height: 0px"
-          ></div>
-        </div>
-      </div>
+        </button>
+      </perfect-scrollbar>
     </div>
   </div>
 </template>
+<script>
+export default {
+  setup() {
+    return {};
+  },
+};
+</script>
