@@ -6,7 +6,8 @@ const TOKEN_DATA = "__MEDDYJWTUSRID";
 export const isSignedIn = () => {
   let token = getUserFromTokenData();
   const now = moment();
-  if (token && moment(token.exp).isBefore(now)) {
+  const exp = moment.unix(token.exp);
+  if (token && exp.isAfter(now)) {
     return true;
   }
 };
