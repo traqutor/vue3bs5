@@ -17,7 +17,7 @@
           <div v-for="(msg, idx) of messages" :key="msg.id">
             <!-- time divider-->
             <div
-              v-if="idx === 0 || getIfPeriodToDisplay(idx)"
+              v-if="getIfPeriodToDisplay(idx)"
               class="dialog-group-strip text-primary"
             >
               {{ timeMessagesDividerFormat(msg.createdTime.seconds) }}
@@ -62,9 +62,6 @@ export default {
 
     const selectedConversation = computed(
       () => store.getters.getSelectedConversation
-    );
-    const isMessagesLoading = computed(
-      () => store.getters.getIsMessagesLoading
     );
 
     const loggedUser = computed(() => store.getters.getLoggedUser);
@@ -111,10 +108,18 @@ export default {
     };
 
     const getIfPeriodToDisplay = (index) => {
-      return (
-        timeMessagesDividerFormat(messages.value[index].createdTime.seconds) !==
-        timeMessagesDividerFormat(messages.value[index - 1].createdTime.seconds)
-      );
+      if (messages.value.length > index + 1) {
+        return (
+          timeMessagesDividerFormat(
+            messages.value[index].createdTime.seconds
+          ) !==
+          timeMessagesDividerFormat(
+            messages.value[index + 1].createdTime.seconds
+          )
+        );
+      } else {
+        return true;
+      }
     };
 
     const getIfUserInfoToDisplay = (index) => {
