@@ -1,7 +1,7 @@
 import Mutations from "./tasksMutations";
 import Actions from "./tasksActions";
 import Getters from "./tasksGetters";
-import { TASKS_VIEW_MODES } from "@/store/enums/EnumTypes";
+import {TASKS_BOARD_VIEW_MODES, TASKS_VIEW_MODES} from "@/store/enums/EnumTypes";
 
 const taskTypesModule = {
   state() {
@@ -9,6 +9,7 @@ const taskTypesModule = {
       tasks: [],
       isTasksLoading: false,
       viewMode: TASKS_VIEW_MODES.LIST,
+      tasksBoardViewMode: TASKS_BOARD_VIEW_MODES.TASKS,
       isTaskDrawerVisible: false,
       selectedTaskTypeCreation: null,
       selectedTaskId: null,

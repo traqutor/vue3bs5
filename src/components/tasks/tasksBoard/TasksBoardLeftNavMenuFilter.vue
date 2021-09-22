@@ -25,9 +25,10 @@
             py-3
             bg-primary
             text-white
-            active
             shadow-none
           "
+          :class="boardViewMode === tasksBoardViewModes.TASKS && 'active'"
+          @click="onboardViewModeSelect(tasksBoardViewModes.TASKS)"
         >
           <div class="media align-items-center overflow-hidden">
             <div class="media-body text-truncate font-weight-middle text-left">
@@ -45,8 +46,12 @@
             pl-3
             pr-2
             py-3
+            bg-primary
+            text-white
             shadow-none
           "
+          :class="boardViewMode === tasksBoardViewModes.MY_REQUESTS && 'active'"
+          @click="onboardViewModeSelect(tasksBoardViewModes.MY_REQUESTS)"
         >
           <div class="media align-items-center overflow-hidden">
             <div class="media-body text-truncate font-weight-middle text-left">
@@ -64,8 +69,12 @@
             pl-3
             pr-2
             py-3
+            bg-primary
+            text-white
             shadow-none
           "
+          :class="boardViewMode === tasksBoardViewModes.SCHEDULED && 'active'"
+          @click="onboardViewModeSelect(tasksBoardViewModes.SCHEDULED)"
         >
           <div class="media align-items-center overflow-hidden">
             <div class="media-body text-truncate font-weight-middle text-left">
@@ -78,9 +87,21 @@
   </div>
 </template>
 <script>
+import { computed, ref } from "vue";
+import { Mutations, TASKS_BOARD_VIEW_MODES } from "@/store/enums/EnumTypes";
+import { useStore } from "vuex";
+
 export default {
   setup() {
-    return {};
+    const store = useStore();
+    const tasksBoardViewModes = ref(TASKS_BOARD_VIEW_MODES);
+    const boardViewMode = computed(() => store.getters.getTasksBoardViewMode);
+
+    const onboardViewModeSelect = (mode) => {
+      store.commit(Mutations.setTasksBoardViewMode, mode);
+    };
+
+    return { boardViewMode, tasksBoardViewModes, onboardViewModeSelect };
   },
 };
 </script>

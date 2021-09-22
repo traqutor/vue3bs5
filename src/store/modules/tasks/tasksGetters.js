@@ -8,6 +8,9 @@ export default {
   getTasksViewMode: (state) => {
     return state.viewMode;
   },
+  getTasksBoardViewMode: (state) => {
+    return state.tasksBoardViewMode;
+  },
   getIsTaskDrawerVisible: (state) => {
     return state.isTaskDrawerVisible;
   },

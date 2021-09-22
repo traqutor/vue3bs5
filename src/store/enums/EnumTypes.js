@@ -134,6 +134,7 @@ const Mutations = {
   setTasksList: "setTasksList",
   setIsTasksLoading: "setIsTasksLoading",
   setTasksViewMode: "setTasksViewMode",
+  setTasksBoardViewMode: "setTasksBoardViewMode",
   setIsTaskDrawerVisible: "setIsTaskDrawerVisible",
   setSelectedTaskTypeCreation: "selectedTaskTypeCreation",
   setSelectedTaskId: "setSelectedTaskId",
@@ -226,11 +227,18 @@ const TASK_ACTION_STATUSES = [
 const TASKS_VIEW_MODES = {
   LIST: "List",
   BOARD: "Board",
-  MAP: "Board",
+  MAP: "Map",
   RAISE: "Raise",
   MANAGE: "Manage",
   PROGRESS: "Progress",
 };
+
+const TASKS_BOARD_VIEW_MODES = {
+  TASKS: "Tasks",
+  MY_REQUESTS: "MyRequests",
+  SCHEDULED: "Scheduled",
+};
+
 
 //messages
 const TEMPLATE_VIEW_MODES = {
@@ -329,6 +337,7 @@ export {
   SWATCH_COLORS,
   TASK_ACTION_STATUSES,
   TASKS_VIEW_MODES,
+  TASKS_BOARD_VIEW_MODES,
   TEMPLATE_VIEW_MODES,
   TEMPLATES,
   QUICK_MESSAGES,

@@ -650,23 +650,36 @@
   </div>
 </template>
 <script>
-import TaskBoardItem from "@/components/tasks/tasksBoard/TaskBoardItem";
+import { computed } from "vue";
 import { useStore } from "vuex";
+import TaskBoardItem from "@/components/tasks/tasksBoard/TaskBoardItem";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 import FeatherArrowSortVertical from "@/icons/FeatherArrowSortVertical";
-import { Mutations } from "@/store/enums/EnumTypes";
+import { Mutations, TASKS_BOARD_VIEW_MODES } from "@/store/enums/EnumTypes";
+
 export default {
   components: { FeatherArrowSortVertical, FeatherMoreVertical, TaskBoardItem },
   setup() {
     const store = useStore();
+    const loggedUser = computed(() => store.getters.getLoggedUser);
+    const boardViewMode = computed(() => store.getters.getTasksBoardViewMode);
+
     const getList = (status) => {
-      return store.getters.getTasks.filter(
-        (task) => task.taskStatus === status
-      );
+      if (boardViewMode.value === TASKS_BOARD_VIEW_MODES.MY_REQUESTS) {
+        return store.getters.getTasks.filter(
+          (task) =>
+            task.taskStatus === status &&
+            loggedUser.value &&
+            task.creatorId === loggedUser.value.id
+        );
+      } else {
+        return store.getters.getTasks.filter(
+          (task) => task.taskStatus === status
+        );
+      }
     };
 
     const startDrag = (event, item) => {
-      console.log(item);
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
       event.dataTransfer.setData("taskId", item.id);

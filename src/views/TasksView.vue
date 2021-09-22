@@ -10,41 +10,47 @@
             class="nav-item nav-link"
             to="/tasks/taskList"
             aria-selected="true"
+            active-class="active"
             >Task List</router-link
           >
           <router-link
             class="nav-item nav-link"
             to="/tasks/taskBoard"
             aria-selected="false"
-            >Board</router-link
+            active-class="active"
+          >Board</router-link
           >
           <router-link
             class="nav-item nav-link"
             to="/tasks/taskMap"
             role="tab"
             aria-selected="false"
-            >Map</router-link
+            active-class="active"
+          >Map</router-link
           >
           <router-link
             class="nav-item nav-link"
             to="/tasks/taskRaise"
             role="tab"
             aria-selected="false"
-            >Raise Task</router-link
+            active-class="active"
+          >Raise Task</router-link
           >
           <router-link
             class="nav-item nav-link"
             to="/tasks/taskManage"
             role="tab"
             aria-selected="false"
-            >Manage</router-link
+            active-class="active"
+          >Manage</router-link
           >
           <router-link
             class="nav-item nav-link"
             to="/tasks/taskProgress"
             role="tab"
             aria-selected="false"
-            >Progress</router-link
+            active-class="active"
+          >Progress</router-link
           >
         </div>
       </nav>

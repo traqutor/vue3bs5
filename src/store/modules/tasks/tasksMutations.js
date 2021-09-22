@@ -10,6 +10,9 @@ export default {
   [Mutations.setTasksViewMode]: (state, mode) => {
     state.viewMode = mode;
   },
+  [Mutations.setTasksBoardViewMode]: (state, mode) => {
+    state.tasksBoardViewMode = mode;
+  },
   [Mutations.setIsTaskDrawerVisible]: (state, flag) => {
     state.isTaskDrawerVisible = flag;
   },
