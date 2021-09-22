@@ -70,11 +70,9 @@
               </figure>
 
               <div class="media-body input-group input-group-sm flex-nowrap">
-                <!--
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="addon-wrapping">@</span>
-                </div>-->
                 <input
+                  :value="modelValue.badgeColour"
+                  @input="onFormChange($event.target.value, 'badgeColour')"
                   type="text"
                   :disabled="readOnly"
                   class="form-control bg-light shadow-none"

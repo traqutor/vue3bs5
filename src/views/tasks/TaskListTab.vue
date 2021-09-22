@@ -1,10 +1,16 @@
 <template>
   <div class="flex-section-slide flex-fill">
+    <!-- start::task statuses filter buttons -->
     <div class="flex-slide-content row">
       <div class="col d-flex flex-column">
         <!-- start::header buttons -->
-        <div class="list-group list-group-horizontal nav-fill list-group-task">
+        <div
+          class="list-group list-group-horizontal nav-fill list-group-task"
+          :class="isTasksFilterActive && 'has-active'"
+        >
           <button
+            v-for="status of taskActionStatuses"
+            :key="status.id"
             class="
               btn btn-sm
               list-group-item
@@ -15,126 +21,20 @@
               w-25
               rounded
               px-3
+              ms-3
               list-task-item
               text-white
-              bg-task-new
-              toggle-filter-control
               shadow-none
             "
+            :class="[
+              onGetIsTaskFilterButtonActive(status.id) && 'active ',
+              status.class,
+            ]"
+            @click="onTaskStatusSelect(status)"
           >
-            New<span class="f-size-24 font-weight-middle ms-auto">{{
-              getTasksCountOfStatuses("New")
-            }}</span>
-          </button>
-          <button
-            class="
-              btn btn-sm
-              list-group-item
-              nav-link
-              d-flex
-              align-items-center
-              flex-fill
-              w-25
-              rounded
-              px-3
-              list-task-item
-              bg-task-start
-              text-white
-              toggle-filter-control
-              shadow-none
-            "
-          >
-            Started<span class="f-size-24 font-weight-middle ms-auto">{{
-              getTasksCountOfStatuses("InProgress")
-            }}</span>
-          </button>
-          <button
-            class="
-              btn btn-sm
-              list-group-item
-              nav-link
-              d-flex
-              align-items-center
-              flex-fill
-              w-25
-              rounded
-              px-3
-              list-task-item
-              bg-task-queue
-              text-white
-              toggle-filter-control
-              shadow-none
-            "
-            filter-value="3"
-          >
-            Queued<span class="f-size-24 font-weight-middle ms-auto">{{
-              getTasksCountOfStatuses("Queued")
-            }}</span>
-          </button>
-          <button
-            class="
-              btn btn-sm
-              list-group-item
-              nav-link
-              d-flex
-              align-items-center
-              flex-fill
-              w-25
-              rounded
-              px-3
-              list-task-item
-              bg-task-hold
-              text-white
-              toggle-filter-control
-              shadow-none
-            "
-          >
-            On Hold<span class="f-size-24 font-weight-middle ms-auto">{{
-              getTasksCountOfStatuses("OnHold")
-            }}</span>
-          </button>
-          <button
-            class="
-              btn btn-sm
-              list-group-item
-              nav-link
-              d-flex
-              align-items-center
-              flex-fill
-              w-25
-              rounded
-              px-3
-              list-task-item
-              bg-task-overdue
-              text-white
-              toggle-filter-control
-              shadow-none
-            "
-          >
-            Overdue<span class="f-size-24 font-weight-middle ms-auto">{{
-              getTasksCountOfStatuses("Overdue")
-            }}</span>
-          </button>
-          <button
-            class="
-              btn btn-sm
-              list-group-item
-              nav-link
-              d-flex
-              align-items-center
-              flex-fill
-              w-25
-              rounded
-              px-3
-              list-task-item
-              bg-task-complete
-              text-white
-              toggle-filter-control
-              shadow-none
-            "
-          >
-            Completed<span class="f-size-24 font-weight-middle ms-auto">{{
-              getTasksCountOfStatuses("Completed")
+            {{ status.label
+            }}<span class="f-size-24 font-weight-middle ms-auto">{{
+              onGetTasksCountOfStatuses(status.id)
             }}</span>
           </button>
 
@@ -242,6 +142,7 @@
         </div>
       </div>
     </div>
+    <!-- end::task statuses filter buttons -->
 
     <!-- start::drawer -->
     <div
@@ -271,13 +172,13 @@
   </div>
 </template>
 <script>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { timeTaskCreationFormat } from "@/services/datetime.service";
 import FeatherRefreshCw from "@/icons/FeatherRefreshCw";
 import FeatherFilter from "@/icons/FeatherFilter";
 import FeatherArrowRight from "@/icons/FeatherArrowRight";
-import { Mutations } from "@/store/enums/EnumTypes";
+import { Mutations, TASK_ACTION_STATUSES } from "@/store/enums/EnumTypes";
 import TaskDrawerDetails from "@/components/tasks/TaskDrawerDetails";
 import TaskStatusBadge from "@/components/tasks/TaskStatusBadge";
 import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
@@ -295,33 +196,92 @@ export default {
   },
   setup() {
     const store = useStore();
+    const taskActionStatuses = ref(TASK_ACTION_STATUSES);
+    const taskActiveActionStatuses = ref([]);
+
     const isDrawerVisible = computed(
       () => store.getters.getIsTaskDrawerVisible
     );
-    const tasks = computed(() => store.getters.getTasks);
+
+    const isTasksFilterActive = computed(() => {
+      return taskActiveActionStatuses.value.length > 0;
+    });
+
+    const tasks = computed(() => {
+      if (isTasksFilterActive.value) {
+        // filter by selected statuses
+        let filtered = store.getters.getTasks.filter((item) => {
+          return taskActiveActionStatuses.value.find((active) => {
+            if (active.isFilterable) {
+              return item.taskStatus === active.id;
+            } else if (active.id === "Overdue") {
+              return (
+                item.isDeadlinePassed
+              );
+            }
+          });
+        });
+
+        return filtered;
+      } else {
+        return store.getters.getTasks;
+      }
+    });
+
     const selectedTaskId = computed(() => store.getters.getSelectedTaskId);
 
-    const onTaskSelect = (task) => {
-      store.commit(Mutations.setSelectedTaskId, task.id);
+    const onGetIsTaskFilterButtonActive = (statusId) => {
+      return taskActiveActionStatuses.value.find(
+        (item) => item.id === statusId
+      );
+    };
 
+    const onTaskStatusSelect = (status) => {
+      const idx = taskActiveActionStatuses.value.findIndex(
+        (item) => item.id === status.id
+      );
+      if (idx !== -1) {
+        taskActiveActionStatuses.value.splice(idx, 1);
+      } else {
+        taskActiveActionStatuses.value.push(status);
+      }
+
+      // if all options selected then clear the filter
+      if (
+        taskActiveActionStatuses.value.length ===
+        taskActionStatuses.value.length
+      ) {
+        taskActiveActionStatuses.value = [];
+      }
+      console.log(taskActiveActionStatuses.value);
+    };
+
+    const onTaskSelect = (task) => {
       if (selectedTaskId.value === task.id) {
         store.commit(Mutations.setIsTaskDrawerVisible, !isDrawerVisible.value);
       } else {
         store.commit(Mutations.setIsTaskDrawerVisible, true);
       }
+      store.commit(Mutations.setSelectedTaskId, task.id);
     };
 
-    const getTasksCountOfStatuses = (status) => {
-      return tasks.value.filter((task) => task.taskStatus === status).length;
+    const onGetTasksCountOfStatuses = (status) => {
+      return store.getters.getTasks.filter((task) => task.taskStatus === status)
+        .length;
     };
 
     return {
       isDrawerVisible,
+      isTasksFilterActive,
+      taskActionStatuses,
+      taskActiveActionStatuses,
       tasks,
       selectedTaskId,
-      getTasksCountOfStatuses,
+      onGetTasksCountOfStatuses,
+      onGetIsTaskFilterButtonActive,
       timeTaskCreationFormat,
       onTaskSelect,
+      onTaskStatusSelect,
     };
   },
 };

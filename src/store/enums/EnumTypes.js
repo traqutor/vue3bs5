@@ -146,7 +146,7 @@ const TASK_TYPES_VIEW_MODES = {
   ADD_NEW: "Add ",
 };
 const TASK_TYPE_EMPTY = {
-  id: "",
+  id: 0,
   minimumRequiredParticipants: 0,
   deadlineCountdownInterval: 0,
   locationId: "",
@@ -175,6 +175,51 @@ const SWATCH_COLORS = [
   { color: "4df6d0", className: "todo-label-5" },
   { color: "f2f81b", className: "todo-label-6" },
   { color: "1c2ef8", className: "todo-label-7" },
+];
+
+const TASK_ACTION_STATUSES = [
+  {
+    id: "New",
+    label: "New",
+    isActive: false,
+    isFilterable: true,
+    class: "bg-task-new",
+  },
+  {
+    id: "InProgress",
+    label: "Started",
+    isActive: false,
+    isFilterable: true,
+    class: "bg-task-start",
+  },
+  {
+    id: "Queued",
+    label: "Queued",
+    isActive: false,
+    isFilterable: true,
+    class: "bg-task-queue",
+  },
+  {
+    id: "OnHold",
+    label: "On Hold",
+    isActive: false,
+    isFilterable: true,
+    class: "bg-task-hold",
+  },
+  {
+    id: "Overdue",
+    label: "Overdue",
+    isActive: false,
+    isFilterable: false,
+    class: "bg-task-overdue",
+  },
+  {
+    id: "Completed",
+    label: "Completed",
+    isActive: false,
+    isFilterable: false,
+    class: "bg-task-complete",
+  },
 ];
 
 //taskTypes
@@ -282,6 +327,7 @@ export {
   TASK_TYPES_VIEW_MODES,
   TASK_TYPE_EMPTY,
   SWATCH_COLORS,
+  TASK_ACTION_STATUSES,
   TASKS_VIEW_MODES,
   TEMPLATE_VIEW_MODES,
   TEMPLATES,

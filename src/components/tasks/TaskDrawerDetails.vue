@@ -362,7 +362,15 @@
                     rounded
                     me-3
                   "
+                  @click="onReturnTaskAction"
                 >
+                  <div
+                    v-if="isReturnAction"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
                   Return
                 </button>
                 <!-- end:: return button -->
@@ -386,6 +394,13 @@
                   "
                   @click="onStartTaskAction"
                 >
+                  <div
+                    v-if="isStartAction"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
                   Start
                 </button>
                 <!-- end:: start button -->
@@ -409,6 +424,13 @@
                   "
                   @click="onHoldTaskAction"
                 >
+                  <div
+                    v-if="isOnHoldAction"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
                   On Hold
                 </button>
                 <!-- end:: on hold button -->
@@ -432,6 +454,13 @@
                   "
                   @click="onCompleteTaskAction"
                 >
+                  <div
+                    v-if="isCompleteAction"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
                   Complete
                 </button>
                 <!-- end:: complete button -->
@@ -454,6 +483,13 @@
                   "
                   @click="onQueueTaskAction"
                 >
+                  <div
+                    v-if="isQueueAction"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
                   Queue
                 </button>
                 <!-- end:: queue button -->
@@ -470,7 +506,7 @@
 </template>
 <script>
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import TaskStatusBadge from "@/components/tasks/TaskStatusBadge";
 import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
 import FeatherX from "@/icons/FeatherX";
@@ -505,45 +541,90 @@ export default {
     const taskReturnButtonStatuses = ["InProgress", "OnHold", "Queued"];
     const store = useStore();
     const task = computed(() => store.getters.getSelectedTask);
+    const isStartAction = ref(false);
+    const isOnHoldAction = ref(false);
+    const isQueueAction = ref(false);
+    const isCompleteAction = ref(false);
+    const isReturnAction = ref(false);
 
     const onStartTaskAction = () => {
+      isStartAction.value = true;
       const payload = {
         taskId: task.value.id,
         activeRoleId: "",
       };
-      store.dispatch(Actions.onStartTask, payload);
+      store
+        .dispatch(Actions.onStartTask, payload)
+        .then(() => {
+          isStartAction.value = false;
+        })
+        .catch(() => {
+          isStartAction.value = false;
+        });
     };
 
     const onHoldTaskAction = () => {
+      isOnHoldAction.value = true;
       const payload = {
         taskId: task.value.id,
         activeRoleId: "",
       };
-      store.dispatch(Actions.onOnHoldTask, payload);
+      store
+        .dispatch(Actions.onOnHoldTask, payload)
+        .then(() => {
+          isOnHoldAction.value = false;
+        })
+        .catch(() => {
+          isOnHoldAction.value = false;
+        });
     };
 
     const onQueueTaskAction = () => {
+      isQueueAction.value = true;
       const payload = {
         taskId: task.value.id,
         activeRoleId: "",
       };
-      store.dispatch(Actions.onQueueTask, payload);
+      store
+        .dispatch(Actions.onQueueTask, payload)
+        .then(() => {
+          isQueueAction.value = false;
+        })
+        .catch(() => {
+          isQueueAction.value = false;
+        });
     };
 
     const onCompleteTaskAction = () => {
+      isCompleteAction.value = true;
       const payload = {
         taskId: task.value.id,
         activeRoleId: "",
       };
-      store.dispatch(Actions.onCompleteTask, payload);
+      store
+        .dispatch(Actions.onCompleteTask, payload)
+        .then(() => {
+          isCompleteAction.value = false;
+        })
+        .catch(() => {
+          isCompleteAction.value = false;
+        });
     };
 
     const onReturnTaskAction = () => {
+      isReturnAction.value = true;
       const payload = {
         taskId: task.value.id,
         activeRoleId: "",
       };
-      store.dispatch(Actions.onReturnTask, payload);
+      store
+        .dispatch(Actions.onReturnTask, payload)
+        .then(() => {
+          isReturnAction.value = false;
+        })
+        .catch(() => {
+          isReturnAction.value = false;
+        });
     };
 
     const onCloseDrawer = () => {
@@ -557,6 +638,11 @@ export default {
       taskOnHoldButtonStatuses,
       taskCompleteButtonStatuses,
       taskReturnButtonStatuses,
+      isStartAction,
+      isOnHoldAction,
+      isQueueAction,
+      isCompleteAction,
+      isReturnAction,
       onStartTaskAction,
       onHoldTaskAction,
       onQueueTaskAction,

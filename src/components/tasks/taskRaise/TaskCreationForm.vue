@@ -154,6 +154,13 @@
           type="submit"
           class="btn btn-sm btn-primary btn-lg btn-block f-size-15 mt-2"
         >
+          <div
+            v-if="isFormSaving"
+            class="spinner-border spinner-border-sm"
+            role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
           Submit
         </button>
       </div>
@@ -202,7 +209,6 @@ export default {
     });
 
     const clearValidity = (input) => {
-      console.log("clearValidity", input);
       event.isFormValid = true;
       event[input].isValid = true;
     };
@@ -256,14 +262,14 @@ export default {
           (participant) => {
             if (participant.isRole) {
               return {
-                id: "",
+                id: null,
                 userId: participant.id,
                 isRole: true,
                 minimumRequiredQuantity: 0,
               };
             } else {
               return {
-                id: "",
+                id: null,
                 userId: participant.userId,
                 isRole: participant.isRole,
                 minimumRequiredQuantity: 0,
@@ -273,13 +279,16 @@ export default {
         ),
       };
 
+      event.isFormSaving = true;
       store
         .dispatch(Actions.onCreateTask, payload)
         .then(() => {
-          store.dispatch(Actions.onGetTaskList);
+          event.isFormSaving = false;
           router.push({ path: "/tasks/taskList" });
         })
-        .catch(() => {});
+        .catch(() => {
+          event.isFormSaving = false;
+        });
     };
 
     const onCancel = () => {

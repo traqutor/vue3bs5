@@ -11,6 +11,13 @@
           class="btn btn-sm rounded w-50 btn-primary me-3"
           @click="onCreateTaskType"
         >
+          <div
+              v-if="isFormSaving"
+              class="spinner-border spinner-border-sm"
+              role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
           Save
         </button>
         <button
@@ -38,10 +45,11 @@ import {
 export default {
   components: { TaskTypeDefinitionForm },
   setup() {
-    const isCreating = ref();
+    const isFormSaving = ref();
     const taskType = ref(Object.assign({}, TASK_TYPE_EMPTY));
     const store = useStore();
     const onCreateTaskType = () => {
+      isFormSaving.value = true;
       store
         .dispatch(Actions.onCreateType, taskType.value)
         .then(() => {
@@ -50,10 +58,10 @@ export default {
             Mutations.setTaskTypesViewMode,
             TASK_TYPES_VIEW_MODES.LIST
           );
-          isCreating.value = false;
+          isFormSaving.value = false;
         })
         .catch(() => {
-          isCreating.value = false;
+          isFormSaving.value = false;
         });
     };
 
@@ -61,7 +69,7 @@ export default {
       store.commit(Mutations.setTaskTypesViewMode, TASK_TYPES_VIEW_MODES.LIST);
     };
 
-    return { taskType, isCreating, onCancel, onCreateTaskType };
+    return { taskType, isFormSaving, onCancel, onCreateTaskType };
   },
 };
 </script>

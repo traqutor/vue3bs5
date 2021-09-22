@@ -27,7 +27,7 @@ export default {
         console.error("onGetTaskList error:", error);
       });
   },
-  [Actions.onCreateTask]: (_, payload) => {
+  [Actions.onCreateTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/CreateTask`;
 
@@ -35,6 +35,7 @@ export default {
         .post(url, payload)
         .then(function (response) {
           if (response.data.isOk) {
+            dispatch(Actions.onGetTaskList);
             resolve();
           } else {
             console.error("onCreateTask error:", response.data.message);
@@ -48,15 +49,15 @@ export default {
     });
   },
 
-  [Actions.onStartTask]: (_, payload) => {
+  [Actions.onStartTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/StartTask`;
 
       axiosWebApiInstance
         .post(url, payload)
         .then(function (response) {
-          console.log(response);
           if (response.data.isOk) {
+            dispatch(Actions.onGetTaskList);
             resolve();
           } else {
             console.error("onStartTask error:", response.data.message);
@@ -70,15 +71,15 @@ export default {
     });
   },
 
-  [Actions.onOnHoldTask]: (_, payload) => {
+  [Actions.onOnHoldTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/OnHoldTask`;
 
       axiosWebApiInstance
         .post(url, payload)
         .then(function (response) {
-          console.log(response);
           if (response.data.isOk) {
+            dispatch(Actions.onGetTaskList);
             resolve();
           } else {
             console.error("onOnHoldTask error:", response.data.message);
@@ -92,15 +93,15 @@ export default {
     });
   },
 
-  [Actions.onQueueTask]: (_, payload) => {
+  [Actions.onQueueTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/QueueTask`;
 
       axiosWebApiInstance
         .post(url, payload)
         .then(function (response) {
-          console.log(response);
           if (response.data.isOk) {
+            dispatch(Actions.onGetTaskList);
             resolve();
           } else {
             console.error("onQueueTask error:", response.data.message);
@@ -114,7 +115,7 @@ export default {
     });
   },
 
-  [Actions.onCompleteTask]: (_, payload) => {
+  [Actions.onCompleteTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/CompleteTask`;
 
@@ -123,6 +124,7 @@ export default {
         .then(function (response) {
           console.log(response);
           if (response.data.isOk) {
+            dispatch(Actions.onGetTaskList);
             resolve();
           } else {
             console.error("onCompleteTask error:", response.data.message);
@@ -136,7 +138,7 @@ export default {
     });
   },
 
-  [Actions.onReturnTask]: (_, payload) => {
+  [Actions.onReturnTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/ReturnTask`;
 
@@ -145,6 +147,7 @@ export default {
         .then(function (response) {
           console.log(response);
           if (response.data.isOk) {
+            dispatch(Actions.onGetTaskList);
             resolve();
           } else {
             console.error("onReturnTask error:", response.data.message);
