@@ -18,7 +18,7 @@
             to="/tasks/taskBoard"
             aria-selected="false"
             active-class="active"
-          >Board</router-link
+            >Board</router-link
           >
           <router-link
             class="nav-item nav-link"
@@ -26,7 +26,7 @@
             role="tab"
             aria-selected="false"
             active-class="active"
-          >Map</router-link
+            >Map</router-link
           >
           <router-link
             class="nav-item nav-link"
@@ -34,7 +34,7 @@
             role="tab"
             aria-selected="false"
             active-class="active"
-          >Raise Task</router-link
+            >Raise Task</router-link
           >
           <router-link
             class="nav-item nav-link"
@@ -42,7 +42,7 @@
             role="tab"
             aria-selected="false"
             active-class="active"
-          >Manage</router-link
+            >Manage</router-link
           >
           <router-link
             class="nav-item nav-link"
@@ -50,7 +50,7 @@
             role="tab"
             aria-selected="false"
             active-class="active"
-          >Progress</router-link
+            >Progress</router-link
           >
         </div>
       </nav>

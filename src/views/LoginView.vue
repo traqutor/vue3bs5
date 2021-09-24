@@ -272,13 +272,13 @@
 </template>
 
 <script>
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import FeatherUser from "@/icons/FeatherUser";
 import FeatherUnlock from "@/icons/FeatherUnlock";
 import FeatherAtSign from "@/icons/FeatherAtSign";
-import { computed, ref } from "vue";
-import { Mutations } from "@/store/enums/EnumTypes";
 
 export default {
   name: "Login",
@@ -301,7 +301,7 @@ export default {
     };
 
     const onLogIn = () => {
-      store.dispatch("onLogin", authData.value).then(() => {
+      store.dispatch(Actions.onLogin, authData.value).then(() => {
         router.push({ name: "Conversations" });
       });
     };

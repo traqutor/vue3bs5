@@ -8,7 +8,7 @@ import jwt_decode from "jwt-decode";
 import { Actions, Mutations } from "@/store/enums/EnumTypes";
 
 export default {
-  onLogin: ({ commit }, authData) => {
+  [Actions.onLogin]: ({ commit }, authData) => {
     commit(Mutations.setLoggedIsLoading, true);
 
     const params = {
@@ -69,7 +69,7 @@ export default {
     });
   },
 
-  onAppInitRecallLoggedUserData: ({ commit, dispatch }) => {
+  [Actions.onAppInitRecallLoggedUserData]: ({ commit, dispatch }) => {
     return new Promise((resolve) => {
       const user = getUserFromTokenData();
       const token = getTokenData();

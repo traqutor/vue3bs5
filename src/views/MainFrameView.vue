@@ -17,6 +17,7 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
+import { Actions } from "@/store/enums/EnumTypes";
 import AppHeader from "@/components/header/MainHeader";
 import AsideLeft from "@/components/aside/AsideLeft";
 import ModalMediaSelectionManager from "@/components/media/manager/ModalMediaSelectionManager";
@@ -28,7 +29,7 @@ export default {
     const store = useStore();
     const getAsideLeftClass = computed(() => store.getters.getAsideLeftClass);
 
-    store.dispatch("onAppInitRecallLoggedUserData");
+    store.dispatch(Actions.onAppInitRecallLoggedUserData);
     store.dispatch("onCreateHubConnection");
 
     return {

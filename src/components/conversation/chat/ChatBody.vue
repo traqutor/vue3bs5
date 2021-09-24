@@ -1,14 +1,8 @@
 <template>
   <div class="flex-slide-content">
     <div class="d-flex flex-column h-100 w-100 position-absolute">
-      <template v-if="isLoading">
-        <div
-          class="d-flex justify-content-center align-content-center fs-5 mt-3"
-        >
-          Is loading...
-        </div>
-      </template>
-      <template v-else>
+      <LoadingListComponent :is-shown="isLoading" />
+      <template v-if="!isLoading">
         <div
           ref="chatContainer"
           class="chat-container-reverse-scroller pe-3 ign-scroll-smooth"
@@ -44,9 +38,11 @@ import { timeMessagesDividerFormat } from "@/services/datetime.service";
 import { guidsAreEqual } from "@/services/guids.service";
 import ChatMessageBubble from "@/components/conversation/chat/bubble/ChatMessageBubble";
 import { Actions } from "@/store/enums/EnumTypes";
+import LoadingListComponent from "@/components/common/LoadingListComponent";
 export default {
   name: "ign-chat-mode",
   components: {
+    LoadingListComponent,
     ChatMessageBubble,
   },
 

@@ -16,7 +16,7 @@ export default {
     { state, commit, rootState },
     { refresh = false, silent = false }
   ) => {
-    if (!silent) commit("setIsConversationsLoading", true);
+    if (!silent) commit(Mutations.setIsConversationsLoading, true);
 
     let skipConversations = refresh
       ? 0
@@ -44,9 +44,10 @@ export default {
           Mutations.setTotalMissedCounter,
           response.data.totalMissedCounter
         );
-        commit("setIsConversationsLoading", false);
+        commit(Mutations.setIsConversationsLoading, false);
       })
       .catch((error) => {
+        commit(Mutations.setIsConversationsLoading, false);
         console.error("On GET_CONVERSATIONS error:", error);
       });
   },
@@ -123,7 +124,12 @@ export default {
     });
   },
 
-  [Actions.onDirectConversationUpdate]: ({ commit, dispatch, state, getters }) => {
+  [Actions.onDirectConversationUpdate]: ({
+    commit,
+    dispatch,
+    state,
+    getters,
+  }) => {
     commit("setIsConversationCreating", true);
     const requestPayload = {
       user: { id: getters.getLoggedUser.id, isRole: false },
@@ -545,7 +551,10 @@ export default {
     commit("setConversations", conversations);
   },
 
-  [Actions.onMessageAcknowledgedNotification]: ({ state, commit, getters }, message) => {
+  [Actions.onMessageAcknowledgedNotification]: (
+    { state, commit, getters },
+    message
+  ) => {
     if (guidsAreEqual(state.selectedConversationId, message.conversationId)) {
       const messages = [...getters.getMessages];
       const idx = messages.findIndex((msg) => msg.id === message.messageId);
@@ -566,7 +575,10 @@ export default {
     }
   },
 
-  [Actions.onReceivedMessageNotification]: ({ state, getters, commit }, message) => {
+  [Actions.onReceivedMessageNotification]: (
+    { state, getters, commit },
+    message
+  ) => {
     const idx = state.conversations.findIndex((c) =>
       guidsAreEqual(c.id, message.conversationId)
     );
@@ -602,7 +614,10 @@ export default {
     }
   },
 
-  [Actions.onMessageReadNotification]: ({ state, commit, getters }, payload) => {
+  [Actions.onMessageReadNotification]: (
+    { state, commit, getters },
+    payload
+  ) => {
     const idx = state.conversations.findIndex(
       (c) => c.id === payload.conversationId
     );
@@ -704,7 +719,10 @@ export default {
       });
   },
 
-  [Actions.onRemoveUsersFromConversation]: ({ commit, getters }, participants) => {
+  [Actions.onRemoveUsersFromConversation]: (
+    { commit, getters },
+    participants
+  ) => {
     const values = {
       activeRoleId: null,
       conversationId: getters.getSelectedConversationId,

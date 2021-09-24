@@ -95,6 +95,7 @@
                         :key="conversation.id"
                         :conversation="conversation"
                       ></conversations-list-item>
+                      <LoadingListComponent :isShown="isConversationsLoading" />
                     </div>
                   </perfect-scrollbar>
                 </div>
@@ -111,16 +112,24 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 import ConversationsListItem from "@/components/conversations/ConversationsListItem";
 import FeatherMoreHorizontal from "@/icons/FeatherMoreHorizontal";
+import LoadingListComponent from "@/components/common/LoadingListComponent";
 
 export default {
   setup() {
     const store = useStore();
+    const isConversationsLoading = computed(
+      () => store.getters.getIsConversationsLoading
+    );
     const conversations = computed(() => store.getters.getConversations);
     const numberOfConversations = computed(
       () => store.getters.getTotalMissedCounter
     );
-    return { conversations, numberOfConversations };
+    return { isConversationsLoading, conversations, numberOfConversations };
   },
-  components: { FeatherMoreHorizontal, ConversationsListItem },
+  components: {
+    LoadingListComponent,
+    FeatherMoreHorizontal,
+    ConversationsListItem,
+  },
 };
 </script>

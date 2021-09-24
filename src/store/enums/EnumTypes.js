@@ -14,6 +14,10 @@ const SocketReceivers = {
 };
 
 const Actions = {
+  // auth actions
+  onLogin: "onLogin",
+  onAppInitRecallLoggedUserData: "onAppInitRecallLoggedUserData",
+
   // conversations actions
   onGetConversations: "onGetConversations",
   onCreateConversation: "onCreateConversation",
@@ -100,6 +104,7 @@ const Mutations = {
   setMessage: "setMessage",
   setReplyMessage: "setReplyMessage",
   setTotalMissedCounter: "setTotalMissedCounter",
+  setIsConversationsLoading: "setIsConversationsLoading",
 
   // media mutation types
   setMediaTypeSelected: "setMediaTypeSelected",
@@ -238,7 +243,6 @@ const TASKS_BOARD_VIEW_MODES = {
   MY_REQUESTS: "MyRequests",
   SCHEDULED: "Scheduled",
 };
-
 
 //messages
 const TEMPLATE_VIEW_MODES = {

@@ -22,7 +22,7 @@ export default {
   setSelectedConversationId: (state, conversationId) => {
     state.selectedConversationId = conversationId;
   },
-  setIsConversationsLoading: (state, flag) => {
+  [Mutations.setIsConversationsLoading]: (state, flag) => {
     state.isConversationsLoading = flag;
   },
   setIsConversationCreating: (state, flag) => {

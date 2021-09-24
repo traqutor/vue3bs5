@@ -65,11 +65,13 @@
               </div>
               <!-- end::more vertical menu dropdown -->
 
+              <!-- start:: content editable -->
               <ChatContentEditable
                 v-model="messageText"
+                is-user-typing-notify="true"
                 @submitContent="onSubmit"
               />
-
+              <!-- end:: content editable -->
               <!-- end::message text area -->
 
               <!-- start::request acknowledge indicator icon toggle button -->
@@ -289,7 +291,7 @@
   </div>
 </template>
 <script>
-import { computed, ref, onMounted, watch } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import FeatherPointSquare from "@/icons/FeatherPointSquare";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
@@ -388,15 +390,6 @@ export default {
     function onAcknowledgePost(message) {
       store.dispatch(Actions.onAcknowledgeMessage, message.id);
     }
-
-    watch(
-      () => messageText.value,
-      (after) => {
-        if (after) {
-          store.dispatch("onUserIsTyping", after);
-        }
-      }
-    );
 
     onMounted(() => {
       let sender = null;
