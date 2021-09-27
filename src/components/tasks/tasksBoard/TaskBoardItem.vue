@@ -158,7 +158,7 @@ import FeatherClock from "@/icons/FeatherClock";
 import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
 import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
 import { timeTaskCreationFormat } from "@/services/datetime.service";
-import { Mutations } from "@/store/enums/EnumTypes";
+import {Actions, Mutations} from "@/store/enums/EnumTypes";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import ParticipantAvatar from "@/components/participant/ParticipantAvatar";
 
@@ -185,7 +185,7 @@ export default {
       } else {
         store.commit(Mutations.setIsTaskDrawerVisible, true);
       }
-      store.commit(Mutations.setSelectedTaskId, props.task.id);
+      store.dispatch(Actions.onSelectTask, props.task.id);
     };
 
     return {

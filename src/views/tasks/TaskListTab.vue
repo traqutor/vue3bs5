@@ -178,7 +178,11 @@ import { timeTaskCreationFormat } from "@/services/datetime.service";
 import FeatherRefreshCw from "@/icons/FeatherRefreshCw";
 import FeatherFilter from "@/icons/FeatherFilter";
 import FeatherArrowRight from "@/icons/FeatherArrowRight";
-import { Mutations, TASK_ACTION_STATUSES } from "@/store/enums/EnumTypes";
+import {
+  Actions,
+  Mutations,
+  TASK_ACTION_STATUSES,
+} from "@/store/enums/EnumTypes";
 import TaskDrawerDetails from "@/components/tasks/TaskDrawerDetails";
 import TaskStatusBadge from "@/components/tasks/TaskStatusBadge";
 import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
@@ -215,9 +219,7 @@ export default {
             if (active.isFilterable) {
               return item.taskStatus === active.id;
             } else if (active.id === "Overdue") {
-              return (
-                item.isDeadlinePassed
-              );
+              return item.isDeadlinePassed;
             }
           });
         });
@@ -262,7 +264,7 @@ export default {
       } else {
         store.commit(Mutations.setIsTaskDrawerVisible, true);
       }
-      store.commit(Mutations.setSelectedTaskId, task.id);
+      store.dispatch(Actions.onSelectTask, task.id);
     };
 
     const onGetTasksCountOfStatuses = (status) => {

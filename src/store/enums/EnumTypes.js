@@ -20,6 +20,7 @@ const Actions = {
 
   // conversations actions
   onGetConversations: "onGetConversations",
+  onGetConversation: "onGetConversation",
   onCreateConversation: "onCreateConversation",
   onDirectConversationUpdate: "onDirectConversationUpdate",
   onCheckConversationMessages: "onCheckConversationMessages",
@@ -77,6 +78,7 @@ const Actions = {
   onGetRequiredActions: "onGetRequiredActions",
 
   // tasks actions types
+  onSelectTask: "onSelectTask",
   onGetTaskList: "onGetTaskList",
   onCreateTask: "onCreateTask",
   onStartTask: "onStartTask",

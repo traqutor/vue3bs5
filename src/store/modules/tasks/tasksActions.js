@@ -49,6 +49,16 @@ export default {
     });
   },
 
+  [Actions.onSelectTask]: ({ commit, dispatch, getters }, taskId) => {
+    return new Promise(() => {
+      commit(Mutations.setSelectedTaskId, taskId);
+      const conversationId = getters.getSelectedTask.conversationId;
+      if (conversationId) {
+        dispatch(Actions.onGetConversation, conversationId);
+      }
+    });
+  },
+
   [Actions.onStartTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
       const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/StartTask`;

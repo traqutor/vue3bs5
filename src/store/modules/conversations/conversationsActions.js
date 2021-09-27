@@ -52,16 +52,46 @@ export default {
       });
   },
 
+  [Actions.onGetConversation]: (
+    { commit, dispatch, getters },
+    conversationId
+  ) => {
+    return new Promise((resolve, reject) => {
+      if (getters.getConversations.some((item) => item.id === conversationId)) {
+        dispatch(Actions.onSelectConversation, conversationId).then(() => {
+          resolve();
+        });
+      } else {
+        const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetConversation?id=${conversationId}`;
+        axiosWebApiInstance
+          .get(url)
+          .then(function (response) {
+            console.log("response", response);
+            const conversations = [...getters.getConversations];
+            commit("setConversations", conversations);
+            resolve();
+          })
+          .catch((error) => {
+            console.error("onGetConversation error:", error);
+            reject(error);
+          });
+      }
+    });
+  },
+
   [Actions.onSelectConversation]: ({ commit, dispatch }, conversationId) => {
-    commit("setSelectedConversationId", conversationId);
-    commit("purgeWhisperParticipants");
-    commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
-    commit(Mutations.setReplyMessage, null);
-    commit(Mutations.setMediaShareGalleryItems, []);
-    commit(Mutations.setMediaSelectedItems, []);
-    dispatch(Actions.onGetMessages, {
-      refresh: true,
-      showLoading: true,
+    return new Promise((resolve) => {
+      commit("setSelectedConversationId", conversationId);
+      commit("purgeWhisperParticipants");
+      commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
+      commit(Mutations.setReplyMessage, null);
+      commit(Mutations.setMediaShareGalleryItems, []);
+      commit(Mutations.setMediaSelectedItems, []);
+      dispatch(Actions.onGetMessages, {
+        refresh: true,
+        showLoading: true,
+      });
+      resolve();
     });
   },
 

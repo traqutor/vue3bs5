@@ -73,9 +73,6 @@ export default {
       (text) => {
         if (text) {
           onUserIsTyping();
-          const range = window.getSelection().getRangeAt(0);
-          range.deleteContents();
-          range.insertNode(document.createTextNode(text));
         }
       }
     );
