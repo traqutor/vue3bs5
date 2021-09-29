@@ -90,7 +90,7 @@
                   >
                     <td class="ps-2">
                       <div class="d-flex align-items-center overflow-hidden">
-                        <TaskColorIndicator :task="task" />
+                        <TaskColorIndicator :color="task.badgeColour" />
                         <div
                           class="
                             media-body

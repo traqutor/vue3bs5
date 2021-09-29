@@ -95,7 +95,7 @@ export default {
       })
       .then(function (response) {
         if (response.data.response.isOk) {
-          commit(Mutations.setTasksList, response.data.tasks);
+          commit(Mutations.setCompletedTasks, response.data.tasks);
         } else {
           console.error(
             "onGetCompletedTask error:",
@@ -252,5 +252,38 @@ export default {
           reject();
         });
     });
+  },
+
+  // tasks notification related actions
+  [Actions.onTaskCreatedNotification]: ({ commit }, task) => {
+    console.log("onTaskCreatedNotification", task);
+    commit(Mutations.setUpdatedTask, task);
+  },
+
+  [Actions.onTaskStatusChangedNotification]: ({ commit }, task) => {
+    console.log("onTaskStatusChangedNotification", task);
+  },
+
+  [Actions.onTaskCreatedNotification]: ({ commit }, task) => {
+    console.log("onTaskCreatedNotification", task);
+  },
+
+  [Actions.onTaskStatusChangedNotification]: ({ commit }, task) => {
+    console.log("onTaskStatusChangedNotification", task);
+  },
+
+  [Actions.onTaskDeadlineCountdownStartedNotification]: ({ commit }, task) => {
+    console.log("onTaskDeadlineCountdownStartedNotification", task);
+  },
+
+  [Actions.onTaskDeadlinePassedNotification]: ({ commit }, task) => {
+    console.log("onTaskDeadlinePassedNotification", task);
+  },
+
+  [Actions.onGroupTaskUpdateNotification]: ({ commit }, group) => {
+    console.log("onGroupTaskUpdateNotification", group);
+  },
+  [Actions.onTaskDeletedNotification]: ({ commit }, task) => {
+    console.log("onTaskDeletedNotification", task);
   },
 };

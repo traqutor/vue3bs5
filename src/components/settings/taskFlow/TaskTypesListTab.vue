@@ -119,12 +119,7 @@
                     >
                       <td class="ps-2">
                         <div class="d-flex align-items-center overflow-hidden">
-                          <span class="f-icon me-3"
-                            ><i
-                              class="f-icon f-icon-24 rounded"
-                              :style="`background-color: #${item.badgeColour}`"
-                            ></i
-                          ></span>
+                          <TaskColorIndicator :color="item.badgeColour" />
                           <div class="media-body font-weight-middle">
                             {{ item.title }}
                           </div>
@@ -245,12 +240,8 @@
               "
             >
               <div class="mb-2 d-flex align-items-center">
-                <span class="f-icon me-3"
-                  ><i
-                    class="f-icon f-icon-24 rounded"
-                    :style="`background-color: #${selectedTaskType.badgeColour}`"
-                  ></i
-                ></span>
+                <TaskColorIndicator :color="selectedTaskType.badgeColour" />
+
                 <div class="overflow-hidden ms-n1">
                   <div class="text-truncate f-size-16 font-weight-middle">
                     {{ selectedTaskType.title }}
@@ -270,7 +261,11 @@
                   class="d-flex flex-column position-absolute h-100 w-100 pr-3"
                 >
                   <TaskTypeDefinitionForm v-if="editType" v-model="editType" />
-                  <TaskTypeDefinitionForm v-else v-model="selectedTaskType" :read-only="true" />
+                  <TaskTypeDefinitionForm
+                    v-else
+                    v-model="selectedTaskType"
+                    :read-only="true"
+                  />
                 </perfect-scrollbar>
               </div>
 
@@ -309,7 +304,6 @@
                 </button>
               </div>
               <!-- end:: type drawer actions buttons -->
-
             </div>
           </div>
         </div>
@@ -329,9 +323,11 @@ import FeatherMoreHorizontal from "@/icons/FeatherMoreHorizontal";
 import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
 import FeatherSearch from "@/icons/FeatherSearch";
 import TaskTypeDefinitionForm from "@/components/settings/taskFlow/taskTypeForm/TaskTypeDefinitionForm";
+import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
 
 export default {
   components: {
+    TaskColorIndicator,
     TaskTypeDefinitionForm,
     FeatherSearch,
     FeatherChevronsRight,

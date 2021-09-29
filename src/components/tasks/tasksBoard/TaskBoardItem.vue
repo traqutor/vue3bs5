@@ -8,7 +8,7 @@
       class="d-flex px-3 py-2 align-items-center dropdown hover-action-group"
     >
       <div class="d-flex align-items-center overflow-hidden me-auto">
-        <task-color-indicator :task="task" />
+        <task-color-indicator :color="task.badgeColour" />
         <div
           class="
             media-body

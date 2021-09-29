@@ -127,7 +127,6 @@ export default {
       SocketReceivers.ConversationCreatedNotification,
       (payload) => {
         const conversation = JSON.parse(payload);
-        console.log("ConversationCreatedNotification", conversation);
 
         dispatch(Actions.onConversationCreatedNotification, conversation);
       }
@@ -146,7 +145,6 @@ export default {
     // tasks related notifications
     connection.on(SocketReceivers.TaskCreated, (payload) => {
       const task = JSON.parse(payload);
-      console.log("TaskCreated", task);
 
       dispatch(Actions.onTaskCreatedNotification, task);
     });

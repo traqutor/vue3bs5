@@ -5,7 +5,7 @@
     >
       <!-- start::task details header -->
       <div class="mb-2 d-flex align-items-center">
-        <TaskColorIndicator :task="task" />
+        <TaskColorIndicator :color="task.badgeColour" />
         <div class="overflow-hidden">
           <div class="text-truncate f-size-16 font-weight-middle">
             {{ task.title }}

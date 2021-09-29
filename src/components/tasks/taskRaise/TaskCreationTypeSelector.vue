@@ -340,7 +340,7 @@
                   <span class="f-icon me-3"
                     ><i
                       class="f-icon f-icon-24 rounded"
-                      :style="`background-color: #${taskType.badgeColour}`"
+                      :style="`background-color: ${taskType.badgeColour}`"
                     ></i
                   ></span>
                   <div class="media-body">

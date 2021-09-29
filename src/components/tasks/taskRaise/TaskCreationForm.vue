@@ -7,12 +7,7 @@
     >
       <!-- start:: selected task header -->
       <div class="mb-3 me-3 d-flex align-items-center overflow-hidden">
-        <span class="f-icon me-3"
-          ><i
-            class="f-icon f-icon-24 rounded"
-            :style="`background-color: #${selectedType.badgeColour}`"
-          ></i
-        ></span>
+        <TaskColorIndicator :color="selectedType.badgeColour" />
 
         <div class="media-body overflow-hidden ms-n1">
           <div class="is-filtered text-truncate f-size-16 font-weight-middle">
@@ -180,9 +175,11 @@ import TaskLocationFormField from "@/components/tasks/taskRaise/TaskLocationForm
 import TaskRequiredParticipantsFormField from "@/components/tasks/taskRaise/TaskRequiredParticipantsFormField";
 import { useRouter } from "vue-router";
 import TaskDueDateFormField from "@/components/tasks/taskRaise/TaskDueDateFormField";
+import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
 
 export default {
   components: {
+    TaskColorIndicator,
     TaskDueDateFormField,
     TaskRequiredParticipantsFormField,
     TaskLocationFormField,

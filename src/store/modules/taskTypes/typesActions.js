@@ -498,10 +498,4 @@ export default {
         console.error("ON onGetCustomFields error:", error);
       });
   },
-
-  // tasks related notification actions
-  [Actions.onTaskCreatedNotification]: ({ commit }, task) => {
-    console.log("onTaskCreatedNotification", task);
-    commit(Mutations.setUpdatedTask, task);
-  },
 };

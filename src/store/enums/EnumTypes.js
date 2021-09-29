@@ -201,13 +201,13 @@ const TASK_TYPE_EMPTY = {
 };
 
 const SWATCH_COLORS = [
-  { color: "417505", className: "todo-label-1" },
-  { color: "f5a623", className: "todo-label-2" },
-  { color: "751dc4", className: "todo-label-3" },
-  { color: "d0021b", className: "todo-label-4" },
-  { color: "4df6d0", className: "todo-label-5" },
-  { color: "f2f81b", className: "todo-label-6" },
-  { color: "1c2ef8", className: "todo-label-7" },
+  { color: "#417505", className: "todo-label-1" },
+  { color: "#f5a623", className: "todo-label-2" },
+  { color: "#751dc4", className: "todo-label-3" },
+  { color: "#d0021b", className: "todo-label-4" },
+  { color: "#4df6d0", className: "todo-label-5" },
+  { color: "#f2f81b", className: "todo-label-6" },
+  { color: "#1c2ef8", className: "todo-label-7" },
 ];
 
 const TASK_ACTION_STATUSES = [
