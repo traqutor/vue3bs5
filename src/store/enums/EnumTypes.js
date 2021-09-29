@@ -11,6 +11,13 @@ const SocketReceivers = {
     "MessageQuickReactionRemovedNotification",
   ConversationCreatedNotification: "ConversationCreatedNotification",
   ConversationTopicChangedNotification: "ConversationTopicChangedNotification",
+
+  TaskCreated: "TaskCreated",
+  TaskStatusChanged: "TaskStatusChanged",
+  TaskDeadlineCountdownStarted: "TaskDeadlineCountdownStarted",
+  TaskDeadlinePassed: "TaskDeadlinePassed",
+  GroupTaskUpdate: "GroupTaskUpdate",
+  TaskDeleted: "TaskDeleted",
 };
 
 const Actions = {
@@ -80,12 +87,23 @@ const Actions = {
   // tasks actions types
   onSelectTask: "onSelectTask",
   onGetTaskList: "onGetTaskList",
+  onGetMyTasks: "onGetMyTasks",
+  onGetRequestedTasks: "onGetRequestedTasks",
+  onGetCompletedTasks: "onGetCompletedTasks",
   onCreateTask: "onCreateTask",
   onStartTask: "onStartTask",
   onOnHoldTask: "onOnHoldTask",
   onQueueTask: "onQueueTask",
   onCompleteTask: "onCompleteTask",
   onReturnTask: "onReturnTask",
+
+  onTaskCreatedNotification: "onTaskCreatedNotification",
+  onTaskStatusChangedNotification: "onTaskStatusChangedNotification",
+  onTaskDeadlineCountdownStartedNotification:
+    "onTaskDeadlineCountdownStartedNotification",
+  onTaskDeadlinePassedNotification: "onTaskDeadlinePassedNotification",
+  onGroupTaskUpdateNotification: "onGroupTaskUpdateNotification",
+  onTaskDeletedNotification: "onTaskDeletedNotification",
 };
 
 const Mutations = {
@@ -137,9 +155,16 @@ const Mutations = {
   setTaskTypesRequiredActions: "setTaskTypesRequiredActions",
 
   // tasks mutation types
-
   setTasksList: "setTasksList",
+  setRequestedTasks: "setRequestedTasks",
+  setMyTasks: "setMyTasks",
+  setCompletedTasks: "setCompletedTasks",
+
   setIsTasksLoading: "setIsTasksLoading",
+  setIsRequestedTasksLoading: "setIsRequestedTasksLoading",
+  setIsMyTasksLoading: "setIsMyTasksLoading",
+  setIsCompletedTasksLoading: "setIsCompletedTasksLoading",
+
   setTasksViewMode: "setTasksViewMode",
   setTasksBoardViewMode: "setTasksBoardViewMode",
   setIsTaskDrawerVisible: "setIsTaskDrawerVisible",

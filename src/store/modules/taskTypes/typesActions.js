@@ -5,13 +5,11 @@ export default {
   [Actions.onGetTypes]: ({ commit }) => {
     commit(Mutations.setIsTypesLoading, true);
 
-    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/SearchTypes`;
+    const page = 1;
+    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/GetTypes?page=${page}`;
 
     axiosWebApiInstance
-      .post(url, {
-        page: 1,
-        query: "",
-      })
+      .get(url)
       .then(function (response) {
         if (response.data.response.isOk) {
           commit(Mutations.setTaskTypes, response.data.taskTypes);
@@ -499,5 +497,11 @@ export default {
       .catch((error) => {
         console.error("ON onGetCustomFields error:", error);
       });
+  },
+
+  // tasks related notification actions
+  [Actions.onTaskCreatedNotification]: ({ commit }, task) => {
+    console.log("onTaskCreatedNotification", task);
+    commit(Mutations.setUpdatedTask, task);
   },
 };

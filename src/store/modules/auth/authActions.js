@@ -86,6 +86,9 @@ export default {
         dispatch(Actions.onSearchRequiredActions);
         dispatch(Actions.onSearchCustomFields);
         dispatch(Actions.onGetTaskList);
+        dispatch(Actions.onGetMyTasks);
+        dispatch(Actions.onGetRequestedTasks);
+        dispatch(Actions.onGetCompletedTasks);
 
         resolve(user);
       }

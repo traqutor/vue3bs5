@@ -142,7 +142,51 @@ export default {
         dispatch("onConversationTopicChangedNotification", conversation);
       }
     );
+
+    // tasks related notifications
+    connection.on(SocketReceivers.TaskCreated, (payload) => {
+      const task = JSON.parse(payload);
+      console.log("TaskCreated", task);
+
+      dispatch(Actions.onTaskCreatedNotification, task);
+    });
+
+    connection.on(SocketReceivers.TaskStatusChanged, (payload) => {
+      const task = JSON.parse(payload);
+      console.log("TaskStatusChanged", task);
+
+      dispatch(Actions.onTaskStatusChangedNotification, task);
+    });
+
+    connection.on(SocketReceivers.TaskDeadlineCountdownStarted, (payload) => {
+      const task = JSON.parse(payload);
+      console.log("TaskDeadlineCountdownStarted", task);
+
+      dispatch(Actions.onTaskDeadlineCountdownStartedNotification, task);
+    });
+
+    connection.on(SocketReceivers.TaskDeadlinePassed, (payload) => {
+      const task = JSON.parse(payload);
+      console.log("TaskDeadlinePassed", task);
+
+      dispatch(Actions.onTaskDeadlinePassedNotification, task);
+    });
+
+    connection.on(SocketReceivers.GroupTaskUpdate, (payload) => {
+      const group = JSON.parse(payload);
+      console.log("GroupTaskUpdate", group);
+
+      dispatch(Actions.onGroupTaskUpdateNotification, group);
+    });
+
+    connection.on(SocketReceivers.TaskDeleted, (payload) => {
+      const task = JSON.parse(payload);
+      console.log("TaskDeleted", task);
+
+      dispatch(Actions.onTaskDeletedNotification, task);
+    });
   },
+
   onSocketConnectionClose: ({ state }) => {
     console.log("onSocketConnectionClose");
     state.hubConnection.stop();
