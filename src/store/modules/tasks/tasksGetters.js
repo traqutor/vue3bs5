@@ -31,9 +31,23 @@ export default {
     return state.selectedTaskId;
   },
   getSelectedTask: (state, getters) => {
-    return state.tasks.find(
-      (task) =>
-        getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
+    return (
+      state.tasks.find(
+        (task) =>
+          getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
+      ) ||
+      state.myTasks.find(
+        (task) =>
+          getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
+      ) ||
+      state.requestedTasks.find(
+        (task) =>
+          getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
+      ) ||
+      state.completedTasks.find(
+        (task) =>
+          getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
+      )
     );
   },
 };

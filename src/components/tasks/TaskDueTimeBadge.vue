@@ -1,16 +1,14 @@
 <template>
   <span
-    class="
+      class="
       badge badge-pill
-      bagd
       px-2
       py-1
       f-size-13
       font-weight-middle
       text-spacing text-monospace
-      timer
     "
-    :class="badgeClass"
+      :class="badgeClass"
   >
     {{ badgeLabel }}</span
   >

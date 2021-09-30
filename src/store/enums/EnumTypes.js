@@ -213,7 +213,7 @@ const SWATCH_COLORS = [
 const TASK_ACTION_STATUSES = [
   {
     id: "New",
-    label: "New",
+    label: "All",
     isActive: false,
     isFilterable: true,
     class: "bg-task-new",

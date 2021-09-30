@@ -11,11 +11,9 @@
           >
             <input
               type="text"
+              v-model="searchText"
               class="form-control is-filter-control bg-light shadow-none"
-              filter-content="#task-group-type"
-              filter-item=".list-group-item"
               placeholder="Search"
-              aria-describedby="button-addon2"
             />
             <div class="input-group-append">
               <button
@@ -27,50 +25,21 @@
                 "
                 type="button"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-search"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
+                <feather-search />
               </button>
             </div>
           </div>
 
+          <!-- start::task types filter categories dropdown -->
           <div class="dropdown ms-3" role="group">
             <button
-              id="btnGroupDrop1"
               type="button"
               class="btn btn-sm btn-primary rounded shadow-none"
-              data-toggle="dropdown"
+              data-bs-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-filter"
-              >
-                <polygon
-                  points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
-                ></polygon>
-              </svg>
+              <feather-filter />
             </button>
             <div
               class="
@@ -79,8 +48,6 @@
                 dropdown-insert-click
                 toggle-filter-group
               "
-              filter-content="#task-group-type"
-              filter-item=".list-group-item"
             >
               <div class="dropdown-header text-secondary pt-0 pb-1">
                 Filter by Type
@@ -101,36 +68,9 @@
                   class="toggle-filter-control"
                   value="all"
                 />
-                <span class="input-icon f-icon-20"
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-circle"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle></svg
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-check-circle"
-                  >
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline
-                      points="22 4 12 14.01 9 11.01"
-                    ></polyline></svg></span
+                <span class="input-icon f-icon-20">
+                  <feather-circle />
+                  <feather-check-circle /> </span
                 >All
               </label>
 
@@ -149,35 +89,7 @@
                   value="type1"
                 />
                 <span class="input-icon f-icon-20"
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-circle"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle></svg
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-check-circle"
-                  >
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline
-                      points="22 4 12 14.01 9 11.01"
-                    ></polyline></svg></span
+                  ><feather-circle /> <feather-check-circle /></span
                 >Clinical
               </label>
 
@@ -196,35 +108,7 @@
                   value="type2"
                 />
                 <span class="input-icon f-icon-20"
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-circle"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle></svg
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-check-circle"
-                  >
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline
-                      points="22 4 12 14.01 9 11.01"
-                    ></polyline></svg></span
+                  ><feather-circle /> <feather-check-circle /></span
                 >Maintenance
               </label>
 
@@ -243,39 +127,12 @@
                   value="type3"
                 />
                 <span class="input-icon f-icon-20"
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-circle"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle></svg
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-check-circle"
-                  >
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline
-                      points="22 4 12 14.01 9 11.01"
-                    ></polyline></svg></span
+                  ><feather-circle /> <feather-check-circle /></span
                 >Porter
               </label>
             </div>
           </div>
+          <!-- end::task types filter categories dropdown -->
         </div>
         <!-- start::display task types as grid or list -->
         <div class="side-nav-line ms-3">
@@ -337,12 +194,8 @@
                 "
               >
                 <div class="d-flex align-items-center overflow-hidden">
-                  <span class="f-icon me-3"
-                    ><i
-                      class="f-icon f-icon-24 rounded"
-                      :style="`background-color: ${taskType.badgeColour}`"
-                    ></i
-                  ></span>
+                  <TaskColorIndicator :color="taskType.badgeColour" />
+
                   <div class="media-body">
                     <span class="me-auto is-filtered text-truncate">{{
                       taskType.title
@@ -389,10 +242,8 @@
                   py-2
                 "
               >
-                <figure
-                  class="avatar avatar-md rounded me-3"
-                  :style="`background-color: #${taskType.badgeColour}`"
-                ></figure>
+                <TaskColorIndicator :color="taskType.badgeColour" />
+
                 <div class="media-body ms-n1 text-dark font-weight-middle">
                   {{ taskType.title }}
                 </div>
@@ -419,13 +270,35 @@ import { useStore } from "vuex";
 import FeatherGrid from "@/icons/FeatherGrid";
 import FeatherList from "@/icons/FeatherList";
 import { Mutations } from "@/store/enums/EnumTypes";
+import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
+import FeatherFilter from "@/icons/FeatherFilter";
+import FeatherCircle from "@/icons/FeatherCircle";
+import FeatherCheckCircle from "@/icons/FeatherCheckCircle";
+import FeatherSearch from "@/icons/FeatherSearch";
 
 export default {
-  components: { FeatherList, FeatherGrid },
+  components: {
+    FeatherSearch,
+    FeatherCheckCircle,
+    FeatherCircle,
+    FeatherFilter,
+    TaskColorIndicator,
+    FeatherList,
+    FeatherGrid,
+  },
   setup() {
     const isListMode = ref();
+    const searchText = ref();
     const store = useStore();
-    const taskTypes = computed(() => store.getters.getTaskTypes);
+    const taskTypes = computed(() => {
+      console.log("searchText.value", searchText.value);
+
+      return searchText.value
+        ? store.getters.getTaskTypes.filter((type) => {
+            return type.title.toLowerCase().includes(searchText.value.toLowerCase());
+          })
+        : store.getters.getTaskTypes;
+    });
 
     const onTaskTypeSelect = (type) => {
       store.commit(Mutations.setSelectedTaskTypeCreation, type);
@@ -433,6 +306,7 @@ export default {
 
     return {
       isListMode,
+      searchText,
       taskTypes,
       onTaskTypeSelect,
     };

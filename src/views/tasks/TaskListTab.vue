@@ -30,7 +30,7 @@
               onGetIsTaskFilterButtonActive(status.id) && 'active ',
               status.class,
             ]"
-            @click="onTaskStatusSelect(status)"
+            @click="onTasksFilterStatusSelect(status)"
           >
             {{ status.label
             }}<span class="f-size-24 font-weight-middle ms-auto">{{
@@ -129,7 +129,7 @@
                       </div>
                     </td>
                     <td>
-                      <div class="d-flex align-items-center">
+                      <div class="d-flex align-items-center table-min-counter">
                         <TaskDueTimeBadge :task="task" />
                       </div>
                     </td>
@@ -214,19 +214,67 @@ export default {
     const tasks = computed(() => {
       if (isTasksFilterActive.value) {
         // filter by selected statuses
-        let filtered = store.getters.getTasks.filter((item) => {
-          return taskActiveActionStatuses.value.find((active) => {
-            if (active.isFilterable) {
-              return item.taskStatus === active.id;
-            } else if (active.id === "Overdue") {
-              return item.isDeadlinePassed;
-            }
-          });
+        let filtered = [];
+
+        taskActiveActionStatuses.value.forEach((status) => {
+
+          if (status.id === "New") {
+            filtered = filtered.concat(store.getters.getTasks);
+          }
+
+          if (status.id === "InProgress") {
+            filtered = filtered.concat(
+              store.getters.getRequestedTasks.filter(
+                (item) => item.taskStatus === status.id
+              )
+            );
+          }
+
+          if (status.id === "Queued") {
+            filtered = filtered.concat(
+              store.getters.getRequestedTasks.filter(
+                (item) => item.taskStatus === status.id
+              )
+            );
+          }
+
+          if (status.id === "Queued") {
+            filtered = filtered.concat(
+              store.getters.getRequestedTasks.filter(
+                (item) => item.taskStatus === status.id
+              )
+            );
+          }
+
+          if (status.id === "OnHold") {
+            filtered = filtered.concat(
+              store.getters.getRequestedTasks.filter(
+                (item) => item.taskStatus === status.id
+              )
+            );
+          }
+
+          if (status.id === "Overdue") {
+            filtered = filtered.concat(
+              store.getters.getRequestedTasks.filter(
+                (item) => item.isDeadlinePassed
+              )
+            );
+          }
+
+          if (status.id === "Completed") {
+            filtered = filtered.concat(store.getters.getCompletedTasks);
+          }
         });
 
         return filtered;
       } else {
-        return store.getters.getTasks;
+        return [
+          ...store.getters.getTasks,
+          ...store.getters.getMyTasks,
+          ...store.getters.getRequestedTasks,
+          ...store.getters.getCompletedTasks,
+        ];
       }
     });
 
@@ -238,7 +286,7 @@ export default {
       );
     };
 
-    const onTaskStatusSelect = (status) => {
+    const onTasksFilterStatusSelect = (status) => {
       const idx = taskActiveActionStatuses.value.findIndex(
         (item) => item.id === status.id
       );
@@ -268,8 +316,31 @@ export default {
     };
 
     const onGetTasksCountOfStatuses = (status) => {
-      return store.getters.getTasks.filter((task) => task.taskStatus === status)
-        .length;
+      switch (status) {
+        case "New":
+          return store.getters.getTasks.length;
+        case "InProgress":
+          return store.getters.getRequestedTasks.filter(
+            (item) => item.taskStatus === status
+          ).length;
+        case "Queued":
+          return store.getters.getRequestedTasks.filter(
+            (item) => item.taskStatus === status
+          ).length;
+        case "OnHold":
+          return store.getters.getRequestedTasks.filter(
+            (item) => item.taskStatus === status
+          ).length;
+        case "Overdue":
+          return store.getters.getRequestedTasks.filter(
+            (item) => item.isDeadlinePassed
+          ).length;
+        case "Completed":
+          return store.getters.getCompletedTasks.length;
+
+        default:
+          return 0;
+      }
     };
 
     return {
@@ -283,7 +354,7 @@ export default {
       onGetIsTaskFilterButtonActive,
       timeTaskCreationFormat,
       onTaskSelect,
-      onTaskStatusSelect,
+      onTasksFilterStatusSelect,
     };
   },
 };
