@@ -8,6 +8,7 @@ import socketModule from "@/store/modules/socket";
 import templateModule from "@/store/modules/templates";
 import taskTypesModule from "@/store/modules/taskTypes";
 import tasksModule from "@/store/modules/tasks";
+import toastModule from "@/store/modules/toast";
 
 const store = createStore({
   modules: {
@@ -20,6 +21,7 @@ const store = createStore({
     templates: templateModule,
     taskTypes: taskTypesModule,
     tasks: tasksModule,
+    toast: toastModule,
   },
 });
 

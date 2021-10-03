@@ -255,35 +255,54 @@ export default {
   },
 
   // tasks notification related actions
-  [Actions.onTaskCreatedNotification]: ({ commit }, task) => {
+  [Actions.onTaskCreatedNotification]: ({ commit, dispatch }, task) => {
     console.log("onTaskCreatedNotification", task);
+    dispatch(Actions.onDisplayNotification, {
+      text: task.title + "created",
+      backgroundColor: task.badgeColor,
+    });
     commit(Mutations.setUpdatedTask, task);
   },
 
-  [Actions.onTaskStatusChangedNotification]: ({ commit }, task) => {
+  [Actions.onTaskStatusChangedNotification]: ({ commit, dispatch }, task) => {
+    dispatch(Actions.onDisplayNotification, {
+      text: "Task updated",
+      backgroundColor: "green",
+    });
     console.log("onTaskStatusChangedNotification", task);
   },
 
-  [Actions.onTaskCreatedNotification]: ({ commit }, task) => {
-    console.log("onTaskCreatedNotification", task);
-  },
-
-  [Actions.onTaskStatusChangedNotification]: ({ commit }, task) => {
-    console.log("onTaskStatusChangedNotification", task);
-  },
-
-  [Actions.onTaskDeadlineCountdownStartedNotification]: ({ commit }, task) => {
+  [Actions.onTaskDeadlineCountdownStartedNotification]: (
+    { commit, dispatch },
+    task
+  ) => {
+    dispatch(Actions.onDisplayNotification, {
+      text: "Task updated",
+      backgroundColor: "green",
+    });
     console.log("onTaskDeadlineCountdownStartedNotification", task);
   },
 
-  [Actions.onTaskDeadlinePassedNotification]: ({ commit }, task) => {
+  [Actions.onTaskDeadlinePassedNotification]: ({ commit, dispatch }, task) => {
+    dispatch(Actions.onDisplayNotification, {
+      text: "Task updated",
+      backgroundColor: "green",
+    });
     console.log("onTaskDeadlinePassedNotification", task);
   },
 
-  [Actions.onGroupTaskUpdateNotification]: ({ commit }, group) => {
+  [Actions.onGroupTaskUpdateNotification]: ({ commit, dispatch }, group) => {
+    dispatch(Actions.onDisplayNotification, {
+      text: "Task updated",
+      backgroundColor: "green",
+    });
     console.log("onGroupTaskUpdateNotification", group);
   },
-  [Actions.onTaskDeletedNotification]: ({ commit }, task) => {
+  [Actions.onTaskDeletedNotification]: ({ commit, dispatch }, task) => {
+    dispatch(Actions.onDisplayNotification, {
+      text: task.title + "updated",
+      backgroundColor: "red",
+    });
     console.log("onTaskDeletedNotification", task);
   },
 };

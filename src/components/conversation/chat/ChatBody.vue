@@ -38,7 +38,7 @@ import { timeMessagesDividerFormat } from "@/services/datetime.service";
 import { guidsAreEqual } from "@/services/guids.service";
 import ChatMessageBubble from "@/components/conversation/chat/bubble/ChatMessageBubble";
 import { Actions } from "@/store/enums/EnumTypes";
-import LoadingListComponent from "@/components/common/LoadingListComponent";
+import LoadingListComponent from "@/components/common/loading/LoadingListComponent";
 export default {
   name: "ign-chat-mode",
   components: {

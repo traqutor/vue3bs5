@@ -104,6 +104,10 @@ const Actions = {
   onTaskDeadlinePassedNotification: "onTaskDeadlinePassedNotification",
   onGroupTaskUpdateNotification: "onGroupTaskUpdateNotification",
   onTaskDeletedNotification: "onTaskDeletedNotification",
+
+  // toast action types
+  onDisplayNotification: "onDisplayNotification",
+  onRemoveNotification: "onRemoveNotification",
 };
 
 const Mutations = {
@@ -171,6 +175,10 @@ const Mutations = {
   setSelectedTaskTypeCreation: "selectedTaskTypeCreation",
   setSelectedTaskId: "setSelectedTaskId",
   setUpdatedTask: "setUpdatedTask",
+
+  // toast mutation types
+  displayNotification: "displayNotification",
+  removeNotification: "removeNotification",
 };
 
 //taskTypes

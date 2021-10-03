@@ -112,7 +112,7 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 import ConversationsListItem from "@/components/conversations/ConversationsListItem";
 import FeatherMoreHorizontal from "@/icons/FeatherMoreHorizontal";
-import LoadingListComponent from "@/components/common/LoadingListComponent";
+import LoadingListComponent from "@/components/common/loading/LoadingListComponent";
 
 export default {
   setup() {
