@@ -1,12 +1,12 @@
 import { Mutations } from "@/store/enums/EnumTypes";
-import {getUID} from "bootstrap/js/src/util";
+import { guidsGetOne } from "@/services/guids.service";
 
 export default {
   [Mutations.displayNotification](state, payload) {
-    console.log('Mutations.displayNotification', payload);
+    console.log("Mutations.displayNotification", payload);
     state.notifications = [
       ...state.notifications,
-      { ...payload, id: getUID() },
+      { ...payload, id: guidsGetOne() },
     ];
   },
   [Mutations.removeNotification](state) {
