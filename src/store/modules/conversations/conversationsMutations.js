@@ -22,9 +22,11 @@ export default {
   setSelectedConversationId: (state, conversationId) => {
     state.selectedConversationId = conversationId;
   },
+
   [Mutations.setIsConversationsLoading]: (state, flag) => {
     state.isConversationsLoading = flag;
   },
+
   setIsConversationCreating: (state, flag) => {
     state.isConversationCreating = flag;
   },
@@ -74,7 +76,6 @@ export default {
   setSelectedMessageId: (state, messageId) => {
     state.selectedMessageId = messageId;
   },
-
   purgeUserIsTyping: (state, whoIsTyping) => {
     const idx = state.conversations.findIndex((c) => {
       return guidsAreEqual(c.id, whoIsTyping.conversationId);
@@ -95,7 +96,6 @@ export default {
 
     state.conversations = [...tmp];
   },
-
   toggleQuickChatTextSelector: (state) => {
     state.isQuickChatTextSelectorVisible =
       !state.isQuickChatTextSelectorVisible;

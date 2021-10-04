@@ -21,8 +21,8 @@ export default {
   setup() {
     const store = useStore();
 
-    const firstNotificationTopPosition = ref(60);
-    const notificationVerticalSpace = ref(60);
+    const firstNotificationTopPosition = ref(70);
+    const notificationVerticalSpace = ref(70);
     const notifications = computed(() => store.getters.getNotifications);
 
     const getNotificationPosition = (notificationIndex) => {

@@ -27,7 +27,7 @@ export default {
 
     const badgeClass = ref("badge-warning");
     const badgeLabel = ref("");
-    const deadLine = moment.unix(props.task.dateDeadline.seconds);
+    const deadLine = moment.unix(props.task?.dateDeadline?.seconds);
 
     const countDownDueTime = () => {
       const now = moment();

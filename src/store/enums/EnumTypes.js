@@ -221,7 +221,7 @@ const SWATCH_COLORS = [
 const TASK_ACTION_STATUSES = [
   {
     id: "New",
-    label: "All",
+    label: "Unassigned",
     isActive: false,
     isFilterable: true,
     class: "bg-task-new",
@@ -240,20 +240,20 @@ const TASK_ACTION_STATUSES = [
     isFilterable: true,
     class: "bg-task-queue",
   },
-  {
-    id: "OnHold",
-    label: "On Hold",
-    isActive: false,
-    isFilterable: true,
-    class: "bg-task-hold",
-  },
-  {
-    id: "Overdue",
-    label: "Overdue",
-    isActive: false,
-    isFilterable: false,
-    class: "bg-task-overdue",
-  },
+  // {
+  //   id: "OnHold",
+  //   label: "On Hold",
+  //   isActive: false,
+  //   isFilterable: true,
+  //   class: "bg-task-hold",
+  // },
+  // {
+  //   id: "Overdue",
+  //   label: "Overdue",
+  //   isActive: false,
+  //   isFilterable: false,
+  //   class: "bg-task-overdue",
+  // },
   {
     id: "Completed",
     label: "Completed",

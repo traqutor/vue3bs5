@@ -108,12 +108,15 @@
                     rounded
                   "
                 >
+                  <!-- start:: open conversation for assigned users -->
                   <button
                     type="button"
                     class="btn btn-primary px-2 shadow-none"
+                    @click="onOpenConversation"
                   >
                     <feather-message-square-line class="f-icon-18" />
                   </button>
+                  <!-- end:: open conversation for assigned users -->
                 </div>
               </div>
               <!-- end::assigned to -->
@@ -334,12 +337,14 @@ import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvata
 import FeatherFileText from "@/icons/FeatherFileText";
 import FeatherUser from "@/icons/FeatherUser";
 import FeatherMapPin from "@/icons/FeatherMapPin";
-import { Actions } from "@/store/enums/EnumTypes";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import { timeHhMmaDotDdddFormat } from "@/services/datetime.service";
+import { CONVERSATION_VIEW_MODES } from "@/const";
 
 export default {
   props: ["task"],
-  setup(props) {
+  emits: ["onViewModeChange"],
+  setup(props, { emit }) {
     const store = useStore();
 
     const taskStartButtonStatuses = ["New"];
@@ -433,6 +438,26 @@ export default {
         });
     };
 
+    const onOpenConversation = () => {
+      if (props.task.conversationId) {
+        emit("onViewModeChange", "Conversation");
+      } else {
+        console.log("setConversationViewMode");
+        store.commit(
+          "setSelectedParticipants",
+          props.task.taskRequiredParticipants.map((item) => {
+            const participant = store.getters.getParticipantById(item.userId);
+            return {
+              id: participant.id,
+              isRole: participant.isRole,
+              name: participant.name,
+            };
+          })
+        );
+        store.commit("setConversationViewMode", CONVERSATION_VIEW_MODES.NEW);
+      }
+    };
+
     return {
       taskStartButtonStatuses,
       taskQueueButtonStatuses,
@@ -449,6 +474,7 @@ export default {
       onQueueTaskAction,
       onCompleteTaskAction,
       onReturnTaskAction,
+      onOpenConversation,
       timeHhMmaDotDdddFormat,
     };
   },

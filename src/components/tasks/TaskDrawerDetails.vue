@@ -32,30 +32,40 @@
           class="nav nav-tabs border-bottom border-secondary-light"
           style="min-height: 38px"
         >
-          <a
+          <button
             class="nav-item nav-link"
             :class="drawerViewMode === 'Details' && 'active'"
-            @click="drawerViewMode = 'Details'"
-            >Details</a
+            @click="onChangeDrawerViewMode('Details')"
           >
+            Details
+          </button>
 
-          <a
+          <button
             v-if="task.conversationId"
             class="nav-item nav-link"
             :class="drawerViewMode === 'Conversation' && 'active'"
-            @click="drawerViewMode = 'Conversation'"
+            @click="onChangeDrawerViewMode('Conversation')"
           >
             Conversation
-            <span class="badge badge-pill ms-2 badge-primary"> 7</span>
-          </a>
+            <span
+              v-if="
+                selectedConversation &&
+                selectedConversation.unreadMessageCount > 0
+              "
+              class="badge badge-pill ms-2 badge-primary"
+            >
+              {{ selectedConversation.unreadMessageCount }}</span
+            >
+          </button>
 
-          <a
+          <button
             v-if="task.fromLocation || task.toLocation"
             class="nav-item nav-link"
             :class="drawerViewMode === 'Location' && 'active'"
-            @click="drawerViewMode = 'Location'"
-            >Location</a
+            @click="onChangeDrawerViewMode('Location')"
           >
+            Location
+          </button>
 
           <div
             v-if="drawerViewMode === 'Conversation'"
@@ -77,22 +87,7 @@
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-more-horizontal f-icon-26"
-                >
-                  <circle cx="12" cy="12" r="1"></circle>
-                  <circle cx="19" cy="12" r="1"></circle>
-                  <circle cx="5" cy="12" r="1"></circle>
-                </svg>
+                <feather-more-horizontal class="f-icon-26" />
               </button>
               <div
                 class="
@@ -132,6 +127,7 @@
       <TaskDrawerDetailsContent
         v-if="drawerViewMode === 'Details'"
         :task="task"
+        @onViewModeChange="onChangeDrawerViewMode"
       />
       <!-- end::task details content -->
 
@@ -156,9 +152,11 @@ import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
 import TaskDrawerDetailsContent from "@/components/tasks/tasksBoard/TaskDrawerDetailsContent";
 import TaskDrawerDetailsConversation from "@/components/tasks/tasksBoard/TaskDrawerDetailsConversation";
 import TaskDrawerDetailsLocation from "@/components/tasks/tasksBoard/TaskDrawerDetailsLocation";
+import FeatherMoreHorizontal from "@/icons/FeatherMoreHorizontal";
 
 export default {
   components: {
+    FeatherMoreHorizontal,
     TaskDrawerDetailsLocation,
     TaskDrawerDetailsConversation,
     TaskDrawerDetailsContent,
@@ -173,6 +171,13 @@ export default {
 
     const store = useStore();
     const task = computed(() => store.getters.getSelectedTask);
+    const selectedConversation = computed(
+      () => store.getters.getSelectedConversation
+    );
+
+    const onChangeDrawerViewMode = (mode) => {
+      drawerViewMode.value = mode;
+    };
 
     const onCloseDrawer = () => {
       store.commit(Mutations.setIsTaskDrawerVisible, false);
@@ -185,6 +190,8 @@ export default {
     return {
       drawerViewMode,
       task,
+      selectedConversation,
+      onChangeDrawerViewMode,
       onCloseDrawer,
     };
   },

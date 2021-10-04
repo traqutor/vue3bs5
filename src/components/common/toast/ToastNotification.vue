@@ -5,7 +5,7 @@
         class="notification"
         :style="{ 'background-color': notification.backgroundColor }"
       >
-        {{ notification.text ? notification.text : "Default text" }}
+        {{ notification.text ? notification.text : "Notification" }}
       </div>
     </transition>
   </div>
@@ -20,11 +20,11 @@ export default {
 <style lang="scss" scoped>
 .notification-wrapper {
   position: relative;
-  width: 170px;
+  width: 240px;
   margin: 10px;
 }
 .notification {
-  height: 50px;
+  height: 60px;
   padding: 10px 15px;
   border-radius: 7px;
   color: #fff;
