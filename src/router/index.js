@@ -13,13 +13,19 @@ const routes = [
       {
         path: "/tasks",
         name: "Tasks",
-        redirect: "/tasks/taskList",
+        redirect: "/tasks/myTasks",
         meta: { auth: true },
         component: () => import("@/views/TasksView"),
         children: [
           {
-            path: "/tasks/taskList",
-            name: "Task List",
+            path: "/tasks/myTasks",
+            name: "My Tasks",
+            meta: { auth: true },
+            component: () => import("@/views/tasks/TaskListTab"),
+          },
+          {
+            path: "/tasks/requestedBy:flag",
+            name: "Requested by me",
             meta: { auth: true },
             component: () => import("@/views/tasks/TaskListTab"),
           },

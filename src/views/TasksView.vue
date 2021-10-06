@@ -8,11 +8,19 @@
         >
           <router-link
             class="nav-item nav-link"
-            to="/tasks/taskList"
+            to="/tasks/myTasks"
             aria-selected="true"
             active-class="active"
-            >Task List</router-link
+            >My Tasks</router-link
           >
+          <router-link
+            class="nav-item nav-link"
+            to="/tasks/requestedBy:me"
+            aria-selected="true"
+            active-class="active"
+            >Requested by me</router-link
+          >
+
           <router-link
             class="nav-item nav-link"
             to="/tasks/taskBoard"

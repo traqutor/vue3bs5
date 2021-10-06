@@ -10,16 +10,18 @@ const taskTypesModule = {
   state() {
     return {
       //tasks lists
-      tasks: [],
-      myTasks: [],
       requestedTasks: [],
-      completedTasks: [],
+      myTasks: [],
+      unassignedTasks: [],
+      myCompletedTasks: [],
+      requestedCompletedTasks: [],
 
       //loading booleans flag
-      isTasksLoading: false,
       isRequestedTasksLoading: false,
       isMyTasksLoading: false,
-      isCompletedTasksLoading: false,
+      isUnassignedTasksLoading: false,
+      isMyCompletedTasksLoading: false,
+      isRequestedCompletedTasksLoading: false,
 
       //selections
       selectedTaskTypeCreation: null,

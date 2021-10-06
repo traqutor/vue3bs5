@@ -12,12 +12,12 @@ const SocketReceivers = {
   ConversationCreatedNotification: "ConversationCreatedNotification",
   ConversationTopicChangedNotification: "ConversationTopicChangedNotification",
 
-  TaskCreated: "TaskCreated",
-  TaskStatusChanged: "TaskStatusChanged",
-  TaskDeadlineCountdownStarted: "TaskDeadlineCountdownStarted",
-  TaskDeadlinePassed: "TaskDeadlinePassed",
-  GroupTaskUpdate: "GroupTaskUpdate",
-  TaskDeleted: "TaskDeleted",
+  TaskCreated: "TaskCreatedNotification",
+  TaskStatusChanged: "TaskStatusChangedNotification",
+  TaskDeadlineCountdownStarted: "TaskDeadlineCountdownStartedNotification",
+  TaskDeadlinePassed: "TaskDeadlinePassedNotification",
+  GroupTaskUpdate: "GroupTaskUpdateNotification",
+  TaskDeleted: "TaskDeletedNotification",
 };
 
 const Actions = {
@@ -86,10 +86,11 @@ const Actions = {
 
   // tasks actions types
   onSelectTask: "onSelectTask",
-  onGetTaskList: "onGetTaskList",
-  onGetMyTasks: "onGetMyTasks",
   onGetRequestedTasks: "onGetRequestedTasks",
-  onGetCompletedTasks: "onGetCompletedTasks",
+  onGetMyTasks: "onGetMyTasks",
+  onGetUnassignedTasks: "onGetUnassignedTasks",
+  onGetMyCompletedTasks: "onGetMyCompletedTasks",
+  onGetRequestedCompletedTasks: "onGetRequestedCompletedTasks",
   onCreateTask: "onCreateTask",
   onStartTask: "onStartTask",
   onOnHoldTask: "onOnHoldTask",
@@ -159,15 +160,17 @@ const Mutations = {
   setTaskTypesRequiredActions: "setTaskTypesRequiredActions",
 
   // tasks mutation types
-  setTasksList: "setTasksList",
   setRequestedTasks: "setRequestedTasks",
   setMyTasks: "setMyTasks",
-  setCompletedTasks: "setCompletedTasks",
+  setUnassignedTasks: "setUnassignedTasks",
+  setMyCompletedTasks: "setMyCompletedTasks",
+  setRequestedCompletedTasks: "setRequestedCompletedTasks",
 
-  setIsTasksLoading: "setIsTasksLoading",
   setIsRequestedTasksLoading: "setIsRequestedTasksLoading",
   setIsMyTasksLoading: "setIsMyTasksLoading",
-  setIsCompletedTasksLoading: "setIsCompletedTasksLoading",
+  setIsUnassignedTasksLoading: "setIsUnassignedTasksLoading",
+  setIsMyCompletedTasksLoading: "setIsMyCompletedTasksLoading",
+  setIsRequestedCompletedTasksLoading: "setIsRequestedCompletedTasksLoading",
 
   setTasksViewMode: "setTasksViewMode",
   setTasksBoardViewMode: "setTasksBoardViewMode",
@@ -220,7 +223,7 @@ const SWATCH_COLORS = [
 
 const TASK_ACTION_STATUSES = [
   {
-    id: "New",
+    id: "Unassigned",
     label: "Unassigned",
     isActive: false,
     isFilterable: true,

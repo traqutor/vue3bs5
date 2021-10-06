@@ -6,7 +6,7 @@ export default {
     commit(Mutations.setIsTypesLoading, true);
 
     const page = 1;
-    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/GetTypes?page=${page}`;
+    const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/GetTypes?page=${page}`;
 
     axiosWebApiInstance
       .get(url)
@@ -28,7 +28,7 @@ export default {
     return new Promise((resolve) => {
       commit(Mutations.setIsTypePost, true);
 
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/CreateType`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/CreateType`;
 
       axiosWebApiInstance
         .post(url, type)
@@ -76,7 +76,7 @@ export default {
     return new Promise((resolve) => {
       commit(Mutations.setIsTypePost, true);
 
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/UpdateType`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/UpdateType`;
 
       axiosWebApiInstance
         .delete(url, { data: { typeIds } })
@@ -112,7 +112,7 @@ export default {
     return new Promise((resolve) => {
       commit(Mutations.setIsTypePost, true);
 
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/UpdateRequiredParticipantsToType`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/UpdateRequiredParticipantsToType`;
 
       axiosWebApiInstance
         .post(url, { typeId, taskRequiredParticipants })
@@ -145,7 +145,7 @@ export default {
 
   [Actions.onAddCustomFieldsToType]: (_, { typeId, ids }) => {
     return new Promise((resolve, reject) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/AddCustomFieldsToType`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/AddCustomFieldsToType`;
 
       axiosWebApiInstance
         .post(url, { typeId, ids })
@@ -169,7 +169,7 @@ export default {
 
   [Actions.onAddRequiredActionsToType]: (_, { typeId, ids }) => {
     return new Promise((resolve, reject) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/AddRequiredActionsToType`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/AddRequiredActionsToType`;
 
       axiosWebApiInstance
         .post(url, { typeId, ids })
@@ -198,7 +198,7 @@ export default {
     return new Promise((resolve) => {
       commit(Mutations.setIsTypePost, true);
 
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/RemoveRequiredParticipantsFromType`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/RemoveRequiredParticipantsFromType`;
 
       axiosWebApiInstance
         .delete(url, {
@@ -244,7 +244,7 @@ export default {
 
   [Actions.onRemoveCustomFieldsFromType]: (_, { typeId, ids }) => {
     return new Promise((resolve, reject) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/RemoveCustomFieldsFromType`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/RemoveCustomFieldsFromType`;
 
       axiosWebApiInstance
         .post(url, { typeId, ids })
@@ -270,7 +270,7 @@ export default {
 
   [Actions.onRemoveRequiredActionsFromType]: (_, { typeId, ids }) => {
     return new Promise((resolve, reject) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/RemoveRequiredActionsFromType`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/RemoveRequiredActionsFromType`;
 
       axiosWebApiInstance
         .post(url, { typeId, ids })
@@ -296,7 +296,7 @@ export default {
 
   [Actions.onAddRequiredActions]: ({ commit }, actions) => {
     return new Promise((resolve) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/AddRequiredActions`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/AddRequiredActions`;
 
       axiosWebApiInstance
         .post(url, actions)
@@ -322,7 +322,7 @@ export default {
 
   [Actions.onAddCustomFields]: ({ commit }, fields) => {
     return new Promise((resolve) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/AddCustomFields`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/AddCustomFields`;
 
       axiosWebApiInstance
         .post(url, fields)
@@ -348,7 +348,7 @@ export default {
 
   [Actions.onDeleteRequiredActions]: ({ commit }, actions) => {
     return new Promise((resolve) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/DeleteRequiredActions`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/DeleteRequiredActions`;
 
       axiosWebApiInstance
         .delete(url, { data: [...actions] })
@@ -377,7 +377,7 @@ export default {
 
   [Actions.onDeleteCustomFields]: ({ commit }, fields) => {
     return new Promise((resolve) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/DeleteCustomFields`;
+      const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/DeleteCustomFields`;
 
       axiosWebApiInstance
         .delete(url, { data: [...fields] })
@@ -402,7 +402,7 @@ export default {
   },
 
   [Actions.onSearchRequiredActions]: ({ commit }) => {
-    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/SearchRequiredActions`;
+    const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/SearchRequiredActions`;
 
     axiosWebApiInstance
       .post(url, {
@@ -428,7 +428,7 @@ export default {
   },
 
   [Actions.onSearchCustomFields]: ({ commit }) => {
-    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/SearchCustomFields`;
+    const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/SearchCustomFields`;
 
     axiosWebApiInstance
       .post(url, {
@@ -454,7 +454,7 @@ export default {
   },
 
   [Actions.onGetCustomFields]: ({ commit }) => {
-    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes/GetCustomFields?Page=1`;
+    const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes/GetCustomFields?Page=1`;
 
     axiosWebApiInstance
       .get(url)
@@ -477,7 +477,7 @@ export default {
   },
 
   [Actions.onGetRequiredActions]: ({ commit }) => {
-    const url = `${process.env.VUE_APP_BASE_URL}/api/TaskTypes//GetRequiredActions?Page=1`;
+    const url = `${process.env.VUE_APP_BASE_URL}/TaskTypes//GetRequiredActions?Page=1`;
 
     axiosWebApiInstance
       .get(url)

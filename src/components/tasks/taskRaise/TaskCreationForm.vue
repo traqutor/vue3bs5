@@ -126,6 +126,33 @@
               </div>
             </div>
             <!-- end::notes -->
+
+            <div class="border-top border-secondary-light mt-4 mb-3"></div>
+
+            <!-- start::requires -->
+            <div class="d-flex">
+              <feather-file-text
+                class="me-3 align-self-center f-icon-20 text-secondary"
+              />
+              <div class="media-body">
+                <div class="text-secondary mb-2">Requires</div>
+                <div
+                  v-for="field of customFields"
+                  :key="field.id"
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="field.val"
+                  />
+                  <label class="form-check-label">
+                    {{ field.title }}
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- end::notes -->
           </perfect-scrollbar>
         </div>
       </div>
@@ -133,14 +160,6 @@
 
       <div class="pt-2 text-danger" v-if="!isFormValid">
         Please fix the above errors and submit again.
-        <br />
-        fromLocation: {{ fromLocation }}
-        <br />
-        taskRequiredParticipants: {{ taskRequiredParticipants }}
-        <br />
-        deadlineDate: {{ deadlineDate }}
-        <br />
-        notes: {{ notes }}
       </div>
 
       <!-- start::submit task button -->
@@ -201,7 +220,7 @@ export default {
       toLocation: { val: "", isValid: true },
       notes: { val: "", isValid: true },
       deadlineDate: { val: "", isValid: true },
-      customFields: { val: [], isValid: true },
+      customFields: store.getters.getCustomFields,
       taskRequiredParticipants: { val: [], isValid: true },
     });
 
@@ -247,14 +266,18 @@ export default {
 
       const payload = {
         taskTypeId: +props.selectedType.id,
-        activeRoleId: event.activeRoleId.val,
+        activeRoleId: event.activeRoleId.val
+          ? event.activeRoleId.val
+          : store.getters.getLoggedUserActiveRole.Id,
         subjectId: event.subjectId.val,
         fromLocation: event.fromLocation.val,
         toLocation: event.toLocation.val,
         notes: event.notes.val,
         deadlineDate: event.deadlineDate.val,
         isIncident: false,
-        customFields: [],
+        customFields: event.customFields
+          .filter((field) => field.val)
+          .map((field) => field.id),
         taskRequiredParticipants: event.taskRequiredParticipants.val.map(
           (participant) => {
             if (participant.isRole) {
@@ -277,11 +300,12 @@ export default {
       };
 
       event.isFormSaving = true;
+
       store
         .dispatch(Actions.onCreateTask, payload)
         .then(() => {
           event.isFormSaving = false;
-          router.push({ path: "/tasks/taskList" });
+          router.push({ path: "/tasks/requestedBy:me" });
         })
         .catch(() => {
           event.isFormSaving = false;

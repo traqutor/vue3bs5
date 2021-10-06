@@ -173,6 +173,7 @@
 </template>
 <script>
 import { computed, ref } from "vue";
+import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { timeTaskCreationFormat } from "@/services/datetime.service";
 import FeatherRefreshCw from "@/icons/FeatherRefreshCw";
@@ -199,8 +200,9 @@ export default {
     FeatherRefreshCw,
   },
   setup() {
-    const store = useStore();
+    const route = useRoute();
     const taskActionStatuses = ref(TASK_ACTION_STATUSES);
+    const store = useStore();
     const taskActiveActionStatuses = ref([]);
 
     const isDrawerVisible = computed(
@@ -212,68 +214,59 @@ export default {
     });
 
     const tasks = computed(() => {
+      const requestedTasks = route.params.flag
+        ? store.getters.getRequestedTasks
+        : store.getters.getMyTasks;
+      const completedTasks = route.params.flag
+        ? store.getters.getRequestedCompletedTasks
+        : store.getters.getMyCompletedTasks;
+
       if (isTasksFilterActive.value) {
         // filter by selected statuses
         let filtered = [];
 
         taskActiveActionStatuses.value.forEach((status) => {
+          console.log(status);
 
-          if (status.id === "New") {
-            filtered = filtered.concat(store.getters.getTasks);
+          if (status.id === "Unassigned") {
+            filtered = store.getters.getUnassignedTasks;
           }
 
           if (status.id === "InProgress") {
             filtered = filtered.concat(
-              store.getters.getRequestedTasks.filter(
-                (item) => item.taskStatus === status.id
-              )
+              requestedTasks.filter((item) => item.taskStatus === status.id)
             );
           }
 
           if (status.id === "Queued") {
             filtered = filtered.concat(
-              store.getters.getRequestedTasks.filter(
-                (item) => item.taskStatus === status.id
-              )
-            );
-          }
-
-          if (status.id === "Queued") {
-            filtered = filtered.concat(
-              store.getters.getRequestedTasks.filter(
-                (item) => item.taskStatus === status.id
-              )
+              requestedTasks.filter((item) => item.taskStatus === status.id)
             );
           }
 
           if (status.id === "OnHold") {
             filtered = filtered.concat(
-              store.getters.getRequestedTasks.filter(
-                (item) => item.taskStatus === status.id
-              )
+              requestedTasks.filter((item) => item.taskStatus === status.id)
             );
           }
 
           if (status.id === "Overdue") {
             filtered = filtered.concat(
-              store.getters.getRequestedTasks.filter(
-                (item) => item.isDeadlinePassed
-              )
+              requestedTasks.filter((item) => item.isDeadlinePassed)
             );
           }
 
           if (status.id === "Completed") {
-            filtered = filtered.concat(store.getters.getCompletedTasks);
+            filtered = filtered.concat(completedTasks);
           }
         });
 
         return filtered;
       } else {
         return [
-          ...store.getters.getTasks,
-          ...store.getters.getMyTasks,
-          ...store.getters.getRequestedTasks,
-          ...store.getters.getCompletedTasks,
+          ...store.getters.getUnassignedTasks,
+          ...requestedTasks,
+          ...completedTasks,
         ];
       }
     });
@@ -316,27 +309,29 @@ export default {
     };
 
     const onGetTasksCountOfStatuses = (status) => {
+      const requestedTasks = route.params.flag
+        ? store.getters.getRequestedTasks
+        : store.getters.getMyTasks;
+      const completedTasks = route.params.flag
+        ? store.getters.getRequestedCompletedTasks
+        : store.getters.getMyCompletedTasks;
+
       switch (status) {
-        case "New":
-          return store.getters.getTasks.length;
+        case "Unassigned":
+          return store.getters.getUnassignedTasks.length;
         case "InProgress":
-          return store.getters.getRequestedTasks.filter(
-            (item) => item.taskStatus === status
-          ).length;
+          return requestedTasks.filter((item) => item.taskStatus === status)
+            .length;
         case "Queued":
-          return store.getters.getRequestedTasks.filter(
-            (item) => item.taskStatus === status
-          ).length;
+          return requestedTasks.filter((item) => item.taskStatus === status)
+            .length;
         case "OnHold":
-          return store.getters.getRequestedTasks.filter(
-            (item) => item.taskStatus === status
-          ).length;
+          return requestedTasks.filter((item) => item.taskStatus === status)
+            .length;
         case "Overdue":
-          return store.getters.getRequestedTasks.filter(
-            (item) => item.isDeadlinePassed
-          ).length;
+          return requestedTasks.filter((item) => item.isDeadlinePassed).length;
         case "Completed":
-          return store.getters.getCompletedTasks.length;
+          return completedTasks.length;
 
         default:
           return 0;

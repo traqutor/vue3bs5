@@ -147,6 +147,13 @@
                 </div>
               </div>
               <!-- end::requested by -->
+
+              <div class="mb-2 text-secondary mt-3">Requires</div>
+              <div class="py-1 mt-1">
+                <span class="text-dark">{{
+                  task.customFields.map((field) => field.title).join(", ")
+                }}</span>
+              </div>
             </perfect-scrollbar>
           </div>
         </div>
@@ -329,15 +336,16 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import FeatherClock from "@/icons/FeatherClock";
 import FeatherMessageSquareLine from "@/icons/FeatherMessageSquareLine";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import FeatherFileText from "@/icons/FeatherFileText";
 import FeatherUser from "@/icons/FeatherUser";
 import FeatherMapPin from "@/icons/FeatherMapPin";
-import { Actions, Mutations } from "@/store/enums/EnumTypes";
+import { Actions } from "@/store/enums/EnumTypes";
 import { timeHhMmaDotDdddFormat } from "@/services/datetime.service";
 import { CONVERSATION_VIEW_MODES } from "@/const";
 
@@ -345,6 +353,7 @@ export default {
   props: ["task"],
   emits: ["onViewModeChange"],
   setup(props, { emit }) {
+    const router = useRouter();
     const store = useStore();
 
     const taskStartButtonStatuses = ["New"];
@@ -358,11 +367,15 @@ export default {
     const isCompleteAction = ref(false);
     const isReturnAction = ref(false);
 
+    const activeRoleId = computed(
+      () => store.getters.getLoggedUserActiveRole.Id
+    );
+
     const onStartTaskAction = () => {
       isStartAction.value = true;
       const payload = {
         taskId: props.task.id,
-        activeRoleId: "",
+        activeRoleId: activeRoleId.value,
       };
       store
         .dispatch(Actions.onStartTask, payload)
@@ -378,7 +391,7 @@ export default {
       isOnHoldAction.value = true;
       const payload = {
         taskId: props.task.id,
-        activeRoleId: "",
+        activeRoleId: activeRoleId.value,
       };
       store
         .dispatch(Actions.onOnHoldTask, payload)
@@ -394,7 +407,7 @@ export default {
       isQueueAction.value = true;
       const payload = {
         taskId: props.task.id,
-        activeRoleId: "",
+        activeRoleId: activeRoleId.value,
       };
       store
         .dispatch(Actions.onQueueTask, payload)
@@ -410,7 +423,7 @@ export default {
       isCompleteAction.value = true;
       const payload = {
         taskId: props.task.id,
-        activeRoleId: "",
+        activeRoleId: activeRoleId.value,
       };
       store
         .dispatch(Actions.onCompleteTask, payload)
@@ -426,7 +439,7 @@ export default {
       isReturnAction.value = true;
       const payload = {
         taskId: props.task.id,
-        activeRoleId: "",
+        activeRoleId: activeRoleId.value,
       };
       store
         .dispatch(Actions.onReturnTask, payload)
@@ -438,11 +451,14 @@ export default {
         });
     };
 
+    const getIfLoggedUserIsAllowedToPerformTaskAction = () => {
+      return true;
+    };
+
     const onOpenConversation = () => {
       if (props.task.conversationId) {
         emit("onViewModeChange", "Conversation");
       } else {
-        console.log("setConversationViewMode");
         store.commit(
           "setSelectedParticipants",
           props.task.taskRequiredParticipants.map((item) => {
@@ -455,6 +471,7 @@ export default {
           })
         );
         store.commit("setConversationViewMode", CONVERSATION_VIEW_MODES.NEW);
+        router.push({ path: "/conversations" });
       }
     };
 
@@ -469,6 +486,7 @@ export default {
       isQueueAction,
       isCompleteAction,
       isReturnAction,
+      getIfLoggedUserIsAllowedToPerformTaskAction,
       onStartTaskAction,
       onHoldTaskAction,
       onQueueTaskAction,

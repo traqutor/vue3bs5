@@ -167,32 +167,30 @@
               "
             >
               <!-- start::message text area -->
-              <TextareaResizeAuto>
-                <template v-slot:default="{ resize }">
-                  <textarea
-                    class="
-                      form-control
-                      dialog-input-textarea
-                      chat-textarea-control
-                      f-size-14
-                      bg-transparent
-                      border-0
-                      rounded-0
-                      is-keyup-group-control
-                      shadow-none
-                      ps-2
-                      autoresize-textarea
-                      no-resize
-                    "
-                    rows="1"
-                    placeholder="Type a message ..."
-                    style="height: 42px; overflow-y: hidden"
-                    v-model="messageText"
-                    @input="resize"
-                    @keydown.enter.prevent="onSubmitFirstStep"
-                  ></textarea>
-                </template>
-              </TextareaResizeAuto>
+              <!--              <TextareaResizeAuto>-->
+              <!--                <template v-slot:default="{ resize }">-->
+              <textarea
+                class="
+                  form-control
+                  dialog-input-textarea
+                  chat-textarea-control
+                  f-size-14
+                  bg-transparent
+                  border-0
+                  rounded-0
+                  is-keyup-group-control
+                  shadow-none
+                  ps-2
+                  autoresize-textarea
+                  no-resize
+                "
+                rows="1"
+                placeholder="Type a message ..."
+                v-model="messageText"
+                @keydown.enter.prevent="onSubmitFirstStep"
+              ></textarea>
+              <!--                </template>-->
+              <!--              </TextareaResizeAuto>-->
               <!-- end::message text area -->
 
               <!-- start:: emoji dropdown -->

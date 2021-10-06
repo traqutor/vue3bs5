@@ -85,10 +85,13 @@ export default {
         dispatch(Actions.onGetTypes);
         dispatch(Actions.onSearchRequiredActions);
         dispatch(Actions.onSearchCustomFields);
-        dispatch(Actions.onGetTaskList);
-        dispatch(Actions.onGetMyTasks);
+
+        //tasks 
         dispatch(Actions.onGetRequestedTasks);
-        dispatch(Actions.onGetCompletedTasks);
+        dispatch(Actions.onGetMyTasks);
+        dispatch(Actions.onGetUnassignedTasks);
+        dispatch(Actions.onGetMyCompletedTasks);
+        dispatch(Actions.onGetRequestedCompletedTasks);
 
         resolve(user);
       }

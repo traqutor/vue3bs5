@@ -2,68 +2,23 @@ import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import { axiosWebApiInstance } from "@/services/axios.service";
 
 export default {
-  [Actions.onGetTaskList]: ({ commit }) => {
-    commit(Mutations.setIsTasksLoading, true);
-
-    const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/GetTaskList`;
-
-    axiosWebApiInstance
-      .get(url, {
-        params: {
-          activeRoleIds: [],
-        },
-      })
-      .then(function (response) {
-        if (response.data.response.isOk) {
-          commit(Mutations.setTasksList, response.data.tasks);
-        } else {
-          console.error("onGetTaskList error:", response.data.response.message);
-        }
-        commit(Mutations.setIsTasksLoading, false);
-      })
-      .catch((error) => {
-        commit(Mutations.setIsTasksLoading, false);
-        console.error("onGetTaskList error:", error);
-      });
-  },
-
-  [Actions.onGetMyTasks]: ({ commit }) => {
-    commit(Mutations.setIsMyTasksLoading, true);
-
-    const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/GetMyTasks`;
-
-    axiosWebApiInstance
-      .get(url, {
-        params: {
-          activeRoleIds: [],
-        },
-      })
-      .then(function (response) {
-        if (response.data.response.isOk) {
-          commit(Mutations.setMyTasks, response.data.tasks);
-        } else {
-          console.error("onGetMyTasks error:", response.data.response.message);
-        }
-        commit(Mutations.setIsMyTasksLoading, false);
-      })
-      .catch((error) => {
-        commit(Mutations.setIsMyTasksLoading, false);
-        console.error("onGetMyTasks error:", error);
-      });
-  },
-
-  [Actions.onGetRequestedTasks]: ({ commit }) => {
+  [Actions.onGetRequestedTasks]: ({ commit, getters }) => {
     commit(Mutations.setIsRequestedTasksLoading, true);
 
-    const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/GetRequestedTasks`;
+    const page = 0;
+
+    let url = `${process.env.VUE_APP_BASE_URL}/Tasks/GetRequestedTasks?page=${page}`;
+
+    const activeRoleIds = getters.getLoggedUser.SystemRoles.map(
+      (role, index) => {
+        return `&activeRoleIds[${index}]=${role.Id}`;
+      }
+    ).join("");
+
+    url = url + activeRoleIds;
 
     axiosWebApiInstance
-      .get(url, {
-        params: {
-          page: 1,
-          activeRoleIds: [],
-        },
-      })
+      .get(url)
       .then(function (response) {
         if (response.data.response.isOk) {
           commit(Mutations.setRequestedTasks, response.data.tasks);
@@ -81,44 +36,145 @@ export default {
       });
   },
 
-  [Actions.onGetCompletedTasks]: ({ commit }) => {
-    commit(Mutations.setIsCompletedTasksLoading, true);
+  [Actions.onGetMyTasks]: ({ commit, getters }) => {
+    commit(Mutations.setIsMyTasksLoading, true);
 
-    const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/GetCompletedTasks`;
+    let url = `${process.env.VUE_APP_BASE_URL}/Tasks/GetMyTasks`;
+    const activeRoleIds = getters.getLoggedUser.SystemRoles.map(
+      (role, index) => {
+        return `${index === 0 ? "?" : "&"}activeRoleIds[${index}]=${role.Id}`;
+      }
+    ).join("");
+
+    url = url + activeRoleIds;
 
     axiosWebApiInstance
-      .get(url, {
-        params: {
-          page: 1,
-          activeRoleIds: [],
-        },
-      })
+      .get(url)
       .then(function (response) {
         if (response.data.response.isOk) {
-          commit(Mutations.setCompletedTasks, response.data.tasks);
+          commit(Mutations.setMyTasks, response.data.tasks);
+        } else {
+          console.error("onGetMyTasks error:", response.data.response.message);
+        }
+        commit(Mutations.setIsMyTasksLoading, false);
+      })
+      .catch((error) => {
+        commit(Mutations.setIsMyTasksLoading, false);
+        console.error("onGetMyTasks error:", error);
+      });
+  },
+
+  [Actions.onGetUnassignedTasks]: ({ commit, getters }) => {
+    commit(Mutations.setIsUnassignedTasksLoading, true);
+
+    const page = 1;
+    let url = `${process.env.VUE_APP_BASE_URL}/Tasks/GetUnassignedTasks?page=${page}`;
+
+    const activeRoleIds = getters.getLoggedUser.SystemRoles.map(
+      (role, index) => {
+        return `&activeRoleIds[${index}]=${role.Id}`;
+      }
+    ).join("");
+
+    url = url + activeRoleIds;
+
+    axiosWebApiInstance
+      .get(url)
+      .then(function (response) {
+        if (response.data.response.isOk) {
+          commit(Mutations.setUnassignedTasks, response.data.tasks);
         } else {
           console.error(
-            "onGetCompletedTask error:",
+            "onGetUnassignedTasks error:",
             response.data.response.message
           );
         }
-        commit(Mutations.setIsCompletedTasksLoading, false);
+        commit(Mutations.setIsUnassignedTasksLoading, false);
       })
       .catch((error) => {
-        commit(Mutations.setIsCompletedTasksLoading, false);
-        console.error("onGetCompletedTask error:", error);
+        commit(Mutations.setIsUnassignedTasksLoading, false);
+        console.error("onGetUnassignedTasks error:", error);
+      });
+  },
+
+  [Actions.onGetMyCompletedTasks]: ({ commit, getters }) => {
+    commit(Mutations.setIsMyCompletedTasksLoading, true);
+
+    const page = 1;
+
+    let url = `${process.env.VUE_APP_BASE_URL}/Tasks/GetMyCompletedTasks?page=${page}`;
+
+    const activeRoleIds = getters.getLoggedUser.SystemRoles.map(
+      (role, index) => {
+        return `&activeRoleIds[${index}]=${role.Id}`;
+      }
+    ).join("");
+
+    url = url + activeRoleIds;
+
+    axiosWebApiInstance
+      .get(url)
+      .then(function (response) {
+        if (response.data.response.isOk) {
+          commit(Mutations.setMyCompletedTasks, response.data.tasks);
+        } else {
+          console.error(
+            "onGetMyCompletedTasks error:",
+            response.data.response.message
+          );
+        }
+        commit(Mutations.setIsMyCompletedTasksLoading, false);
+      })
+      .catch((error) => {
+        commit(Mutations.setIsMyCompletedTasksLoading, false);
+        console.error("onGetMyCompletedTasks error:", error);
+      });
+  },
+
+  [Actions.onGetRequestedCompletedTasks]: ({ commit, getters }) => {
+    commit(Mutations.setIsRequestedCompletedTasksLoading, true);
+
+    const page = 1;
+
+    let url = `${process.env.VUE_APP_BASE_URL}/Tasks/GetRequestedCompletedTasks?page=${page}`;
+
+    const activeRoleIds = getters.getLoggedUser.SystemRoles.map(
+      (role, index) => {
+        return `&activeRoleIds[${index}]=${role.Id}`;
+      }
+    ).join("");
+
+    url = url + activeRoleIds;
+
+    axiosWebApiInstance
+      .get(url)
+      .then(function (response) {
+        if (response.data.response.isOk) {
+          commit(Mutations.setRequestedCompletedTasks, response.data.tasks);
+        } else {
+          console.error(
+            "onGetRequestedCompletedTasks error:",
+            response.data.response.message
+          );
+        }
+        commit(Mutations.setIsRequestedCompletedTasksLoading, false);
+      })
+      .catch((error) => {
+        commit(Mutations.setIsRequestedCompletedTasksLoading, false);
+        console.error("onGetRequestedCompletedTasks error:", error);
       });
   },
 
   [Actions.onCreateTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/CreateTask`;
+      const url = `${process.env.VUE_APP_BASE_URL}/Tasks/CreateTask`;
 
       axiosWebApiInstance
         .post(url, payload)
         .then(function (response) {
+          console.log("response", response);
           if (response.data.isOk) {
-            dispatch(Actions.onGetTaskList);
+            dispatch(Actions.onGetRequestedTasks);
             resolve();
           } else {
             console.error("onCreateTask error:", response.data.message);
@@ -144,7 +200,7 @@ export default {
 
   [Actions.onStartTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/StartTask`;
+      const url = `${process.env.VUE_APP_BASE_URL}/Tasks/StartTask`;
 
       axiosWebApiInstance
         .post(url, payload)
@@ -166,7 +222,7 @@ export default {
 
   [Actions.onOnHoldTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/OnHoldTask`;
+      const url = `${process.env.VUE_APP_BASE_URL}/Tasks/OnHoldTask`;
 
       axiosWebApiInstance
         .post(url, payload)
@@ -188,7 +244,7 @@ export default {
 
   [Actions.onQueueTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/QueueTask`;
+      const url = `${process.env.VUE_APP_BASE_URL}/Tasks/QueueTask`;
 
       axiosWebApiInstance
         .post(url, payload)
@@ -210,7 +266,7 @@ export default {
 
   [Actions.onCompleteTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/CompleteTask`;
+      const url = `${process.env.VUE_APP_BASE_URL}/Tasks/CompleteTask`;
 
       axiosWebApiInstance
         .post(url, payload)
@@ -233,7 +289,7 @@ export default {
 
   [Actions.onReturnTask]: ({ dispatch }, payload) => {
     return new Promise((resolve, reject) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/Tasks/ReturnTask`;
+      const url = `${process.env.VUE_APP_BASE_URL}/Tasks/ReturnTask`;
 
       axiosWebApiInstance
         .post(url, payload)
@@ -298,6 +354,7 @@ export default {
     });
     console.log("onGroupTaskUpdateNotification", group);
   },
+
   [Actions.onTaskDeletedNotification]: ({ commit, dispatch }, task) => {
     dispatch(Actions.onDisplayNotification, {
       text: task.title + "updated",

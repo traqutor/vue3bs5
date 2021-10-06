@@ -666,14 +666,14 @@ export default {
 
     const getList = (status) => {
       if (boardViewMode.value === TASKS_BOARD_VIEW_MODES.MY_REQUESTS) {
-        return store.getters.getTasks.filter(
+        return store.getters.getRequestedTasks.filter(
           (task) =>
             task.taskStatus === status &&
             loggedUser.value &&
             task.creatorId === loggedUser.value.id
         );
       } else {
-        return store.getters.getTasks.filter(
+        return store.getters.getMyTasks.filter(
           (task) => task.taskStatus === status
         );
       }

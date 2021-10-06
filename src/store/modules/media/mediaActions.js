@@ -7,7 +7,7 @@ export default {
     const isGeneral = true;
     const isMetadataRequest = false;
 
-    const url = `${process.env.VUE_APP_BASE_URL}/api/Gallery/GetThumbnails?ItemsQuantity=${itemsQuantity}&isGeneral=${isGeneral}&isMedatadaRequest=${isMetadataRequest}`;
+    const url = `${process.env.VUE_APP_BASE_URL}/Gallery/GetThumbnails?ItemsQuantity=${itemsQuantity}&isGeneral=${isGeneral}&isMedatadaRequest=${isMetadataRequest}`;
 
     axiosWebApiInstance
       .get(url)
@@ -25,7 +25,7 @@ export default {
 
   [Actions.onGetAttachmentsThumbnails]: (_, requestQuery) => {
     return new Promise((resolve) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/Gallery/GetAttachmentsThumbnails?${requestQuery}`;
+      const url = `${process.env.VUE_APP_BASE_URL}/Gallery/GetAttachmentsThumbnails?${requestQuery}`;
 
       axiosWebApiInstance
         .get(url)
@@ -47,7 +47,7 @@ export default {
 
   [Actions.onGetItem]: ({ commit, getters }, itemId) => {
     if (!getters.getMediaItemById(itemId)) {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/Gallery/GetItem?itemId=${itemId}`;
+      const url = `${process.env.VUE_APP_BASE_URL}/Gallery/GetItem?itemId=${itemId}`;
       axiosWebApiInstance
         .get(url)
         .then(function (response) {
@@ -67,7 +67,7 @@ export default {
   [Actions.onShareGalleryItems]: ({ commit }, requestPayload) => {
     commit(Mutations.setIsMediaShareLoading, true);
     return new Promise((resolve) => {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/Gallery/ShareGalleryItem`;
+      const url = `${process.env.VUE_APP_BASE_URL}/Gallery/ShareGalleryItem`;
 
       axiosWebApiInstance
         .post(url, requestPayload)

@@ -1,20 +1,47 @@
 export default {
-  getTasks: (state) => {
-    return state.tasks;
-  },
-  getMyTasks: (state) => {
-    return state.myTasks;
-  },
+  // tasks lists
   getRequestedTasks: (state) => {
     return state.requestedTasks;
   },
-  getCompletedTasks: (state) => {
-    return state.completedTasks;
+
+  getMyTasks: (state) => {
+    return state.myTasks;
   },
 
-  getIsTasksLoading: (state) => {
-    return state.isTasksLoading;
+  getUnassignedTasks: (state) => {
+    return state.unassignedTasks;
   },
+
+  getMyCompletedTasks: (state) => {
+    return state.myCompletedTasks;
+  },
+
+  getRequestedCompletedTasks: (state) => {
+    return state.requestedCompletedTasks;
+  },
+
+  // tasks loader flags
+  getIsRequestedTasksLoading: (state) => {
+    return state.isRequestedTasksLoading;
+  },
+
+  getIsMyTasksLoading: (state) => {
+    return state.isMyTasksLoading;
+  },
+
+  getIsUnassignedTasksLoading: (state) => {
+    return state.isUnassignedTasksLoading;
+  },
+
+  getIsMyCompletedTasksLoading: (state) => {
+    return state.isMyCompletedTasksLoading;
+  },
+
+  getIsRequestedCompletedTasksLoading: (state) => {
+    return state.isRequestedCompletedTasksLoading;
+  },
+
+  // tasks view modes
   getTasksViewMode: (state) => {
     return state.viewMode;
   },
@@ -24,15 +51,19 @@ export default {
   getIsTaskDrawerVisible: (state) => {
     return state.isTaskDrawerVisible;
   },
+
+  // tasks creation
   getSelectedTaskTypeCreation: (state) => {
     return state.selectedTaskTypeCreation;
   },
+
+  // tasks selections
   getSelectedTaskId: (state) => {
     return state.selectedTaskId;
   },
   getSelectedTask: (state, getters) => {
     return (
-      state.tasks.find(
+      state.requestedTasks.find(
         (task) =>
           getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
       ) ||
@@ -40,11 +71,15 @@ export default {
         (task) =>
           getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
       ) ||
-      state.requestedTasks.find(
+      state.unassignedTasks.find(
         (task) =>
           getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
       ) ||
-      state.completedTasks.find(
+      state.myCompletedTasks.find(
+        (task) =>
+          getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
+      ) ||
+      state.requestedCompletedTasks.find(
         (task) =>
           getters.getSelectedTaskId && task.id === getters.getSelectedTaskId
       )

@@ -2,31 +2,37 @@ import { Mutations } from "@/store/enums/EnumTypes";
 
 export default {
   //tasks lists
-  [Mutations.setTasksList]: (state, tasks) => {
-    state.tasks = tasks;
+  [Mutations.setRequestedTasks]: (state, tasks) => {
+    state.requestedTasks = tasks;
   },
   [Mutations.setMyTasks]: (state, tasks) => {
     state.myTasks = tasks;
   },
-  [Mutations.setRequestedTasks]: (state, tasks) => {
-    state.requestedTasks = tasks;
+  [Mutations.setUnassignedTasks]: (state, tasks) => {
+    state.unassignedTasks = tasks;
   },
-  [Mutations.setCompletedTasks]: (state, tasks) => {
-    state.completedTasks = tasks;
+  [Mutations.setMyCompletedTasks]: (state, tasks) => {
+    state.myCompletedTasks = tasks;
+  },
+  [Mutations.setRequestedCompletedTasks]: (state, tasks) => {
+    state.requestedCompletedTasks = tasks;
   },
 
   //loading booleans flag
-  [Mutations.setIsTasksLoading]: (state, flag) => {
-    state.isTasksLoading = flag;
+  [Mutations.setIsRequestedTasksLoading]: (state, flag) => {
+    state.isRequestedTasksLoading = flag;
   },
   [Mutations.setIsMyTasksLoading]: (state, flag) => {
     state.isMyTasksLoading = flag;
   },
-  [Mutations.setIsRequestedTasksLoading]: (state, flag) => {
-    state.isRequestedTasksLoading = flag;
+  [Mutations.setIsUnassignedTasksLoading]: (state, flag) => {
+    state.isUnassignedTasksLoading = flag;
   },
-  [Mutations.setIsCompletedTasksLoading]: (state, flag) => {
-    state.isCompletedTasksLoading = flag;
+  [Mutations.setIsMyCompletedTasksLoading]: (state, flag) => {
+    state.isMyCompletedTasksLoading = flag;
+  },
+  [Mutations.setIsRequestedCompletedTasksLoading]: (state, flag) => {
+    state.isRequestedCompletedTasksLoading = flag;
   },
 
   //selections
