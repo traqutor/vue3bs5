@@ -665,18 +665,22 @@ export default {
     const boardViewMode = computed(() => store.getters.getTasksBoardViewMode);
 
     const getList = (status) => {
+      let tasks = store.getters.getUnassignedTasks.filter((task) => task.taskStatus === status) ;
       if (boardViewMode.value === TASKS_BOARD_VIEW_MODES.MY_REQUESTS) {
-        return store.getters.getRequestedTasks.filter(
-          (task) =>
-            task.taskStatus === status &&
-            loggedUser.value &&
-            task.creatorId === loggedUser.value.id
+        tasks = tasks.concat(
+          store.getters.getRequestedTasks.filter(
+            (task) =>
+              task.taskStatus === status &&
+              loggedUser.value &&
+              task.creatorId === loggedUser.value.id
+          )
         );
       } else {
-        return store.getters.getMyTasks.filter(
-          (task) => task.taskStatus === status
+        tasks = tasks.concat(
+          store.getters.getMyTasks.filter((task) => task.taskStatus === status)
         );
       }
+      return tasks;
     };
 
     const startDrag = (event, item) => {

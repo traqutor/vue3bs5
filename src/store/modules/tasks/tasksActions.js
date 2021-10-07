@@ -5,7 +5,7 @@ export default {
   [Actions.onGetRequestedTasks]: ({ commit, getters }) => {
     commit(Mutations.setIsRequestedTasksLoading, true);
 
-    const page = 0;
+    const page = 1;
 
     let url = `${process.env.VUE_APP_BASE_URL}/Tasks/GetRequestedTasks?page=${page}`;
 
@@ -172,8 +172,9 @@ export default {
       axiosWebApiInstance
         .post(url, payload)
         .then(function (response) {
-          console.log("response", response);
           if (response.data.isOk) {
+            dispatch(Actions.onGetUnassignedTasks);
+            dispatch(Actions.onGetMyTasks);
             dispatch(Actions.onGetRequestedTasks);
             resolve();
           } else {
@@ -206,7 +207,9 @@ export default {
         .post(url, payload)
         .then(function (response) {
           if (response.data.isOk) {
-            dispatch(Actions.onGetTaskList);
+            dispatch(Actions.onGetUnassignedTasks);
+            dispatch(Actions.onGetMyTasks);
+            dispatch(Actions.onGetRequestedTasks);
             resolve();
           } else {
             console.error("onStartTask error:", response.data.message);
@@ -228,7 +231,9 @@ export default {
         .post(url, payload)
         .then(function (response) {
           if (response.data.isOk) {
-            dispatch(Actions.onGetTaskList);
+            dispatch(Actions.onGetUnassignedTasks);
+            dispatch(Actions.onGetMyTasks);
+            dispatch(Actions.onGetRequestedTasks);
             resolve();
           } else {
             console.error("onOnHoldTask error:", response.data.message);
@@ -250,7 +255,10 @@ export default {
         .post(url, payload)
         .then(function (response) {
           if (response.data.isOk) {
-            dispatch(Actions.onGetTaskList);
+            dispatch(Actions.onGetUnassignedTasks);
+            dispatch(Actions.onGetMyTasks);
+            dispatch(Actions.onGetRequestedTasks);
+
             resolve();
           } else {
             console.error("onQueueTask error:", response.data.message);
@@ -273,7 +281,10 @@ export default {
         .then(function (response) {
           console.log(response);
           if (response.data.isOk) {
-            dispatch(Actions.onGetTaskList);
+            dispatch(Actions.onGetUnassignedTasks);
+            dispatch(Actions.onGetMyTasks);
+            dispatch(Actions.onGetRequestedTasks);
+
             resolve();
           } else {
             console.error("onCompleteTask error:", response.data.message);
@@ -296,7 +307,10 @@ export default {
         .then(function (response) {
           console.log(response);
           if (response.data.isOk) {
-            dispatch(Actions.onGetTaskList);
+            dispatch(Actions.onGetUnassignedTasks);
+            dispatch(Actions.onGetMyTasks);
+            dispatch(Actions.onGetRequestedTasks);
+
             resolve();
           } else {
             console.error("onReturnTask error:", response.data.message);
