@@ -184,7 +184,7 @@ import {
   Mutations,
   TASK_ACTION_STATUSES,
 } from "@/store/enums/EnumTypes";
-import TaskDrawerDetails from "@/components/tasks/TaskDrawerDetails";
+import TaskDrawerDetails from "@/components/tasks/taskDrawer/TaskDrawerDetails";
 import TaskStatusBadge from "@/components/tasks/TaskStatusBadge";
 import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
 import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";

@@ -51,7 +51,7 @@ import TasksBoardLeftNavMenuFilter from "@/components/tasks/tasksBoard/TasksBoar
 import TaskBoard from "@/components/tasks/tasksBoard/TaskBoard";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
-import TaskDrawerDetails from "@/components/tasks/TaskDrawerDetails";
+import TaskDrawerDetails from "@/components/tasks/taskDrawer/TaskDrawerDetails";
 import { TASKS_BOARD_VIEW_MODES } from "@/store/enums/EnumTypes";
 import TaskBoardScheduled from "@/components/tasks/tasksBoard/TaskBoardScheduled";
 export default {

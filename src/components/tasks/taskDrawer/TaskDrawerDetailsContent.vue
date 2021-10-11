@@ -60,10 +60,7 @@
                   class="me-3 align-self-center f-icon-20 text-secondary"
                 />
 
-                <div class="media-body ms-n1">
-                  <div class="text-secondary f-size-13">Patient Name</div>
-                  <div>{{ task.subjectId }}</div>
-                </div>
+                <TaskDrawerPatientInfo :task="task" />
               </div>
               <!-- end::patient -->
 
@@ -85,7 +82,7 @@
               <div class="border-top border-secondary-light mt-4 mb-3"></div>
 
               <!-- start::assigned to -->
-              <div class="mb-2 text-secondary mt-3">Assigned To</div>
+              <div class="mb-2 text-secondary mt-3">Team members</div>
 
               <div
                 class="py-1 on-hover hover-action-group overflow-hidden mt-1"
@@ -348,6 +345,7 @@ import FeatherMapPin from "@/icons/FeatherMapPin";
 import { Actions } from "@/store/enums/EnumTypes";
 import { timeHhMmaDotDdddFormat } from "@/services/datetime.service";
 import { CONVERSATION_VIEW_MODES } from "@/const";
+import TaskDrawerPatientInfo from "@/components/tasks/taskDrawer/TaskDrawerPatientInfo";
 
 export default {
   props: ["task"],
@@ -498,6 +496,7 @@ export default {
   },
 
   components: {
+    TaskDrawerPatientInfo,
     FeatherClock,
     FeatherMessageSquareLine,
     ParticipantAvatarNameItem,

@@ -149,9 +149,9 @@ import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
 import FeatherX from "@/icons/FeatherX";
 import { Mutations } from "@/store/enums/EnumTypes";
 import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
-import TaskDrawerDetailsContent from "@/components/tasks/tasksBoard/TaskDrawerDetailsContent";
-import TaskDrawerDetailsConversation from "@/components/tasks/tasksBoard/TaskDrawerDetailsConversation";
-import TaskDrawerDetailsLocation from "@/components/tasks/tasksBoard/TaskDrawerDetailsLocation";
+import TaskDrawerDetailsContent from "@/components/tasks/taskDrawer/TaskDrawerDetailsContent";
+import TaskDrawerDetailsConversation from "@/components/tasks/taskDrawer/TaskDrawerDetailsConversation";
+import TaskDrawerDetailsLocation from "@/components/tasks/taskDrawer/TaskDrawerDetailsLocation";
 import FeatherMoreHorizontal from "@/icons/FeatherMoreHorizontal";
 
 export default {
