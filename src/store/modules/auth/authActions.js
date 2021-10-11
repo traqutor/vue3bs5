@@ -83,10 +83,12 @@ export default {
         dispatch(Actions.onGetConversations, { refresh: true });
         dispatch(Actions.onGetThumbnails);
         dispatch(Actions.onGetTypes);
+        dispatch(Actions.onGetLocations);
+        dispatch(Actions.onGetPatients);
         dispatch(Actions.onSearchRequiredActions);
         dispatch(Actions.onSearchCustomFields);
 
-        //tasks 
+        //tasks
         dispatch(Actions.onGetRequestedTasks);
         dispatch(Actions.onGetMyTasks);
         dispatch(Actions.onGetUnassignedTasks);

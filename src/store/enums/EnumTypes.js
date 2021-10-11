@@ -109,6 +109,12 @@ const Actions = {
   // toast action types
   onDisplayNotification: "onDisplayNotification",
   onRemoveNotification: "onRemoveNotification",
+
+  // locations action types
+  onGetLocations: "onGetLocations",
+
+  // patients action types
+  onGetPatients: "onGetPatients",
 };
 
 const Mutations = {
@@ -182,6 +188,12 @@ const Mutations = {
   // toast mutation types
   displayNotification: "displayNotification",
   removeNotification: "removeNotification",
+
+  // locations mutation types
+  setLocations: "setLocations",
+
+  // patients mutation types
+  setPatients: "setPatients",
 };
 
 //taskTypes

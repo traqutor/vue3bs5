@@ -13,10 +13,10 @@
       >
         <option
           v-for="item of locations"
-          :selected="modelValue === item"
-          :key="item"
+          :selected="modelValue === item.title"
+          :key="item.title"
         >
-          {{ item }}
+          {{ item.title }}
         </option>
       </select>
     </div>
@@ -24,20 +24,24 @@
 </template>
 <script>
 import { computed } from "vue";
+import { useStore } from "vuex";
 import FeatherMapPin from "@/icons/FeatherMapPin";
+
 export default {
   components: { FeatherMapPin },
-  props: ["modelValue", "name", "label", "isValid", "clearValidity"],
-  // props: {
-  //   modelValue: { type: String },
-  //   label: { type: String },
-  //   isValid: { type: Boolean },
-  //   clearValidity: { type: Function },
-  // },
+  props: [
+    "modelValue",
+    "name",
+    "label",
+    "isValid",
+    "clearValidity",
+    "exceptLocationId",
+  ],
   emits: ["update:modelValue"],
   setup(props, { emit }) {
+    const store = useStore();
     const locations = computed(() => {
-      return ["Room IPC.001", "Room IPC.002", "Room IPC.003", "Room IPC.004"];
+      return store.getters.getLocationExceptId(props.exceptLocationId);
     });
 
     const onUpdateValue = (event) => {

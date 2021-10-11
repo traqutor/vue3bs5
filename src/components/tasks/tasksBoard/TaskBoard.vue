@@ -45,6 +45,7 @@
                   @drop="(e) => onDrop(e, 'New')"
                   @drag-start="(e) => console.log('drag start', e)"
                   @drag-end="(e) => console.log('drag end', e)"
+                  :get-child-payload="getTaskPayload('taskId')"
                   drag-class="card-ghost"
                   drop-class="card-ghost-drop"
                   :drop-placeholder="dropPlaceholderOptions"
@@ -200,8 +201,6 @@ import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { Container, Draggable } from "vue-dndrop";
 import TaskBoardItem from "@/components/tasks/tasksBoard/TaskBoardItem";
-import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
-import FeatherArrowSortVertical from "@/icons/FeatherArrowSortVertical";
 import { Mutations, TASKS_BOARD_VIEW_MODES } from "@/store/enums/EnumTypes";
 import TasksBoardColumnHeader from "@/components/tasks/tasksBoard/TasksBoardColumnHeader";
 
@@ -210,8 +209,6 @@ export default {
     TasksBoardColumnHeader,
     Container,
     Draggable,
-    FeatherArrowSortVertical,
-    FeatherMoreVertical,
     TaskBoardItem,
   },
   setup() {
@@ -246,7 +243,9 @@ export default {
     };
 
     const getTaskPayload = (taskId) => {
-      return taskId;
+      return (index) => {
+        return taskId + index;
+      };
     };
 
     const startDrag = (event, item) => {
@@ -260,12 +259,12 @@ export default {
     const onDrop = async (event, status) => {
       console.log("On drop", event);
       console.log("On drop", status);
-
-      const taskId = event.dataTransfer.getData("taskId");
-      const task = await store.getters.getTasks.find(
-        (item) => +item.id === +taskId
-      );
-      store.commit(Mutations.setUpdatedTask, { ...task, taskStatus: status });
+      //
+      // const taskId = event.dataTransfer.getData("taskId");
+      // const task = await store.getters.getTasks.find(
+      //   (item) => +item.id === +taskId
+      // );
+      // store.commit(Mutations.setUpdatedTask, { ...task, taskStatus: status });
     };
 
     return {

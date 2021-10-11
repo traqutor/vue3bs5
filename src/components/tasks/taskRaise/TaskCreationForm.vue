@@ -58,6 +58,7 @@
                 name="toLocation"
                 :is-valid="toLocation.isValid"
                 :clear-validity="clearValidity"
+                :except-location="fromLocation.val?.id"
               />
               <!-- end::toLocation -->
             </div>
@@ -86,21 +87,12 @@
 
             <!-- start::subjectId -->
             <div class="d-flex">
-              <feather-user
-                class="me-3 align-self-center f-icon-20 text-secondary"
+              <TaskPatientSelectFormField
+                v-model="subjectId.val"
+                :is-valid="subjectId.isValid"
+                label="Patient name"
+                name="subjectId"
               />
-
-              <div class="media-body" :class="{ invalid: !subjectId.isValid }">
-                <div class="text-secondary mb-2">Patient</div>
-                <div class="input-group input-group-sm border-0">
-                  <input
-                    type="text"
-                    class="form-control form-control-sm bg-light shadow-none"
-                    v-model="subjectId.val"
-                    @blur="clearValidity('subjectId')"
-                  />
-                </div>
-              </div>
             </div>
             <!-- end::subjectId -->
 
@@ -145,14 +137,18 @@
                     class="form-check-input"
                     type="checkbox"
                     v-model="field.val"
+                    :id="`value${field.id}`"
                   />
-                  <label class="form-check-label">
+                  <label
+                    class="form-check-label on-hover"
+                    :for="`value${field.id}`"
+                  >
                     {{ field.title }}
                   </label>
                 </div>
               </div>
             </div>
-            <!-- end::notes -->
+            <!-- end::requires -->
           </perfect-scrollbar>
         </div>
       </div>
@@ -195,9 +191,11 @@ import TaskRequiredParticipantsFormField from "@/components/tasks/taskRaise/Task
 import { useRouter } from "vue-router";
 import TaskDueDateFormField from "@/components/tasks/taskRaise/TaskDueDateFormField";
 import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
+import TaskPatientSelectFormField from "@/components/tasks/taskRaise/TaskPatientSelectFormField";
 
 export default {
   components: {
+    TaskPatientSelectFormField,
     TaskColorIndicator,
     TaskDueDateFormField,
     TaskRequiredParticipantsFormField,
