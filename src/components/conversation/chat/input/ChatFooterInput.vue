@@ -293,6 +293,8 @@
 <script>
 import { computed, ref, onMounted } from "vue";
 import { useStore } from "vuex";
+import { Actions } from "@/store/enums/EnumTypes";
+import { CONVERSATION_VIEW_MODES } from "@/const";
 import FeatherPointSquare from "@/icons/FeatherPointSquare";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 import FeatherSmile from "@/icons/FeatherSmile";
@@ -300,12 +302,11 @@ import FeatherArrowUp from "@/icons/FeatherArrowUp";
 import FeatherPaper from "@/icons/FeatherPaper";
 import ChatRecordMessage from "@/components/conversation/chat/ChatRecordMessage";
 import ChatPlayMessage from "@/components/conversation/chat/ChatPlayMessage";
-import { CONVERSATION_VIEW_MODES } from "@/const";
 import EmojiPicker from "@/components/conversation/chat/chat-text-selector/EmojiPicker";
 import FeatherChevronsLeft from "@/icons/FeatherChevronsLeft";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
-import ChatContentEditable from "@/components/conversation/chat/input/ChatContentEditable";
-import { Actions } from "@/store/enums/EnumTypes";
+import ChatContentEditable from "@/components/common/textarea/TextAreaAutoresizeContent";
+
 export default {
   components: {
     ChatContentEditable,

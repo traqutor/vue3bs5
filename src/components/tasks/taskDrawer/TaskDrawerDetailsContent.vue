@@ -2,6 +2,7 @@
   <div class="d-flex flex-column flex-fill pt-1">
     <div class="flex-fill position-relative">
       <div class="d-flex flex-column h-100 w-100 position-absolute">
+        <!-- start::task details -->
         <div class="d-flex flex-column flex-fill position-relative">
           <div
             class="
@@ -154,6 +155,7 @@
             </perfect-scrollbar>
           </div>
         </div>
+        <!-- start::task details -->
 
         <!-- start::task bottom actions buttons -->
         <div class="mt-2 border-top border-secondary-light">
@@ -235,36 +237,6 @@
               Start
             </button>
             <!-- end:: start button -->
-
-            <!-- start:: on hold button -->
-            <button
-              v-if="
-                taskOnHoldButtonStatuses.some(
-                  (status) => status === task.taskStatus
-                )
-              "
-              type="button"
-              class="
-                btn btn-sm
-                shadow-none
-                text-white
-                bg-task-on-hold
-                w-50
-                rounded
-                me-3
-              "
-              @click="onHoldTaskAction"
-            >
-              <div
-                v-if="isOnHoldAction"
-                class="spinner-border spinner-border-sm"
-                role="status"
-              >
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              On Hold
-            </button>
-            <!-- end:: on hold button -->
 
             <!-- start:: complete button -->
             <button

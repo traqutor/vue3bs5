@@ -39,21 +39,20 @@
                   flex-fill
                   pe-3
                   mt-1
+                  drop-zone
                 "
+                @drop="onDrop($event, 'New')"
+                @dragenter.prevent
+                @dragover.prevent
               >
-                <Container
-                  @drop="(e) => onDrop(e, 'New')"
-                  @drag-start="(e) => console.log('drag start', e)"
-                  @drag-end="(e) => console.log('drag end', e)"
-                  :get-child-payload="getTaskPayload('taskId')"
-                  drag-class="card-ghost"
-                  drop-class="card-ghost-drop"
-                  :drop-placeholder="dropPlaceholderOptions"
-                >
-                  <Draggable v-for="task of getList('New')" :key="task.id">
-                    <TaskBoardItem :task="task" />
-                  </Draggable>
-                </Container>
+                <template v-for="task of getList('New')" :key="task.id">
+                  <TaskBoardItem
+                    :id="task.id"
+                    draggable="true"
+                    :task="task"
+                    @dragstart="startDrag($event, task)"
+                  />
+                </template>
               </perfect-scrollbar>
               <!-- end::column scroll -->
             </div>
@@ -87,18 +86,22 @@
                   flex-fill
                   pe-3
                   mt-1
+                  drop-zone
                 "
+                @drop="onDrop($event, 'InProgress')"
+                @dragenter.prevent
+                @dragover.prevent
               >
-                <Container @drop="onDrop($event, 'InProgress')">
-                  <!-- start:task drag element -->
-                  <Draggable
-                    v-for="task of getList('InProgress')"
-                    :key="task.id"
-                  >
-                    <TaskBoardItem :task="task" />
-                  </Draggable>
-                  <!-- end:task drag element -->
-                </Container>
+                <!-- start:task drag element -->
+                <template v-for="task of getList('InProgress')" :key="task.id">
+                  <TaskBoardItem
+                    :id="task.id"
+                    :task="task"
+                    draggable="true"
+                    @dragstart="startDrag($event, task)"
+                  />
+                </template>
+                <!-- end:task drag element -->
               </perfect-scrollbar>
               <!-- end::column scroll -->
             </div>
@@ -132,15 +135,22 @@
                   flex-fill
                   pe-3
                   mt-1
+                  drop-zone
                 "
+                @drop="onDrop($event, 'Queued')"
+                @dragenter.prevent
+                @dragover.prevent
               >
-                <Container @drop="onDrop($event, 'Queued')">
-                  <!-- start:task drag element -->
-                  <Draggable v-for="task of getList('Queued')" :key="task.id">
-                    <TaskBoardItem :task="task" />
-                  </Draggable>
-                  <!-- end:task drag element -->
-                </Container>
+                <!-- start:task drag element -->
+                <template v-for="task of getList('Queued')" :key="task.id">
+                  <TaskBoardItem
+                    :id="task.id"
+                    :task="task"
+                    draggable="true"
+                    @dragstart="startDrag($event, task)"
+                  />
+                </template>
+                <!-- end:task drag element -->
               </perfect-scrollbar>
               <!-- end::column scroll -->
             </div>
@@ -174,18 +184,22 @@
                   flex-fill
                   pe-3
                   mt-1
+                  drop-zone
                 "
+                @drop="onDrop($event, 'Completed')"
+                @dragenter.prevent
+                @dragover.prevent
               >
-                <Container @drop="onDrop($event, 'Completed')">
-                  <!-- start:task drag element -->
-                  <Draggable
-                    v-for="task of getList('Completed')"
-                    :key="task.id"
-                  >
-                    <TaskBoardItem :task="task" />
-                  </Draggable>
-                  <!-- end:task drag element -->
-                </Container>
+                <!-- start:task drag element -->
+                <template v-for="task of getList('Completed')" :key="task.id">
+                  <TaskBoardItem
+                    :id="task.id"
+                    :task="task"
+                    draggable="true"
+                    @dragstart="startDrag($event, task)"
+                  />
+                </template>
+                <!-- end:task drag element -->
               </perfect-scrollbar>
               <!-- end::column scroll -->
             </div>
@@ -197,9 +211,8 @@
   </div>
 </template>
 <script>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
-import { Container, Draggable } from "vue-dndrop";
 import TaskBoardItem from "@/components/tasks/tasksBoard/TaskBoardItem";
 import { Mutations, TASKS_BOARD_VIEW_MODES } from "@/store/enums/EnumTypes";
 import TasksBoardColumnHeader from "@/components/tasks/tasksBoard/TasksBoardColumnHeader";
@@ -207,19 +220,12 @@ import TasksBoardColumnHeader from "@/components/tasks/tasksBoard/TasksBoardColu
 export default {
   components: {
     TasksBoardColumnHeader,
-    Container,
-    Draggable,
     TaskBoardItem,
   },
   setup() {
     const store = useStore();
     const loggedUser = computed(() => store.getters.getLoggedUser);
     const boardViewMode = computed(() => store.getters.getTasksBoardViewMode);
-    const dropPlaceholderOptions = ref({
-      className: "drop-preview",
-      animationDuration: "150",
-      showOnTop: true,
-    });
 
     const getList = (status) => {
       let tasks = store.getters.getUnassignedTasks.filter(
@@ -242,12 +248,6 @@ export default {
       return tasks;
     };
 
-    const getTaskPayload = (taskId) => {
-      return (index) => {
-        return taskId + index;
-      };
-    };
-
     const startDrag = (event, item) => {
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
@@ -257,20 +257,15 @@ export default {
     };
 
     const onDrop = async (event, status) => {
-      console.log("On drop", event);
-      console.log("On drop", status);
-      //
-      // const taskId = event.dataTransfer.getData("taskId");
-      // const task = await store.getters.getTasks.find(
-      //   (item) => +item.id === +taskId
-      // );
-      // store.commit(Mutations.setUpdatedTask, { ...task, taskStatus: status });
+      const taskId = event.dataTransfer.getData("taskId");
+      const task = await store.getters.getUnassignedTasks.find(
+        (item) => +item.id === +taskId
+      );
+      store.commit(Mutations.setUpdatedTask, { ...task, taskStatus: status });
     };
 
     return {
-      dropPlaceholderOptions,
       getList,
-      getTaskPayload,
       startDrag,
       onDrop,
     };

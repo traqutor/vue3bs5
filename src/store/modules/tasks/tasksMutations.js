@@ -43,7 +43,7 @@ export default {
     state.selectedTaskId = taskId;
   },
   [Mutations.setUpdatedTask]: (state, task) => {
-    const tasks = [...state.tasks];
+    const tasks = [...state.unassignedTasks];
     const idx = tasks.findIndex((item) => item.id === task.id);
     if (idx !== -1) {
       tasks[idx] = task;
@@ -51,7 +51,7 @@ export default {
       tasks.unshift(task);
     }
 
-    state.tasks = [...tasks];
+    state.unassignedTasks = [...tasks];
   },
 
   // views

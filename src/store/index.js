@@ -10,7 +10,7 @@ import taskTypesModule from "@/store/modules/taskTypes";
 import tasksModule from "@/store/modules/tasks";
 import toastModule from "@/store/modules/toast";
 import locationsModule from "@/store/modules/locations";
-import patientsModule from "@/store/patients";
+import patientsModule from "@/store/modules/patients";
 
 const store = createStore({
   modules: {

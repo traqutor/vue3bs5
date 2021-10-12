@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="loggedUser && loggedUser.SystemRoles && loggedUser.SystemRoles.length > 1 "
+    v-if="loggedUser && loggedUser.SystemRoles"
     class="d-flex align-items-center me-4 dropdown"
   >
     <div

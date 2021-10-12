@@ -167,30 +167,11 @@
               "
             >
               <!-- start::message text area -->
-              <!--              <TextareaResizeAuto>-->
-              <!--                <template v-slot:default="{ resize }">-->
-              <textarea
-                class="
-                  form-control
-                  dialog-input-textarea
-                  chat-textarea-control
-                  f-size-14
-                  bg-transparent
-                  border-0
-                  rounded-0
-                  is-keyup-group-control
-                  shadow-none
-                  ps-2
-                  autoresize-textarea
-                  no-resize
-                "
-                rows="1"
-                placeholder="Type a message ..."
+              <ChatContentEditable
                 v-model="messageText"
-                @keydown.enter.prevent="onSubmitFirstStep"
-              ></textarea>
-              <!--                </template>-->
-              <!--              </TextareaResizeAuto>-->
+                is-user-typing-notify="true"
+                @submitContent="onSubmitFirstStep"
+              />
               <!-- end::message text area -->
 
               <!-- start:: emoji dropdown -->
