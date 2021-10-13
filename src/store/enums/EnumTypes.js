@@ -223,6 +223,29 @@ const TASK_TYPE_EMPTY = {
   requiredParticipants: [],
 };
 
+const TASK_IN_PROCESS_TARGET_STATES = {
+  New: {
+    availableStatuses: ["InProgress"],
+    actions: { InProgress: "onStartTask" },
+  },
+  InProgress: {
+    availableStatuses: ["New", "Queued", "Completed"],
+    actions: {
+      New: "onReturnTask",
+      Queued: "onQueueTask",
+      Completed: "onCompleteTask",
+    },
+  },
+  Queued: {
+    availableStatuses: ["New"],
+    actions: { New: "onReturnTask" },
+  },
+  Completed: {
+    availableStatuses: [],
+    actions: {},
+  },
+};
+
 const SWATCH_COLORS = [
   { color: "#417505", className: "todo-label-1" },
   { color: "#f5a623", className: "todo-label-2" },
@@ -392,6 +415,7 @@ export {
   TASK_ACTION_STATUSES,
   TASKS_VIEW_MODES,
   TASKS_BOARD_VIEW_MODES,
+  TASK_IN_PROCESS_TARGET_STATES,
   TEMPLATE_VIEW_MODES,
   TEMPLATES,
   QUICK_MESSAGES,

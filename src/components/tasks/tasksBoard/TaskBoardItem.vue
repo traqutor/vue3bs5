@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="task"
     class="card bg-grey-light mt-3 sortable-item hover-visible-group on-hover"
     :class="selectedTaskId === task.id && 'collapse-list-open'"
     @click="onTaskSelect"
@@ -158,7 +159,7 @@ import FeatherClock from "@/icons/FeatherClock";
 import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
 import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
 import { timeTaskCreationFormat } from "@/services/datetime.service";
-import {Actions, Mutations} from "@/store/enums/EnumTypes";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import ParticipantAvatar from "@/components/participant/ParticipantAvatar";
 

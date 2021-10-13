@@ -122,8 +122,8 @@
               class="d-flex flex-column list-group-board sortable-group-content"
             >
               <TasksBoardColumnHeader
-                title="Started"
-                :counter="getList('InProgress').length"
+                title="Queued"
+                :counter="getList('Queued').length"
                 background-class="bg-task-queue"
               />
 
@@ -213,8 +213,13 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
+import {
+  Actions,
+  Mutations,
+  TASK_IN_PROCESS_TARGET_STATES,
+  TASKS_BOARD_VIEW_MODES,
+} from "@/store/enums/EnumTypes";
 import TaskBoardItem from "@/components/tasks/tasksBoard/TaskBoardItem";
-import { Mutations, TASKS_BOARD_VIEW_MODES } from "@/store/enums/EnumTypes";
 import TasksBoardColumnHeader from "@/components/tasks/tasksBoard/TasksBoardColumnHeader";
 
 export default {
@@ -225,6 +230,7 @@ export default {
   setup() {
     const store = useStore();
     const loggedUser = computed(() => store.getters.getLoggedUser);
+    const activeRole = computed(() => store.getters.getLoggedUserActiveRole);
     const boardViewMode = computed(() => store.getters.getTasksBoardViewMode);
 
     const getList = (status) => {
@@ -256,12 +262,82 @@ export default {
       event.dataTransfer.setDragImage(el, 50, 50);
     };
 
+    const isActionAllowed = (task, targetStatus) => {
+      console.log(loggedUser.value.id);
+      const isRequiredUser = task.taskRequiredParticipants.some(
+        (participant) => {
+          console.log(participant.userId);
+          return (
+            (!participant.isRole &&
+              participant.userId === loggedUser.value.id) ||
+            (participant.isRole && participant.userId === activeRole.value.Id)
+          );
+        }
+      );
+
+      return (
+        isRequiredUser &&
+        TASK_IN_PROCESS_TARGET_STATES[task.taskStatus].availableStatuses.some(
+          (status) => status === targetStatus
+        )
+      );
+    };
+
+    const getTaskTargetAction = (task, targetStatus) => {
+      return TASK_IN_PROCESS_TARGET_STATES[task.taskStatus].actions[
+        targetStatus
+      ];
+    };
+
     const onDrop = async (event, status) => {
       const taskId = event.dataTransfer.getData("taskId");
-      const task = await store.getters.getUnassignedTasks.find(
+
+      let task = await store.getters.getUnassignedTasks.find(
         (item) => +item.id === +taskId
       );
-      store.commit(Mutations.setUpdatedTask, { ...task, taskStatus: status });
+
+      if (!task) {
+        task = await store.getters.getMyTasks.find(
+          (item) => +item.id === +taskId
+        );
+      }
+
+      if (!task) {
+        task = await store.getters.getRequestedTasks.find(
+          (item) => +item.id === +taskId
+        );
+      }
+
+      if (task && isActionAllowed(task, status)) {
+        console.log(task.taskStatus);
+
+        const actionName = getTaskTargetAction(task, status);
+
+        const payload = {
+          taskId: task.id,
+          activeRoleId: null,
+        };
+        store
+          .dispatch(actionName, payload)
+          .then(() => {
+            store.dispatch(Actions.onDisplayNotification, {
+              text: "Task operation completed",
+              backgroundColor: "green",
+            });
+          })
+          .catch((error) => {
+            store.dispatch(Actions.onDisplayNotification, {
+              text: actionName + "error: " + error,
+              backgroundColor: "red",
+            });
+          });
+      } else {
+        console.error("This action is not permitted");
+        store.dispatch(Actions.onDisplayNotification, {
+          text: "This action is not permitted",
+          backgroundColor: "red",
+        });
+      }
     };
 
     return {

@@ -325,6 +325,8 @@ export default {
   setup(props, { emit }) {
     const router = useRouter();
     const store = useStore();
+    const loggedUser = computed(() => store.getters.getLoggedUser);
+    const activeRole = computed(() => store.getters.getLoggedUserActiveRole);
 
     const taskStartButtonStatuses = ["New"];
     const taskQueueButtonStatuses = ["InProgress", "OnHold"];
@@ -337,15 +339,11 @@ export default {
     const isCompleteAction = ref(false);
     const isReturnAction = ref(false);
 
-    const activeRoleId = computed(
-      () => store.getters.getLoggedUserActiveRole.Id
-    );
-
     const onStartTaskAction = () => {
       isStartAction.value = true;
       const payload = {
         taskId: props.task.id,
-        // activeRoleId: activeRoleId.value, todo no active role for demo
+        // activerRole: activeRole.value.id, todo no active role for demo
         activeRoleId: null,
       };
       store
@@ -362,7 +360,7 @@ export default {
       isOnHoldAction.value = true;
       const payload = {
         taskId: props.task.id,
-        // activeRoleId: activeRoleId.value, todo no active role for demo
+        // activeRoleId: activeRole.value.id, todo no active role for demo
         activeRoleId: null,
       };
       store
@@ -379,7 +377,7 @@ export default {
       isQueueAction.value = true;
       const payload = {
         taskId: props.task.id,
-        // activeRoleId: activeRoleId.value, todo no active role for demo
+        // activeRoleId: activeRole.value.id, todo no active role for demo
         activeRoleId: null,
       };
       store
@@ -396,7 +394,7 @@ export default {
       isCompleteAction.value = true;
       const payload = {
         taskId: props.task.id,
-        // activeRoleId: activeRoleId.value, todo no active role for demo
+        // activeRoleId: activeRole.value.id, todo no active role for demo
         activeRoleId: null,
       };
       store
@@ -413,7 +411,7 @@ export default {
       isReturnAction.value = true;
       const payload = {
         taskId: props.task.id,
-        // activeRoleId: activeRoleId.value, todo no active role for demo
+        // activeRoleId: activeRole.value.id, todo no active role for demo
         activeRoleId: null,
       };
       store
@@ -427,7 +425,13 @@ export default {
     };
 
     const getIfLoggedUserIsAllowedToPerformTaskAction = () => {
-      return true;
+      return props.task.taskRequiredParticipants.some((participant) => {
+        console.log(participant.userId);
+        return (
+          (!participant.isRole && participant.userId === loggedUser.value.id) ||
+          (participant.isRole && participant.userId === activeRole.value.Id)
+        );
+      });
     };
 
     const onOpenConversation = () => {
