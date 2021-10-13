@@ -167,9 +167,8 @@
               "
             >
               <!-- start::message text area -->
-              <ChatContentEditable
+              <TextAreaAutoresizeContent
                 v-model="messageText"
-                is-user-typing-notify="true"
                 @submitContent="onSubmitFirstStep"
               />
               <!-- end::message text area -->
@@ -377,18 +376,19 @@
 <script>
 import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
+import { Actions } from "@/store/enums/EnumTypes";
 import { CONVERSATION_VIEW_MODES } from "@/const";
 import FeatherSquare from "@/icons/FeatherSquare";
 import FeatherCheckSquare from "@/icons/FeatherCheckSquare";
 import FeatherMessageSquareGroup from "@/icons/FeatherMessageSquareGroup";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
-import TextareaResizeAuto from "@/components/text/TextareaResizeAuto";
+
 import FeatherArrowUp from "@/icons/FeatherArrowUp";
 import FeatherSmile from "@/icons/FeatherSmile";
 import EmojiPicker from "@/components/conversation/chat/chat-text-selector/EmojiPicker";
 import FeatherPaper from "@/icons/FeatherPaper";
-import { Actions } from "@/store/enums/EnumTypes";
+import TextAreaAutoresizeContent from "@/components/common/textarea/TextAreaAutoresizeContent";
 
 export default {
   setup() {
@@ -517,11 +517,11 @@ export default {
     };
   },
   components: {
+    TextAreaAutoresizeContent,
     FeatherPaper,
     EmojiPicker,
     FeatherSmile,
     FeatherArrowUp,
-    TextareaResizeAuto,
     ConversationsParticipantsListItem,
     ParticipantAvatarNameItem,
     FeatherMessageSquareGroup,

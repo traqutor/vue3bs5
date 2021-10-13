@@ -210,14 +210,28 @@ export default {
             dispatch(Actions.onGetUnassignedTasks);
             dispatch(Actions.onGetMyTasks);
             dispatch(Actions.onGetRequestedTasks);
+            dispatch(Actions.onGetMyCompletedTasks);
+            dispatch(Actions.onGetRequestedCompletedTasks);
             resolve();
           } else {
-            console.error("onStartTask error:", response.data.message);
+            console.error("onStartTask error: ", response.data.message);
+
+            dispatch(Actions.onDisplayNotification, {
+              text: "Start task action error: " + response.data.message,
+              backgroundColor: "red",
+            });
+
             reject();
           }
         })
         .catch((error) => {
-          console.error("onStartTask error:", error);
+          console.error("onStartTask error: ", error);
+
+          dispatch(Actions.onDisplayNotification, {
+            text: "Start task action error: " + error,
+            backgroundColor: "red",
+          });
+
           reject();
         });
     });
@@ -236,12 +250,24 @@ export default {
             dispatch(Actions.onGetRequestedTasks);
             resolve();
           } else {
-            console.error("onOnHoldTask error:", response.data.message);
+            console.error("onOnHoldTask error: ", response.data.message);
+
+            dispatch(Actions.onDisplayNotification, {
+              text: "On hold task action error: " + response.data.message,
+              backgroundColor: "red",
+            });
+
             reject();
           }
         })
         .catch((error) => {
-          console.error("onOnHoldTask error:", error);
+          console.error("onOnHoldTask error: ", error);
+
+          dispatch(Actions.onDisplayNotification, {
+            text: "On hold task action error: " + error,
+            backgroundColor: "red",
+          });
+
           reject();
         });
     });
@@ -261,12 +287,24 @@ export default {
 
             resolve();
           } else {
-            console.error("onQueueTask error:", response.data.message);
+            console.error("onQueueTask error: ", response.data.message);
+
+            dispatch(Actions.onDisplayNotification, {
+              text: "Queue task action error: " + response.data.message,
+              backgroundColor: "red",
+            });
+
             reject();
           }
         })
         .catch((error) => {
-          console.error("onQueueTask error:", error);
+          console.error("onQueueTask error: ", error);
+
+          dispatch(Actions.onDisplayNotification, {
+            text: "Queue task action error: " + error,
+            backgroundColor: "red",
+          });
+
           reject();
         });
     });
@@ -287,12 +325,24 @@ export default {
 
             resolve();
           } else {
-            console.error("onCompleteTask error:", response.data.message);
+            console.error("onCompleteTask error: ", response.data.message);
+
+            dispatch(Actions.onDisplayNotification, {
+              text: "Complete task action error: " + response.data.message,
+              backgroundColor: "red",
+            });
+
             reject();
           }
         })
         .catch((error) => {
-          console.error("onCompleteTask error:", error);
+          console.error("onCompleteTask error: ", error);
+
+          dispatch(Actions.onDisplayNotification, {
+            text: "Complete task action error: " + error,
+            backgroundColor: "red",
+          });
+
           reject();
         });
     });
@@ -313,12 +363,24 @@ export default {
 
             resolve();
           } else {
-            console.error("onReturnTask error:", response.data.message);
+            console.error("onReturnTask error: ", response.data.message);
+
+            dispatch(Actions.onDisplayNotification, {
+              text: "Return task action error: " + response.data.message,
+              backgroundColor: "red",
+            });
+
             reject();
           }
         })
         .catch((error) => {
-          console.error("onReturnTask error:", error);
+          console.error("onReturnTask error: ", error);
+
+          dispatch(Actions.onDisplayNotification, {
+            text: "Return task action error: " + error,
+            backgroundColor: "red",
+          });
+
           reject();
         });
     });
@@ -326,15 +388,32 @@ export default {
 
   // tasks notification related actions
   [Actions.onTaskCreatedNotification]: ({ commit, dispatch }, task) => {
-    console.log("onTaskCreatedNotification", task);
+    //todo it is dummy just workaround
+    dispatch(Actions.onGetUnassignedTasks);
+    dispatch(Actions.onGetMyTasks);
+    dispatch(Actions.onGetRequestedTasks);
+    dispatch(Actions.onGetMyCompletedTasks);
+    dispatch(Actions.onGetRequestedCompletedTasks);
+    // needs to be changed
+
     dispatch(Actions.onDisplayNotification, {
-      text: task.title + "created",
-      backgroundColor: task.badgeColor,
+      text: "New task created",
+      backgroundColor: "green",
     });
-    commit(Mutations.setUpdatedTask, task);
+
+    console.log("onTaskCreatedNotification", task);
+
   },
 
   [Actions.onTaskStatusChangedNotification]: ({ commit, dispatch }, task) => {
+    //todo it is dummy just workaround
+    dispatch(Actions.onGetUnassignedTasks);
+    dispatch(Actions.onGetMyTasks);
+    dispatch(Actions.onGetRequestedTasks);
+    dispatch(Actions.onGetMyCompletedTasks);
+    dispatch(Actions.onGetRequestedCompletedTasks);
+    // needs to be changed
+
     dispatch(Actions.onDisplayNotification, {
       text: "Task updated",
       backgroundColor: "green",
@@ -347,23 +426,23 @@ export default {
     task
   ) => {
     dispatch(Actions.onDisplayNotification, {
-      text: "Task updated",
-      backgroundColor: "green",
+      text: "Task deadline countdown started",
+      backgroundColor: "orange",
     });
     console.log("onTaskDeadlineCountdownStartedNotification", task);
   },
 
   [Actions.onTaskDeadlinePassedNotification]: ({ commit, dispatch }, task) => {
     dispatch(Actions.onDisplayNotification, {
-      text: "Task updated",
-      backgroundColor: "green",
+      text: "Task deadline passed",
+      backgroundColor: "red",
     });
     console.log("onTaskDeadlinePassedNotification", task);
   },
 
   [Actions.onGroupTaskUpdateNotification]: ({ commit, dispatch }, group) => {
     dispatch(Actions.onDisplayNotification, {
-      text: "Task updated",
+      text: "Task was updated",
       backgroundColor: "green",
     });
     console.log("onGroupTaskUpdateNotification", group);
@@ -371,7 +450,7 @@ export default {
 
   [Actions.onTaskDeletedNotification]: ({ commit, dispatch }, task) => {
     dispatch(Actions.onDisplayNotification, {
-      text: task.title + "updated",
+      text: "Task was deleted",
       backgroundColor: "red",
     });
     console.log("onTaskDeletedNotification", task);

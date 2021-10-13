@@ -2,7 +2,7 @@
   <div class="notification-wrapper">
     <transition name="fade" appear>
       <div
-        class="notification"
+        class="notification font-weight-middle"
         :style="{ 'background-color': notification.backgroundColor }"
       >
         {{ notification.text ? notification.text : "Notification" }}
@@ -20,13 +20,12 @@ export default {
 <style lang="scss" scoped>
 .notification-wrapper {
   position: relative;
-  width: 240px;
   margin: 10px;
 }
 .notification {
   height: 60px;
   padding: 10px 15px;
-  border-radius: 7px;
+  border-radius: 6px;
   color: #fff;
   background-color: #000;
   white-space: nowrap;

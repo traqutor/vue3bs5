@@ -66,7 +66,7 @@
               <!-- end::more vertical menu dropdown -->
 
               <!-- start:: content editable -->
-              <ChatContentEditable
+              <TextAreaAutoresizeContent
                 v-model="messageText"
                 is-user-typing-notify="true"
                 @submitContent="onSubmit"
@@ -305,11 +305,11 @@ import ChatPlayMessage from "@/components/conversation/chat/ChatPlayMessage";
 import EmojiPicker from "@/components/conversation/chat/chat-text-selector/EmojiPicker";
 import FeatherChevronsLeft from "@/icons/FeatherChevronsLeft";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
-import ChatContentEditable from "@/components/common/textarea/TextAreaAutoresizeContent";
+import TextAreaAutoresizeContent from "@/components/common/textarea/TextAreaAutoresizeContent";
 
 export default {
   components: {
-    ChatContentEditable,
+    TextAreaAutoresizeContent,
     ParticipantAvatarNameItem,
     FeatherChevronsLeft,
     EmojiPicker,

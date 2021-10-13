@@ -8,6 +8,7 @@
       border-0
       shadow-none
       ps-2
+      my-2
       no-resize
     "
     rows="1"
@@ -58,17 +59,19 @@ export default {
     };
 
     const resizeTextArea = () => {
-      if (content.value.length === 0) return;
       areaRef.value.rows = 1;
-      const styles = window.getComputedStyle(areaRef.value);
-      const paddingTop = parseInt(styles.paddingTop);
-      const paddingBottom = parseInt(styles.paddingBottom);
-      const padding = paddingTop + paddingBottom;
-      const initialHeight =
-        (parseInt(styles.height) - padding) / areaRef.value.rows;
-      const scrollHeight = areaRef.value.scrollHeight - padding;
-      const newRows = Math.ceil(scrollHeight / initialHeight);
-      areaRef.value.rows = newRows;
+      if (content.value) {
+        const styles = window.getComputedStyle(areaRef.value);
+        const paddingTop = parseInt(styles.paddingTop);
+        const paddingBottom = parseInt(styles.paddingBottom);
+        const padding = paddingTop + paddingBottom;
+        console.log(paddingTop, paddingBottom);
+        const initialHeight =
+          (parseInt(styles.height) - padding) / areaRef.value.rows;
+        const scrollHeight = areaRef.value.scrollHeight - padding;
+        const newRows = Math.ceil(scrollHeight / initialHeight);
+        areaRef.value.rows = newRows;
+      }
     };
 
     watch(

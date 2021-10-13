@@ -345,7 +345,8 @@ export default {
       isStartAction.value = true;
       const payload = {
         taskId: props.task.id,
-        activeRoleId: activeRoleId.value,
+        // activeRoleId: activeRoleId.value, todo no active role for demo
+        activeRoleId: null,
       };
       store
         .dispatch(Actions.onStartTask, payload)
@@ -361,7 +362,8 @@ export default {
       isOnHoldAction.value = true;
       const payload = {
         taskId: props.task.id,
-        activeRoleId: activeRoleId.value,
+        // activeRoleId: activeRoleId.value, todo no active role for demo
+        activeRoleId: null,
       };
       store
         .dispatch(Actions.onOnHoldTask, payload)
@@ -377,7 +379,8 @@ export default {
       isQueueAction.value = true;
       const payload = {
         taskId: props.task.id,
-        activeRoleId: activeRoleId.value,
+        // activeRoleId: activeRoleId.value, todo no active role for demo
+        activeRoleId: null,
       };
       store
         .dispatch(Actions.onQueueTask, payload)
@@ -393,7 +396,8 @@ export default {
       isCompleteAction.value = true;
       const payload = {
         taskId: props.task.id,
-        activeRoleId: activeRoleId.value,
+        // activeRoleId: activeRoleId.value, todo no active role for demo
+        activeRoleId: null,
       };
       store
         .dispatch(Actions.onCompleteTask, payload)
@@ -409,7 +413,8 @@ export default {
       isReturnAction.value = true;
       const payload = {
         taskId: props.task.id,
-        activeRoleId: activeRoleId.value,
+        // activeRoleId: activeRoleId.value, todo no active role for demo
+        activeRoleId: null,
       };
       store
         .dispatch(Actions.onReturnTask, payload)
