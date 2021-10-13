@@ -1,5 +1,6 @@
 import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import { axiosWebApiInstance } from "@/services/axios.service";
+import { notifyUser } from "@/services/notifications.service";
 
 export default {
   [Actions.onGetRequestedTasks]: ({ commit, getters }) => {
@@ -397,12 +398,13 @@ export default {
     // needs to be changed
 
     dispatch(Actions.onDisplayNotification, {
-      text: "New task created",
+      text: "New task was created",
       backgroundColor: "green",
     });
 
-    console.log("onTaskCreatedNotification", task);
+    notifyUser("New task was created");
 
+    console.log("onTaskCreatedNotification", task);
   },
 
   [Actions.onTaskStatusChangedNotification]: ({ commit, dispatch }, task) => {
