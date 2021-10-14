@@ -147,12 +147,16 @@
         </div>
       </div>
       <!--end::message bub text acknowledge-->
+
+      <!--start::message reactions -->
+      <div class="d-flex justify-content-end">
+        <BubbleReactionDropdown :item="item" />
+      </div>
+      <!--end::message reactions -->
+
     </div>
     <!--end::message content  -->
 
-    <!--start::message reactions -->
-    <BubbleReactionDropdown :item="item" />
-    <!--end::message reactions -->
   </div>
   <!--end::By logged User bubble-->
 
@@ -262,12 +266,17 @@
               </div>
             </div>
             <!--end::message bub text acknowledge-->
+
+            <!--start::message reactions -->
+            <div class="d-flex justify-content-end">
+              <BubbleReactionDropdown :item="item" />
+            </div>
+            <!--end::message reactions -->
+
           </div>
           <!--end::message -->
 
-          <!--start::message reactions -->
-          <BubbleReactionDropdown :item="item" />
-          <!--end::message reactions -->
+
         </div>
         <!--end::message content  -->
 

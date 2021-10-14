@@ -1,12 +1,7 @@
 <template>
   <div
     v-if="item.quickReactions && item.quickReactions.length > 0"
-    class="
-      dialog-group-reactions
-      position-absolute position-bottom-right
-      me-1
-      dropdown
-    "
+    class="dropdown bubble-quick-reactions"
   >
     <div
       class="
@@ -122,3 +117,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.bubble-quick-reactions {
+  margin-top: 1rem;
+  margin-bottom: -32px;
+  margin-right: -12px;
+}
+</style>

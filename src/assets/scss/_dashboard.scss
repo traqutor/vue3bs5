@@ -777,7 +777,6 @@ mark {
   min-height: 16px;
   min-width: 16px;
   display: inline-block;
-  margin: -0.2ex 0.15em 0.2ex;
   line-height: normal;
   vertical-align: middle;
 }
@@ -3306,9 +3305,6 @@ textarea.auto-size {
 
 .dialog-group-reactions {
   margin-bottom: -25px;
-}
-.dialog-reaction + .dialog-reaction {
-  margin-left: 3px;
 }
 
 .dialog-group-callout {

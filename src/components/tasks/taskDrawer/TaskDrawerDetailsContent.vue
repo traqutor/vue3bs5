@@ -178,7 +178,10 @@
           </div>
 
           <!-- start::task action buttons -->
-          <div class="btn-group btn-group-sm w-100 btn-status-group">
+          <div
+            v-if="getIfLoggedUserIsAllowedToPerformTaskAction()"
+            class="btn-group btn-group-sm w-100 btn-status-group"
+          >
             <!-- start:: return button -->
             <button
               v-if="
@@ -426,7 +429,6 @@ export default {
 
     const getIfLoggedUserIsAllowedToPerformTaskAction = () => {
       return props.task.taskRequiredParticipants.some((participant) => {
-        console.log(participant.userId);
         return (
           (!participant.isRole && participant.userId === loggedUser.value.id) ||
           (participant.isRole && participant.userId === activeRole.value.Id)
