@@ -2,7 +2,9 @@
   <div class="d-flex align-items-center mb-2 pe-3">
     <div class="input-group input-group-sm filter-control-group flex-grow-1">
       <input
+        ref="textToSearchParticipantsRef"
         v-model="textToSearchParticipants"
+        v-focus
         type="text"
         class="form-control is-filter-control bg-light shadow-none"
         placeholder="Search"
@@ -10,7 +12,7 @@
       <div class="input-group-append">
         <button
           v-if="textToSearchParticipants"
-          @click="textToSearchParticipants = ''"
+          @click="onSearchButtonClick"
           class="
             btn btn-light
             border-left-0
@@ -28,8 +30,10 @@
             border-left-0
             text-secondary text-dark-hover
             btn-filter-control
+            shadow-none
           "
           type="button"
+          @click="onSearchButtonClick"
         >
           <feather-search></feather-search>
         </button>
@@ -74,7 +78,18 @@ export default {
       },
     },
   },
+  directives: {
+    focus: {
+      mounted(el) {
+        el.focus();
+      },
+    },
+  },
   methods: {
+    onSearchButtonClick() {
+      this.textToSearchParticipants = "";
+      this.$refs.textToSearchParticipantsRef.focus();
+    },
     onChangeConversationViewMode() {
       this.$store.commit("setParticipantsSearchText", "");
       this.$store.commit("purgeSelectedParticipants");

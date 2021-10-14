@@ -6,8 +6,9 @@
       :class="isAllParticipantsReadMessage ? 'text-lime' : 'text-white-75'"
     />
 
+    <!-- start::readers counter -->
     <span
-      v-if="!selectedConversation.isDirect"
+      v-if="isReaderCounterVisible"
       class="dialog-message-action ign-pointer"
       :id="`dropdownMenuBubbleWatchersId${item.id}`"
       data-bs-toggle="dropdown"
@@ -17,6 +18,8 @@
       }}</span>
       <span v-else>{{ selectedConversationMessageParticipants.length }}</span>
     </span>
+    <!-- end::readers counter -->
+
     <!-- start:: dropdown menu -->
     <div
       class="dropdown-menu dropdown-menu-sm p-0 shadow"
@@ -170,6 +173,10 @@ export default {
       store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
     };
 
+    const isReaderCounterVisible = computed(() => {
+      return !props.selectedConversation.isDirect && props.selectedConversation.participants?.length > 2;
+    });
+
     const watchedMessageParticipants = computed(() =>
       store.getters.getWatchedMessageParticipants(props.item)
     );
@@ -215,6 +222,7 @@ export default {
       watchedMessageParticipants,
       whisperRecipients,
       isAllParticipantsReadMessage,
+      isReaderCounterVisible,
       selectedConversationMessageParticipants,
       onMessageOpen,
       timeHhMmaDotDdddFormat,

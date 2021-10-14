@@ -14,6 +14,7 @@
             border-left-0
             text-secondary text-dark-hover
             btn-filter-control
+            shadow-none
           "
           type="button"
         >
