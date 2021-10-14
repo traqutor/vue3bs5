@@ -19,34 +19,16 @@
 
       <div class="modal-box--inner" :style="modalBoxInnerStyle">
         <div class="d-flex align-items-center justify-content-center mt-1">
-          <button
-            v-show="!isMarkerEnabled"
-            class="fancybox-button"
-            @click="onShowMarkerArea"
-          >
-            <feather-point-stroke class="f-icon-24" />
-          </button>
-
-          <button
-            v-show="!isMarkerEnabled"
-            @click="onToggleShowLayers"
-            class="fancybox-button mr-3"
-          >
+          <button @click="onToggleShowLayers" class="fancybox-button mr-3">
             <feather-eye-open v-if="isShowLayer" class="f-icon-24" />
             <feather-eye-off v-else class="f-icon-24" />
           </button>
 
-          <button
-            v-show="!isMarkerEnabled"
-            class="fancybox-button"
-            title="Zoom"
-            disabled=""
-          >
+          <button class="fancybox-button" title="Zoom" disabled="">
             <feather-zoom-in class="f-icon-24" />
           </button>
 
           <button
-            v-show="!isMarkerEnabled"
             class="fancybox-button"
             title="Thumbnails"
             @click="onToggleGalleryView"
@@ -55,12 +37,31 @@
           </button>
 
           <button
-            v-show="!isMarkerEnabled"
             class="fancybox-button position-absolute position-right mr-2"
             title="Close"
             @click="onCloseModal"
           >
             <feather-x class="f-icon-24" />
+          </button>
+        </div>
+
+        <div class="fancybox-navigation">
+          <button
+            v-if="isPreviousPicture"
+            class="fancybox-button fancybox-button--arrow_left"
+            title="Previous"
+            @click="onPreviousPicture"
+          >
+            <feather-arrow-left class="f-icon-24" />
+          </button>
+
+          <button
+            v-if="isNextPicture"
+            class="fancybox-button fancybox-button--arrow_right"
+            title="Next"
+            @click="onNextPicture"
+          >
+            <feather-arrow-right class="f-icon-24" />
           </button>
         </div>
 
@@ -75,20 +76,21 @@ import { computed, ref } from "vue";
 import { Mutations } from "@/store/enums/EnumTypes";
 import FeatherX from "@/icons/FeatherX";
 import PictureItem from "@/components/media/modals/PictureItem";
-import FeatherPointStroke from "@/icons/FeatherPointStroke";
 import FeatherZoomIn from "@/icons/FeatherZoomIn";
 import FeatherGrid from "@/icons/FeatherGrid";
 import FeatherEyeOpen from "@/icons/FeatherEyeOpen";
 import FeatherEyeOff from "@/icons/FeatherEyeOff";
-import * as markerjs2 from "markerjs2";
+import FeatherArrowLeft from "@/icons/FeatherArrowLeft";
+import FeatherArrowRight from "@/icons/FeatherArrowRight";
 
 export default {
   components: {
+    FeatherArrowRight,
+    FeatherArrowLeft,
     FeatherEyeOff,
     FeatherEyeOpen,
     FeatherGrid,
     FeatherZoomIn,
-    FeatherPointStroke,
     PictureItem,
     FeatherX,
   },
@@ -96,14 +98,32 @@ export default {
     const store = useStore();
 
     const isGalleryVisible = ref(true);
-    const isMarkerEnabled = ref(false);
     const isShowLayer = ref(true);
-
-    const showModal = computed(() => store.getters.getIsLightBoxVisible);
 
     const thumbnailsOfViewFiles = computed(
       () => store.getters.getLightBoxViewFiles
     );
+
+    const selectedItem = computed(() => store.getters.getMediaSelectedItem);
+
+    const currentIndex = computed(() =>
+      store.getters.getLightBoxViewFiles.findIndex(
+        (item) => item.id === selectedItem.value.id
+      )
+    );
+
+    const isPreviousPicture = computed(() => {
+      return thumbnailsOfViewFiles.value.length >= 1 && currentIndex.value > 0;
+    });
+
+    const isNextPicture = computed(() => {
+      return (
+        thumbnailsOfViewFiles.value.length >= 1 &&
+        currentIndex.value < thumbnailsOfViewFiles.value.length - 1
+      );
+    });
+
+    const showModal = computed(() => store.getters.getIsLightBoxVisible);
 
     const modalBoxInnerStyle = computed(() => {
       const value = isGalleryVisible.value ? 212 : 0;
@@ -123,6 +143,16 @@ export default {
       store.commit(Mutations.setMediaSelectedItem, item);
     };
 
+    const onPreviousPicture = () => {
+      const item = thumbnailsOfViewFiles.value[currentIndex.value - 1];
+      store.commit(Mutations.setMediaSelectedItem, item);
+    };
+
+    const onNextPicture = () => {
+      const item = thumbnailsOfViewFiles.value[currentIndex.value + 1];
+      store.commit(Mutations.setMediaSelectedItem, item);
+    };
+
     const onCloseModal = () => {
       store.commit(Mutations.setIsLightBoxVisible, false);
     };
@@ -135,40 +165,20 @@ export default {
       isShowLayer.value = !isShowLayer.value;
     };
 
-    const onMarkerEnabled = (flag) => {
-      isMarkerEnabled.value = flag;
-      isGalleryVisible.value = !flag;
-    };
-
-    const onShowMarkerArea = () => {
-      const markerArea = new markerjs2.MarkerArea(
-        document.getElementById("imgAnnotateId")
-      );
-      // markerArea.settings.displayMode = 'popup';
-      markerArea.addRenderEventListener((imgURL) => {
-        console.log("addRenderEventListener", imgURL);
-      });
-      markerArea.addCloseEventListener(() => {
-        console.log("addCloseEventListener");
-        onMarkerEnabled(false);
-      });
-      markerArea.show();
-      onMarkerEnabled(true);
-    };
-
     return {
       showModal,
       thumbnailsOfViewFiles,
       modalBoxInnerStyle,
       modalBoxDrawerStyle,
-      isMarkerEnabled,
       isShowLayer,
+      isPreviousPicture,
+      isNextPicture,
       onToggleGalleryView,
       onToggleShowLayers,
       onSelectPicture,
+      onPreviousPicture,
+      onNextPicture,
       onCloseModal,
-      onMarkerEnabled,
-      onShowMarkerArea,
     };
   },
 };
@@ -275,11 +285,27 @@ export default {
   vertical-align: top;
   visibility: inherit;
   width: 54px;
+  font-weight: bold;
 }
 
 .fancybox-button,
 .fancybox-button:link,
 .fancybox-button:visited {
   color: #ccc;
+}
+
+.fancybox-navigation .fancybox-button {
+  height: 64px;
+  width: 64px;
+  position: absolute;
+  top: calc(50% - 50px);
+}
+
+.fancybox-navigation .fancybox-button--arrow_left {
+  left: 0;
+}
+
+.fancybox-navigation .fancybox-button--arrow_right {
+  right: 0;
 }
 </style>

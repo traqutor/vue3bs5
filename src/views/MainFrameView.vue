@@ -9,8 +9,9 @@
       <router-view></router-view>
     </main>
     <ModalMediaSelectionManager />
+    <ModalConversationAttachmentViewBox />
     <MediaLightBoxModal v-if="false" />
-    <ModalMediaViewBox v-if="true" />
+    <ModalMediaViewBox v-if="false" />
   </div>
 </template>
 
@@ -23,6 +24,7 @@ import AsideLeft from "@/components/aside/AsideLeft";
 import ModalMediaSelectionManager from "@/components/media/manager/ModalMediaSelectionManager";
 import MediaLightBoxModal from "@/components/media/modals/MediaLightBoxModal";
 import ModalMediaViewBox from "@/components/media/modals/ModalMediaViewBox";
+import ModalConversationAttachmentViewBox from "@/components/media/modals/ModalConversationAttachmentViewBox";
 
 export default {
   setup() {
@@ -38,6 +40,7 @@ export default {
   },
   name: "MainFrameView",
   components: {
+    ModalConversationAttachmentViewBox,
     MediaLightBoxModal,
     ModalMediaViewBox,
     ModalMediaSelectionManager,
