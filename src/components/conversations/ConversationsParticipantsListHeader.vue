@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import { CONVERSATION_VIEW_MODES } from "@/const";
+import { CHAT_VIEW_MODES, CONVERSATION_VIEW_MODES } from "@/const";
 import FeatherSearch from "@/icons/FeatherSearch";
 import FeatherX from "@/icons/FeatherX";
 
@@ -91,12 +91,14 @@ export default {
       this.$refs.textToSearchParticipantsRef.focus();
     },
     onChangeConversationViewMode() {
+      console.log("onChangeConversationViewMode.console.l)");
       this.$store.commit("setParticipantsSearchText", "");
       this.$store.commit("purgeSelectedParticipants");
       this.$store.commit(
         "setConversationViewMode",
         this.conversationViewModes.VIEW
       );
+      this.$store.commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
     },
   },
 };
