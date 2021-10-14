@@ -91,7 +91,6 @@ export default {
       this.$refs.textToSearchParticipantsRef.focus();
     },
     onChangeConversationViewMode() {
-      console.log("onChangeConversationViewMode.console.l)");
       this.$store.commit("setParticipantsSearchText", "");
       this.$store.commit("purgeSelectedParticipants");
       this.$store.commit(
