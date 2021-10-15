@@ -39,7 +39,7 @@ export default {
     axiosWebApiInstance
       .get(url)
       .then(function (response) {
-        commit("setConversations", response.data.conversations);
+        commit(Mutations.setConversations, response.data.conversations);
         commit(
           Mutations.setTotalMissedCounter,
           response.data.totalMissedCounter
@@ -68,7 +68,7 @@ export default {
           .then(function (response) {
             console.log("response", response);
             const conversations = [...getters.getConversations];
-            commit("setConversations", conversations);
+            commit(Mutations.setConversations, conversations);
             resolve();
           })
           .catch((error) => {
@@ -563,7 +563,7 @@ export default {
       conversations.splice(0, 0, conversation);
 
       commit("setSelectedConversationId", conversation.id);
-      commit("setConversations", [...conversations]);
+      commit(Mutations.setConversations, [...conversations]);
     } else {
       dispatch(Actions.onGetConversations, { refresh: false });
     }
@@ -578,7 +578,7 @@ export default {
     } else {
       conversations.unshift(payload);
     }
-    commit("setConversations", conversations);
+    commit(Mutations.setConversations, conversations);
   },
 
   [Actions.onMessageAcknowledgedNotification]: (
@@ -606,7 +606,7 @@ export default {
   },
 
   [Actions.onReceivedMessageNotification]: (
-    { state, getters, commit },
+    { state, getters, commit, dispatch },
     message
   ) => {
     const idx = state.conversations.findIndex((c) =>
@@ -628,7 +628,9 @@ export default {
         tmpMessages.unshift(message);
         conversations[idx].messages = [...tmpMessages];
 
-        // update counters
+
+
+        // update conversation counters when the logged user is not the author of the message
         if (!getters.getIsLoggedUserMessageAuthor(message)) {
           conversation.unreadMessageCount = conversation.unreadMessageCount + 1;
 
@@ -639,7 +641,13 @@ export default {
         conversations.splice(idx, 1);
         conversations.splice(0, 0, conversation);
 
-        commit("setConversations", [...conversations]);
+        commit(Mutations.setConversations, [...conversations]);
+
+        // call endpoint that the message was read if conversation is already selected
+        if (conversation.id === getters.getSelectedConversationId) {
+          dispatch(Actions.onMarkMessagesAsRead);
+        };
+
       }
     }
   },
@@ -687,7 +695,7 @@ export default {
     const tmpConversations = state.conversations.map((conv) =>
       conv.id !== conversation.id ? conv : { ...conversation }
     );
-    commit("setConversations", tmpConversations);
+    commit(Mutations.setConversations, tmpConversations);
 
     //update messages watched by users
     if (guidsAreEqual(state.selectedConversationId, payload.conversationId)) {
@@ -727,7 +735,7 @@ export default {
       conv.id !== conversation.id ? conv : { ...conversation }
     );
 
-    commit("setConversations", [...tmpConversations]);
+    commit(Mutations.setConversations, [...tmpConversations]);
   },
 
   [Actions.onAddUsersToConversation]: ({ commit, getters }) => {
