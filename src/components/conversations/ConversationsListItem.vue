@@ -142,7 +142,7 @@
         </div>
         <!-- end::user is typing toggle with third line -->
 
-        <!-- start::third line-->
+        <!-- start::third line last message-->
         <div
           v-else
           class="d-flex justify-content-between align-items-center pt-1"
@@ -158,6 +158,9 @@
                 :class="isWatchedByAllParticipants ? 'text-success' : ''"
               />
               {{ getTextFromHtmlContent(conversation.lastMessage.text) }}
+            </div>
+            <div v-else class="media-body f-size-13 text-truncate">
+              You were added to the conversation
             </div>
           </div>
           <span

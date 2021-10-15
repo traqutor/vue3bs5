@@ -22,7 +22,7 @@
             v-if="
               !isLoading && !messages.length && !getIfUserIsConversationAuthor
             "
-            class="d-flex justify-content-center align-content-center fs-5 mt-3"
+            class="p-3 my-3 rounded-3 bg-grey text-light me-auto"
           >
             You were added to the conversation
           </div>
