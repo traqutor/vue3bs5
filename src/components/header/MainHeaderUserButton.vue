@@ -97,6 +97,7 @@ import FeatherToggleLeft from "@/icons/FeatherToggleLeft";
 import FeatherToggleRight from "@/icons/FeatherToggleRight";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { Mutations } from "@/store/enums/EnumTypes";
 
 export default {
   setup() {
@@ -105,6 +106,7 @@ export default {
     function onUserLogOut() {
       store.dispatch("onSocketConnectionClose");
       store.commit("setLogOutUser");
+      store.commit(Mutations.setConversations, []);
     }
 
     const loggedUser = computed(() => store.getters.getLoggedUser);
