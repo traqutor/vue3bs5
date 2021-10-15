@@ -39,7 +39,10 @@
           </button>
 
           <div class="btn-group-vertical btn-group-vertical-separate ms-3">
-            <button class="btn btn-sm btn-primary toggle-filter-control">
+            <button
+              class="btn btn-sm btn-primary toggle-filter-control"
+              @click="onRefreshFilters"
+            >
               <feather-refresh-cw />
             </button>
             <button class="btn btn-sm btn-primary shadow-none">
@@ -296,7 +299,6 @@ export default {
       ) {
         taskActiveActionStatuses.value = [];
       }
-      console.log(taskActiveActionStatuses.value);
     };
 
     const onTaskSelect = (task) => {
@@ -338,6 +340,10 @@ export default {
       }
     };
 
+    const onRefreshFilters = () => {
+      taskActiveActionStatuses.value = [];
+    };
+
     return {
       isDrawerVisible,
       isTasksFilterActive,
@@ -350,6 +356,7 @@ export default {
       timeTaskCreationFormat,
       onTaskSelect,
       onTasksFilterStatusSelect,
+      onRefreshFilters,
     };
   },
 };
