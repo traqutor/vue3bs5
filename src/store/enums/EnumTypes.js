@@ -378,12 +378,12 @@ const MEDIA_PATIENT_ITEM_SIZES = {
   LARGE: "Large",
 };
 const MEDIA_TYPES = {
-  ALL: "all",
-  AUDIO: "audio",
-  PHOTO: "Picture",
-  VIDEO: "video",
-  DOC: "doc",
-  NOTE: "note",
+  ALL: "All",
+  AUDIO: "Audio",
+  PHOTO: "Photos",
+  VIDEO: "Videos",
+  DOC: "Document",
+  NOTE: "Notes",
 };
 const MEDIA_NAV_TABS = {
   RECENT: "Recent",

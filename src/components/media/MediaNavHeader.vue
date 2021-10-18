@@ -8,7 +8,7 @@
           style="min-height: 42px"
         >
           <a
-            class="nav-item nav-link nav-filter-control ign-pointer"
+            class="nav-item nav-link nav-filter-control on-hover"
             v-if="mediaTypeSelected.type === MEDIA_TYPES.ALL"
             @click="onTab(MEDIA_NAV_TABS.RECENT)"
             :class="tabActive === MEDIA_NAV_TABS.RECENT ? 'active' : ''"
@@ -16,26 +16,24 @@
           >
 
           <a
-            class="nav-item nav-link nav-filter-control ign-pointer"
+            class="nav-item nav-link nav-filter-control on-hover"
             @click="onTab(MEDIA_NAV_TABS.GENERAL)"
             :class="tabActive === MEDIA_NAV_TABS.GENERAL ? 'active' : ''"
             >General</a
           >
 
           <a
-            class="nav-item nav-link nav-filter-control"
+            class="nav-item nav-link nav-filter-control on-hover"
             @click="onTab(MEDIA_NAV_TABS.PATIENTS)"
             :class="tabActive === MEDIA_NAV_TABS.PATIENTS ? 'active' : ''"
             >Patients</a
           >
 
           <a
-            class="nav-item nav-link nav-filter-control"
+            class="nav-item nav-link nav-filter-control on-hover"
             @click="onTab(MEDIA_NAV_TABS.UNDEFINED)"
             :class="tabActive === MEDIA_NAV_TABS.UNDEFINED ? 'active' : ''"
-            >Unidentified<span class="badge rounded-pill bg-secondary ms-2"
-              >2</span
-            ></a
+            >Unidentified</a
           >
 
           <div class="btn-toolbar ms-auto">
@@ -191,23 +189,9 @@
                     role="tab"
                     aria-controls="section-patients-grid"
                     aria-selected="true"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="feather feather-grid f-icon-22"
-                    >
-                      <rect x="3" y="3" width="7" height="7"></rect>
-                      <rect x="14" y="3" width="7" height="7"></rect>
-                      <rect x="14" y="14" width="7" height="7"></rect>
-                      <rect x="3" y="14" width="7" height="7"></rect></svg
-                  ></a>
+                  >
+                    <feather-grid class="f-icon-22" />
+                  </a>
 
                   <div class="btn-group" role="group">
                     <button
@@ -427,6 +411,14 @@
       </div>
     </div>
   </div>
+
+  <div class="d-flex chips-selection-frame">
+    <button-chip v-for="item of mediaTypes" :active="true" class="me-2" >All</button-chip>
+    <button-chip class="me-2">Photos</button-chip>
+    <button-chip class="me-2">Videos</button-chip>
+    <button-chip class="me-2">Audio</button-chip>
+    <button-chip class="me-2">Document</button-chip>
+  </div>
 </template>
 <script>
 import FeatherGrid from "@/icons/FeatherGrid";
@@ -442,10 +434,17 @@ import {
 import { mapGetters } from "vuex";
 import FeatherCircle from "@/icons/FeatherCircle";
 import FeatherCheckCircle from "@/icons/FeatherCheckCircle";
+import ButtonChip from "@/components/common/buttons/ButtonChip";
 
 export default {
   name: "MediaNavHeader",
-  components: { FeatherCheckCircle, FeatherCircle, FeatherList, FeatherGrid },
+  components: {
+    ButtonChip,
+    FeatherCheckCircle,
+    FeatherCircle,
+    FeatherList,
+    FeatherGrid,
+  },
   data() {
     return {
       MEDIA_TYPES,
@@ -480,3 +479,14 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.chips-selection-frame {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 10px 10px 10px 0px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+</style>
