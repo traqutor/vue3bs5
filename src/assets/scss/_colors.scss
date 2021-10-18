@@ -1,135 +1,27 @@
-/* ==============
-  Color Scheme
-================= */
-
-.text-lime {
-  color: #23d04d !important;
-}
-.text-slime {
-  color: rgba(0, 0, 0, 0.79) !important;
-}
-.text-pink {
-  color: #fc1b70;
-}
-.text-red {
-  color: #ff384a !important;
-}
-.text-yellow {
-  color: #f2f81b !important;
-}
-.text-orange {
-  color: #f5a623 !important;
-}
-.text-white-75 {
-  color: rgba(255, 255, 255, 0.75) !important;
-}
-.text-laser {
-  color: #59f0ff !important;
-}
-.text-blue {
-  color: #007bff !important;
-}
-.text-blue-light {
-  color: #2ea6ff !important;
-}
-
-.bg-yellow {
-  background: #f2f81b !important;
-}
-.bg-blue-light {
-  background: #d7ebff !important;
-}
-.bg-secondary-light {
-  background: #77818a !important;
-}
-.bg-secondary-dark {
-  background: #2c3137;
-}
-
-.bg-white-50 {
-  background: rgba(255, 255, 255, 0.5) !important;
-}
-.bg-white-75 {
-  background: rgba(255, 255, 255, 0.75) !important;
-}
-
-.text-white-hover:hover {
-  color: #fff !important;
-}
-
-.opacity-25 {
-  opacity: 0.25 !important;
-}
-.opacity-35 {
-  opacity: 0.35 !important;
-}
-.opacity-50 {
-  opacity: 0.5 !important;
-}
-.opacity-75 {
-  opacity: 0.75 !important;
-}
-.opacity-80 {
-  opacity: 0.8 !important;
-}
-.opacity-85 {
-  opacity: 0.85 !important;
-}
-.opacity-90 {
-  opacity: 0.9 !important;
-}
-.opacity-1,
-.opacity-hover-100:hover {
-  opacity: 1 !important;
-}
-
-.bg-yellow {
-  background: #f2f81b !important;
-}
-.bg-blue {
-  background: #1886d8 !important;
-}
-.bg-blue-acknowledged {
-  background: #d7ebff;
-}
-.bg-blue-acknowledged-dark {
-  background: #5699cd;
-}
-.bg-green {
-  background: #28a745 !important;
-}
-.bg-grey-light {
-  background: #edf1f5;
-}
-.bg-grey-whisper {
-  background: #878d94;
-}
-.bg-grey {
-  background-color: $grey;
-}
-.bg-grey-whisper-dark {
-  background: #6c757d;
-}
-.bg-transparent {
-  background: rgba(255, 255, 255, 0.15) !important;
-}
-.bg-secondary-light {
-  background: #77818a !important;
-}
-.bg-secondary-dark {
-  background: #2c3137;
-}
-.bg-darker-blue {
-  color: #fff;
-  background-color: #3d6a97;
-}
-.bg-white-50 {
-  background: rgba(255, 255, 255, 0.5) !important;
-}
-.bg-white-75 {
-  background: rgba(255, 255, 255, 0.75) !important;
-}
-
-.text-white-hover:hover {
-  color: #fff !important;
-}
+// Include any default variable overrides here
+$blue: #1886d8;
+$blue-light: #2ea6ff;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #dc3545;
+$orange: #F37C20;
+$yellow: #ffc107;
+$green: #28a745;
+$lime: #23d04d;
+$teal: #20c997;
+$cyan: #17a2b8;
+$white: #fff;
+$grey: #797F84;
+$grey-dark: #343a40;
+$grey-light: #edf1f5;
+$primary: #3d6a97;
+$secondary: #3b4758;
+$secondary-dark: #213040;
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #18222d;
+$breakpoint-xs: 0;

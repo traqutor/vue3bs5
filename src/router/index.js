@@ -19,7 +19,7 @@ const routes = [
         children: [
           {
             path: "/tasks/myTasks",
-            name: "My Tasks",
+            name: "Tasks",
             meta: { auth: true },
             component: () => import("@/views/tasks/TaskListTab"),
           },

@@ -1,3 +1,5 @@
+@import "_colors";
+@import "_colors";
 /* ==============
   Base Style
 ================= */
@@ -1659,12 +1661,13 @@ textarea.auto-size {
 /* --- Sidebar Left --- */
 
 .sidebar-left {
-  width: 3.75rem;
+  width: 72px;
   height: 100%;
   top: 0;
   left: 0;
   box-shadow: none;
 }
+
 .sidebar-left::after {
   display: inline-block;
   height: calc(100% - 60px);
@@ -2468,7 +2471,7 @@ textarea.auto-size {
   left: 0;
   bottom: 0;
   margin-bottom: -1px;
-  background: $primary;
+  background: $orange;
 }
 .side-nav-line-main .nav-link.active::before {
   height: 3px;
