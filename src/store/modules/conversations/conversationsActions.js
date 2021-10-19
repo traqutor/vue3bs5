@@ -22,6 +22,7 @@ export default {
     let skipConversations = refresh
       ? 0
       : state.pageOfConversations.takeConversations;
+
     let takeConversations = refresh
       ? 20
       : state.pageOfConversations.takeConversations + 20;
@@ -646,9 +647,11 @@ export default {
         if (conversation.id === getters.getSelectedConversationId) {
           dispatch(Actions.onMarkMessagesAsRead);
         }
-
-        playNotificationSound();
       }
+    }
+
+    if (message.authorId !== getters.getLoggedUser.id) {
+      playNotificationSound();
     }
   },
 

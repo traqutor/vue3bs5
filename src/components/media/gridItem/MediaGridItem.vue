@@ -1,50 +1,31 @@
 <template>
-  <div
-    class="list-media-item on-hover position-relative hover-action-group mb-4"
-    v-if="item"
-  >
+  <div class="list-media-item" style="margin-bottom: 24px"   v-if="item">
     <MediaItem :item="item" :is-drop-down-menu="true" />
 
-    <div
-      v-if="
-        item.blobType === MEDIA_TYPES.DOC ||
-        item.blobType === MEDIA_TYPES.NOTE ||
-        item.blobType === MEDIA_TYPES.AUDIO
-      "
-      class="media py-1"
-    >
-      <div class="media-body overflow-hidden">
-        <div class="text-truncate font-weight-middle">
-          {{ item.name }}
-        </div>
-      </div>
+    <div class="d-flex pe-3" style="margin-top: 12px">
+      <span class="text-truncate file-name-label"> {{ item.name }}</span>
     </div>
 
-    <div class="d-flex f-size-12 text-secondary">
-      <div
-        class="text-nowrap on-hover"
-        data-toggle="tooltip"
-        title=""
-        data-original-title="12:48 pm • Yesterday"
-      >
-        12:48 <small>am</small>
-      </div>
+    <div class="d-flex" style="margin-top: 3.71px">
+      <span class="file-created-label">Created {{ getCreatedAgo }}</span>
     </div>
   </div>
 </template>
 <script>
+import { computed } from "vue";
+import moment from "moment";
 import { MEDIA_TYPES } from "@/store/enums/EnumTypes";
 import MediaItem from "@/components/media/item/MediaItem";
 
 export default {
   name: "MediaGridItem",
-  props: {
-    item: null,
-    isSelect: null,
-  },
-  setup() {
+  props: ["item", "isSelect"],
+  setup(props) {
+    const getCreatedAgo = computed(() => moment(props.item.created).fromNow());
+
     return {
       MEDIA_TYPES,
+      getCreatedAgo,
     };
   },
   components: {
@@ -52,3 +33,21 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+@import "../../../assets/scss/colors";
+.file-name-label {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: $primary-black;
+}
+
+.file-created-label {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: $grey;
+}
+</style>

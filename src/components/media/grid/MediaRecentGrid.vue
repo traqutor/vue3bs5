@@ -5,49 +5,42 @@
     >
       <div class="text-blue my-3 f-size-15">Today</div>
 
-      <div
-        class="d-flex flex-wrap list-media-group table-todo-list"
-        :class="itemSizeClass"
-      >
-        <MediaGridItem :item="{ blobType: 'doc' }" />
-        <MediaGridItem :item="{ blobType: 'audio' }" />
-        <MediaGridItem :item="{ blobType: 'Picture' }" />
-        <MediaGridItem :item="{ blobType: 'video' }" />
-        <MediaGridItem :item="{ blobType: 'note' }" />
+      <div class="d-flex flex-wrap list-media-group table-todo-list">
+        <template v-for="item of thumbnails" :key="item.name">
+          <MediaGridItem :item="item" />
+        </template>
       </div>
 
       <div class="text-blue my-3 f-size-15">Yesterday</div>
 
-      <div
-        class="d-flex flex-wrap list-media-group table-todo-list"
-        :class="itemSizeClass"
-      >
-        <MediaGridItem
-          v-for="i in [1, 2, 3]"
-          :key="i"
-          :item="{ blobType: 'doc' }"
-        >
-        </MediaGridItem>
+      <div class="d-flex flex-wrap list-media-group table-todo-list">
+        <template v-for="item of thumbnails" :key="item.name">
+          <MediaGridItem :item="item" />
+        </template>
       </div>
     </perfect-scrollbar>
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { useStore } from "vuex";
 import { MEDIA_ITEM_SIZES } from "@/store/enums/EnumTypes";
 import MediaGridItem from "@/components/media/gridItem/MediaGridItem";
+import { computed } from "vue";
 export default {
   name: "MediaRecentGrid",
+  setup() {
+    const store = useStore();
+    const thumbnails = computed(() => store.getters.getMediaThumbnails);
+
+    return {
+      thumbnails,
+    };
+  },
   data() {
     return {
       MEDIA_ITEM_SIZES,
     };
   },
   components: { MediaGridItem },
-  computed: {
-    ...mapGetters({
-      itemSizeClass: "getMediaItemClass",
-    }),
-  },
 };
 </script>

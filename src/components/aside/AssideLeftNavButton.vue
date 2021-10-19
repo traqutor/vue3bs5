@@ -23,9 +23,7 @@
 </template>
 
 <script>
-import FeatherMessageSquareLine from "@/icons/FeatherMessageSquareLine";
 export default {
-  components: { FeatherMessageSquareLine },
   props: ["title", "path", "badgeNumber"],
 };
 </script>
@@ -65,7 +63,8 @@ export default {
 }
 
 .aside-nav-link:hover {
-  color: $orange;
+  color: $primary-black;
+  background-color: $grey-hover;
 }
 .aside-nav-link.router-link-active {
   color: $orange;
