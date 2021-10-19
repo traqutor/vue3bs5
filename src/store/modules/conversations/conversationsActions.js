@@ -8,6 +8,7 @@ import {
 import { CHAT_VIEW_MODES } from "@/const";
 import { Actions, MEDIA_TYPES, Mutations } from "@/store/enums/EnumTypes";
 import { subtractNotLessTenZero } from "@/services/counter.service";
+import { playNotificationSound } from "@/services/sound.service";
 
 let getMessagesSource = null;
 
@@ -628,8 +629,6 @@ export default {
         tmpMessages.unshift(message);
         conversations[idx].messages = [...tmpMessages];
 
-
-
         // update conversation counters when the logged user is not the author of the message
         if (!getters.getIsLoggedUserMessageAuthor(message)) {
           conversation.unreadMessageCount = conversation.unreadMessageCount + 1;
@@ -646,8 +645,9 @@ export default {
         // call endpoint that the message was read if conversation is already selected
         if (conversation.id === getters.getSelectedConversationId) {
           dispatch(Actions.onMarkMessagesAsRead);
-        };
+        }
 
+        playNotificationSound();
       }
     }
   },

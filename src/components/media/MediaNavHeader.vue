@@ -413,7 +413,7 @@
   </div>
 
   <div class="d-flex chips-selection-frame">
-    <button-chip v-for="item of mediaTypes" :active="true" class="me-2" >All</button-chip>
+    <button-chip :active="true" class="me-2" >All</button-chip>
     <button-chip class="me-2">Photos</button-chip>
     <button-chip class="me-2">Videos</button-chip>
     <button-chip class="me-2">Audio</button-chip>
