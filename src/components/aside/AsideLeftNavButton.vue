@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../assets/scss/colors";
+@import "../../assets/scss/constans";
 
 .aside-left {
   width: 72px;

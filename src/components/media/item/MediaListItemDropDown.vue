@@ -1,45 +1,24 @@
 <template>
-  <div
-    class="
-      dropdown
-      position-absolute position-top-right
-      m-2
-      image-inner-dropdown
-      avatar-group-mask
-    "
-  >
+  <div class="dropdown position-absolute position-top-right m-2">
     <div
       class="avatar-group avatar-group-slide btn bg-white border-0"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
-      <figure class="avatar avatar-custom text-white" :class="getClass()">
-        <FeatherPlay v-if="item && item.blobType === MEDIA_TYPES.VIDEO" />
-        <FeatherMic v-if="item && item.blobType === MEDIA_TYPES.AUDIO" />
-        <FeatherEdit v-if="item && item.blobType === MEDIA_TYPES.NOTE" />
-        <FeatherCamera v-if="item && item.blobType === MEDIA_TYPES.PHOTO" />
-        <FeatherFileText v-if="item && item.blobType === MEDIA_TYPES.DOC" />
-      </figure>
       <figure class="avatar avatar-custom text-media-2">
         <FeatherMoreVertical class="f-icon-18" />
       </figure>
     </div>
 
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Attach to patient</a></li>
-      <li><a class="dropdown-item" href="#">Share in conversation</a></li>
-      <li><hr class="dropdown-divider" /></li>
-      <li><a class="dropdown-item" href="#">Delete</a></li>
+      <li><a class="dropdown-item">Attach to patient</a></li>
+      <li><a class="dropdown-item">Share in conversation</a></li>
+      <li><a class="dropdown-item">Delete</a></li>
     </ul>
   </div>
 </template>
 <script>
 import { MEDIA_TYPES } from "@/store/enums/EnumTypes";
-import FeatherPlay from "@/icons/FeatherPlay";
-import FeatherFileText from "@/icons/FeatherFileText";
-import FeatherMic from "@/icons/FeatherMic";
-import FeatherEdit from "@/icons/FeatherEdit";
-import FeatherCamera from "@/icons/FeatherCamera";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 
 export default {
@@ -76,11 +55,19 @@ export default {
   },
   components: {
     FeatherMoreVertical,
-    FeatherCamera,
-    FeatherEdit,
-    FeatherMic,
-    FeatherFileText,
-    FeatherPlay,
   },
 };
 </script>
+<style>
+.media-more-drop-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+}
+</style>

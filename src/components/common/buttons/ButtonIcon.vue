@@ -9,7 +9,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../../assets/scss/colors";
+@import "../../../assets/scss/constans";
 
 .btn-icon {
   /* icon */

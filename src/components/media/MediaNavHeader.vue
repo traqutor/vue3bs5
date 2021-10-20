@@ -121,7 +121,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../assets/scss/colors";
+@import "../../assets/scss/constans";
 
 .input-field {
   background: #eaecee;
@@ -145,6 +145,5 @@ export default {
   align-items: center;
   padding: 10px 10px 10px 0px;
   margin-top: 12px;
-  margin-bottom: 12px;
 }
 </style>

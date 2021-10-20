@@ -1,24 +1,34 @@
 <template>
-  <div class="flex-fill position-relative overflow-hidden pt-3">
-    <perfect-scrollbar
-      class="d-flex flex-column position-absolute h-100 w-100 pe-3"
-    >
-      <div class="text-blue my-3 f-size-15">Today</div>
+  <div class="flex-fill position-relative overflow-hidden">
+    <div class="media-grid-wrapper">
+      <perfect-scrollbar
+        class="d-flex flex-column position-absolute h-100 w-100"
+      >
+        <div class="media-recent-time-ago-divider">
+          <span class="subheader-label">Today</span>
+        </div>
 
-      <div class="d-flex flex-wrap list-media-group table-todo-list">
-        <template v-for="item of thumbnails" :key="item.name">
-          <MediaGridItem :item="item" />
-        </template>
-      </div>
+        <div class="media-grid-container">
+          <MediaGridItem
+            v-for="item of thumbnails"
+            :key="item.name"
+            :item="item"
+          />
+        </div>
 
-      <div class="text-blue my-3 f-size-15">Yesterday</div>
+        <div class="media-recent-time-ago-divider">
+          <span class="subheader-label">Yesterday</span>
+        </div>
 
-      <div class="d-flex flex-wrap list-media-group table-todo-list">
-        <template v-for="item of thumbnails" :key="item.name">
-          <MediaGridItem :item="item" />
-        </template>
-      </div>
-    </perfect-scrollbar>
+        <div class="media-grid-container">
+          <MediaGridItem
+            v-for="item of thumbnails"
+            :key="item.name"
+            :item="item"
+          />
+        </div>
+      </perfect-scrollbar>
+    </div>
   </div>
 </template>
 <script>
@@ -34,10 +44,6 @@ export default {
 
     return {
       thumbnails,
-    };
-  },
-  data() {
-    return {
       MEDIA_ITEM_SIZES,
     };
   },

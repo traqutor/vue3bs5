@@ -30,3 +30,21 @@ $grey-hover: rgba(234, 236, 238, 0.5);
 
 $primary-black: #000000;
 $blue-system: #007AFF;
+
+
+// Small tablets and desktops
+$screen-sm-min: 1024px;
+
+// Medium tablets and desktops
+$screen-md-min: 1152px;
+
+// Large tablets and desktops
+$screen-lg-min: 1700px;
+
+// Xtra Large tablets and desktops
+$screen-xl-min: 1200px;
+
+
+// common margin and padding values
+$wrapper-space: 32px;
+$gap-space: 24px;

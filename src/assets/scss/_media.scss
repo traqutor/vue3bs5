@@ -1,0 +1,64 @@
+@import "mixins";
+@import "constans";
+
+.media-grid-wrapper {
+  display: grid;
+  //margin-left: 32px;
+  //margin-right: 32px;
+  //
+  //@include xl {
+  //  max-width: 1784px;
+  //  margin-left: auto;
+  //  margin-right: auto;
+  //}
+}
+
+.media-grid-container {
+  margin-right: $wrapper-space;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: $gap-space;
+}
+
+.media-grid-tile {
+  display: grid;
+  cursor: pointer;
+}
+
+.media-grid-tile:hover .media-grid-tile-name-label {
+  color: #007aff;
+}
+
+.media-grid-tile:hover .media-grid-tile-created-label {
+  color: #007aff;
+}
+
+.media-grid-tile-name-label {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  margin-top: 12px;
+  color: $primary-black;
+}
+
+.media-grid-tile-created-label {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  margin-top: 3.71px;
+  color: $grey;
+}
+
+.media-grid-tile-figure {
+  position: relative;
+}
+
+.media-recent-time-ago-divider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px 0;
+  height: 65px;
+}

@@ -1,0 +1,37 @@
+.app {
+  position: relative;
+  width: 100%;
+  padding: 64px 0 24px 72px;
+  height: 100vh;
+  margin: 0 auto;
+  left: 0;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  height: 100%;
+  width: 100%;
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-header-logo {
+  position: relative;
+  height: 64px;
+  width: 64px;
+}
+
+.main-header-image {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  left: 10px;
+  top: calc(50% - 44px/2);
+}
+

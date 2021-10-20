@@ -1,8 +1,13 @@
-@import "_colors";
+@import "constans";
 
-@import '../node_modules/bootstrap/scss/bootstrap';
+@import "../node_modules/bootstrap/scss/bootstrap";
 
 // Then add additional custom code here
-@import '_dashboard.scss';
-@import '_bootstrap_overwrite.scss';
-@import '_schema';
+@import "mixins";
+@import "dashboard.scss"; // to be removed
+@import "bootstrap_overwrite.scss";
+@import "schema";
+@import "styles";
+@import "media";
+@import "buttons";
+@import "typogrphy";

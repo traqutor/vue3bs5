@@ -1,75 +1,63 @@
 <template>
-  <aside class="sidebar sidebar-left d-flex flex-column">
-    <nav class="navbar p-0 aside-left">
-      <div class="navbar-brand w-100">
-        <div class="d-flex align-items-center text-decoration-none main-logo">
-          <img
-            class="main-logo-image"
-            src="../../../public/images/logo.svg"
-            alt=""
-          />
-        </div>
-      </div>
-    </nav>
-
+  <aside class="aside-left">
     <nav class="nav flex-column">
-      <AssideLeftNavButton title="Tasks" path="/tasks" badge-number="">
+      <AsideLeftNavButton title="Tasks" path="/tasks" badge-number="">
         <feather-clipboard-line class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
 
-      <AssideLeftNavButton
+      <AsideLeftNavButton
         title="Messages"
         path="/conversations"
         :badge-number="numberOfConversations"
       >
         <feather-message-square-line class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
 
-      <AssideLeftNavButton title="Incidents" path="/incidents" badge-number="">
+      <AsideLeftNavButton title="Incidents" path="/incidents" badge-number="">
         <feather-flasher class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
 
-      <AssideLeftNavButton title="Locate" path="/locate" badge-number="">
+      <AsideLeftNavButton title="Locate" path="/locate" badge-number="">
         <feather-map-pin class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
 
-      <AssideLeftNavButton title="Alarms" path="/alarms" badge-number="">
+      <AsideLeftNavButton title="Alarms" path="/alarms" badge-number="">
         <feather-alert-triangle class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
 
-      <AssideLeftNavButton title="Media" path="/media" badge-number="">
+      <AsideLeftNavButton title="Media" path="/media" badge-number="">
         <feather-play class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
 
-      <AssideLeftNavButton title="Patients" path="/patients" badge-number="">
+      <AsideLeftNavButton title="Patients" path="/patients" badge-number="">
         <feather-patient class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
 
-      <AssideLeftNavButton title="Sentinel" path="/sentinel" badge-number="">
+      <AsideLeftNavButton title="Sentinel" path="/sentinel" badge-number="">
         <feather-shield class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
     </nav>
 
     <nav class="nav flex-column mt-auto">
-      <AssideLeftNavButton
+      <AsideLeftNavButton
         title="Switchboard"
         path="/switchboard"
         badge-number=""
       >
         <feather-headphones-mic class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
 
-      <AssideLeftNavButton
+      <AsideLeftNavButton
         title="Role Management"
         path="/role_management"
         badge-number=""
       >
         <feather-user-check class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
 
-      <AssideLeftNavButton title="Settings" path="/settings" badge-number="">
+      <AsideLeftNavButton title="Settings" path="/settings" badge-number="">
         <feather-settings class="f-icon-26" />
-      </AssideLeftNavButton>
+      </AsideLeftNavButton>
     </nav>
   </aside>
 </template>
@@ -85,7 +73,7 @@ import FeatherPatient from "@/icons/FeatherPatient";
 import FeatherShield from "@/icons/FeatherShield";
 import FeatherHeadphonesMic from "@/icons/FeatherHeadphonesMic";
 import FeatherPlay from "@/icons/FeatherPlay";
-import AssideLeftNavButton from "@/components/aside/AssideLeftNavButton";
+import AsideLeftNavButton from "@/components/aside/AsideLeftNavButton";
 import FeatherUserCheck from "@/icons/FeatherUserCheck";
 import FeatherSettings from "@/icons/FeatherSettings";
 
@@ -93,7 +81,7 @@ export default {
   components: {
     FeatherSettings,
     FeatherUserCheck,
-    AssideLeftNavButton,
+    AsideLeftNavButton,
     FeatherPlay,
     FeatherHeadphonesMic,
     FeatherShield,
@@ -117,3 +105,17 @@ export default {
   },
 };
 </script>
+<style>
+.aside-left {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 72px;
+  left: 0px;
+  top: 64px;
+  bottom: 0px;
+
+  background: #ffffff;
+  box-shadow: 1px 0px 0px #dde3e8;
+}
+</style>

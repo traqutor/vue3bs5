@@ -1,7 +1,10 @@
-@import "_colors";
-@import "_colors";
+@import "constans";
+
 /* ==============
   Base Style
+
+  todo get rid of this stylesheets
+
 ================= */
 
 body {
@@ -1438,21 +1441,7 @@ textarea.auto-size {
   Main App
 ================= */
 
-.app {
-  position: relative;
-  width: 100%;
-  padding: 5.25rem 5.25rem 1.5rem 5.25rem;
-  min-height: 100vh;
-  margin: 0 auto;
-  left: 0;
-  transition: all 0.3s ease-in-out;
-  overflow: hidden;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
+
 .app.sidebar-left-fixed {
   padding-left: 14.5rem;
 }
@@ -1663,7 +1652,7 @@ textarea.auto-size {
 .sidebar-left {
   width: 72px;
   height: 100%;
-  top: 0;
+  top: 64px;
   left: 0;
   box-shadow: none;
 }
@@ -2175,20 +2164,6 @@ textarea.auto-size {
 /* ==============
   Content
 ================= */
-
-.content {
-  height: 100%;
-  width: 100%;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-  position: relative;
-  overflow: hidden;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
 
 .step-tabpanel {
   display: none;
@@ -5157,10 +5132,6 @@ figcaption {
       rgba(255, 255, 255, 0) 47%,
       rgba(255, 255, 255, 0)
     );
-}
-
-.image-figure {
-  position: relative;
 }
 
 .image-figure-grid {
