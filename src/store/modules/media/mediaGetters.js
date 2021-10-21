@@ -1,6 +1,7 @@
 import {
   MEDIA_ITEM_SIZES,
   MEDIA_PATIENT_ITEM_SIZES,
+  MEDIA_TYPES,
 } from "@/store/enums/EnumTypes";
 import { guidsAreEqual } from "@/services/guids.service";
 
@@ -49,8 +50,12 @@ export default {
         return "list-group-md";
     }
   },
-  getMediaThumbnails: (state) => {
-    return state.mediaThumbnails;
+  getMediaThumbnails: (state, getters) => {
+    return state.mediaThumbnails.filter((thumb) =>
+      getters.getMediaTypeSelected.type === MEDIA_TYPES.ALL
+        ? true
+        : thumb.blobType === getters.getMediaTypeSelected.type
+    );
   },
 
   getMediaSelectedItems: (state) => {

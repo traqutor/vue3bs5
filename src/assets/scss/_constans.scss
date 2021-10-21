@@ -27,6 +27,7 @@ $breakpoint-xs: 0;
 
 $grey: #797F84;
 $grey-hover: rgba(234, 236, 238, 0.5);
+$grey-empty: #EAECEE;
 
 $primary-black: #000000;
 $blue-system: #007AFF;
@@ -42,9 +43,12 @@ $screen-md-min: 1152px;
 $screen-lg-min: 1700px;
 
 // Xtra Large tablets and desktops
-$screen-xl-min: 1200px;
+$screen-xl-min: 1920px;
 
 
 // common margin and padding values
 $wrapper-space: 32px;
 $gap-space: 24px;
+
+//media tile height
+$media-tile-height: 172px;

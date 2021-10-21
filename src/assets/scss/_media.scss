@@ -1,16 +1,30 @@
 @import "mixins";
 @import "constans";
 
-.media-grid-wrapper {
-  display: grid;
-  //margin-left: 32px;
-  //margin-right: 32px;
-  //
-  //@include xl {
-  //  max-width: 1784px;
-  //  margin-left: auto;
-  //  margin-right: auto;
-  //}
+.max-content-wrapper {
+  margin-left: 32px;
+  margin-right: 32px;
+
+  @include sm {
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+
+  @include md {
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+
+  @include lg {
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+
+  @include xl {
+    max-width: 1784px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .media-grid-container {
@@ -25,12 +39,27 @@
   cursor: pointer;
 }
 
+.media-grid-tile:hover .media-grid-figure {
+  border: 3px solid #007aff;
+}
+
 .media-grid-tile:hover .media-grid-tile-name-label {
   color: #007aff;
 }
 
 .media-grid-tile:hover .media-grid-tile-created-label {
   color: #007aff;
+}
+
+.media-grid-figure {
+  display: grid;
+  position: relative;
+
+  height: $media-tile-height;
+
+  border: 3px solid transparent;
+  box-sizing: border-box;
+  border-radius: 4px;
 }
 
 .media-grid-tile-name-label {

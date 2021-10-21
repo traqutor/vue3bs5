@@ -1,27 +1,26 @@
 <template>
-  <a @click="index = 0" class="image-inner-content image-inner-img text-white">
-    <img :src="`data:image/png;base64,${item.dataBase64}`" />
-    <FeatherZoomIn />
-  </a>
+  <div
+    class="bound-image"
+    :style="{
+      'background-image': `url(data:image/png;base64,${item.dataBase64})`,
+    }"
+  ></div>
 </template>
 <script>
-import FeatherZoomIn from "@/icons/FeatherZoomIn";
-import { timeHhMmaDotDdddFormat } from "@/services/datetime.service";
-
 export default {
-  components: { FeatherZoomIn },
-  setup() {
-    return {
-      timeHhMmaDotDdddFormat,
-    };
-  },
-  data: function () {
-    return {
-      index: null,
-    };
-  },
   props: {
     item: null,
   },
 };
 </script>
+<style scoped lang="scss">
+@import "src/assets/scss/constans";
+.bound-image {
+  max-width: 100%;
+  background-color: $grey-empty;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 1px;
+}
+</style>

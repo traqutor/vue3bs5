@@ -40,6 +40,7 @@ export default {
   name: "MediaRecentGrid",
   setup() {
     const store = useStore();
+
     const thumbnails = computed(() => store.getters.getMediaThumbnails);
 
     return {

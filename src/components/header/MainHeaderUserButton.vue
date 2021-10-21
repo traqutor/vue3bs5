@@ -1,26 +1,16 @@
 <template>
-  <div class="d-flex align-items-center me-3 dropdown">
+  <div class="d-flex align-items-center me-2">
     <div
       v-if="loggedUser"
-      class="d-flex align-items-center on-hover h-100 dropdown-toggle pe-2"
+      class="d-flex align-items-center on-hover h-100 me-1"
       id="dropdownMenuButton1"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
-      <figure
-        class="avatar avatar-lg me-1"
-        :data-initial="loggedUser.name.substring(0, 1).toUpperCase()"
-        id="mainAvatar"
-      >
-        <i class="avatar-presence away text-light"></i>
-      </figure>
-
-      <div
-        v-if="!loggedUser.SystemRoles || loggedUser.SystemRoles.length <= 1"
-        class="media-body font-weight-middle ps-1 pe-1"
-      >
-        {{ loggedUser.name }}
-      </div>
+      <ParticipantAvatar
+        class="avatar avatar-lg"
+        :participant-id="loggedUser.id"
+      ></ParticipantAvatar>
     </div>
 
     <ul class="dropdown-menu dropdown-menu-end">
@@ -98,6 +88,7 @@ import FeatherToggleRight from "@/icons/FeatherToggleRight";
 import { useStore } from "vuex";
 import { computed } from "vue";
 import { Mutations } from "@/store/enums/EnumTypes";
+import ParticipantAvatar from "@/components/participant/ParticipantAvatar";
 
 export default {
   setup() {
@@ -117,6 +108,7 @@ export default {
     };
   },
   components: {
+    ParticipantAvatar,
     FeatherToggleRight,
     FeatherToggleLeft,
     FeatherDisc,

@@ -6,7 +6,7 @@
       <div class="text-blue my-3 f-size-15">Today</div>
 
       <table
-          class="
+        class="
           table
           table-hover
           table-head-sticky
@@ -16,34 +16,17 @@
         "
       >
         <thead>
-        <tr class="bg-white">
-          <th scope="col" class="pt-1 text-nowrap border-0">Name</th>
-          <th scope="col" class="pt-1 text-nowrap border-0">File type</th>
-          <th scope="col" class="pt-1 text-nowrap border-0">Duration</th>
-          <th scope="col" class="pt-1 text-nowrap border-0">Created</th>
-        </tr>
+          <tr class="bg-white">
+            <th scope="col" class="pt-1 text-nowrap border-0">Name</th>
+            <th scope="col" class="pt-1 text-nowrap border-0">File type</th>
+            <th scope="col" class="pt-1 text-nowrap border-0">Duration</th>
+            <th scope="col" class="pt-1 text-nowrap border-0">Created</th>
+          </tr>
         </thead>
         <tbody>
-        <tr v-for="item of thumbnails" :key="item.id">
-          <td>
-            <div class="d-flex align-items-center on-hover">
-              <figure class="avatar avatar-md me-3 rounded overflow-hidden">
-                <img
-                    :src="`data:image/png;base64,${item.dataBase64}`"
-                    alt="..."
-                />
-              </figure>
-              <div class="media-body overflow-hidden">
-                <div class="text-truncate">
-                  {{ item.name }}
-                </div>
-              </div>
-            </div>
-          </td>
-          <td class="text-nowrap">{{ item.name.substr(-3) }}</td>
-          <td class="text-nowrap"> - </td>
-          <td class="text-nowrap">{{ item.created }}</td>
-        </tr>
+          <template v-for="item of thumbnails" :key="item.id">
+            <MediaListItem :item="item" />
+          </template>
         </tbody>
       </table>
 
@@ -68,26 +51,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item of thumbnails" :key="item.id">
-            <td>
-              <div class="d-flex align-items-center on-hover">
-                <figure class="avatar avatar-md me-3 rounded overflow-hidden">
-                  <img
-                    :src="`data:image/png;base64,${item.dataBase64}`"
-                    alt="..."
-                  />
-                </figure>
-                <div class="media-body overflow-hidden">
-                  <div class="text-truncate">
-                    {{ item.name }}
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td class="text-nowrap">{{ item.name.substr(-3) }}</td>
-            <td class="text-nowrap"> - </td>
-            <td class="text-nowrap">{{ item.created }}</td>
-          </tr>
+        <template v-for="item of thumbnails" :key="item.id">
+          <MediaListItem :item="item" />
+        </template>
         </tbody>
       </table>
     </perfect-scrollbar>
@@ -97,8 +63,10 @@
 import { useStore } from "vuex";
 import { computed } from "vue";
 import { MEDIA_ITEM_SIZES } from "@/store/enums/EnumTypes";
+import MediaListItem from "@/components/media/listItem/MediaListItem";
 export default {
   name: "MediaRecentList",
+  components: { MediaListItem },
   setup() {
     const store = useStore();
     const thumbnails = computed(() => store.getters.getMediaThumbnails);

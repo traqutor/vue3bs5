@@ -380,7 +380,7 @@ const MEDIA_PATIENT_ITEM_SIZES = {
 const MEDIA_TYPES = {
   ALL: "All",
   AUDIO: "Audio",
-  PHOTO: "Photos",
+  PHOTO: "Picture",
   VIDEO: "Videos",
   DOC: "Document",
   NOTE: "Notes",

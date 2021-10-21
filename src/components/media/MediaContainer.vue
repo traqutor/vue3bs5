@@ -1,5 +1,5 @@
 <template>
-  <div class="col d-flex flex-column ps-4 overflow-hidden border-left">
+  <div class="col d-flex flex-column overflow-hidden max-content-wrapper">
     <div class="flex-section-slide flex-fill">
       <div class="flex-slide-content d-flex flex-column">
         <media-nav-header />
@@ -10,8 +10,6 @@
         <!--        <media-patients v-else-if="tabActive === MEDIA_NAV_TABS.PATIENTS" />-->
         <!--        <media-undefined v-else-if="tabActive === MEDIA_NAV_TABS.UNDEFINED" />-->
       </div>
-
-      <!--      <media-drawer />-->
     </div>
   </div>
 </template>
