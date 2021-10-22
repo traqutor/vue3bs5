@@ -437,16 +437,16 @@ export default {
                 store
                   .dispatch(Actions.onCheckConversationMessages, response.id)
                   .then((messages) => {
-                    if (messages.length > 0) {
+                    if (messages && messages.length > 0) {
                       isCreationStep.value = 1;
                     } else {
-                      isCreationStep.value = 2;
+                      isCreationStep.value = 1;
                     }
                   });
               });
           }
         } else {
-          isCreationStep.value = 2;
+          isCreationStep.value = 1;
         }
       }
     }

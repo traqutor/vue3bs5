@@ -23,26 +23,14 @@ import DocListItem from "@/components/media/item/DocListItem";
 import PhotoItem from "@/components/media/item/PhotoItem";
 import NoteItem from "@/components/media/item/NoteItem";
 import VideoItem from "@/components/media/item/VideoItem";
-import MediaListItemDropDown from "@/components/media/item/MediaListItemDropDown";
+import MediaListItemDropDown from "@/components/media/gridItem/MediaGridItemDropDown";
 import MediaItemSelectToggle from "@/components/media/item/MediaItemSelectToggle";
 import { computed } from "vue";
 
 export default {
   props: ["item", "isSelect", "isDropDownMenu"],
-  setup(props) {
-    const store = useStore();
-
-    const thumbnails = computed(() => store.getters.getMediaThumbnails);
-
-    const onItemClick = () => {
-      store.dispatch(Actions.onShowMediaFilesInLightBox, {
-        media: thumbnails.value,
-        item: props.item,
-      });
-    };
-
+  data() {
     return {
-      onItemClick,
       MEDIA_TYPES,
     };
   },

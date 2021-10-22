@@ -111,6 +111,7 @@ export default {
       SocketReceivers.MessageQuickReactionNotification,
       (response) => {
         const message = JSON.parse(response);
+        console.log("MessageQuickReactionNotification", message);
         dispatch(Actions.onMessageQuickReactionNotification, message);
       }
     );
@@ -119,6 +120,7 @@ export default {
       SocketReceivers.MessageQuickReactionRemovedNotification,
       (response) => {
         const message = JSON.parse(response);
+        console.log("MessageQuickReactionRemovedNotification", message);
         dispatch(Actions.onMessageQuickReactionRemovedNotification, message);
       }
     );
@@ -127,6 +129,7 @@ export default {
       SocketReceivers.ConversationCreatedNotification,
       (payload) => {
         const conversation = JSON.parse(payload);
+        console.log("ConversationCreatedNotification", conversation);
 
         dispatch(Actions.onConversationCreatedNotification, conversation);
       }

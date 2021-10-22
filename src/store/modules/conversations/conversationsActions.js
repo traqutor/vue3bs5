@@ -611,17 +611,19 @@ export default {
     { state, getters, commit, dispatch },
     message
   ) => {
-    const idx = state.conversations.findIndex((c) =>
+    let idx = state.conversations.findIndex((c) =>
       guidsAreEqual(c.id, message.conversationId)
     );
 
-    if (idx !== -1) {
+    const applyNewMessage = () => {
       const conversations = [...state.conversations];
       const conversation = { ...conversations[idx] };
 
-      const isNewMessage = !conversation.messages.some((msg) => {
-        return guidsAreEqual(msg.id, message.id);
-      });
+      const isNewMessage =
+        conversation.messages &&
+        !conversation.messages.some((msg) => {
+          return guidsAreEqual(msg.id, message.id);
+        });
 
       if (isNewMessage) {
         conversation.lastMessage = message;
@@ -648,6 +650,17 @@ export default {
           dispatch(Actions.onMarkMessagesAsRead);
         }
       }
+    };
+
+    if (idx !== -1) {
+      applyNewMessage();
+    } else {
+      dispatch(Actions.onGetConversation, message.conversationId).then(() => {
+        idx = state.conversations.findIndex((c) =>
+          guidsAreEqual(c.id, message.conversationId)
+        );
+        applyNewMessage();
+      });
     }
 
     if (message.authorId !== getters.getLoggedUser.id) {

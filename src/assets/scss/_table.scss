@@ -1,0 +1,27 @@
+@import "constans";
+
+.custom-table-row-data-button {
+  width: 48px;
+  padding-right: 0 !important;
+}
+
+.custom-table-item {
+  cursor: pointer;
+  height: 54px;
+  box-shadow: inset 0px -1px 0px #DDE3E8;
+}
+
+.custom-table-item:hover {
+  background: linear-gradient(
+                  0deg,
+                  rgba(0, 122, 255, 0.07),
+                  rgba(0, 122, 255, 0.07)
+  ),
+  #ffffff;
+  box-shadow: inset 0px -1px 0px #dde3e8;
+}
+
+.custom-table-item:hover .media-title-label,
+.custom-table-item:hover .feather {
+  color: $blue;
+}
