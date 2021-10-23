@@ -143,22 +143,13 @@ export default {
     const participants = ref([...props.selectedParticipants]);
 
     const systemParticipants = computed(() =>
-      store.getters.getSystemUsers
-        .map((user) => {
-          return {
-            id: user.userId,
-            userId: user.userId,
-            isRole: false,
-            name: user.userName,
-          };
-        })
-        .filter((participant) => {
-          return searchText.value
-            ? participant.name
-                .toLowerCase()
-                .includes(searchText.value.toLowerCase())
-            : true;
-        })
+      searchText.value
+        ? store.getters.getAllPossibleParticipants.filter((participant) =>
+            participant.name
+              .toLowerCase()
+              .includes(searchText.value.toLowerCase())
+          )
+        : store.getters.getAllPossibleParticipants
     );
 
     const onToggleParticipant = (participant) => {
