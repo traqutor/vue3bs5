@@ -301,6 +301,7 @@ export default {
     };
 
     const onLogIn = () => {
+      store.commit(Mutations.setSoundEffect);
       store.dispatch(Actions.onLogin, authData.value).then(() => {
         router.push({ name: "Conversations" });
       });

@@ -219,6 +219,7 @@ export default {
       }
     }
   },
+
   [Actions.onMessageQuickReactionRemovedNotification]: (
     { commit, getters },
     reaction

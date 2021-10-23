@@ -8,7 +8,6 @@ import {
 import { CHAT_VIEW_MODES } from "@/const";
 import { Actions, MEDIA_TYPES, Mutations } from "@/store/enums/EnumTypes";
 import { subtractNotLessTenZero } from "@/services/counter.service";
-import { playNotificationSound } from "@/services/sound.service";
 
 let getMessagesSource = null;
 
@@ -664,7 +663,7 @@ export default {
     }
 
     if (message.authorId !== getters.getLoggedUser.id) {
-      playNotificationSound();
+      commit(Mutations.setSoundWaterDrop);
     }
   },
 

@@ -11,6 +11,7 @@ import tasksModule from "@/store/modules/tasks";
 import toastModule from "@/store/modules/toast";
 import locationsModule from "@/store/modules/locations";
 import patientsModule from "@/store/modules/patients";
+import soundModule from "@/store/modules/sound";
 
 const store = createStore({
   modules: {
@@ -26,6 +27,7 @@ const store = createStore({
     toast: toastModule,
     locations: locationsModule,
     patients: patientsModule,
+    sound: soundModule,
   },
 });
 

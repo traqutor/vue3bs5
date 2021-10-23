@@ -196,6 +196,11 @@ const Mutations = {
 
   // patients mutation types
   setPatients: "setPatients",
+
+  // sound mutation types
+  prepareSoundEffect: "prepareSoundEffect",
+  setSoundEffect: "setSoundEffect",
+  setSoundWaterDrop: "setSoundWaterDrop",
 };
 
 //taskTypes
