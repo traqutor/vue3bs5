@@ -51,15 +51,25 @@ export default {
     }
   },
   getMediaThumbnails: (state, getters) => {
-    return state.mediaThumbnails.filter((thumb) =>
-      getters.getMediaTypeSelected.type === MEDIA_TYPES.ALL
-        ? true
-        : thumb.blobType === getters.getMediaTypeSelected.type
-    );
+    return state.mediaThumbnails
+      .filter((thumb) =>
+        getters.getMediaTypeSelected.type === MEDIA_TYPES.ALL
+          ? true
+          : thumb.blobType === getters.getMediaTypeSelected.type
+      )
+      .filter((thumb) =>
+        getters.getMediaSearchText
+          ? thumb.name.toLowerCase().includes(getters.getMediaSearchText)
+          : true
+      );
   },
 
   getMediaSelectedItems: (state) => {
     return state.mediaSelectedItems;
+  },
+
+  getMediaSearchText: (state) => {
+    return state.mediaSearchText;
   },
 
   getIsMediaItemSelected: (state) => (item) => {

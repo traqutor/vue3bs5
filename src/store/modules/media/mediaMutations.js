@@ -39,6 +39,9 @@ export default {
   [Mutations.setMediaSelectedItems]: (state, items) => {
     state.mediaSelectedItems = items;
   },
+  [Mutations.setMediaSearchText]: (state, text) => {
+    state.mediaSearchText = text;
+  },
   [Mutations.setMediaShareGalleryItems]: (state, share) => {
     state.mediaShareGalleryItems = share;
   },

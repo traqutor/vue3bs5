@@ -33,6 +33,7 @@ const mediaModule = {
       mediaItems: [],
       mediaSelectedItem: null,
       mediaSelectedItems: [],
+      mediaSearchText: null,
       mediaShareGalleryItems: [],
       isMediaShareLoading: false,
       isLightBoxVisible: false,

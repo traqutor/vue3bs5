@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column flex-fill overflow-hidden">
+  <div class="d-flex flex-column flex-fill overflow-hidden m-3">
     <div class="section-content">
       <nav class="side-nav-line side-nav-line-main nav-line-center">
         <div

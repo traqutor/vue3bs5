@@ -152,6 +152,7 @@ const Mutations = {
 
   toggleMediaSelectedItem: "toggleMediaSelectedItem",
   setMediaSelectedItems: "setMediaSelectedItems",
+  setMediaSearchText: "setMediaSearchText",
   setMediaShareGalleryItems: "setMediaShareGalleryItems",
 
   setIsMediaShareLoading: "setIsMediaShareLoading",

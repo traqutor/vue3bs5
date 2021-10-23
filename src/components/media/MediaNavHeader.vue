@@ -47,7 +47,12 @@
     >
 
     <div class="d-flex ms-auto">
-      <input type="text" class="input-field" placeholder="Filter by keyword" />
+      <input
+        v-model="searchText"
+        type="text"
+        class="input-field"
+        placeholder="Filter by keyword"
+      />
 
       <ButtonIcon
         class="ms-3"
@@ -77,9 +82,10 @@ import {
   MEDIA_VIEW_MODES,
   Mutations,
 } from "@/store/enums/EnumTypes";
-import { mapGetters } from "vuex";
+import { useStore } from "vuex";
 import ButtonChip from "@/components/common/buttons/ButtonChip";
 import ButtonIcon from "@/components/common/buttons/ButtonIcon";
+import { computed } from "vue";
 
 export default {
   name: "MediaNavHeader",
@@ -89,33 +95,52 @@ export default {
     FeatherList,
     FeatherGrid,
   },
-  data() {
+  setup() {
+    const store = useStore();
+
+    const searchText = computed({
+      set(value) {
+        store.commit(Mutations.setMediaSearchText, value);
+      },
+      get() {
+        return store.getters.getMediaSearchText;
+      },
+    });
+
+    const tabActive = computed(() => store.getters.getMediaNavTabSelected);
+    const mediaTypes = computed(() => store.getters.getMediaTypes);
+    const mediaTypeSelected = computed(
+      () => store.getters.getMediaTypeSelected
+    );
+    const mediaViewMode = computed(() => store.getters.getMediaViewMode);
+
+    const onTab = (tab) => {
+      store.commit(Mutations.setMediaNavTabSelected, tab);
+    };
+
+    const onTypeSelect = (type) => {
+      store.commit(Mutations.setMediaTypeSelected, type);
+    };
+
+    const onViewMode = (mode) => {
+      store.commit(Mutations.setMediaViewMode, mode);
+    };
+
     return {
+      searchText,
+      tabActive,
+      mediaTypes,
+      mediaTypeSelected,
+      mediaViewMode,
+      onTab,
+      onTypeSelect,
+      onViewMode,
       MEDIA_TYPES,
       MEDIA_ITEM_SIZES,
       MEDIA_PATIENT_ITEM_SIZES,
       MEDIA_NAV_TABS,
       MEDIA_VIEW_MODES,
     };
-  },
-  methods: {
-    onTab(tab) {
-      this.$store.commit(Mutations.setMediaNavTabSelected, tab);
-    },
-    onTypeSelect(type) {
-      this.$store.commit(Mutations.setMediaTypeSelected, type);
-    },
-    onViewMode(mode) {
-      this.$store.commit(Mutations.setMediaViewMode, mode);
-    },
-  },
-  computed: {
-    ...mapGetters({
-      tabActive: "getMediaNavTabSelected",
-      mediaTypes: "getMediaTypes",
-      mediaTypeSelected: "getMediaTypeSelected",
-      mediaViewMode: "getMediaViewMode",
-    }),
   },
 };
 </script>
