@@ -1,8 +1,8 @@
 <template>
-  <div class="text-truncate">
+  <span class="text-truncate">
     <span class="text-dark font-weight-middle">{{ participant.name }}</span
     ><span class="text-secondary ms-2 f-size-13">{{ getRolesAsLabel() }}</span>
-  </div>
+  </span>
 </template>
 <script>
 import { useStore } from "vuex";

@@ -1,5 +1,5 @@
 <template>
-  <div class="row section-widget position-relative flex-fill mt-2">
+  <div class="row section-widget position-relative flex-fill mt-3">
     <MediaContainer></MediaContainer>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <tr class="custom-table-item">
+  <tr class="custom-table-row">
     <td>
       <div class="d-flex align-items-center">
         <figure class="avatar avatar-md me-3 rounded overflow-hidden">

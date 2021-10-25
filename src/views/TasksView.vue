@@ -1,68 +1,31 @@
 <template>
   <div class="d-flex flex-column flex-fill overflow-hidden m-3">
-    <div class="section-content">
-      <nav class="side-nav-line side-nav-line-main nav-line-center">
-        <div
-          class="nav nav-tabs nav-fill border-secondary-light"
-          id="main-nav-group"
-        >
-          <router-link
-            class="nav-item nav-link"
-            to="/tasks/myTasks"
-            aria-selected="true"
-            active-class="active"
-            >My Tasks</router-link
-          >
-          <router-link
-            class="nav-item nav-link"
-            to="/tasks/requestedBy:me"
-            aria-selected="true"
-            active-class="active"
-            >Requested by me</router-link
-          >
+    <div class="nav custom-nav">
+      <router-link class="nav-item custom-nav-item" to="/tasks/myTasks">
+        <span class="nav-link custom-nav-link">My Tasks</span>
+      </router-link>
 
-          <router-link
-            class="nav-item nav-link"
-            to="/tasks/taskBoard"
-            aria-selected="false"
-            active-class="active"
-            >Board</router-link
-          >
-          <router-link
-            class="nav-item nav-link"
-            to="/tasks/taskMap"
-            role="tab"
-            aria-selected="false"
-            active-class="active"
-            >Map</router-link
-          >
-          <router-link
-            class="nav-item nav-link"
-            to="/tasks/taskRaise"
-            role="tab"
-            aria-selected="false"
-            active-class="active"
-            >Raise Task</router-link
-          >
-          <router-link
-            class="nav-item nav-link"
-            to="/tasks/taskManage"
-            role="tab"
-            aria-selected="false"
-            active-class="active"
-            >Manage</router-link
-          >
-          <router-link
-            class="nav-item nav-link"
-            to="/tasks/taskProgress"
-            role="tab"
-            aria-selected="false"
-            active-class="active"
-            >Progress</router-link
-          >
-        </div>
-      </nav>
+      <router-link class="nav-link custom-nav-item" to="/tasks/requestedBy:me">
+        <span class="nav-link custom-nav-link">Requested by me</span>
+      </router-link>
+
+      <router-link class="nav-link custom-nav-item" to="/tasks/taskBoard">
+        <span class="nav-link custom-nav-link">Board</span>
+      </router-link>
+
+      <router-link class="nav-link custom-nav-item" to="/tasks/taskRaise">
+        <span class="nav-link custom-nav-link">Raise Task</span>
+      </router-link>
+
+      <router-link class="nav-link custom-nav-item" to="/tasks/taskManage">
+        <span class="nav-link custom-nav-link">Manage</span>
+      </router-link>
+
+      <router-link class="nav-link custom-nav-item" to="/tasks/taskProgress">
+        <span class="nav-link custom-nav-link">Statistics</span>
+      </router-link>
     </div>
+
     <div class="d-flex flex-column flex-fill">
       <router-view></router-view>
     </div>

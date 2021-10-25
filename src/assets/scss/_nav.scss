@@ -1,0 +1,48 @@
+@import "constans";
+
+.custom-nav {
+  height: 50px;
+  margin-bottom: 12px;
+
+  .custom-nav-item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 14px 16px;
+
+    background: #ffffff;
+
+    text-decoration: none !important;
+
+    cursor: pointer;
+
+    .custom-nav-link {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 22px;
+      padding: 0;
+      text-align: center;
+      color: $grey;
+
+      &.active,
+      &.router-link-active,
+      &.router-link-exact-active {
+        color: $primary-black;
+      }
+    }
+    :hover {
+      color: $primary-black;
+    }
+
+    &.active,
+    &.router-link-active,
+    &.router-link-exact-active {
+      box-shadow: 0px 2px 0px $orange;
+
+      .custom-nav-link {
+        color: $primary-black;
+      }
+    }
+  }
+}

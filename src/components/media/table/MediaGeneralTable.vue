@@ -5,7 +5,7 @@
     >
       <table>
         <thead>
-          <tr class="bg-white">
+          <tr>
             <th scope="col" class="pt-1 text-nowrap border-0">Name</th>
             <th scope="col" class="pt-1 text-nowrap border-0">File type</th>
             <th scope="col" class="pt-1 text-nowrap border-0">Duration</th>
@@ -14,7 +14,7 @@
         </thead>
         <tbody>
           <template v-for="item of thumbnails" :key="item.id">
-            <MediaListItem :item="item" />
+            <MediaTableRowItem :item="item" />
           </template>
         </tbody>
       </table>
@@ -24,10 +24,10 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
-import MediaListItem from "@/components/media/listItem/MediaTableRowItem";
+import MediaTableRowItem from "@/components/media/table/MediaTableRowItem";
 export default {
   name: "MediaGeneralList",
-  components: { MediaListItem },
+  components: { MediaTableRowItem },
   setup() {
     const store = useStore();
     const itemSizeClass = computed(() => store.getters.getMediaItemClass);

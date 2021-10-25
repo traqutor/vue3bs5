@@ -46,7 +46,7 @@
 import { useStore } from "vuex";
 import { computed } from "vue";
 import { MEDIA_ITEM_SIZES } from "@/store/enums/EnumTypes";
-import MediaListItem from "@/components/media/listItem/MediaTableRowItem";
+import MediaListItem from "@/components/media/table/MediaTableRowItem";
 export default {
   name: "MediaRecentList",
   components: { MediaListItem },

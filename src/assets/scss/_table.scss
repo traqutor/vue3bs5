@@ -5,13 +5,13 @@
   padding-right: 0 !important;
 }
 
-.custom-table-item {
+.custom-table-row {
   cursor: pointer;
   height: 54px;
   box-shadow: inset 0px -1px 0px #DDE3E8;
 }
 
-.custom-table-item:hover {
+.custom-table-row:hover {
   background: linear-gradient(
                   0deg,
                   rgba(0, 122, 255, 0.07),
@@ -21,7 +21,7 @@
   box-shadow: inset 0px -1px 0px #dde3e8;
 }
 
-.custom-table-item:hover .media-title-label,
-.custom-table-item:hover .feather {
+.custom-table-row:hover .media-title-label,
+.custom-table-row:hover .feather {
   color: $blue;
 }

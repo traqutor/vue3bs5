@@ -3,140 +3,39 @@
     <!-- start::task statuses filter buttons -->
     <div class="flex-slide-content row">
       <div class="col d-flex flex-column">
-        <!-- start::header buttons -->
-        <div
-          class="list-group list-group-horizontal nav-fill list-group-task"
-          :class="isTasksFilterActive && 'has-active'"
-        >
-          <button
-            v-for="status of taskActionStatuses"
+        <!-- start:: media type selection chips buttons -->
+        <div class="d-flex chips-selection-frame">
+          <button-chip
+            v-for="status of TASK_ACTION_STATUSES"
+            @click="onStatusSelect(status)"
             :key="status.id"
-            class="
-              btn btn-sm
-              list-group-item
-              nav-link
-              d-flex
-              align-items-center
-              flex-fill
-              w-25
-              rounded
-              px-3
-              ms-3
-              list-task-item
-              text-white
-              shadow-none
-            "
-            :class="[
-              onGetIsTaskFilterButtonActive(status.id) && 'active ',
-              status.class,
-            ]"
-            @click="onTasksFilterStatusSelect(status)"
+            :active="selectedStatus.id === status.id"
+            class="me-2"
+            >{{ status.label }}</button-chip
           >
-            {{ status.label
-            }}<span class="f-size-24 font-weight-middle ms-auto">{{
-              onGetTasksCountOfStatuses(status.id)
-            }}</span>
-          </button>
-
-          <div class="btn-group-vertical btn-group-vertical-separate ms-3">
-            <button
-              class="btn btn-sm btn-primary toggle-filter-control"
-              @click="onRefreshFilters"
-            >
-              <feather-refresh-cw />
-            </button>
-            <button class="btn btn-sm btn-primary shadow-none">
-              <feather-filter />
-            </button>
-          </div>
         </div>
-        <!-- end::header buttons -->
 
-        <div class="flex-fill position-relative overflow-hidden mt-4">
+        <div class="flex-fill position-relative overflow-hidden mt-3">
           <!-- start::table -->
           <perfect-scrollbar
             class="d-flex flex-column position-absolute h-100 w-100 pe-3"
           >
-            <table
-              class="
-                table
-                table-hover
-                table-head-sticky
-                table-self-middle
-                table-todo-list
-                table-collapse-list
-              "
-              id="task-full-list"
-            >
+            <table>
               <thead>
-                <tr class="bg-white font-weight-middle">
-                  <th scope="col" class="pt-1 text-nowrap border-0">Type</th>
-                  <th scope="col" class="pt-1 text-nowrap border-0">
-                    Location
+                <tr>
+                  <th scope="col" class="text-nowrap border-0 ps-3">
+                    Task no.
                   </th>
-                  <th scope="col" class="pt-1 text-nowrap border-0">Raised</th>
-                  <th scope="col" class="pt-1 text-nowrap border-0">
-                    Assigned To
-                  </th>
-                  <th scope="col" class="pt-1 text-nowrap border-0">Status</th>
-                  <th scope="col" class="pt-1 text-nowrap border-0">
-                    Due Time
-                  </th>
+                  <th scope="col" class="text-nowrap border-0">Task type</th>
+                  <th scope="col" class="text-nowrap border-0">Location</th>
+                  <th scope="col" class="text-nowrap border-0">Raised</th>
+                  <th scope="col" class="text-nowrap border-0">Assigned To</th>
+                  <th scope="col" class="text-nowrap border-0">Status</th>
                 </tr>
               </thead>
               <tbody>
                 <template v-for="task of tasks" :key="task.id">
-                  <tr
-                    class="task-item on-hover hover-action-group"
-                    :class="task.id === selectedTaskId && 'collapse-list-open'"
-                    @click="onTaskSelect(task)"
-                  >
-                    <td class="ps-2">
-                      <div class="d-flex align-items-center overflow-hidden">
-                        <TaskColorIndicator :color="task.badgeColour" />
-                        <div
-                          class="
-                            media-body
-                            d-flex
-                            align-items-center
-                            font-weight-middle
-                          "
-                        >
-                          {{ task.title }}
-                        </div>
-                        <div class="text-secondary f-size-13 ms-3">
-                          #{{ task.id }}
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="open-map text-primary-hover on-hover">
-                        {{ task.fromLocation }}
-                        <feather-arrow-right
-                          class="text-muted mx-1 f-icon-16 opacity-75"
-                        />
-                        {{ task.toLocation }}
-                      </div>
-                    </td>
-                    <td>
-                      <span class="text-nowrap pe-5">
-                        {{ timeTaskCreationFormat(task.created.seconds) }}
-                      </span>
-                    </td>
-                    <td>
-                      <span>{{ task.taskRequiredParticipants.length }}</span>
-                    </td>
-                    <td>
-                      <div class="mw-6xl">
-                        <TaskStatusBadge :task="task" />
-                      </div>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center table-min-counter">
-                        <TaskDueTimeBadge :task="task" />
-                      </div>
-                    </td>
-                  </tr>
+                  <TaskTableRowItem :task="task" />
                 </template>
               </tbody>
             </table>
@@ -178,185 +77,75 @@
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import { timeTaskCreationFormat } from "@/services/datetime.service";
-import FeatherRefreshCw from "@/icons/FeatherRefreshCw";
-import FeatherFilter from "@/icons/FeatherFilter";
-import FeatherArrowRight from "@/icons/FeatherArrowRight";
-import {
-  Actions,
-  Mutations,
-  TASK_ACTION_STATUSES,
-} from "@/store/enums/EnumTypes";
+import { TASK_ACTION_STATUSES } from "@/store/enums/EnumTypes";
 import TaskDrawerDetails from "@/components/tasks/taskDrawer/TaskDrawerDetails";
-import TaskStatusBadge from "@/components/tasks/TaskStatusBadge";
-import TaskDueTimeBadge from "@/components/tasks/TaskDueTimeBadge";
-import TaskColorIndicator from "@/components/tasks/TaskColorIndicator";
+import ButtonChip from "@/components/common/buttons/ButtonChip";
+import TaskTableRowItem from "@/components/tasks/taksTable/TaskTableRowItem";
 
 export default {
   components: {
-    TaskColorIndicator,
-    TaskDueTimeBadge,
-    TaskStatusBadge,
+    TaskTableRowItem,
+    ButtonChip,
     TaskDrawerDetails,
-    FeatherArrowRight,
-    FeatherFilter,
-    FeatherRefreshCw,
   },
   setup() {
     const route = useRoute();
-    const taskActionStatuses = ref(TASK_ACTION_STATUSES);
     const store = useStore();
-    const taskActiveActionStatuses = ref([]);
+    const selectedStatus = ref(TASK_ACTION_STATUSES[0]);
 
     const isDrawerVisible = computed(
       () => store.getters.getIsTaskDrawerVisible
     );
 
-    const isTasksFilterActive = computed(() => {
-      return taskActiveActionStatuses.value.length > 0;
-    });
-
     const tasks = computed(() => {
-      const requestedTasks = route.params.flag
-        ? store.getters.getRequestedTasks
-        : store.getters.getMyTasks;
-      const completedTasks = route.params.flag
-        ? store.getters.getRequestedCompletedTasks
-        : store.getters.getMyCompletedTasks;
-
-      if (isTasksFilterActive.value) {
-        // filter by selected statuses
-        let filtered = [];
-
-        taskActiveActionStatuses.value.forEach((status) => {
-          console.log(status);
-
-          if (status.id === "Unassigned") {
-            filtered = store.getters.getUnassignedTasks;
-          }
-
-          if (status.id === "InProgress") {
-            filtered = filtered.concat(
-              requestedTasks.filter((item) => item.taskStatus === status.id)
+      if (route.params.flag) {
+        //my tasks
+        switch (selectedStatus.value.id) {
+          case "Unassigned":
+            return store.getters.getUnassignedTasks;
+          case "InProgress":
+            return store.getters.getRequestedTasks.filter(
+              (item) => item.taskStatus === "InProgress"
             );
-          }
-
-          if (status.id === "Queued") {
-            filtered = filtered.concat(
-              requestedTasks.filter((item) => item.taskStatus === status.id)
+          case "Queued":
+            return store.getters.getRequestedTasks.filter(
+              (item) => item.taskStatus === "Queued"
             );
-          }
-
-          if (status.id === "OnHold") {
-            filtered = filtered.concat(
-              requestedTasks.filter((item) => item.taskStatus === status.id)
-            );
-          }
-
-          if (status.id === "Overdue") {
-            filtered = filtered.concat(
-              requestedTasks.filter((item) => item.isDeadlinePassed)
-            );
-          }
-
-          if (status.id === "Completed") {
-            filtered = filtered.concat(completedTasks);
-          }
-        });
-
-        return filtered;
+          case "Completed":
+            return store.getters.getRequestedCompletedTasks;
+          default:
+            return [];
+        }
       } else {
-        return [
-          ...store.getters.getUnassignedTasks,
-          ...requestedTasks,
-          ...completedTasks,
-        ];
+        switch (selectedStatus.value.id) {
+          case "Unassigned":
+            return store.getters.getUnassignedTasks;
+          case "InProgress":
+            return store.getters.getMyTasks.filter(
+              (item) => item.taskStatus === "InProgress"
+            );
+          case "Queued":
+            return store.getters.getMyTasks.filter(
+              (item) => item.taskStatus === "Queued"
+            );
+          case "Completed":
+            return store.getters.getMyCompletedTasks;
+          default:
+            return [];
+        }
       }
     });
 
-    const selectedTaskId = computed(() => store.getters.getSelectedTaskId);
-
-    const onGetIsTaskFilterButtonActive = (statusId) => {
-      return taskActiveActionStatuses.value.find(
-        (item) => item.id === statusId
-      );
-    };
-
-    const onTasksFilterStatusSelect = (status) => {
-      const idx = taskActiveActionStatuses.value.findIndex(
-        (item) => item.id === status.id
-      );
-      if (idx !== -1) {
-        taskActiveActionStatuses.value.splice(idx, 1);
-      } else {
-        taskActiveActionStatuses.value.push(status);
-      }
-
-      // if all options selected then clear the filter
-      if (
-        taskActiveActionStatuses.value.length ===
-        taskActionStatuses.value.length
-      ) {
-        taskActiveActionStatuses.value = [];
-      }
-    };
-
-    const onTaskSelect = (task) => {
-      if (selectedTaskId.value === task.id) {
-        store.commit(Mutations.setIsTaskDrawerVisible, !isDrawerVisible.value);
-      } else {
-        store.commit(Mutations.setIsTaskDrawerVisible, true);
-      }
-      store.dispatch(Actions.onSelectTask, task.id);
-    };
-
-    const onGetTasksCountOfStatuses = (status) => {
-      const requestedTasks = route.params.flag
-        ? store.getters.getRequestedTasks
-        : store.getters.getMyTasks;
-      const completedTasks = route.params.flag
-        ? store.getters.getRequestedCompletedTasks
-        : store.getters.getMyCompletedTasks;
-
-      switch (status) {
-        case "Unassigned":
-          return store.getters.getUnassignedTasks.length;
-        case "InProgress":
-          return requestedTasks.filter((item) => item.taskStatus === status)
-            .length;
-        case "Queued":
-          return requestedTasks.filter((item) => item.taskStatus === status)
-            .length;
-        case "OnHold":
-          return requestedTasks.filter((item) => item.taskStatus === status)
-            .length;
-        case "Overdue":
-          return requestedTasks.filter((item) => item.isDeadlinePassed).length;
-        case "Completed":
-          return completedTasks.length;
-
-        default:
-          return 0;
-      }
-    };
-
-    const onRefreshFilters = () => {
-      taskActiveActionStatuses.value = [];
+    const onStatusSelect = (status) => {
+      selectedStatus.value = status;
     };
 
     return {
       isDrawerVisible,
-      isTasksFilterActive,
-      taskActionStatuses,
-      taskActiveActionStatuses,
+      selectedStatus,
       tasks,
-      selectedTaskId,
-      onGetTasksCountOfStatuses,
-      onGetIsTaskFilterButtonActive,
-      timeTaskCreationFormat,
-      onTaskSelect,
-      onTasksFilterStatusSelect,
-      onRefreshFilters,
+      onStatusSelect,
+      TASK_ACTION_STATUSES,
     };
   },
 };

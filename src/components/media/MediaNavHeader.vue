@@ -1,41 +1,43 @@
 <template>
   <!-- start::navigation header -->
-  <nav class="side-nav-line">
+
+  <div class="nav custom-nav">
     <div
-      class="nav nav-tabs border-bottom border-secondary-light"
-      style="min-height: 42px"
+      class="nav-item custom-nav-item "
+      @click="onTab(MEDIA_NAV_TABS.RECENT)"
+      :class="tabActive === MEDIA_NAV_TABS.RECENT ? 'active' : ''"
     >
-      <a
-        class="nav-item nav-link nav-filter-control on-hover"
-        @click="onTab(MEDIA_NAV_TABS.RECENT)"
-        :class="tabActive === MEDIA_NAV_TABS.RECENT ? 'active' : ''"
-        >Recent</a
-      >
-
-      <a
-        class="nav-item nav-link nav-filter-control on-hover"
-        @click="onTab(MEDIA_NAV_TABS.GENERAL)"
-        :class="tabActive === MEDIA_NAV_TABS.GENERAL ? 'active' : ''"
-        >General</a
-      >
-
-      <a
-        class="nav-item nav-link nav-filter-control on-hover"
-        @click="onTab(MEDIA_NAV_TABS.PATIENTS)"
-        :class="tabActive === MEDIA_NAV_TABS.PATIENTS ? 'active' : ''"
-        >Patients</a
-      >
-
-      <a
-        class="nav-item nav-link nav-filter-control on-hover"
-        @click="onTab(MEDIA_NAV_TABS.UNDEFINED)"
-        :class="tabActive === MEDIA_NAV_TABS.UNDEFINED ? 'active' : ''"
-        >Unidentified</a
-      >
+      <span class="nav-link custom-nav-link">Recent</span>
     </div>
-  </nav>
+
+    <div
+      class="nav-item custom-nav-item"
+      @click="onTab(MEDIA_NAV_TABS.GENERAL)"
+      :class="tabActive === MEDIA_NAV_TABS.GENERAL ? 'active' : ''"
+    >
+      <span class="nav-link custom-nav-link">General</span>
+    </div>
+
+    <div
+      class="nav-item custom-nav-item"
+      @click="onTab(MEDIA_NAV_TABS.PATIENTS)"
+      :class="tabActive === MEDIA_NAV_TABS.PATIENTS ? 'active' : ''"
+    >
+      <span class="nav-link custom-nav-link">General</span>
+    </div>
+
+    <div
+      class="nav-item custom-nav-item"
+      @click="onTab(MEDIA_NAV_TABS.UNDEFINED)"
+      :class="tabActive === MEDIA_NAV_TABS.UNDEFINED ? 'active' : ''"
+    >
+      <span class="nav-link custom-nav-link">Unidentified</span>
+    </div>
+  </div>
+
   <!-- end::navigation header -->
 
+  <!-- start:: media type selection chips buttons -->
   <div class="d-flex chips-selection-frame">
     <button-chip
       v-for="type of mediaTypes"
@@ -70,6 +72,8 @@
       </ButtonIcon>
     </div>
   </div>
+  <!-- end:: media type selection chips buttons -->
+
 </template>
 <script>
 import FeatherGrid from "@/icons/FeatherGrid";
