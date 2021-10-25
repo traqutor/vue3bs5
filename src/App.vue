@@ -15,6 +15,15 @@ export default defineComponent({
   setup() {
     const store = useStore();
     store.commit(Mutations.prepareSoundEffect);
+
+    window.addEventListener("online", function () {
+      store.commit(Mutations.setIsSocketOnline);
+    });
+
+    window.addEventListener("offline", function () {
+      store.commit(Mutations.setIsSocketOnline, false);
+    });
+
   },
 });
 </script>

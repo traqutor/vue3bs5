@@ -197,6 +197,11 @@ const Mutations = {
   // patients mutation types
   setPatients: "setPatients",
 
+  // socket mutation types
+  setSocketHubConnection: "setSocketHubConnection",
+  setIsSocketReconnecting: "setIsSocketReconnecting",
+  setIsSocketOnline: "setIsSocketOnline",
+
   // sound mutation types
   prepareSoundEffect: "prepareSoundEffect",
   setSoundEffect: "setSoundEffect",

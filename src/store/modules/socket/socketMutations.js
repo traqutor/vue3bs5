@@ -1,5 +1,13 @@
+import { Mutations } from "@/store/enums/EnumTypes";
+
 export default {
-  setSocketHubConnection: (state, connection) => {
+  [Mutations.setSocketHubConnection]: (state, connection) => {
     state.hubConnection = connection;
+  },
+  [Mutations.setIsSocketOnline]: (state) => {
+    state.isSocketOnline = navigator.onLine;
+  },
+  [Mutations.setIsSocketReconnecting]: (state, flag) => {
+    state.isSocketReconnecting = flag;
   },
 };

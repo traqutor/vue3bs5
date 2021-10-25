@@ -10,6 +10,7 @@
       <chat-footer-acknowledge />
       <chat-footer-whisper />
       <chat-footer-attachments />
+      <chat-socket-connection-error />
       <chat-footer-input />
     </div>
   </div>
@@ -23,8 +24,10 @@ import ChatDrawer from "@/components/conversation/chat/ChatDrawer";
 import ChatFooterUserIsTyping from "@/components/conversation/chat/input/ChatFooterUserIsTyping";
 import ChatFooterAttachments from "@/components/conversation/chat/input/ChatFooterAttachments";
 import ChatReplyMessage from "@/components/conversation/chat/input/ChatReplyMessage";
+import ChatSocketConnectionError from "@/components/conversation/chat/input/ChatSocketConnectionError";
 export default {
   components: {
+    ChatSocketConnectionError,
     ChatReplyMessage,
     ChatFooterAttachments,
     ChatFooterUserIsTyping,

@@ -6,6 +6,8 @@ const socketModule = {
   state() {
     return {
       hubConnection: null,
+      isSocketOnline: navigator.onLine,
+      isSocketReconnecting: false,
       mapOfTypingUsers: {},
     };
   },

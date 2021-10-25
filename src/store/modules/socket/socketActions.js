@@ -1,5 +1,4 @@
 import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
-
 import { getTokenData } from "@/services/jwt.service";
 import { Actions, Mutations, SocketReceivers } from "@/store/enums/EnumTypes";
 
@@ -185,6 +184,16 @@ export default {
       console.log("TaskDeleted", task);
 
       dispatch(Actions.onTaskDeletedNotification, task);
+    });
+
+    // socket will automatically try to reconnect listen if is reconnecting
+    connection.onreconnecting(() => {
+      commit(Mutations.setIsSocketReconnecting, true);
+    });
+
+    // listen and update when reconnected
+    connection.onreconnected(() => {
+      commit(Mutations.setIsSocketReconnecting, false);
     });
   },
 

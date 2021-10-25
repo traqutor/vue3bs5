@@ -18,7 +18,7 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { Actions } from "@/store/enums/EnumTypes";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import AppHeader from "@/components/header/MainHeader";
 import AsideLeft from "@/components/aside/AsideLeft";
 import ModalMediaSelectionManager from "@/components/media/manager/ModalMediaSelectionManager";
