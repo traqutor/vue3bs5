@@ -1,5 +1,5 @@
 <template>
-  <router-link class="aside-nav-link" :to="{ path }">
+  <router-link class="aside-nav-link" :to="{ path }" @click="onButtonNavigate">
     <div class="d-inline-block position-relative">
       <span
         v-if="badgeNumber > 0"
@@ -23,8 +23,20 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
+import { Mutations } from "@/store/enums/EnumTypes";
+
 export default {
   props: ["title", "path", "badgeNumber"],
+  setup() {
+    const store = useStore();
+    const onButtonNavigate = () => {
+      store.commit(Mutations.setSoundEffect);
+    };
+    return {
+      onButtonNavigate,
+    };
+  },
 };
 </script>
 

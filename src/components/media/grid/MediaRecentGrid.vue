@@ -5,7 +5,7 @@
         class="d-flex flex-column position-absolute h-100 w-100"
       >
         <div class="media-recent-time-ago-divider">
-          <span class="subheader-label">Today</span>
+          <span class="label-subheader">Today</span>
         </div>
 
         <div class="media-grid-container">
@@ -17,7 +17,7 @@
         </div>
 
         <div class="media-recent-time-ago-divider">
-          <span class="subheader-label">Yesterday</span>
+          <span class="label-subheader">Yesterday</span>
         </div>
 
         <div class="media-grid-container">

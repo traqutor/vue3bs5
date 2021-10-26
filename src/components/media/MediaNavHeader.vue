@@ -38,7 +38,7 @@
   <!-- end::navigation header -->
 
   <!-- start:: media type selection chips buttons -->
-  <div class="d-flex chips-selection-frame">
+  <div class="d-flex chips-buttons-nav">
     <button-chip
       v-for="type of mediaTypes"
       @click="onTypeSelect(type)"
@@ -166,13 +166,5 @@ export default {
   font-size: 14px;
   line-height: 19px;
   color: $grey;
-}
-
-.chips-selection-frame {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 10px 10px 10px 0px;
-  margin-top: 12px;
 }
 </style>

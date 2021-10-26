@@ -1,10 +1,14 @@
 @import "constans";
 
-.subheader-label {
+.label-subheader {
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
   line-height: 25px;
 
   color: $primary-black;
+}
+
+.label-error {
+  color: $red;
 }

@@ -1,6 +1,6 @@
 <template>
   <div v-if="isReconnecting">
-    <span class="">Network Connection Lost</span>
+    <span class="label-error">Network Connection Lost</span>
   </div>
 </template>
 

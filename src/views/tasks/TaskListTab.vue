@@ -4,7 +4,7 @@
     <div class="flex-slide-content row">
       <div class="col d-flex flex-column">
         <!-- start:: media type selection chips buttons -->
-        <div class="d-flex chips-selection-frame">
+        <div class="d-flex chips-buttons-nav">
           <button-chip
             v-for="status of TASK_ACTION_STATUSES"
             @click="onStatusSelect(status)"
