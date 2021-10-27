@@ -134,6 +134,7 @@ const Mutations = {
   //conversation mutation types
   setConversations: "setConversations",
   setMessage: "setMessage",
+  setMessageText: "setMessageText",
   setReplyMessage: "setReplyMessage",
   setTotalMissedCounter: "setTotalMissedCounter",
   setIsConversationsLoading: "setIsConversationsLoading",

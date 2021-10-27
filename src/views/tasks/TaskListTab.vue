@@ -23,14 +23,12 @@
             <table>
               <thead>
                 <tr>
-                  <th scope="col" class="text-nowrap border-0 ps-3">
-                    Task no.
-                  </th>
-                  <th scope="col" class="text-nowrap border-0">Task type</th>
-                  <th scope="col" class="text-nowrap border-0">Location</th>
-                  <th scope="col" class="text-nowrap border-0">Raised</th>
-                  <th scope="col" class="text-nowrap border-0">Assigned To</th>
-                  <th scope="col" class="text-nowrap border-0">Status</th>
+                  <th scope="col" class="custom-td task-no ps-2">Task no</th>
+                  <th scope="col" class="custom-td ps-2">Task type</th>
+                  <th scope="col" class="custom-td ps-2">Location</th>
+                  <th scope="col" class="custom-td ps-2">Raised</th>
+                  <th scope="col" class="custom-td ps-2">Assigned To</th>
+                  <th scope="col" class="custom-td ps-2">Status</th>
                 </tr>
               </thead>
               <tbody>

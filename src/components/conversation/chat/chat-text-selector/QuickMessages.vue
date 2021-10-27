@@ -140,7 +140,7 @@ export default {
       this.$store.commit(Mutations.setSelectedTemplateViewMode, view);
     },
     onTextSelection(text) {
-      this.$store.commit("setMessageText", text);
+      this.$store.commit(Mutations.setMessageText, text);
       this.$store.commit("toggleQuickChatTextSelector");
     },
     onTemplateSelection(template) {

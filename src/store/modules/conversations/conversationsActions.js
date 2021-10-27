@@ -13,7 +13,7 @@ let getMessagesSource = null;
 
 export default {
   [Actions.onGetConversations]: (
-    { state, commit, rootState },
+    { state, commit, getters },
     { refresh = false, silent = false }
   ) => {
     if (!silent) commit(Mutations.setIsConversationsLoading, true);
@@ -30,11 +30,13 @@ export default {
     takeConversations = takeConversations > 99 ? 99 : takeConversations;
 
     commit("setPageOfConversations", { skipConversations, takeConversations });
-    let activeRoleIds = "";
-    rootState.auth.user.SystemRoles.forEach((rle, index) => {
-      activeRoleIds =
-        activeRoleIds + (index === 0 ? "&activeRoleIds=" : "&") + rle.Id;
-    });
+
+    const activeRoleIds = getters.getLoggedUser.SystemRoles.map(
+      (role, index) => {
+        return `&activeRoleIds[${index}]=${role.Id}`;
+      }
+    ).join("");
+
     const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetConversations?skip=0&take=${takeConversations}${activeRoleIds}`;
 
     axiosWebApiInstance
@@ -235,7 +237,7 @@ export default {
       .post(url, message)
       .then(function (response) {
         if (response.data.isOk) {
-          commit("setMessageText", null);
+          commit(Mutations.setMessageText, null);
           commit("purgeWhisperParticipants");
           commit(Mutations.setMediaShareGalleryItems, []);
           commit(Mutations.setReplyMessage, null);

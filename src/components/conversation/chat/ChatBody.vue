@@ -16,7 +16,7 @@
             >
               {{ timeMessagesDividerFormat(msg.createdTime.seconds) }}
             </div>
-            <chat-message-bubble :item="msg"></chat-message-bubble>
+            <chat-message-bubble :item="msg" :index="idx" />
           </div>
           <div
             v-if="

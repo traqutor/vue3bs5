@@ -69,7 +69,7 @@
 
     <!--start::message quick reply emoji  -->
     <div class="on-hover-visible me-2 dropdown" role="group">
-      <BubbleQuckReactionDropdown :item="item" />
+      <BubbleQuickReactionDropdown :item="item" />
     </div>
     <!--end::message quick reply emoji  -->
 
@@ -153,31 +153,19 @@
         <BubbleReactionDropdown :item="item" />
       </div>
       <!--end::message reactions -->
-
     </div>
     <!--end::message content  -->
-
   </div>
   <!--end::By logged User bubble-->
 
   <!--start::others Users bubble-->
   <div v-else class="d-flex pe-5 mt-3">
     <!--start::User avatar-->
-    <figure
-      v-if="isUserInfoToDisplay && getAuthor(item).user"
+    <ParticipantAvatar
       class="avatar avatar-lg me-3 ms-1"
-      :data-initial="getAuthor(item).user.userName.substr(0, 1).toUpperCase()"
-    >
-      <!-- todo: add real user avatar when backend returns it -->
-      <img
-        v-if="getAuthor(item).user.avatar === 'simona.jpg'"
-        :src="`images/${getAuthor(item).user.avatar}`"
-        alt=""
-      />
-    </figure>
-    <div v-else class="avatar avatar-lg me-3 ms-1">
-      <feather-briefcase1 />
-    </div>
+      :participant-id="item.activeRoleId ? item.activeRoleId : item.authorId"
+    />
+
     <!--end::User avatar-->
 
     <div class="media-body">
@@ -272,11 +260,8 @@
               <BubbleReactionDropdown :item="item" />
             </div>
             <!--end::message reactions -->
-
           </div>
           <!--end::message -->
-
-
         </div>
         <!--end::message content  -->
 
@@ -304,7 +289,7 @@
 
         <!--start::message quick reply emoji  -->
         <div class="on-hover-visible ms-2 dropdown" role="group">
-          <BubbleQuckReactionDropdown :item="item" />
+          <BubbleQuickReactionDropdown :item="item" />
         </div>
         <!--end::message quick reply emoji  -->
 
@@ -398,6 +383,7 @@ import { useStore } from "vuex";
 import {
   timeOffsetFormat,
   timeHhMmaDotDdddFormat,
+  timeMessagesDividerFormat,
 } from "@/services/datetime.service";
 import { guidsAreEqual } from "@/services/guids.service";
 import FeatherArrowReplyDown from "@/icons/FeatherArrowReplyDown";
@@ -418,16 +404,17 @@ import ParticipantNameAndRolesItem from "@/components/participant/ParticipantNam
 import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import BubbleAttachments from "@/components/conversation/chat/bubble/BubbleAttachments";
 import BubbleReactionDropdown from "@/components/conversation/chat/bubble/BubbleReactionDropdown";
-import BubbleQuckReactionDropdown from "@/components/conversation/chat/bubble/BubbleQuckReactionDropdown";
+import BubbleQuickReactionDropdown from "@/components/conversation/chat/bubble/BubbleQuickReactionDropdown";
 import BubbleReplyElement from "@/components/conversation/chat/bubble/BubbleReplyElement";
-import FeatherBriefcase1 from "@/icons/FeatherBriefcase1";
+
+import ParticipantAvatar from "@/components/participant/ParticipantAvatar";
 
 export default {
   name: "ign-chat-message-bubble",
   components: {
-    FeatherBriefcase1,
+    ParticipantAvatar,
     BubbleReplyElement,
-    BubbleQuckReactionDropdown,
+    BubbleQuickReactionDropdown,
     BubbleReactionDropdown,
     BubbleAttachments,
     ParticipantNameAndRolesItem,
@@ -444,7 +431,7 @@ export default {
     FeatherMoreVertical,
     FeatherArrowReplyDown,
   },
-  props: ["item"],
+  props: ["item", "index"],
   setup(props) {
     const store = useStore();
     const quickResponsesOptions = ref([
@@ -454,10 +441,13 @@ export default {
       "I'm not available right now",
     ]);
     const loggedUser = computed(() => store.getters.getLoggedUser);
-    const getAuthor = computed(() => store.getters.getMessageAuthor);
+
     const selectedConversation = computed(
       () => store.getters.getSelectedConversation
     );
+
+    const messages = computed(() => store.getters.getMessages);
+
     const selectedCreator = computed(() => store.getters.getSelectedCreator);
 
     const getConversationAvailableCreationRoles = computed(
@@ -504,13 +494,16 @@ export default {
     });
 
     const isUserInfoToDisplay = computed(() => {
-      const messages = store.getters.getMessages;
-      const index = messages.findIndex((msg) => msg.id === props.item.id);
-      return (
-        index === 0 ||
-        messages[index].authorId !== messages[index - 1].authorId ||
-        messages[index].activeRoleId !== messages[index - 1].activeRoleId
-      );
+      if (messages.value.length > props.index + 1) {
+        return (
+          messages.value[props.index].authorId !==
+            messages.value[props.index + 1].authorId ||
+          messages.value[props.index].activeRoleId !==
+            messages.value[props.index + 1].activeRoleId
+        );
+      } else {
+        return true;
+      }
     });
 
     const isPostByLoggedUser = computed(() => {
@@ -606,7 +599,7 @@ export default {
         !props.item.thumbnails
       ) {
         const requestQuery = props.item.attachments
-          .map((atta) => `thumbnailsIds=${atta.id}`)
+          .map((attachment) => `thumbnailsIds=${attachment.id}`)
           .join("&");
         store
           .dispatch(Actions.onGetAttachmentsThumbnails, requestQuery)
@@ -627,7 +620,6 @@ export default {
       getWhisperedRecipients,
       getBubbleClass,
       isUserInfoToDisplay,
-      getAuthor,
       onMessageCopy,
       onMessageEdit,
       onMessageForward,

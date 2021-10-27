@@ -293,7 +293,7 @@
 <script>
 import { computed, ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import { Actions } from "@/store/enums/EnumTypes";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import { CONVERSATION_VIEW_MODES } from "@/const";
 import FeatherPointSquare from "@/icons/FeatherPointSquare";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
@@ -336,7 +336,7 @@ export default {
         return store.state.conversations.messageText;
       },
       set: (value) => {
-        store.commit("setMessageText", value);
+        store.commit(Mutations.setMessageText, value);
       },
     });
 
@@ -362,18 +362,24 @@ export default {
       return msg && msg.replace(/\s/g, "").length;
     }
 
+    const onGetActiveRoleId = () => {
+      return selectedSender.value.isRole
+        ? selectedSender.value.id.toLowerCase()
+        : null;
+    };
+
     function onSubmit(event) {
       if (event.shiftKey === true && event.key === "Enter") {
         messageText.value = messageText.value ? messageText.value : "" + `\n`;
       } else {
         if (onTrimMessageText(messageText.value) > 0) {
-          const activeRoleId = selectedSender.value.isRole
-            ? selectedSender.value.id.toLowerCase()
-            : null;
+          const activeRoleId = onGetActiveRoleId();
+
           const payload = {
             requiresAcknowledgement: requiresAcknowledgement.value,
             activeRoleId: activeRoleId,
           };
+
           store.dispatch(Actions.onCreateMessage, payload).then(() => {
             requiresAcknowledgement.value = false;
           });

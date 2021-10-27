@@ -376,7 +376,7 @@
 <script>
 import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
-import { Actions } from "@/store/enums/EnumTypes";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import { CONVERSATION_VIEW_MODES } from "@/const";
 import FeatherSquare from "@/icons/FeatherSquare";
 import FeatherCheckSquare from "@/icons/FeatherCheckSquare";
@@ -417,7 +417,7 @@ export default {
         return store.state.conversations.messageText;
       },
       set: (value) => {
-        store.commit("setMessageText", value);
+        store.commit(Mutations.setMessageText, value);
       },
     });
 
@@ -457,7 +457,7 @@ export default {
 
     function insertEmoji(emoji) {
       const txt = messageText.value ? messageText.value + emoji : emoji;
-      store.commit("setMessageText", txt);
+      store.commit(Mutations.setMessageText, txt);
     }
 
     function onSelectCreator(id) {
@@ -470,7 +470,7 @@ export default {
 
     function onCreateConversation() {
       store.dispatch(Actions.onCreateConversation).then(() => {
-        store.commit("setMessageText", null);
+        store.commit(Mutations.setMessageText, null);
         store.commit("setConversationTopic", null);
         store.commit("setConversationViewMode", conversationViewModes.VIEW);
       });

@@ -52,7 +52,7 @@ export default {
   setConversationTopic: (state, topic) => {
     state.conversationTopic = topic;
   },
-  setMessageText: (state, messageText) => {
+  [Mutations.setMessageText]: (state, messageText) => {
     state.messageText = messageText;
   },
   setIsMessagesLoading: (state, flag) => {
