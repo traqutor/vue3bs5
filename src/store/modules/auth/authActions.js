@@ -50,7 +50,7 @@ export default {
             );
             commit(Mutations.setLoggedUser, decodedUserData);
             commit(Mutations.setActiveRole, decodedUserData.SystemRoles[0]);
-            commit("setSelectedCreator", decodedUserData);
+            commit(Mutations.setSelectedCreator, decodedUserData);
 
             resolve();
           } else {
@@ -77,9 +77,9 @@ export default {
       if (user && token) {
         commit(Mutations.setLoggedUser, user);
         commit(Mutations.setActiveRole, user.SystemRoles[0]);
-        commit("setSelectedCreator", user);
+        commit(Mutations.setSelectedCreator, user);
 
-        dispatch("getUsers");
+        dispatch(Actions.getUsers);
         dispatch(Actions.onGetConversations, { refresh: true });
         dispatch(Actions.onGetThumbnails);
         dispatch(Actions.onGetTypes);

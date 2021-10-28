@@ -351,7 +351,7 @@ export default {
     }
 
     function onShowTemplatesAndQuickMessages() {
-      store.commit("toggleQuickChatTextSelector");
+      store.commit(Mutations.toggleQuickChatTextSelector);
     }
 
     function onSenderSelect(sender) {

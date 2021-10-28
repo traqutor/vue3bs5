@@ -59,6 +59,8 @@ const Actions = {
   onShowMediaFilesInLightBox: "onShowMediaFilesInLightBox",
 
   // socket actions
+  onCreateHubConnection: "onCreateHubConnection",
+  onSocketConnectionClose: "onSocketConnectionClose",
   onMessageQuickReactionNotification: "onMessageQuickReactionNotification",
   onMessageQuickReactionRemovedNotification:
     "onMessageQuickReactionRemovedNotification",
@@ -115,6 +117,11 @@ const Actions = {
 
   // patients action types
   onGetPatients: "onGetPatients",
+
+  // users action types
+  getUsers: "getUsers",
+  setToggleParticipantSelected: "setToggleParticipantSelected",
+  setToggleParticipantToWhisper: "setToggleParticipantToWhisper",
 };
 
 const Mutations = {
@@ -133,11 +140,25 @@ const Mutations = {
 
   //conversation mutation types
   setConversations: "setConversations",
+  setConversation: "setConversation",
+  setSelectedConversationId: "setSelectedConversationId",
+  setPageOfConversations: "setPageOfConversations",
+  setChatViewMode: "setChatViewMode",
+  setConversationViewMode: "setConversationViewMode",
+  setSelectedCreator: "setSelectedCreator",
+  setConversationTopic: "setConversationTopic",
   setMessage: "setMessage",
+  setMessages: "setMessages",
+  setIsMessagesLoading: "setIsMessagesLoading",
+  setIsMessageCreating: "setIsMessageCreating",
+  setSelectedMessageId: "setSelectedMessageId",
   setMessageText: "setMessageText",
   setReplyMessage: "setReplyMessage",
   setTotalMissedCounter: "setTotalMissedCounter",
   setIsConversationsLoading: "setIsConversationsLoading",
+  setIsConversationCreating: "setIsConversationCreating",
+  purgeUserIsTyping: "purgeUserIsTyping",
+  toggleQuickChatTextSelector: "toggleQuickChatTextSelector",
 
   // media mutation types
   setMediaTypeSelected: "setMediaTypeSelected",
@@ -207,6 +228,16 @@ const Mutations = {
   prepareSoundEffect: "prepareSoundEffect",
   setSoundEffect: "setSoundEffect",
   setSoundWaterDrop: "setSoundWaterDrop",
+
+  // users mutation types
+  setUsers: "setUsers",
+  setRoles: "setRoles",
+  setIsLoadingUsers: "setIsLoadingUsers",
+  setParticipantsSearchText: "setParticipantsSearchText",
+  setSelectedParticipants: "setSelectedParticipants",
+  setWhisperParticipants: "setWhisperParticipants",
+  purgeSelectedParticipants: "purgeSelectedParticipants",
+  purgeWhisperParticipants: "purgeWhisperParticipants",
 };
 
 //taskTypes

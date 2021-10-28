@@ -1,11 +1,12 @@
 import axios from "axios";
 import { axiosWebApiInstance } from "@/services/axios.service";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import { guidsAreEqual } from "@/services/guids.service";
 
 let getUsersSource = null;
 
 export default {
-  getUsers: ({ commit }) => {
+  [Actions.getUsers]: ({ commit }) => {
     if (getUsersSource) {
       getUsersSource.cancel();
     }
@@ -17,12 +18,15 @@ export default {
       .get(url, { cancelToken: getUsersSource.token })
       .then(function (response) {
         getUsersSource = null;
-        commit("setUsers", response.data.users);
-        commit("setRoles", response.data.roles);
+        commit(Mutations.setUsers, response.data.users);
+        commit(Mutations.setRoles, response.data.roles);
       });
   },
 
-  setToggleParticipantSelected: ({ commit, state, getters }, participantId) => {
+  [Actions.setToggleParticipantSelected]: (
+    { commit, state, getters },
+    participantId
+  ) => {
     const selectedParticipants = [...state.selectedParticipants];
     const i = selectedParticipants.findIndex((prt) =>
       guidsAreEqual(prt.id, participantId)
@@ -33,10 +37,10 @@ export default {
       const participant = getters.getParticipantById(participantId);
       selectedParticipants.push(participant);
     }
-    commit("setSelectedParticipants", selectedParticipants);
+    commit(Mutations.setSelectedParticipants, selectedParticipants);
   },
 
-  setToggleParticipantToWhisper: (
+  [Actions.setToggleParticipantToWhisper]: (
     { commit, state, getters },
     participantId
   ) => {
@@ -50,6 +54,6 @@ export default {
       const participant = getters.getParticipantById(participantId);
       whisperToParticipants.push(participant);
     }
-    commit("setWhisperParticipants", whisperToParticipants);
+    commit(Mutations.setWhisperParticipants, whisperToParticipants);
   },
 };

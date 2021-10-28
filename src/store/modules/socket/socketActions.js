@@ -3,7 +3,7 @@ import { getTokenData } from "@/services/jwt.service";
 import { Actions, Mutations, SocketReceivers } from "@/store/enums/EnumTypes";
 
 export default {
-  onCreateHubConnection: ({ state, commit, dispatch, rootState }) => {
+  [Actions.onCreateHubConnection]: ({ state, commit, dispatch, rootState }) => {
     const token = getTokenData();
     const connection = new HubConnectionBuilder()
       .withUrl(
@@ -32,7 +32,7 @@ export default {
       console.log("ReceivedMessageNotification", message);
 
       dispatch(Actions.onReceivedMessageNotification, message);
-      commit("purgeUserIsTyping", {
+      commit(Mutations.purgeUserIsTyping, {
         userId: message.authorId,
         conversationId: message.conversationId,
       });
@@ -76,7 +76,7 @@ export default {
 
       state.mapOfTypingUsers[whoIsTyping.userId + whoIsTyping.conversationId] =
         setTimeout(() => {
-          commit("purgeUserIsTyping", whoIsTyping);
+          commit(Mutations.purgeUserIsTyping, whoIsTyping);
         }, 3000);
 
       if (rootState.auth.user.id !== whoIsTyping.userId) {
@@ -197,8 +197,7 @@ export default {
     });
   },
 
-  onSocketConnectionClose: ({ state }) => {
-    console.log("onSocketConnectionClose");
+  [Actions.onSocketConnectionClose]: ({ state }) => {
     state.hubConnection.stop();
   },
 
@@ -206,7 +205,6 @@ export default {
     { commit, getters },
     reaction
   ) => {
-    console.log("onMessageQuickReactionNotification", reaction);
     if (getters.getSelectedConversation.id === reaction.conversationId) {
       const message = getters.getSelectedConversation.messages.find(
         (msg) => msg.id === reaction.messageId
@@ -233,7 +231,6 @@ export default {
     { commit, getters },
     reaction
   ) => {
-    console.log("MessageQuickReactionRemovedNotification", reaction);
     if (getters.getSelectedConversation.id === reaction.conversationId) {
       const message = getters.getSelectedConversation.messages.find(
         (msg) => msg.id === reaction.messageId

@@ -408,7 +408,7 @@ export default {
         return store.getters.getConversationTopic;
       },
       set: (value) => {
-        store.commit("setConversationTopic", value);
+        store.commit(Mutations.setConversationTopic, value);
       },
     });
 
@@ -465,25 +465,25 @@ export default {
     }
 
     function onSelect(id) {
-      store.dispatch("setToggleParticipantSelected", id);
+      store.dispatch(Actions.setToggleParticipantSelected, id);
     }
 
     function onCreateConversation() {
       store.dispatch(Actions.onCreateConversation).then(() => {
         store.commit(Mutations.setMessageText, null);
-        store.commit("setConversationTopic", null);
-        store.commit("setConversationViewMode", conversationViewModes.VIEW);
+        store.commit(Mutations.setConversationTopic, null);
+        store.commit(Mutations.setConversationViewMode, conversationViewModes.VIEW);
       });
     }
 
     function onDirectConversationUpdate() {
       store.dispatch(Actions.onDirectConversationUpdate).then(() => {
-        store.commit("setConversationViewMode", conversationViewModes.VIEW);
+        store.commit(Mutations.setConversationViewMode, conversationViewModes.VIEW);
       });
     }
 
     function onShowTemplatesAndQuickMessages() {
-      store.commit("toggleQuickChatTextSelector");
+      store.commit(Mutations.toggleQuickChatTextSelector);
     }
 
     watch(

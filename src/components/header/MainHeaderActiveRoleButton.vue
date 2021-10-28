@@ -161,11 +161,11 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import FeatherBriefcase1 from "@/icons/FeatherBriefcase1";
 import FeatherMessageSquareLine from "@/icons/FeatherMessageSquareLine";
 import FeatherClipboardLine from "@/icons/FeatherClipboardLine";
 import FeatherLayers from "@/icons/FeatherLayers";
-import { Mutations } from "@/store/enums/EnumTypes";
 import FeatherFlasher from "@/icons/FeatherFlasher";
 import FeatherAlertTriangle from "@/icons/FeatherAlertTriangle";
 
@@ -174,8 +174,8 @@ export default {
     const store = useStore();
 
     function onUserLogOut() {
-      store.dispatch("onSocketConnectionClose");
-      store.commit("setLogOutUser");
+      store.dispatch(Actions.onSocketConnectionClose);
+      store.commit(Mutations.setLogOutUser);
     }
 
     const loggedUser = computed(() => store.getters.getLoggedUser);

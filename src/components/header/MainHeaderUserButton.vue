@@ -81,13 +81,13 @@
   </div>
 </template>
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import FeatherCircle from "@/icons/FeatherCircle";
 import FeatherDisc from "@/icons/FeatherDisc";
 import FeatherToggleLeft from "@/icons/FeatherToggleLeft";
 import FeatherToggleRight from "@/icons/FeatherToggleRight";
-import { useStore } from "vuex";
-import { computed } from "vue";
-import { Mutations } from "@/store/enums/EnumTypes";
 import ParticipantAvatar from "@/components/participant/ParticipantAvatar";
 
 export default {
@@ -95,8 +95,8 @@ export default {
     const store = useStore();
 
     function onUserLogOut() {
-      store.dispatch("onSocketConnectionClose");
-      store.commit("setLogOutUser");
+      store.dispatch(Actions.onSocketConnectionClose);
+      store.commit(Mutations.setLogOutUser);
       store.commit(Mutations.setConversations, []);
     }
 

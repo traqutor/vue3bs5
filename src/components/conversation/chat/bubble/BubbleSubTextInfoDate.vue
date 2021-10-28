@@ -144,19 +144,20 @@
   >
 </template>
 <script>
+import { computed } from "vue";
 import { useStore } from "vuex";
+import { guidsAreEqual } from "@/services/guids.service";
+import { sortByIsWatched } from "@/services/sort.service";
 import {
   timeOffsetFormat,
   timeHhMmaDotDdddFormat,
 } from "@/services/datetime.service";
+import { Mutations } from "@/store/enums/EnumTypes";
 import { CHAT_VIEW_MODES } from "@/const";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
 import FeatherChevronDown from "@/icons/FeatherChevronDown";
 import FeatherMoreHorizontal from "@/icons/FeatherMoreHorizontal";
-import { guidsAreEqual } from "@/services/guids.service";
-import { computed } from "vue";
-import { sortByIsWatched } from "@/services/sort.service";
 
 export default {
   components: {
@@ -169,8 +170,8 @@ export default {
   setup(props) {
     const store = useStore();
     const onMessageOpen = () => {
-      store.commit("setSelectedMessageId", props.item.id);
-      store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
+      store.commit(Mutations.setSelectedMessageId, props.item.id);
+      store.commit(Mutations.setChatViewMode, CHAT_VIEW_MODES.MESSAGE);
     };
 
     const isReaderCounterVisible = computed(() => {

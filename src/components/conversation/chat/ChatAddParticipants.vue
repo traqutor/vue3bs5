@@ -63,11 +63,11 @@
   </div>
 </template>
 <script>
-import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import { CONVERSATION_VIEW_MODES } from "@/const";
-import { Actions } from "@/store/enums/EnumTypes";
+import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
 
 export default {
   setup() {
@@ -79,15 +79,15 @@ export default {
     );
 
     function onSelectParticipant(participantId) {
-      store.dispatch("setToggleParticipantSelected", participantId);
+      store.dispatch(Actions.setToggleParticipantSelected, participantId);
     }
 
     function onAddSelectedParticipants() {
       if (conversation.value.isDirect) {
         conversation.value.participants.forEach((participant) => {
-          store.dispatch("setToggleParticipantSelected", participant.id);
+          store.dispatch(Actions.setToggleParticipantSelected, participant.id);
         });
-        store.commit("setConversationViewMode", conversationViewModes.NEW);
+        store.commit(Mutations.setConversationViewMode, conversationViewModes.NEW);
       } else {
         store.dispatch(Actions.onAddUsersToConversation);
       }

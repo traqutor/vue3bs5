@@ -57,6 +57,7 @@
   </div>
 </template>
 <script>
+import { Mutations } from "@/store/enums/EnumTypes";
 import { CHAT_VIEW_MODES, CONVERSATION_VIEW_MODES } from "@/const";
 import FeatherSearch from "@/icons/FeatherSearch";
 import FeatherX from "@/icons/FeatherX";
@@ -74,7 +75,7 @@ export default {
         return this.$store.getters.getTextToSearchParticipants;
       },
       set(value) {
-        this.$store.commit("setParticipantsSearchText", value);
+        this.$store.commit(Mutations.setParticipantsSearchText, value);
       },
     },
   },
@@ -91,13 +92,13 @@ export default {
       this.$refs.textToSearchParticipantsRef.focus();
     },
     onChangeConversationViewMode() {
-      this.$store.commit("setParticipantsSearchText", "");
-      this.$store.commit("purgeSelectedParticipants");
+      this.$store.commit(Mutations.setParticipantsSearchText, "");
+      this.$store.commit(Mutations.purgeSelectedParticipants);
       this.$store.commit(
-        "setConversationViewMode",
+        Mutations.setConversationViewMode,
         this.conversationViewModes.VIEW
       );
-      this.$store.commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
+      this.$store.commit(Mutations.setChatViewMode, CHAT_VIEW_MODES.VIEW);
     },
   },
 };

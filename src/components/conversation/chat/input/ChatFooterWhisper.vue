@@ -87,9 +87,10 @@
   </div>
 </template>
 <script>
-import FeatherX from "@/icons/FeatherX";
 import { useStore } from "vuex";
 import { computed, ref } from "vue";
+import {Actions, Mutations} from "@/store/enums/EnumTypes";
+import FeatherX from "@/icons/FeatherX";
 import FeatherUsers from "@/icons/FeatherUsers";
 import FeatherMinimize from "@/icons/FeatherMinimize";
 import FeatherWhisperMessage from "@/icons/FeatherWhisperMessage";
@@ -113,7 +114,7 @@ export default {
     );
 
     const onCancelWhisper = () => {
-      store.commit("purgeWhisperParticipants");
+      store.commit(Mutations.purgeWhisperParticipants);
     };
 
     const onToggleWhisperParticipantsView = () => {
@@ -121,7 +122,7 @@ export default {
     };
 
     function onToggleParticipant(participantId) {
-      store.dispatch("setToggleParticipantToWhisper", participantId);
+      store.dispatch(Actions.setToggleParticipantToWhisper, participantId);
     }
 
     return {

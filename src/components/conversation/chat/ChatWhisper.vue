@@ -116,9 +116,10 @@
   </div>
 </template>
 <script>
-import { CHAT_VIEW_MODES } from "@/const";
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { CHAT_VIEW_MODES } from "@/const";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import { guidsAreEqual } from "@/services/guids.service";
 import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
 import FeatherSearch from "@/icons/FeatherSearch";
@@ -149,11 +150,11 @@ export default {
     }
 
     function onToggleParticipant(participantId) {
-      store.dispatch("setToggleParticipantToWhisper", participantId);
+      store.dispatch(Actions.setToggleParticipantToWhisper, participantId);
     }
 
     function onWhisperButton() {
-      store.commit("setChatViewMode", chatViewModes.VIEW);
+      store.commit(Mutations.setChatViewMode, chatViewModes.VIEW);
     }
 
     return {

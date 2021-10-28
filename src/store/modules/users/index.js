@@ -11,7 +11,6 @@ const usersModule = {
       selectedParticipants: [],
       whisperToParticipants: [],
       selectedMessageCreator: null,
-      pageOfParticipants: 0,
       textToSearchParticipants: "",
       isLoadingUsers: false,
     };

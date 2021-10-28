@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="app header-fixed sidebar-fixed sidebar-footer-fixed bg-white"
-    :class="getAsideLeftClass"
-  >
+  <div class="app header-fixed sidebar-fixed sidebar-footer-fixed bg-white">
     <app-header></app-header>
     <aside-left></aside-left>
     <main class="content">
@@ -16,7 +13,6 @@
 </template>
 
 <script>
-import { computed } from "vue";
 import { useStore } from "vuex";
 import { Actions } from "@/store/enums/EnumTypes";
 import AppHeader from "@/components/header/MainHeader";
@@ -29,14 +25,11 @@ import ModalConversationAttachmentViewBox from "@/components/media/modals/ModalC
 export default {
   setup() {
     const store = useStore();
-    const getAsideLeftClass = computed(() => store.getters.getAsideLeftClass);
 
     store.dispatch(Actions.onAppInitRecallLoggedUserData);
-    store.dispatch("onCreateHubConnection");
+    store.dispatch(Actions.onCreateHubConnection);
 
-    return {
-      getAsideLeftClass,
-    };
+    return {};
   },
   name: "MainFrameView",
   components: {

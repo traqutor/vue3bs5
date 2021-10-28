@@ -141,7 +141,7 @@ export default {
     },
     onTextSelection(text) {
       this.$store.commit(Mutations.setMessageText, text);
-      this.$store.commit("toggleQuickChatTextSelector");
+      this.$store.commit(Mutations.toggleQuickChatTextSelector);
     },
     onTemplateSelection(template) {
       this.$store.commit(Mutations.setSelectedTemplate, template);
@@ -151,7 +151,7 @@ export default {
       );
     },
     onToggleTemplatesAndQuickMessages() {
-      this.$store.commit("toggleQuickChatTextSelector");
+      this.$store.commit(Mutations.toggleQuickChatTextSelector);
     },
   },
   computed: {

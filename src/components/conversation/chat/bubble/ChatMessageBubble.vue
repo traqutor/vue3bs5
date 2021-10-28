@@ -380,28 +380,27 @@
 <script>
 import { computed, ref, onMounted } from "vue";
 import { useStore } from "vuex";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import {
   timeOffsetFormat,
   timeHhMmaDotDdddFormat,
-  timeMessagesDividerFormat,
 } from "@/services/datetime.service";
 import { guidsAreEqual } from "@/services/guids.service";
+import { CHAT_VIEW_MODES } from "@/const";
 import FeatherArrowReplyDown from "@/icons/FeatherArrowReplyDown";
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 import FeatherArrowForward from "@/icons/FeatherArrowForward";
 import FeatherCopy from "@/icons/FeatherCopy";
 import FeatherEdit3 from "@/icons/FeatherEdit3";
 import FeatherLink2 from "@/icons/FeatherLink2";
+
 import FeatherArrowForwardDown from "@/icons/FeatherArrowForwardDown";
 import FeatherMessageCircle from "@/icons/FeatherMessageCircle";
-
 import BubbleAcknowledgedDropDownButton from "@/components/conversation/chat/bubble/BubbleAcknowledgedDropDownButton";
 import BubbleWhisperHeaderDropdown from "@/components/conversation/chat/bubble/BubbleWhisperHeaderDropdown";
 import BubbleSubTextInfoDate from "@/components/conversation/chat/bubble/BubbleSubTextInfoDate";
-import { CHAT_VIEW_MODES } from "@/const";
 import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
 import ParticipantNameAndRolesItem from "@/components/participant/ParticipantNameAndRolesItem";
-import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import BubbleAttachments from "@/components/conversation/chat/bubble/BubbleAttachments";
 import BubbleReactionDropdown from "@/components/conversation/chat/bubble/BubbleReactionDropdown";
 import BubbleQuickReactionDropdown from "@/components/conversation/chat/bubble/BubbleQuickReactionDropdown";
@@ -554,8 +553,8 @@ export default {
     });
 
     const onMessageOpen = () => {
-      store.commit("setSelectedMessageId", props.item.id);
-      store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
+      store.commit(Mutations.setSelectedMessageId, props.item.id);
+      store.commit(Mutations.setChatViewMode, CHAT_VIEW_MODES.MESSAGE);
     };
 
     const onMessageForward = () => {

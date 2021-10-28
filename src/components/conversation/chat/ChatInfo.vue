@@ -183,14 +183,14 @@
 <script>
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
+import { CHAT_VIEW_MODES } from "@/const";
 import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
 import FeatherUserEdit from "@/icons/FeatherUserEdit";
 import FeatherUserPlus from "@/icons/FeatherUserPlus";
-import { CHAT_VIEW_MODES } from "@/const";
 import ParticipantAvatar from "@/components/participant/ParticipantAvatar";
 import FeatherMessageSquareLine from "@/icons/FeatherMessageSquareLine";
 import { guidsAreEqual } from "@/services/guids.service";
-import {Actions} from "@/store/enums/EnumTypes";
 
 export default {
   setup() {
@@ -222,7 +222,7 @@ export default {
     );
 
     function onAddParticipant() {
-      store.commit("setChatViewMode", chatViewModes.ADD_PARTICIPANTS);
+      store.commit(Mutations.setChatViewMode, chatViewModes.ADD_PARTICIPANTS);
     }
 
     function onRemoveParticipants() {

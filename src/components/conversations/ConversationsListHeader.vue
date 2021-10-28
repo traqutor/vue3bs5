@@ -40,9 +40,10 @@
   </div>
 </template>
 <script>
-import FeatherPlus from "@/icons/FeatherPlus";
 import { useStore } from "vuex";
+import { Mutations } from "@/store/enums/EnumTypes";
 import { CONVERSATION_VIEW_MODES } from "@/const";
+import FeatherPlus from "@/icons/FeatherPlus";
 import FeatherSearch from "@/icons/FeatherSearch";
 
 export default {
@@ -51,7 +52,10 @@ export default {
     const conversationViewModes = CONVERSATION_VIEW_MODES;
 
     function onChangeConversationViewMode() {
-      store.commit("setConversationViewMode", conversationViewModes.NEW);
+      store.commit(
+        Mutations.setConversationViewMode,
+        conversationViewModes.NEW
+      );
     }
 
     return {

@@ -1,12 +1,13 @@
 import { CONVERSATION_VIEW_MODES } from "@/const";
-import { guidsAreEqual } from "@/services/guids.service";
 import { Mutations } from "@/store/enums/EnumTypes";
+import { guidsAreEqual } from "@/services/guids.service";
 
 export default {
-  setConversations: (state, conversations) => {
+  [Mutations.setConversations]: (state, conversations) => {
     state.conversations = conversations;
   },
-  setConversation: (state, conversation) => {
+
+  [Mutations.setConversation]: (state, conversation) => {
     const conversations = [...state.conversations];
     const idx = conversations.findIndex((conv) =>
       guidsAreEqual(conv.id, conversation.id)
@@ -19,7 +20,8 @@ export default {
     }
     state.conversations = [...conversations];
   },
-  setSelectedConversationId: (state, conversationId) => {
+
+  [Mutations.setSelectedConversationId]: (state, conversationId) => {
     state.selectedConversationId = conversationId;
   },
 
@@ -27,16 +29,19 @@ export default {
     state.isConversationsLoading = flag;
   },
 
-  setIsConversationCreating: (state, flag) => {
+  [Mutations.setIsConversationCreating]: (state, flag) => {
     state.isConversationCreating = flag;
   },
-  setPageOfConversations: (state, page) => {
+
+  [Mutations.setPageOfConversations]: (state, page) => {
     state.pageOfConversations = page;
   },
-  setChatViewMode: (state, flag) => {
+
+  [Mutations.setChatViewMode]: (state, flag) => {
     state.chatViewMode = flag;
   },
-  setConversationViewMode: (state, mode) => {
+
+  [Mutations.setConversationViewMode]: (state, mode) => {
     if (mode) {
       state.conversationViewMode = mode;
     } else {
@@ -46,22 +51,28 @@ export default {
           : CONVERSATION_VIEW_MODES.VIEW;
     }
   },
-  setSelectedCreator: (state, creator) => {
+
+  [Mutations.setSelectedCreator]: (state, creator) => {
     state.selectedCreator = creator;
   },
-  setConversationTopic: (state, topic) => {
+
+  [Mutations.setConversationTopic]: (state, topic) => {
     state.conversationTopic = topic;
   },
+
   [Mutations.setMessageText]: (state, messageText) => {
     state.messageText = messageText;
   },
-  setIsMessagesLoading: (state, flag) => {
+
+  [Mutations.setIsMessagesLoading]: (state, flag) => {
     state.isMessagesLoading = flag;
   },
-  setIsMessageCreating: (state, flag) => {
+
+  [Mutations.setIsMessageCreating]: (state, flag) => {
     state.isMessageCreating = flag;
   },
-  setMessages: (state, messages) => {
+
+  [Mutations.setMessages]: (state, messages) => {
     if (messages.length > 0) {
       const conversationId = messages[0].conversationId;
       const conversations = [...state.conversations];
@@ -73,10 +84,12 @@ export default {
       state.conversations = [...conversations];
     }
   },
-  setSelectedMessageId: (state, messageId) => {
+
+  [Mutations.setSelectedMessageId]: (state, messageId) => {
     state.selectedMessageId = messageId;
   },
-  purgeUserIsTyping: (state, whoIsTyping) => {
+
+  [Mutations.purgeUserIsTyping]: (state, whoIsTyping) => {
     const idx = state.conversations.findIndex((c) => {
       return guidsAreEqual(c.id, whoIsTyping.conversationId);
     });
@@ -96,7 +109,8 @@ export default {
 
     state.conversations = [...tmp];
   },
-  toggleQuickChatTextSelector: (state) => {
+
+  [Mutations.toggleQuickChatTextSelector]: (state) => {
     state.isQuickChatTextSelectorVisible =
       !state.isQuickChatTextSelectorVisible;
   },
@@ -118,6 +132,7 @@ export default {
   [Mutations.setReplyMessage]: (state, message) => {
     state.replyMessage = message;
   },
+
   [Mutations.setTotalMissedCounter]: (state, counter) => {
     state.totalMissedCounter = counter;
   },

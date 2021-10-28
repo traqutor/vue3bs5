@@ -149,15 +149,16 @@
   </div>
 </template>
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { CHAT_VIEW_MODES } from "@/const";
+import { Mutations } from "@/store/enums/EnumTypes";
+import { guidsAreEqual } from "@/services/guids.service";
+import { sortByIsAcknowledged } from "@/services/sort.service";
 import FeatherMoreHorizontal from "@/icons/FeatherMoreHorizontal";
 import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
-import { CHAT_VIEW_MODES } from "@/const";
-import { useStore } from "vuex";
 import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
-import { guidsAreEqual } from "@/services/guids.service";
-import { computed } from "vue";
-import { sortByIsAcknowledged } from "@/services/sort.service";
 export default {
   components: {
     FeatherChevronsRight,
@@ -198,8 +199,8 @@ export default {
     );
 
     const onMessageOpen = () => {
-      store.commit("setSelectedMessageId", props.item.id);
-      store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
+      store.commit(Mutations.setSelectedMessageId, props.item.id);
+      store.commit(Mutations.setChatViewMode, CHAT_VIEW_MODES.MESSAGE);
     };
 
     const isMessageAcknowledgedByUser = (id) => {

@@ -3,12 +3,12 @@ import { guidsGetOne } from "@/services/guids.service";
 
 export default {
   [Mutations.displayNotification](state, payload) {
-    console.log("Mutations.displayNotification", payload);
     state.notifications = [
       ...state.notifications,
       { ...payload, id: guidsGetOne() },
     ];
   },
+
   [Mutations.removeNotification](state) {
     const notifications = [...state.notifications];
     notifications.shift();

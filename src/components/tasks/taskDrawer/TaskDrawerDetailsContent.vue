@@ -311,15 +311,15 @@
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
+import { timeHhMmaDotDdddFormat } from "@/services/datetime.service";
+import { CONVERSATION_VIEW_MODES } from "@/const";
 import FeatherClock from "@/icons/FeatherClock";
 import FeatherMessageSquareLine from "@/icons/FeatherMessageSquareLine";
 import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import FeatherFileText from "@/icons/FeatherFileText";
 import FeatherUser from "@/icons/FeatherUser";
 import FeatherMapPin from "@/icons/FeatherMapPin";
-import { Actions } from "@/store/enums/EnumTypes";
-import { timeHhMmaDotDdddFormat } from "@/services/datetime.service";
-import { CONVERSATION_VIEW_MODES } from "@/const";
 import TaskDrawerPatientInfo from "@/components/tasks/taskDrawer/TaskDrawerPatientInfo";
 
 export default {
@@ -441,7 +441,7 @@ export default {
         emit("onViewModeChange", "Conversation");
       } else {
         store.commit(
-          "setSelectedParticipants",
+          Mutations.setSelectedParticipants,
           props.task.taskRequiredParticipants.map((item) => {
             const participant = store.getters.getParticipantById(item.userId);
             return {
@@ -451,7 +451,10 @@ export default {
             };
           })
         );
-        store.commit("setConversationViewMode", CONVERSATION_VIEW_MODES.NEW);
+        store.commit(
+          Mutations.setConversationViewMode,
+          CONVERSATION_VIEW_MODES.NEW
+        );
         router.push({ path: "/conversations" });
       }
     };

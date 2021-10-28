@@ -123,9 +123,9 @@
   </div>
 </template>
 <script>
-import { useStore } from "vuex";
 import { computed, ref } from "vue";
-
+import { useStore } from "vuex";
+import { Actions } from "@/store/enums/EnumTypes";
 import ConversationsParticipantsListItem from "@/components/conversations/ConversationsParticipantsListItem";
 
 export default {
@@ -139,7 +139,7 @@ export default {
     const activeTab = ref("all");
 
     function onSelect(id) {
-      store.dispatch("setToggleParticipantSelected", id);
+      store.dispatch(Actions.setToggleParticipantSelected, id);
     }
 
     return {

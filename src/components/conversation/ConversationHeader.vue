@@ -164,6 +164,7 @@ import FeatherUserPlus from "@/icons/FeatherUserPlus";
 import FeatherWhisperMessage from "@/icons/FeatherWhisperMessage";
 import { CHAT_VIEW_MODES } from "@/const";
 import { computed } from "vue";
+import { Mutations } from "@/store/enums/EnumTypes";
 import FeatherUserGroup from "@/icons/FeatherUserGroup";
 import ParticipantAvatar from "@/components/participant/ParticipantAvatar";
 
@@ -180,10 +181,10 @@ export default {
 
     function onConversationModeSelect(mode) {
       if (mode === chatViewModes.VIEW) {
-        store.commit("purgeWhisperParticipants");
-        store.commit("purgeSelectedParticipants");
+        store.commit(Mutations.purgeWhisperParticipants);
+        store.commit(Mutations.purgeSelectedParticipants);
       }
-      store.commit("setChatViewMode", mode);
+      store.commit(Mutations.setChatViewMode, mode);
     }
 
     return {

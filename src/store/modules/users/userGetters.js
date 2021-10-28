@@ -60,6 +60,7 @@ export default {
         .sort(sortByUserName);
     }
   },
+
   getSystemRoles: (state, getters) => {
     if (getters.getChatViewMode === CHAT_VIEW_MODES.ADD_PARTICIPANTS) {
       return state.systemRoles
@@ -83,6 +84,7 @@ export default {
         .sort(sortByName);
     }
   },
+
   getAllPossibleParticipants: (state) => {
     return [
       ...state.systemUsers.map((user) => {
@@ -98,21 +100,27 @@ export default {
       }),
     ];
   },
+
   getSelectedParticipants: (state) => {
     return state.selectedParticipants;
   },
+
   isParticipantSelected: (state) => (id) => {
     return state.selectedParticipants.some((prt) => guidsAreEqual(prt.id, id));
   },
+
   getWhisperToParticipants: (state) => {
     return state.whisperToParticipants;
   },
+
   isWhisperParticipantSelected: (state) => (id) => {
     return state.whisperToParticipants.some((prt) => guidsAreEqual(prt.id, id));
   },
-  isLoadingUsers: (state) => {
+
+  getIsLoadingUsers: (state) => {
     return state.isLoadingUsers;
   },
+
   getParticipantById: (state) => (id) => {
     if (!id || id === guidsGetNull()) return;
 
@@ -137,42 +145,7 @@ export default {
 
     return participant;
   },
-  getUserById: (state) => (id) => {
-    let user = null;
-    state.systemUsers.forEach((usr) => {
-      if (guidsAreEqual(usr.userId, id)) {
-        user = usr;
-      }
-    });
-    return user;
-  },
-  isUserById: (state) => (id) => {
-    let isUser = false;
-    state.systemUsers.forEach((usr) => {
-      if (guidsAreEqual(usr.id, id)) {
-        isUser = true;
-      }
-    });
-    return isUser;
-  },
-  getRoleById: (state) => (id) => {
-    let role = "";
-    state.systemRoles.forEach((rle) => {
-      if (guidsAreEqual(rle.id, id)) {
-        role = rle;
-      }
-    });
-    return role;
-  },
-  isRoleById: (state) => (id) => {
-    let isRole = false;
-    state.systemRoles.forEach((rle) => {
-      if (guidsAreEqual(rle.id, id)) {
-        isRole = true;
-      }
-    });
-    return isRole;
-  },
+
   getDirectParticipant: (state, getters) => (conversation) => {
     return conversation.participants.find((usr) => {
       return (

@@ -1,45 +1,35 @@
+import { Mutations } from "@/store/enums/EnumTypes";
+
 export default {
-  setParticipants: (state, participants) => {
-    state.participants = state.participants.concat(participants);
-  },
-  setUsers: (state, users) => {
+  [Mutations.setUsers]: (state, users) => {
     state.systemUsers = users;
   },
-  setRoles: (state, roles) => {
+
+  [Mutations.setRoles]: (state, roles) => {
     state.systemRoles = roles;
   },
-  setPageOfParticipants: (state, page) => {
-    state.pageOfParticipants = page;
-  },
-  setParticipantsSearchText: (state, text) => {
+
+  [Mutations.setParticipantsSearchText]: (state, text) => {
     state.textToSearchParticipants = text;
   },
-  purgeParticipantsSearchParams: (state) => {
-    state.textToSearchParticipants = "";
-  },
-  setIsLoadingUsers: (state, flag) => {
+
+  [Mutations.setIsLoadingUsers]: (state, flag) => {
     state.isLoadingUsers = flag;
   },
-  setSelectedParticipants: (state, participants) => {
+
+  [Mutations.setSelectedParticipants]: (state, participants) => {
     state.selectedParticipants = participants;
   },
-  setWhisperParticipants: (state, participants) => {
+
+  [Mutations.setWhisperParticipants]: (state, participants) => {
     state.whisperToParticipants = participants;
   },
-  purgeSelectedParticipants: (state) => {
+
+  [Mutations.purgeSelectedParticipants]: (state) => {
     state.selectedParticipants = [];
   },
-  purgeWhisperParticipants: (state) => {
+
+  [Mutations.purgeWhisperParticipants]: (state) => {
     state.whisperToParticipants = [];
-  },
-  toggleWhisperParticipants: (state, participant) => {
-    const i = state.whisperToParticipants.indexOf(
-      (whisper) => whisper.id === participant.id
-    );
-    if (i > -1) {
-      state.whisperToParticipants.splice(i, 1);
-    } else {
-      state.whisperToParticipants.push(participant);
-    }
   },
 };

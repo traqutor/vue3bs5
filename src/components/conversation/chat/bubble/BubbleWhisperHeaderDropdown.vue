@@ -64,13 +64,14 @@
 </template>
 
 <script>
-import FeatherWhisperMessage from "@/icons/FeatherWhisperMessage";
-import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { Mutations } from "@/store/enums/EnumTypes";
 import { guidsAreEqual } from "@/services/guids.service";
 import { CHAT_VIEW_MODES } from "@/const";
-import { useStore } from "vuex";
+import FeatherWhisperMessage from "@/icons/FeatherWhisperMessage";
+import ParticipantAvatarNameItem from "@/components/participant/ParticipantAvatarNameItem";
 import FeatherChevronsRight from "@/icons/FeatherChevronsRight";
-import { computed } from "vue";
 
 export default {
   components: {
@@ -101,8 +102,8 @@ export default {
     };
 
     const onMessageOpen = () => {
-      store.commit("setSelectedMessageId", props.item.id);
-      store.commit("setChatViewMode", CHAT_VIEW_MODES.MESSAGE);
+      store.commit(Mutations.setSelectedMessageId, props.item.id);
+      store.commit(Mutations.setChatViewMode, CHAT_VIEW_MODES.MESSAGE);
     };
 
     return {

@@ -29,7 +29,7 @@ export default {
     // silly limiter no more then 100 conversations can be fetched
     takeConversations = takeConversations > 99 ? 99 : takeConversations;
 
-    commit("setPageOfConversations", { skipConversations, takeConversations });
+    commit(Mutations.setPageOfConversations, { skipConversations, takeConversations });
 
     const activeRoleIds = getters.getLoggedUser.SystemRoles.map(
       (role, index) => {
@@ -84,9 +84,9 @@ export default {
 
   [Actions.onSelectConversation]: ({ commit, dispatch }, conversationId) => {
     return new Promise((resolve) => {
-      commit("setSelectedConversationId", conversationId);
-      commit("purgeWhisperParticipants");
-      commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
+      commit(Mutations.setSelectedConversationId, conversationId);
+      commit(Mutations.purgeWhisperParticipants);
+      commit(Mutations.setChatViewMode, CHAT_VIEW_MODES.VIEW);
       commit(Mutations.setReplyMessage, null);
       commit(Mutations.setMediaShareGalleryItems, []);
       commit(Mutations.setMediaSelectedItems, []);
@@ -99,7 +99,7 @@ export default {
   },
 
   [Actions.onCreateConversation]: ({ commit, state, rootState, getters }) => {
-    commit("setIsConversationCreating", true);
+    commit(Mutations.setIsConversationCreating, true);
 
     return new Promise((resolve) => {
       const topic = state.conversationTopic
@@ -129,10 +129,10 @@ export default {
         .post(url, values)
         .then((response) => {
           if (response.data.isOk) {
-            commit("setIsConversationCreating", false);
-            commit("setConversationTopic", null);
-            commit("purgeSelectedParticipants");
-            commit("setChatViewMode", CHAT_VIEW_MODES.VIEW);
+            commit(Mutations.setIsConversationCreating, false);
+            commit(Mutations.setConversationTopic, null);
+            commit(Mutations.purgeSelectedParticipants);
+            commit(Mutations.setChatViewMode, CHAT_VIEW_MODES.VIEW);
             commit(Mutations.setMediaShareGalleryItems, []);
             commit(Mutations.setMediaSelectedItems, []);
 
@@ -140,7 +140,7 @@ export default {
               (item) => item.id === response.data.result
             );
             if (conversation) {
-              commit("setSelectedConversationId", conversation.id);
+              commit(Mutations.setSelectedConversationId, conversation.id);
             }
             resolve();
           } else {
@@ -151,7 +151,7 @@ export default {
           }
         })
         .catch((error) => {
-          commit("setIsConversationCreating", false);
+          commit(Mutations.setIsConversationCreating, false);
           console.error("On CREATE_CONVERSATION error: ", error);
         });
     });
@@ -163,7 +163,7 @@ export default {
     state,
     getters,
   }) => {
-    commit("setIsConversationCreating", true);
+    commit(Mutations.setIsConversationCreating, true);
     const requestPayload = {
       user: { id: getters.getLoggedUser.id, isRole: false },
       recipient: getters.getSelectedParticipants[0],
@@ -171,11 +171,11 @@ export default {
     return new Promise((resolve) => {
       dispatch(Actions.onGetDirectConversation, requestPayload).then(
         (conversation) => {
-          commit("setIsConversationCreating", false);
-          commit("setConversationTopic", null);
-          commit("purgeSelectedParticipants");
-          commit("setConversation", conversation);
-          commit("setSelectedConversationId", conversation.id);
+          commit(Mutations.setIsConversationCreating, false);
+          commit(Mutations.setConversationTopic, null);
+          commit(Mutations.purgeSelectedParticipants);
+          commit(Mutations.setConversation, conversation);
+          commit(Mutations.setSelectedConversationId, conversation.id);
 
           dispatch(Actions.onGetMessages, {
             refresh: true,
@@ -195,7 +195,7 @@ export default {
   },
 
   [Actions.onCreateMessage]: ({ commit, state, getters }, payload) => {
-    commit("setIsMessageCreating", true);
+    commit(Mutations.setIsMessageCreating, true);
 
     const message = {
       id: guidsGetOne(),
@@ -238,16 +238,16 @@ export default {
       .then(function (response) {
         if (response.data.isOk) {
           commit(Mutations.setMessageText, null);
-          commit("purgeWhisperParticipants");
+          commit(Mutations.purgeWhisperParticipants);
           commit(Mutations.setMediaShareGalleryItems, []);
           commit(Mutations.setReplyMessage, null);
         } else {
           console.error("On CREATE_MESSAGE error:", response.data.message);
         }
-        commit("setIsMessageCreating", false);
+        commit(Mutations.setIsMessageCreating, false);
       })
       .catch((error) => {
-        commit("setIsMessageCreating", false);
+        commit(Mutations.setIsMessageCreating, false);
         console.error("On CREATE_MESSAGE error:", error);
       });
   },
@@ -293,7 +293,7 @@ export default {
     { refresh = false, showLoading = false }
   ) => {
     return new Promise((resolve) => {
-      if (showLoading) commit("setIsMessagesLoading", true);
+      if (showLoading) commit(Mutations.setIsMessagesLoading, true);
 
       const conversationId = getters.getSelectedConversationId;
       const lastMessageId = refresh
@@ -316,8 +316,8 @@ export default {
           let messages = refresh ? [] : getters.getMessages;
           messages = messages.concat(arr);
 
-          commit("setMessages", messages);
-          commit("setIsMessagesLoading", false);
+          commit(Mutations.setMessages, messages);
+          commit(Mutations.setIsMessagesLoading, false);
 
           dispatch(Actions.onMarkMessagesAsRead);
 
@@ -565,7 +565,7 @@ export default {
       conversation.participants = [...participants];
       conversations.splice(0, 0, conversation);
 
-      commit("setSelectedConversationId", conversation.id);
+      commit(Mutations.setSelectedConversationId, conversation.id);
       commit(Mutations.setConversations, [...conversations]);
     } else {
       dispatch(Actions.onGetConversations, { refresh: false });
@@ -604,7 +604,7 @@ export default {
           messages[idx] = msg;
         }
       }
-      commit("setMessages", messages);
+      commit(Mutations.setMessages, messages);
     }
   },
 
@@ -657,10 +657,12 @@ export default {
       applyNewMessage();
     } else {
       dispatch(Actions.onGetConversation, message.conversationId).then(() => {
-        idx = state.conversations.findIndex((c) =>
-          guidsAreEqual(c.id, message.conversationId)
-        );
-        applyNewMessage();
+        dispatch(Actions.onGetMessages).then(() => {
+          idx = state.conversations.findIndex((c) =>
+            guidsAreEqual(c.id, message.conversationId)
+          );
+          applyNewMessage();
+        });
       });
     }
 
@@ -728,7 +730,7 @@ export default {
         return msg;
       });
 
-      commit("setMessages", messages);
+      commit(Mutations.setMessages, messages);
     }
   },
 
@@ -766,8 +768,8 @@ export default {
     axiosWebApiInstance
       .post(url, values)
       .then(() => {
-        commit("purgeSelectedParticipants");
-        commit("setChatViewMode", CHAT_VIEW_MODES.INFO);
+        commit(Mutations.purgeSelectedParticipants);
+        commit(Mutations.setChatViewMode, CHAT_VIEW_MODES.INFO);
       })
       .catch((error) => {
         console.error("On onAddUsersToConversation error:", error);
@@ -796,8 +798,8 @@ export default {
         );
         conversation.participants = [...tmpParticipants];
 
-        commit("setConversation", conversation);
-        commit("purgeSelectedParticipants");
+        commit(Mutations.setConversation, conversation);
+        commit(Mutations.purgeSelectedParticipants);
       })
       .catch((error) => {
         console.error("On onRemoveUsersFromConversation error:", error);
