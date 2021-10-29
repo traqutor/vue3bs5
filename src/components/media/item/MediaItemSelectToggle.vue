@@ -11,6 +11,7 @@
       position-absolute position-top-left
       m-2
     "
+    @click.stop.prevent="onSelectItem"
   >
     <label class="m-0">
       <span class="input-icon m-0">
@@ -25,6 +26,7 @@ import { useStore } from "vuex";
 import FeatherCheck from "@/icons/FeatherCheck";
 import FeatherCircle from "@/icons/FeatherCircle";
 import { computed } from "vue";
+import {Mutations} from "@/store/enums/EnumTypes";
 export default {
   props: ["item"],
   components: { FeatherCircle, FeatherCheck },
@@ -33,8 +35,15 @@ export default {
     const isSelected = computed(() =>
       store.getters.getIsMediaItemSelected(props.item)
     );
+
+    const onSelectItem = () => {
+      console.log("onselect item", props.item);
+      store.commit(Mutations.toggleMediaSelectedItem, props.item);
+    }
+
     return {
       isSelected,
+      onSelectItem,
     };
   },
 };

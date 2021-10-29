@@ -8,7 +8,6 @@
       mt-1
       rounded
       list-group-item-action list-group-dialog
-      hover-action-group
       border-0
       has-new
       visible
@@ -39,13 +38,8 @@
                       .name
                   }}
                 </span>
-                <span class="text-secondary font-weight-normal f-size-14 ms-2"
-                  >Shared role</span
-                >
               </div>
-              <div class="ms-2 text-nowrap">
-                <feather-clock class="text-primary"></feather-clock>
-              </div>
+
               <div
                 class="
                   text-nowrap
@@ -179,104 +173,13 @@
         <!-- end::third line-->
       </div>
     </div>
-
-    <!-- start::hidden dropdown menu -->
-    <div
-      class="
-        btn-group-sm btn-group-vertical
-        rounded
-        hover-action-control
-        bg-light
-        rounded
-      "
-    >
-      <div class="btn-group dropleft dropdown flex-fill dropstart" role="group">
-        <button
-          type="button"
-          class="btn btn-light p-1 shadow-none border-0 toggle-action-active"
-          id="dropdownMenuButton1"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <feather-more-vertical></feather-more-vertical>
-        </button>
-
-        <div
-          class="
-            dropdown-menu dropdown-menu-right dropdown-menu-sm
-            shadow
-            cursor-default
-          "
-          aria-labelledby="dropdownMenuButton1"
-        >
-          <button
-            type="button"
-            class="dropdown-item px-3 d-flex align-items-center"
-          >
-            <feather-message-square
-              class="me-3 text-secondary f-icon-18"
-            ></feather-message-square>
-            <span class="ml-n1">Mark as Read</span>
-          </button>
-          <button
-            type="button"
-            class="
-              dropdown-item
-              px-3
-              d-flex
-              align-items-center
-              dropdown-trigger-toggle
-            "
-            dropdown-trigger="qreply-5"
-          >
-            <feather-arrow-reply
-              class="me-3 text-secondary f-icon-18"
-            ></feather-arrow-reply>
-
-            <span class="ml-n1">Quick Reply</span>
-          </button>
-          <button
-            type="button"
-            class="dropdown-item px-3 d-flex align-items-center"
-          >
-            <feather-whisper-message
-              class="me-3 text-secondary f-icon-18"
-            ></feather-whisper-message>
-
-            <span class="ml-n1">Whisper</span>
-          </button>
-          <button
-            type="button"
-            class="
-              dropdown-item
-              px-3
-              d-flex
-              align-items-center
-              toggle-item-hidden
-            "
-          >
-            <feather-eye-off
-              class="me-3 text-secondary f-icon-18"
-            ></feather-eye-off>
-            <span class="ml-n1">Hide</span>
-          </button>
-        </div>
-      </div>
-    </div>
-    <!-- end::hidden dropdown menu -->
   </a>
 </template>
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
 
-import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
-import FeatherClock from "@/icons/FeatherClock";
 import ConversationsListItemAvatar from "@/components/conversations/ConversationsListItemAvatar";
-import FeatherMessageSquare from "@/icons/FeatherMessageSquare";
-import FeatherArrowReply from "@/icons/FeatherArrowReply";
-import FeatherWhisperMessage from "@/icons/FeatherWhisperMessage";
-import FeatherEyeOff from "@/icons/FeatherEyeOff";
 import DateToLastActivityLabel from "@/components/date/DateToLastActivityLabel";
 import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
 import { guidsAreEqual } from "@/services/guids.service";
@@ -287,13 +190,7 @@ export default {
   components: {
     FeatherCheckDouble,
     DateToLastActivityLabel,
-    FeatherEyeOff,
-    FeatherWhisperMessage,
-    FeatherArrowReply,
-    FeatherMessageSquare,
     ConversationsListItemAvatar,
-    FeatherClock,
-    FeatherMoreVertical,
   },
   props: {
     conversation: Object,

@@ -23,7 +23,7 @@
       @click="onTab(MEDIA_NAV_TABS.PATIENTS)"
       :class="tabActive === MEDIA_NAV_TABS.PATIENTS ? 'active' : ''"
     >
-      <span class="nav-link custom-nav-link">General</span>
+      <span class="nav-link custom-nav-link">Patients</span>
     </div>
 
     <div

@@ -1,5 +1,5 @@
 <template>
-  <div class="media-grid-figure" @click="onItemClick">
+  <div class="media-grid-figure" @click.self="onItemClick">
     <PhotoItem :item="item" v-if="item.blobType === MEDIA_TYPES.PHOTO" />
 
     <AudioListItem :item="item" v-if="item.blobType === MEDIA_TYPES.AUDIO" />
@@ -29,11 +29,24 @@ import { computed } from "vue";
 
 export default {
   props: ["item", "isSelect", "isDropDownMenu"],
-  data() {
+  setup(props) {
+    const store = useStore();
+
+    const thumbnails = computed(() => store.getters.getMediaThumbnails);
+
+    const onItemClick = () => {
+      store.dispatch(Actions.onShowMediaFilesInLightBox, {
+        media: thumbnails.value,
+        item: props.item,
+      });
+    };
+
     return {
+      onItemClick,
       MEDIA_TYPES,
     };
   },
+
   components: {
     MediaItemSelectToggle,
     MediaListItemDropDown,
