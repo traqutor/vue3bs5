@@ -2,12 +2,13 @@ import Getters from "./patientsGetters";
 import Mutations from "./patientsMutations";
 import Actions from "./patientsActions";
 
+export const initialState = () => ({
+  patients: [],
+});
+
 const patientsModule = {
-  state() {
-    return {
-      patients: [],
-    };
-  },
+  state: initialState(),
+
   mutations: Mutations,
   actions: Actions,
   getters: Getters,

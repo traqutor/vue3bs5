@@ -77,9 +77,10 @@ export default {
           (prt) =>
             (getters.getLoggedUser &&
               guidsAreEqual(prt.id, getters.getLoggedUser.id)) ||
-            getters.getLoggedUser.SystemRoles.some((role) => {
-              return guidsAreEqual(role.Id, prt.id);
-            })
+            (getters.getLoggedUser &&
+              getters.getLoggedUser.SystemRoles.some((role) => {
+                return guidsAreEqual(role.Id, prt.id);
+              }))
         )
         .map((participant) => getters.getParticipantById(participant.id))
         .sort((a, b) => a.isRole - b.isRole);

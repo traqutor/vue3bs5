@@ -23,24 +23,27 @@ const SocketReceivers = {
 const Actions = {
   // auth actions
   onLogin: "onLogin",
+  onLogOut: "onLogOut",
   onAppInitRecallLoggedUserData: "onAppInitRecallLoggedUserData",
 
   // conversations actions
   onGetConversations: "onGetConversations",
   onGetConversation: "onGetConversation",
   onCreateConversation: "onCreateConversation",
+  onSelectConversation: "onSelectConversation",
   onDirectConversationUpdate: "onDirectConversationUpdate",
   onCheckConversationMessages: "onCheckConversationMessages",
   onGetDirectConversation: "onGetDirectConversation",
+
+  onGetMessages: "onGetMessages",
   onAcknowledgeMessage: "onAcknowledgeMessage",
   onCreateMessage: "onCreateMessage",
   onQuickMessageResponse: "onQuickMessageResponse",
   onMessageQuickReaction: "onMessageQuickReaction",
-  onSelectConversation: "onSelectConversation",
   onRemoveQuickReaction: "onRemoveQuickReaction",
   onMarkMessagesAsRead: "onMarkMessagesAsRead",
-  onGetMessages: "onGetMessages",
   onUserIsTyping: "onUserIsTyping",
+
   onUserAddedToConversationNotification:
     "onUserAddedToConversationNotification",
   onConversationCreatedNotification: "onConversationCreatedNotification",
@@ -51,12 +54,22 @@ const Actions = {
   onAddUsersToConversation: "onAddUsersToConversation",
   onRemoveUsersFromConversation: "onRemoveUsersFromConversation",
 
+  // layout actions
+
+  // locations action types
+  onGetLocations: "onGetLocations",
+
   // media actions
   onGetThumbnails: "onGetThumbnails",
   onShareGalleryItems: "onShareGalleryItems",
   onGetAttachmentsThumbnails: "onGetAttachmentsThumbnails",
   onGetItem: "onGetItem",
   onShowMediaFilesInLightBox: "onShowMediaFilesInLightBox",
+
+  // patients action types
+  onGetPatients: "onGetPatients",
+
+  // settings actions
 
   // socket actions
   onCreateHubConnection: "onCreateHubConnection",
@@ -65,26 +78,7 @@ const Actions = {
   onMessageQuickReactionRemovedNotification:
     "onMessageQuickReactionRemovedNotification",
 
-  // taskTypes actions types
-  onGetTypes: "onGetTypes",
-  onCreateType: "onCreateType",
-  onUpdateType: "onUpdateType",
-  onSearchTypes: "onSearchTypes",
-  onDeleteTypes: "onDeleteTypes",
-  onUpdateRequiredParticipantsToType: "onUpdateRequiredParticipantsToType",
-  onAddCustomFieldsToType: "onAddCustomFieldsToType",
-  onAddRequiredActionsToType: "onAddRequiredActionsToType",
-  onAddRequiredActions: "onAddRequiredActions",
-  onAddCustomFields: "onAddCustomFields",
-  onRemoveRequiredParticipantsFromType: "onRemoveRequiredParticipantsFromType",
-  onRemoveCustomFieldsFromType: "onRemoveCustomFieldsFromType",
-  onRemoveRequiredActionsFromType: "onRemoveRequiredActionsFromType",
-  onDeleteRequiredActions: "onDeleteRequiredActions",
-  onDeleteCustomFields: "onDeleteCustomFields",
-  onSearchRequiredActions: "onSearchRequiredActions",
-  onSearchCustomFields: "onSearchCustomFields",
-  onGetCustomFields: "onGetCustomFields",
-  onGetRequiredActions: "onGetRequiredActions",
+  // sounds actions
 
   // tasks actions types
   onSelectTask: "onSelectTask",
@@ -108,15 +102,32 @@ const Actions = {
   onGroupTaskUpdateNotification: "onGroupTaskUpdateNotification",
   onTaskDeletedNotification: "onTaskDeletedNotification",
 
+  // taskTypes actions types
+  onGetTypes: "onGetTypes",
+  onCreateType: "onCreateType",
+  onUpdateType: "onUpdateType",
+  onSearchTypes: "onSearchTypes",
+  onDeleteTypes: "onDeleteTypes",
+  onUpdateRequiredParticipantsToType: "onUpdateRequiredParticipantsToType",
+  onAddCustomFieldsToType: "onAddCustomFieldsToType",
+  onAddRequiredActionsToType: "onAddRequiredActionsToType",
+  onAddRequiredActions: "onAddRequiredActions",
+  onAddCustomFields: "onAddCustomFields",
+  onRemoveRequiredParticipantsFromType: "onRemoveRequiredParticipantsFromType",
+  onRemoveCustomFieldsFromType: "onRemoveCustomFieldsFromType",
+  onRemoveRequiredActionsFromType: "onRemoveRequiredActionsFromType",
+  onDeleteRequiredActions: "onDeleteRequiredActions",
+  onDeleteCustomFields: "onDeleteCustomFields",
+  onSearchRequiredActions: "onSearchRequiredActions",
+  onSearchCustomFields: "onSearchCustomFields",
+  onGetCustomFields: "onGetCustomFields",
+  onGetRequiredActions: "onGetRequiredActions",
+
+  // templates actions
+
   // toast action types
   onDisplayNotification: "onDisplayNotification",
   onRemoveNotification: "onRemoveNotification",
-
-  // locations action types
-  onGetLocations: "onGetLocations",
-
-  // patients action types
-  onGetPatients: "onGetPatients",
 
   // users action types
   getUsers: "getUsers",
@@ -125,7 +136,7 @@ const Actions = {
 };
 
 const Mutations = {
-  // auth mutation types
+  //mutations of auth
   setLoggedError: "setLoggedError",
   setLoggedUser: "setLoggedUser",
   setLogOutUser: "setLogOutUser",
@@ -133,12 +144,10 @@ const Mutations = {
   setActiveRole: "setActiveRole",
   setIsTypesLoading: "setIsTypesLoading",
   setIsTypePost: "setIsTypePost",
+  onLogOut: "onLogOut",
 
-  // templates mutation types
-  setSelectedTemplateViewMode: "setSelectedTemplateViewMode",
-  setSelectedTemplate: "setSelectedTemplate",
-
-  //conversation mutation types
+  //mutations of conversations
+  cleanConversationsState: "cleanConversationsState",
   setConversations: "setConversations",
   setConversation: "setConversation",
   setSelectedConversationId: "setSelectedConversationId",
@@ -160,7 +169,16 @@ const Mutations = {
   purgeUserIsTyping: "purgeUserIsTyping",
   toggleQuickChatTextSelector: "toggleQuickChatTextSelector",
 
-  // media mutation types
+  // mutations of layout
+  cleanLayoutState: "cleanLayoutState",
+
+  // mutations of locations
+  cleanLocationsState: "cleanLocationsState",
+  cleanLocationState: "cleanLocationState",
+  setLocations: "setLocations",
+
+  // mutation of media
+  cleanMediaState: "cleanMediaState",
   setMediaTypeSelected: "setMediaTypeSelected",
   setMediaNavTabSelected: "setMediaNavTabSelected",
   setMediaViewMode: "setMediaViewMode",
@@ -171,7 +189,6 @@ const Mutations = {
   setMediaItem: "setMediaItem",
   setMediaSelectedItem: "setMediaSelectedItem",
   setMediaThumbnails: "setMediaThumbnails",
-
   toggleMediaSelectedItem: "toggleMediaSelectedItem",
   setMediaSelectedItems: "setMediaSelectedItems",
   setMediaSearchText: "setMediaSearchText",
@@ -182,14 +199,26 @@ const Mutations = {
   setIsLightBoxVisible: "setIsLightBoxVisible",
   setLightBoxViewFiles: "setLightBoxViewFiles",
 
-  // taskTypes mutations types
-  setTaskTypes: "setTaskTypes",
-  setSelectedTaskType: "setSelectedTaskType",
-  setTaskTypesViewMode: "setTaskTypesViewMode",
-  setTaskTypesCustomFields: "setTaskTypesCustomFields",
-  setTaskTypesRequiredActions: "setTaskTypesRequiredActions",
+  //mutations of patients
+  cleanPatientsState: "cleanPatientsState",
+  setPatients: "setPatients",
 
-  // tasks mutation types
+  // mutations of settings
+  cleanSettingsState: "cleanSettingsState",
+
+  //mutations of socket
+  cleanSocketState: "cleanSocketState",
+  setSocketHubConnection: "setSocketHubConnection",
+  setIsSocketReconnecting: "setIsSocketReconnecting",
+  setIsSocketOnline: "setIsSocketOnline",
+
+  //mutations of sound
+  prepareSoundEffect: "prepareSoundEffect",
+  setSoundEffect: "setSoundEffect",
+  setSoundWaterDrop: "setSoundWaterDrop",
+
+  // mutations of tasks
+  cleanTasksState: "cleanTasksState",
   setRequestedTasks: "setRequestedTasks",
   setMyTasks: "setMyTasks",
   setUnassignedTasks: "setUnassignedTasks",
@@ -209,27 +238,26 @@ const Mutations = {
   setSelectedTaskId: "setSelectedTaskId",
   setUpdatedTask: "setUpdatedTask",
 
-  // toast mutation types
+  // mutations of taskTypes
+  cleanTaskTypesState: "cleanTaskTypesState",
+  setTaskTypes: "setTaskTypes",
+  setSelectedTaskType: "setSelectedTaskType",
+  setTaskTypesViewMode: "setTaskTypesViewMode",
+  setTaskTypesCustomFields: "setTaskTypesCustomFields",
+  setTaskTypesRequiredActions: "setTaskTypesRequiredActions",
+
+  // mutations of templates
+  cleanTemplatesState: "cleanTemplatesState",
+  setSelectedTemplateViewMode: "setSelectedTemplateViewMode",
+  setSelectedTemplate: "setSelectedTemplate",
+
+  //mutations of toast
+  cleanToastState: "cleanToastState",
   displayNotification: "displayNotification",
   removeNotification: "removeNotification",
 
-  // locations mutation types
-  setLocations: "setLocations",
-
-  // patients mutation types
-  setPatients: "setPatients",
-
-  // socket mutation types
-  setSocketHubConnection: "setSocketHubConnection",
-  setIsSocketReconnecting: "setIsSocketReconnecting",
-  setIsSocketOnline: "setIsSocketOnline",
-
-  // sound mutation types
-  prepareSoundEffect: "prepareSoundEffect",
-  setSoundEffect: "setSoundEffect",
-  setSoundWaterDrop: "setSoundWaterDrop",
-
-  // users mutation types
+  //mutations of users
+  cleanUsersState: "cleanUsersState",
   setUsers: "setUsers",
   setRoles: "setRoles",
   setIsLoadingUsers: "setIsLoadingUsers",

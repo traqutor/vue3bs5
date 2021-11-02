@@ -18,28 +18,28 @@ const tmpMediaTypes = [
   { id: 5, type: MEDIA_TYPES.VIDEO, name: "Videos", itemsCount: 0 },
 ];
 
+export const initialState = () => ({
+  mediaNavTabSelected: "Recent",
+  mediaPatientSelected: null,
+  mediaTypeSelected: tmpMediaTypes[0],
+  mediaTypes: tmpMediaTypes,
+  mediaViewMode: MEDIA_VIEW_MODES.GRID,
+  mediaDrawerViewMode: MEDIA_DRAWER_VIEW_MODES.CLOSED,
+  mediaItemSize: MEDIA_ITEM_SIZES.DEFAULT,
+  mediaPatientItemSize: MEDIA_PATIENT_ITEM_SIZES.DEFAULT,
+  mediaThumbnails: [],
+  mediaItems: [],
+  mediaSelectedItem: null,
+  mediaSelectedItems: [],
+  mediaSearchText: null,
+  mediaShareGalleryItems: [],
+  isMediaShareLoading: false,
+  isLightBoxVisible: false,
+  lightBoxViewFiles: [],
+});
+
 const mediaModule = {
-  state() {
-    return {
-      mediaNavTabSelected: "Recent",
-      mediaPatientSelected: null,
-      mediaTypeSelected: tmpMediaTypes[0],
-      mediaTypes: tmpMediaTypes,
-      mediaViewMode: MEDIA_VIEW_MODES.GRID,
-      mediaDrawerViewMode: MEDIA_DRAWER_VIEW_MODES.CLOSED,
-      mediaItemSize: MEDIA_ITEM_SIZES.DEFAULT,
-      mediaPatientItemSize: MEDIA_PATIENT_ITEM_SIZES.DEFAULT,
-      mediaThumbnails: [],
-      mediaItems: [],
-      mediaSelectedItem: null,
-      mediaSelectedItems: [],
-      mediaSearchText: null,
-      mediaShareGalleryItems: [],
-      isMediaShareLoading: false,
-      isLightBoxVisible: false,
-      lightBoxViewFiles: [],
-    };
-  },
+  state: initialState(),
   mutations: Mutations,
   getters: Getters,
   actions: Actions,

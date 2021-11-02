@@ -99,4 +99,22 @@ export default {
       }
     });
   },
+
+  [Actions.onLogOut]: ({ commit, dispatch }) => {
+    dispatch(Actions.onSocketConnectionClose);
+
+    commit(Mutations.cleanLocationsState);
+    commit(Mutations.cleanMediaState);
+    commit(Mutations.cleanPatientsState);
+    commit(Mutations.cleanSettingsState);
+    commit(Mutations.cleanSocketState);
+    commit(Mutations.cleanTasksState);
+    commit(Mutations.cleanTaskTypesState);
+    commit(Mutations.cleanTemplatesState);
+    commit(Mutations.cleanToastState);
+    commit(Mutations.cleanUsersState);
+    commit(Mutations.cleanLayoutState);
+    commit(Mutations.cleanConversationsState);
+    commit(Mutations.setLogOutUser);
+  },
 };

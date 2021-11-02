@@ -2,6 +2,9 @@ import Mutations from "./settingsMutations";
 import Actions from "./settingsActions";
 import Getters from "./settingsGetters";
 
+export const initialState = () => ({
+});
+
 const settingsModule = {
   state() {
     return {};

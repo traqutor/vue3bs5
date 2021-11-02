@@ -29,7 +29,10 @@ export default {
     // silly limiter no more then 100 conversations can be fetched
     takeConversations = takeConversations > 99 ? 99 : takeConversations;
 
-    commit(Mutations.setPageOfConversations, { skipConversations, takeConversations });
+    commit(Mutations.setPageOfConversations, {
+      skipConversations,
+      takeConversations,
+    });
 
     const activeRoleIds = getters.getLoggedUser.SystemRoles.map(
       (role, index) => {
@@ -82,7 +85,11 @@ export default {
     });
   },
 
-  [Actions.onSelectConversation]: ({ commit, dispatch }, conversationId) => {
+  [Actions.onSelectConversation]: (
+    { commit, dispatch, getters },
+    conversationId
+  ) => {
+    commit(Mutations.setIsMessagesLoading, true);
     return new Promise((resolve) => {
       commit(Mutations.setSelectedConversationId, conversationId);
       commit(Mutations.purgeWhisperParticipants);
@@ -90,10 +97,17 @@ export default {
       commit(Mutations.setReplyMessage, null);
       commit(Mutations.setMediaShareGalleryItems, []);
       commit(Mutations.setMediaSelectedItems, []);
-      dispatch(Actions.onGetMessages, {
-        refresh: true,
-        showLoading: true,
-      });
+
+      const conversation = getters.getSelectedConversation;
+      if (!conversation.isLoadedMessages && conversation.messages.length <= 0) {
+        dispatch(Actions.onGetMessages, {
+          refresh: true,
+          showLoading: true,
+        });
+      } else {
+        commit(Mutations.setIsMessagesLoading, false);
+      }
+
       resolve();
     });
   },
@@ -295,7 +309,7 @@ export default {
     return new Promise((resolve) => {
       if (showLoading) commit(Mutations.setIsMessagesLoading, true);
 
-      const conversationId = getters.getSelectedConversationId;
+      const conversation = getters.getSelectedConversation;
       const lastMessageId = refresh
         ? ""
         : getters.getMessages[getters.getMessages.length - 1].id;
@@ -305,15 +319,18 @@ export default {
           getMessagesSource.cancel("Cancel old get messages. Start new one.");
         }
       }
+
       getMessagesSource = axios.CancelToken.source();
-      const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetMessages?ConversationId=${conversationId}&lastMessageId=${lastMessageId}`;
+
+      const url = `${process.env.VUE_APP_BASE_URL}/Messaging/GetMessages?ConversationId=${conversation.id}&lastMessageId=${lastMessageId}`;
 
       axiosWebApiInstance
         .get(url, { cancelToken: getMessagesSource.token })
         .then(function (response) {
           getMessagesSource = null;
+
           let arr = response.data.messages;
-          let messages = refresh ? [] : getters.getMessages;
+          let messages = refresh ? [] : conversation.messages;
           messages = messages.concat(arr);
 
           commit(Mutations.setMessages, messages);

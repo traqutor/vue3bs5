@@ -1,5 +1,6 @@
 import { purgeTokenData } from "@/services/jwt.service";
 import { Mutations } from "@/store/enums/EnumTypes";
+import { initialState } from "@/store/modules/auth/index";
 
 export default {
   [Mutations.setLoggedError]: (state, error) => {
@@ -12,8 +13,12 @@ export default {
   },
 
   [Mutations.setLogOutUser]: (state) => {
-    state.user = null;
-    state.errors = null;
+
+    const initial = initialState();
+    Object.keys(initial).forEach((key) => {
+      state[key] = initial[key];
+    });
+
     purgeTokenData();
   },
 

@@ -83,7 +83,7 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { Actions, Mutations } from "@/store/enums/EnumTypes";
+import { Actions } from "@/store/enums/EnumTypes";
 import FeatherCircle from "@/icons/FeatherCircle";
 import FeatherDisc from "@/icons/FeatherDisc";
 import FeatherToggleLeft from "@/icons/FeatherToggleLeft";
@@ -95,9 +95,7 @@ export default {
     const store = useStore();
 
     function onUserLogOut() {
-      store.dispatch(Actions.onSocketConnectionClose);
-      store.commit(Mutations.setLogOutUser);
-      store.commit(Mutations.setConversations, []);
+      store.dispatch(Actions.onLogOut);
     }
 
     const loggedUser = computed(() => store.getters.getLoggedUser);

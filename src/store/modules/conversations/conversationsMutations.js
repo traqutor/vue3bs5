@@ -1,8 +1,16 @@
 import { CONVERSATION_VIEW_MODES } from "@/const";
 import { Mutations } from "@/store/enums/EnumTypes";
 import { guidsAreEqual } from "@/services/guids.service";
+import { initialState } from "@/store/modules/conversations";
 
 export default {
+  [Mutations.cleanConversationsState]: (state) => {
+    const initial = initialState();
+    Object.keys(initial).forEach((key) => {
+      state[key] = initial[key];
+    });
+  },
+
   [Mutations.setConversations]: (state, conversations) => {
     state.conversations = conversations;
   },
@@ -80,6 +88,7 @@ export default {
         guidsAreEqual(cnv.id, conversationId)
       );
       conversations[idx].messages = [...messages];
+      conversations[idx].isLoadedMessages = true;
 
       state.conversations = [...conversations];
     }

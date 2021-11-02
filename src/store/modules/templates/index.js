@@ -7,15 +7,15 @@ import {
   TEMPLATES,
 } from "@/store/enums/EnumTypes";
 
+export const initialState = () => ({
+  templates: TEMPLATES,
+  quickMessages: QUICK_MESSAGES,
+  templateViewMode: TEMPLATE_VIEW_MODES.QUICK_MESSAGE,
+  selectedTemplate: TEMPLATES.ISBAR,
+});
+
 const socketModule = {
-  state() {
-    return {
-      templates: TEMPLATES,
-      quickMessages: QUICK_MESSAGES,
-      templateViewMode: TEMPLATE_VIEW_MODES.QUICK_MESSAGE,
-      selectedTemplate: TEMPLATES.ISBAR,
-    };
-  },
+  state: initialState(),
   mutations: Mutations,
   actions: Actions,
   getters: Getters,

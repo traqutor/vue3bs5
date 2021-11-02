@@ -8,7 +8,7 @@
           class="chat-container-reverse-scroller pe-3 ign-scroll-smooth"
           @scroll="onScroll"
         >
-          <div v-for="(msg, idx) of messages" :key="msg.id">
+          <div v-for="(msg, idx) of messages" :key="`${idx}_${msg.id}`">
             <!-- time divider-->
             <div
               v-if="getIfPeriodToDisplay(idx)"
@@ -72,17 +72,6 @@ export default {
       );
     });
 
-    const isRoleById = (id) =>
-      computed(() => {
-        let isRole = false;
-        store.getters.getSystemRoles.forEach((rle) => {
-          if (guidsAreEqual(rle.id, id)) {
-            isRole = true;
-          }
-        });
-        return isRole;
-      });
-
     const onScroll = () => {
       const scrollHeight = chatContainer.value.scrollHeight / 2;
       const scrollTop = chatContainer.value.scrollTop * -2;
@@ -127,6 +116,17 @@ export default {
       );
     };
 
+    const getRoleById = (id) =>
+      computed(() => {
+        let isRole = false;
+        store.getters.getSystemRoles.forEach((rle) => {
+          if (guidsAreEqual(rle.id, id)) {
+            isRole = true;
+          }
+        });
+        return isRole;
+      });
+
     const onSendMessage = (msg) => {
       this.$store
         .dispatch(Actions.onGetDirectConversation, {
@@ -135,7 +135,7 @@ export default {
             id: loggedUser.value.id,
           },
           recipient: {
-            isRole: isRoleById(msg.authorId),
+            isRole: getRoleById(msg.authorId),
             id: msg.authorId,
           },
         })

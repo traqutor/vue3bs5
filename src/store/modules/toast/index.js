@@ -2,12 +2,12 @@ import Getters from "./toastGetters";
 import Mutations from "./toastMutations";
 import Actions from "./toastActions";
 
+export const initialState = () => ({
+  notifications: [],
+});
+
 const toastModule = {
-  state() {
-    return {
-      notifications: [],
-    };
-  },
+  state: initialState(),
   mutations: Mutations,
   actions: Actions,
   getters: Getters,
