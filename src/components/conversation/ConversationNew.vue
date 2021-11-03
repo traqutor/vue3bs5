@@ -446,7 +446,7 @@ export default {
               });
           }
         } else {
-          isCreationStep.value = 1;
+          isCreationStep.value = 2;
         }
       }
     }
