@@ -178,13 +178,13 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 
 import ConversationsListItemAvatar from "@/components/conversations/ConversationsListItemAvatar";
 import DateToLastActivityLabel from "@/components/date/DateToLastActivityLabel";
 import FeatherCheckDouble from "@/icons/FeatherCheckDouble";
 import { guidsAreEqual } from "@/services/guids.service";
 import { getTextFromHtmlContent } from "@/services/text.service";
-import { Actions } from "@/store/enums/EnumTypes";
 
 export default {
   components: {
@@ -254,6 +254,7 @@ export default {
     }
 
     function onConversationSelect() {
+      store.commit(Mutations.setSoundEffect);
       store.dispatch(Actions.onSelectConversation, props.conversation.id);
     }
 

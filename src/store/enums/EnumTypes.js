@@ -65,6 +65,8 @@ const Actions = {
   onGetAttachmentsThumbnails: "onGetAttachmentsThumbnails",
   onGetItem: "onGetItem",
   onShowMediaFilesInLightBox: "onShowMediaFilesInLightBox",
+  onStoreInGallery: "onStoreInGallery",
+  onGalleryDelete: "onGalleryDelete",
 
   // patients action types
   onGetPatients: "onGetPatients",

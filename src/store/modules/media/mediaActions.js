@@ -89,4 +89,42 @@ export default {
     commit(Mutations.setLightBoxViewFiles, media);
     commit(Mutations.setIsLightBoxVisible, true);
   },
+
+  [Actions.onStoreInGallery]: ({ dispatch }, filePayload) => {
+    return new Promise((resolve) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/Gallery/storeInGallery`;
+
+      axiosWebApiInstance
+        .post(url, filePayload)
+        .then(function (response) {
+          console.log(response);
+
+          dispatch(Actions.onGetThumbnails);
+
+          resolve();
+        })
+        .catch((error) => {
+          console.error("On onStoreInGallery error:", error);
+        });
+    });
+  },
+
+  [Actions.onGalleryDelete]: ({ dispatch }, deletePayload) => {
+    return new Promise((resolve) => {
+      const url = `${process.env.VUE_APP_BASE_URL}/Gallery/Delete`;
+
+      axiosWebApiInstance
+        .delete(url, { data: deletePayload })
+        .then(function (response) {
+          console.log(response);
+
+          dispatch(Actions.onGetThumbnails);
+
+          resolve();
+        })
+        .catch((error) => {
+          console.error("On onGalleryDelete error:", error);
+        });
+    });
+  },
 };

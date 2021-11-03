@@ -509,6 +509,25 @@
                           select-action-group
                         "
                       >
+                        <template
+                          v-for="(file, index) of selectedFiles"
+                          :key="index"
+                        >
+                          <ImageUploadThumbnailPreview :file="file" />
+                        </template>
+                      </div>
+
+                      <hr />
+
+                      <div
+                        class="
+                          d-flex
+                          flex-wrap
+                          list-media-group
+                          table-todo-list
+                          select-action-group
+                        "
+                      >
                         <template v-for="item of thumbnails" :key="item.id">
                           <MediaThumbnailItem
                             :item="item"
@@ -533,9 +552,24 @@
             <!-- start:: upload files button -->
             <div class="col f-col-xs">
               <div class="pe-1">
-                <button class="btn btn-sm btn-primary btn-block">
+                <button
+                  class="btn btn-sm btn-primary btn-block"
+                  @click="fileSelectorInputClick"
+                >
                   Upload Files
                 </button>
+              </div>
+            </div>
+
+            <div class="col f-col-xs">
+              <div class="pe-1">
+                <input
+                  ref="fileSelectorInput"
+                  style="display: none"
+                  type="file"
+                  multiple
+                  @change="onFileSelected"
+                />
               </div>
             </div>
             <!-- end:: upload files button -->
@@ -654,7 +688,11 @@
                     <div class="text-center mb-2 f-size-14">Are you sure?</div>
 
                     <div class="btn-group btn-group-sm mt-2 mb-3 w-100 px-5">
-                      <button type="button" class="btn btn-danger me-4 rounded">
+                      <button
+                        type="button"
+                        class="btn btn-danger me-4 rounded"
+                        @click="onDeleteSelectedItems"
+                      >
                         Yes
                       </button>
                       <button
@@ -707,9 +745,11 @@ import FeatherXCircle from "@/icons/FeatherXCircle";
 import FeatherList from "@/icons/FeatherList";
 import FeatherGrid from "@/icons/FeatherGrid";
 import MediaThumbnailItem from "@/components/media/item/MediaThumbnailItem";
+import ImageUploadThumbnailPreview from "@/components/media/manager/ImageUploadThumbnailPreview";
 
 export default {
   components: {
+    ImageUploadThumbnailPreview,
     MediaThumbnailItem,
     FeatherGrid,
     FeatherList,
@@ -733,6 +773,9 @@ export default {
   setup() {
     let modal = null;
     const selectMode = ref();
+    const selectedFiles = ref();
+    const fileSelectorInput = ref();
+
     const store = useStore();
     const thumbnails = computed(() => store.getters.getMediaThumbnails);
     const selectedItems = computed(() => store.getters.getMediaSelectedItems);
@@ -758,17 +801,36 @@ export default {
       });
     };
 
+    const onFileSelected = (event) => {
+      selectedFiles.value = event.target.files;
+    };
+
+    const fileSelectorInputClick = () => {
+      fileSelectorInput.value.click();
+    };
+
+    const onDeleteSelectedItems = () => {
+      store.dispatch(Actions.onGalleryDelete, {
+        ids: selectedItems.value.map((item) => item.id),
+      });
+    };
+
     onMounted(() => {
       modal = new Modal(document.getElementById("modalMediaSelectorManagerId"));
     });
 
     return {
+      fileSelectorInput,
       selectMode,
       thumbnails,
       selectedItems,
+      selectedFiles,
       isMediaShareLoading,
+      onFileSelected,
       onToggleSelectMode,
       onShareGalleryItems,
+      fileSelectorInputClick,
+      onDeleteSelectedItems,
     };
   },
 };
