@@ -567,6 +567,7 @@
                   ref="fileSelectorInput"
                   style="display: none"
                   type="file"
+                  accept="image/*"
                   multiple
                   @change="onFileSelected"
                 />
