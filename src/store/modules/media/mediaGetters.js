@@ -1,9 +1,9 @@
+import {dateHeaderTimeAgoFormat, defaultTimeAgoFormat} from "@/services/datetime.service";
 import {
   MEDIA_ITEM_SIZES,
   MEDIA_PATIENT_ITEM_SIZES,
   MEDIA_TYPES,
 } from "@/store/enums/EnumTypes";
-import { guidsAreEqual } from "@/services/guids.service";
 
 export default {
   getMediaNavTabSelected: (state) => {
@@ -23,12 +23,6 @@ export default {
   },
   getMediaDrawerViewMode: (state) => {
     return state.mediaDrawerViewMode;
-  },
-  getMediaItemSize: (state) => {
-    return state.mediaItemSize;
-  },
-  getMediaPatientItemSize: (state) => {
-    return state.mediaPatientItemSize;
   },
   getMediaItemClass: (state) => {
     switch (state.mediaItemSize) {
@@ -62,6 +56,49 @@ export default {
           ? thumb.name.toLowerCase().includes(getters.getMediaSearchText)
           : true
       );
+  },
+
+  getMediaRecentThumbnails: (state, getters) => {
+    return state.mediaRecentThumbnails
+      .filter((thumb) =>
+        getters.getMediaTypeSelected.type === MEDIA_TYPES.ALL
+          ? true
+          : thumb.blobType === getters.getMediaTypeSelected.type
+      )
+      .filter((thumb) =>
+        getters.getMediaSearchText
+          ? thumb.name.toLowerCase().includes(getters.getMediaSearchText)
+          : true
+      );
+  },
+
+  getMediaGroupedRecentThumbnails: (state, getters) => {
+    const groups = state.mediaRecentThumbnails
+      .filter((thumb) =>
+        getters.getMediaTypeSelected.type === MEDIA_TYPES.ALL
+          ? true
+          : thumb.blobType === getters.getMediaTypeSelected.type
+      )
+      .filter((thumb) =>
+        getters.getMediaSearchText
+          ? thumb.name.toLowerCase().includes(getters.getMediaSearchText)
+          : true
+      )
+      .reduce((groups, thumb) => {
+        const date = dateHeaderTimeAgoFormat(thumb.created);
+        if (!groups[date]) {
+          groups[date] = [];
+        }
+        groups[date].push(thumb);
+        return groups;
+      }, {});
+
+    return Object.keys(groups).map((date) => {
+      return {
+        date,
+        thumbnails: groups[date],
+      };
+    });
   },
 
   getMediaSelectedItems: (state) => {

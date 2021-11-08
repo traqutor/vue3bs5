@@ -27,6 +27,7 @@ export const initialState = () => ({
   mediaDrawerViewMode: MEDIA_DRAWER_VIEW_MODES.CLOSED,
   mediaItemSize: MEDIA_ITEM_SIZES.DEFAULT,
   mediaPatientItemSize: MEDIA_PATIENT_ITEM_SIZES.DEFAULT,
+  mediaRecentThumbnails: [],
   mediaThumbnails: [],
   mediaItems: [],
   mediaSelectedItem: null,

@@ -1,5 +1,29 @@
 import moment from "moment";
 
+
+export const dateHeaderTimeAgoFormat = (value) => {
+  let text;
+  let momentValue;
+
+  if (typeof value === "number") {
+    momentValue = moment.unix(value);
+  } else {
+    momentValue = moment(value);
+  }
+
+  const TODAY = moment().startOf("day");
+  const YESTERDAY = TODAY.clone().subtract(1, "days").startOf("day");
+
+  if (momentValue.isSame(TODAY, "d")) {
+    text = "Today";
+  } else if (momentValue.isSame(YESTERDAY, "d")) {
+    text = "Yesterday";
+  } else {
+    text = momentValue.format("DD MMM YYYY");
+  }
+  return text;
+};
+
 export const timeMessagesDividerFormat = (value) => {
   let text;
   let momentValue;

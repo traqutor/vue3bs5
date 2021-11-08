@@ -42,6 +42,14 @@ export default {
     state.mediaThumbnails = thumbnails;
   },
 
+  [Mutations.setMediaRecentThumbnails]: (state, thumbnails) => {
+    state.mediaRecentThumbnails = thumbnails;
+  },
+
+  [Mutations.setMediaUndefinedThumbnails]: (state, thumbnails) => {
+    state.mediaUndefinedThumbnails = thumbnails;
+  },
+
   [Mutations.toggleMediaSelectedItem]: (state, item) => {
     const idx = state.mediaSelectedItems.findIndex(
       (selected) => selected.name === item.name

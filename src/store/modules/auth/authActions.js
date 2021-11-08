@@ -82,6 +82,7 @@ export default {
         dispatch(Actions.getUsers);
         dispatch(Actions.onGetConversations, { refresh: true });
         dispatch(Actions.onGetThumbnails);
+        dispatch(Actions.onGetRecentThumbnails);
         dispatch(Actions.onGetTypes);
         dispatch(Actions.onGetLocations);
         dispatch(Actions.onGetPatients);

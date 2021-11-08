@@ -1,5 +1,5 @@
 <template>
-  <div @scroll="onScrollZoom">
+  <div @wheel="onScrollZoom">
     <div ref="locationPanZoomRef" id="panzoom-element">
       <PlanAlexa3d></PlanAlexa3d>
     </div>
@@ -17,7 +17,6 @@ export default {
     let panzoom = null;
 
     const onScrollZoom = (e) => {
-      console.log(e);
       panzoom.zoomWithWheel(e);
     };
 

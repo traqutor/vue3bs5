@@ -45,7 +45,12 @@ export default {
   setup(props) {
     const store = useStore();
 
-    const thumbnails = computed(() => store.getters.getMediaThumbnails);
+    const thumbnails = computed(() => {
+      if (store.getters.getMediaNavTabSelected === "General") {
+        return store.getters.getMediaThumbnails;
+      }
+      return [];
+    });
 
     const onClickAttachToParent = () => {
       console.log("onClickAttachToParent", props);

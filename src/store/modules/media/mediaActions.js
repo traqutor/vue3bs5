@@ -23,6 +23,30 @@ export default {
       });
   },
 
+  [Actions.onGetRecentThumbnails]: ({ commit }) => {
+    const itemsQuantity = 100;
+    const isGeneral = false;
+    const isMetadataRequest = false;
+
+    const url = `${process.env.VUE_APP_BASE_URL}/Gallery/GetThumbnails?ItemsQuantity=${itemsQuantity}&isGeneral=${isGeneral}&isMedatadaRequest=${isMetadataRequest}`;
+
+    axiosWebApiInstance
+      .get(url)
+      .then(function (response) {
+        if (response.data.isOk) {
+          commit(Mutations.setMediaRecentThumbnails, response.data.thumbnails);
+        } else {
+          console.error(
+            "On onGetRecentThumbnails error:",
+            response.data.message
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("On onGetRecentThumbnails error:", error);
+      });
+  },
+
   [Actions.onGetAttachmentsThumbnails]: (_, requestQuery) => {
     return new Promise((resolve) => {
       const url = `${process.env.VUE_APP_BASE_URL}/Gallery/GetAttachmentsThumbnails?${requestQuery}`;
@@ -90,16 +114,19 @@ export default {
     commit(Mutations.setIsLightBoxVisible, true);
   },
 
-  [Actions.onStoreInGallery]: ({ dispatch }, filePayload) => {
+  [Actions.onStoreInGallery]: ({ dispatch, getters }, filePayload) => {
     return new Promise((resolve) => {
       const url = `${process.env.VUE_APP_BASE_URL}/Gallery/storeInGallery`;
 
+      const payload = { ...filePayload, isGeneral: getters.getMediaNavTabSelected === "General" };
+
       axiosWebApiInstance
-        .post(url, filePayload)
+        .post(url, payload)
         .then(function (response) {
           console.log(response);
 
           dispatch(Actions.onGetThumbnails);
+          dispatch(Actions.onGetRecentThumbnails);
 
           resolve();
         })

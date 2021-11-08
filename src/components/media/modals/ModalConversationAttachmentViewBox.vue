@@ -126,14 +126,20 @@ export default {
     const showModal = computed(() => store.getters.getIsLightBoxVisible);
 
     const modalBoxInnerStyle = computed(() => {
-      const value = isGalleryVisible.value ? 212 : 0;
+      const value =
+        isGalleryVisible.value && thumbnailsOfViewFiles.value.length > 0
+          ? 212
+          : 0;
       return {
         right: `${value}px`,
       };
     });
 
     const modalBoxDrawerStyle = computed(() => {
-      const value = isGalleryVisible.value ? 0 : -212;
+      const value =
+        isGalleryVisible.value && thumbnailsOfViewFiles.value.length > 0
+          ? 0
+          : -212;
       return {
         right: `${value}px`,
       };

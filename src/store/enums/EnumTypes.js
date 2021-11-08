@@ -61,6 +61,7 @@ const Actions = {
 
   // media actions
   onGetThumbnails: "onGetThumbnails",
+  onGetRecentThumbnails: "onGetRecentThumbnails",
   onShareGalleryItems: "onShareGalleryItems",
   onGetAttachmentsThumbnails: "onGetAttachmentsThumbnails",
   onGetItem: "onGetItem",
@@ -191,6 +192,8 @@ const Mutations = {
   setMediaItem: "setMediaItem",
   setMediaSelectedItem: "setMediaSelectedItem",
   setMediaThumbnails: "setMediaThumbnails",
+  setMediaRecentThumbnails: "setMediaRecentThumbnails",
+  setMediaUndefinedThumbnails: "setMediaUndefinedThumbnails",
   toggleMediaSelectedItem: "toggleMediaSelectedItem",
   setMediaSelectedItems: "setMediaSelectedItems",
   setMediaSearchText: "setMediaSearchText",
