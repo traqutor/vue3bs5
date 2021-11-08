@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!isLoaded"
     class="
       list-media-item list-media-card
       on-hover
@@ -7,18 +8,17 @@
       mb-3
       hover-action-group
     "
-    @click="onFileUpload"
   >
     <canvas ref="refCanvas" class="image-load-thumbnail"></canvas>
-    <div class="progress me-2">
-      <div
-        class="progress-bar bg-info"
-        role="progressbar"
-        :style="{ width: `${progress}%` }"
-        aria-valuenow="0"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      ></div>
+    <div class="image-load-button-loader">
+      <div v-if="isUpLoading" class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div v-else>
+        <ButtonIcon @click="onFileUpload">
+          <FeatherPlus class="f-icon-26 text-success" />
+        </ButtonIcon>
+      </div>
     </div>
   </div>
 </template>
@@ -28,16 +28,22 @@ import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { Actions } from "@/store/enums/EnumTypes";
 import { guidsGetOne } from "@/services/guids.service";
+import ButtonIcon from "@/components/common/buttons/ButtonIcon";
+import FeatherPlus from "@/icons/FeatherPlus";
 
 export default {
+  components: { FeatherPlus, ButtonIcon },
   props: ["file"],
   setup(props) {
     const refCanvas = ref();
     const progress = ref(0);
     const fileData = ref();
+    const isUpLoading = ref();
+    const isLoaded = ref();
     const store = useStore();
 
     const onFileUpload = () => {
+      isUpLoading.value = true;
       const thumbnailData = refCanvas.value
         .toDataURL(props.file.type)
         .replace("data:", "")
@@ -66,7 +72,15 @@ export default {
         layers: [],
       };
 
-      store.dispatch(Actions.onStoreInGallery, filePayload);
+      store
+        .dispatch(Actions.onStoreInGallery, filePayload)
+        .then(() => {
+          isUpLoading.value = false;
+          isLoaded.value = true;
+        })
+        .catch(() => {
+          isUpLoading.value = false;
+        });
     };
 
     onMounted(() => {
@@ -103,6 +117,8 @@ export default {
     return {
       refCanvas,
       progress,
+      isUpLoading,
+      isLoaded,
       onFileUpload,
     };
   },
@@ -111,9 +127,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../assets/scss/constans";
-.image-load-thumbnail {
-  width: 198px;
-  height: 166px;
-  background: $grey-box-shadow;
+.image-load-button-loader {
+  height: 48px;
+  width: 48px;
+  position: absolute;
+  top: calc(50% - 24px);
+  left: calc(50% - 24px);
 }
 </style>

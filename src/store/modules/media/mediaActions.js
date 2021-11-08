@@ -3,7 +3,7 @@ import { axiosWebApiInstance } from "@/services/axios.service";
 
 export default {
   [Actions.onGetThumbnails]: ({ commit }) => {
-    const itemsQuantity = 10;
+    const itemsQuantity = 100;
     const isGeneral = true;
     const isMetadataRequest = false;
 

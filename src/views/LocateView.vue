@@ -1,5 +1,10 @@
 <template>
-  <div>
-    <h1>Locate</h1>
-  </div>
+  <LocationPanZoom />
 </template>
+
+<script>
+import LocationPanZoom from "@/components/locations/LocationPanZoom";
+export default {
+  components: { LocationPanZoom },
+};
+</script>

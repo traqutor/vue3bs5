@@ -39,7 +39,7 @@ import { Actions } from "@/store/enums/EnumTypes";
 
 export default {
   props: ["showLayerIndex"],
-  emits: ["onMarkerEnabled"],
+  emits: ["fileLoaded"],
   setup() {
     const store = useStore();
     const selected = computed(() => store.getters.getMediaSelectedItem);

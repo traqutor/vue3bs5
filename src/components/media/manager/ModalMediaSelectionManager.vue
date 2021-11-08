@@ -44,68 +44,6 @@
             <div
               class="col ps-4 d-flex align-items-center justify-content-between"
             >
-              <!-- start:: select mode -->
-              <div class="steps-section w-col-3xs">
-                <button
-                  v-if="!selectMode"
-                  @click="onToggleSelectMode"
-                  class="
-                    btn btn-sm btn-success
-                    toggle-checklist-control
-                    shadow-none
-                  "
-                >
-                  Select
-                </button>
-
-                <div
-                  v-else
-                  class="d-flex align-items-center justify-content-between"
-                >
-                  <button
-                    class="btn btn-sm btn-secondary-light shadow-none"
-                    @click="onToggleSelectMode"
-                  >
-                    Cancel
-                  </button>
-
-                  <div class="btn-group">
-                    <button
-                      class="
-                        btn
-                        text-secondary text-dark-hover
-                        p-0
-                        shadow-none
-                        toggle-select-list
-                      "
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Select All"
-                    >
-                      <feather-check-circle class="f-icon-22" />
-                    </button>
-
-                    <button
-                      class="
-                        btn
-                        text-secondary text-dark-hover
-                        border-0
-                        p-0
-                        shadow-none
-                        toggle-select-list
-                        ms-25
-                      "
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Deselect All"
-                    >
-                      <feather-x-circle class="f-icon-22" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <!-- end:: select mode  -->
-
               <!-- start:: tabs -->
               <nav
                 class="side-nav-line nav-line-center ms-5 ps-3 pe-5 flex-fill"
@@ -529,10 +467,7 @@
                         "
                       >
                         <template v-for="item of thumbnails" :key="item.id">
-                          <MediaThumbnailItem
-                            :item="item"
-                            :is-select="selectMode"
-                          />
+                          <MediaThumbnailItem :item="item" :is-select="true" />
                         </template>
                       </div>
                     </div>
@@ -577,7 +512,7 @@
 
             <div class="col ps-4">
               <div
-                v-if="selectMode && !isMediaShareLoading"
+                v-if="!isMediaShareLoading"
                 class="d-flex justify-content-between align-items-center"
               >
                 <!-- start:: confirm share dropdown button -->
@@ -741,8 +676,6 @@ import FeatherFolder from "@/icons/FeatherFolder";
 import FeatherChevronRight from "@/icons/FeatherChevronRight";
 import FeatherArrowLeft from "@/icons/FeatherArrowLeft";
 import FeatherArrowRight from "@/icons/FeatherArrowRight";
-import FeatherCheckCircle from "@/icons/FeatherCheckCircle";
-import FeatherXCircle from "@/icons/FeatherXCircle";
 import FeatherList from "@/icons/FeatherList";
 import FeatherGrid from "@/icons/FeatherGrid";
 import MediaThumbnailItem from "@/components/media/item/MediaThumbnailItem";
@@ -754,8 +687,6 @@ export default {
     MediaThumbnailItem,
     FeatherGrid,
     FeatherList,
-    FeatherXCircle,
-    FeatherCheckCircle,
     FeatherArrowRight,
     FeatherArrowLeft,
     FeatherChevronRight,
@@ -773,7 +704,7 @@ export default {
   },
   setup() {
     let modal = null;
-    const selectMode = ref();
+
     const selectedFiles = ref();
     const fileSelectorInput = ref();
 
@@ -784,20 +715,12 @@ export default {
       () => store.getters.getIsMediaShareLoading
     );
 
-    const onToggleSelectMode = () => {
-      selectMode.value = !selectMode.value;
-      if (!selectMode.value) {
-        store.commit(Mutations.setMediaSelectedItems, []);
-      }
-    };
-
     const onShareGalleryItems = () => {
       const payload = {
         ids: selectedItems.value.map((item) => item.id),
       };
-      console.log("onShareGalleryItems", payload);
+
       store.dispatch(Actions.onShareGalleryItems, payload).then(() => {
-        console.log("onShareGalleryItems response");
         modal.hide();
       });
     };
@@ -811,9 +734,13 @@ export default {
     };
 
     const onDeleteSelectedItems = () => {
-      store.dispatch(Actions.onGalleryDelete, {
-        ids: selectedItems.value.map((item) => item.id),
-      });
+      store
+        .dispatch(Actions.onGalleryDelete, {
+          ids: selectedItems.value.map((item) => item.id),
+        })
+        .then(() => {
+          store.commit(Mutations.setMediaSelectedItems, []);
+        });
     };
 
     onMounted(() => {
@@ -822,13 +749,11 @@ export default {
 
     return {
       fileSelectorInput,
-      selectMode,
       thumbnails,
       selectedItems,
       selectedFiles,
       isMediaShareLoading,
       onFileSelected,
-      onToggleSelectMode,
       onShareGalleryItems,
       fileSelectorInputClick,
       onDeleteSelectedItems,
