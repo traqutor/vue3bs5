@@ -106,6 +106,7 @@ export default {
         });
       } else {
         commit(Mutations.setIsMessagesLoading, false);
+        dispatch(Actions.onMarkMessagesAsRead);
       }
 
       resolve();

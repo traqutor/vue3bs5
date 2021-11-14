@@ -13,13 +13,25 @@
     </div>
 
     <main-header-user-button></main-header-user-button>
+
+    <div>
+      <Button> <FeatherPlusCirlce class="me-2" /> New task </Button>
+    </div>
   </header>
 </template>
 <script>
 import MainHeaderUserButton from "@/components/header/MainHeaderUserButton";
+import ButtonIcon from "@/components/common/buttons/ButtonIcon";
+import FeatherPlus from "@/icons/FeatherPlus";
+import Button from "@/components/common/buttons/Button";
+import FeatherPlusCirlce from "@/icons/FeatherPlusCirlce";
 
 export default {
   components: {
+    FeatherPlusCirlce,
+    Button,
+    FeatherPlus,
+    ButtonIcon,
     MainHeaderUserButton,
   },
 };
