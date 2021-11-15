@@ -100,4 +100,8 @@ export default {
     items.push(mediaItem);
     state.mediaItems = [...items];
   },
+
+  [Mutations.setTemporarySelectedFilesToUpload]: (state, files) => {
+    state.temporarySelectedFilesToUpload = files;
+  },
 };

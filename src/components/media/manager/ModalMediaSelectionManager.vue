@@ -705,10 +705,12 @@ export default {
   setup() {
     let modal = null;
 
-    const selectedFiles = ref();
     const fileSelectorInput = ref();
 
     const store = useStore();
+    const selectedFiles = computed(
+      () => store.getters.getTemporarySelectedFilesToUpload
+    );
     const thumbnails = computed(() => store.getters.getMediaThumbnails);
     const selectedItems = computed(() => store.getters.getMediaSelectedItems);
     const isMediaShareLoading = computed(
@@ -726,7 +728,10 @@ export default {
     };
 
     const onFileSelected = (event) => {
-      selectedFiles.value = event.target.files;
+      store.commit(
+        Mutations.setTemporarySelectedFilesToUpload,
+        event.target.files
+      );
     };
 
     const fileSelectorInputClick = () => {

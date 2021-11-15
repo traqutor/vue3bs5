@@ -1,4 +1,7 @@
-import {dateHeaderTimeAgoFormat, defaultTimeAgoFormat} from "@/services/datetime.service";
+import {
+  dateHeaderTimeAgoFormat,
+  defaultTimeAgoFormat,
+} from "@/services/datetime.service";
 import {
   MEDIA_ITEM_SIZES,
   MEDIA_PATIENT_ITEM_SIZES,
@@ -141,5 +144,9 @@ export default {
 
   getMediaItemById: (state) => (itemId) => {
     return state.mediaItems.find((item) => item.fileName.includes(itemId));
+  },
+
+  getTemporarySelectedFilesToUpload: (state) => {
+    return state.temporarySelectedFilesToUpload;
   },
 };

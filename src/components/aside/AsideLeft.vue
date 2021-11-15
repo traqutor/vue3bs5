@@ -13,47 +13,47 @@
         <feather-message-square-line class="f-icon-26" />
       </AsideLeftNavButton>
 
-      <AsideLeftNavButton title="Incidents" path="/incidents" badge-number="">
-        <feather-flasher class="f-icon-26" />
-      </AsideLeftNavButton>
+<!--      <AsideLeftNavButton title="Incidents" path="/incidents" badge-number="">-->
+<!--        <feather-flasher class="f-icon-26" />-->
+<!--      </AsideLeftNavButton>-->
 
       <AsideLeftNavButton title="Locate" path="/locate" badge-number="">
         <feather-map-pin class="f-icon-26" />
       </AsideLeftNavButton>
 
-      <AsideLeftNavButton title="Alarms" path="/alarms" badge-number="">
-        <feather-alert-triangle class="f-icon-26" />
-      </AsideLeftNavButton>
+<!--      <AsideLeftNavButton title="Alarms" path="/alarms" badge-number="">-->
+<!--        <feather-alert-triangle class="f-icon-26" />-->
+<!--      </AsideLeftNavButton>-->
 
       <AsideLeftNavButton title="Media" path="/media" badge-number="">
         <feather-play class="f-icon-26" />
       </AsideLeftNavButton>
 
-      <AsideLeftNavButton title="Patients" path="/patients" badge-number="">
-        <feather-patient class="f-icon-26" />
-      </AsideLeftNavButton>
+<!--      <AsideLeftNavButton title="Patients" path="/patients" badge-number="">-->
+<!--        <feather-patient class="f-icon-26" />-->
+<!--      </AsideLeftNavButton>-->
 
-      <AsideLeftNavButton title="Sentinel" path="/sentinel" badge-number="">
-        <feather-shield class="f-icon-26" />
-      </AsideLeftNavButton>
+<!--      <AsideLeftNavButton title="Sentinel" path="/sentinel" badge-number="">-->
+<!--        <feather-shield class="f-icon-26" />-->
+<!--      </AsideLeftNavButton>-->
     </nav>
 
     <nav class="nav flex-column mt-auto">
-      <AsideLeftNavButton
-        title="Switchboard"
-        path="/switchboard"
-        badge-number=""
-      >
-        <feather-headphones-mic class="f-icon-26" />
-      </AsideLeftNavButton>
+<!--      <AsideLeftNavButton-->
+<!--        title="Switchboard"-->
+<!--        path="/switchboard"-->
+<!--        badge-number=""-->
+<!--      >-->
+<!--        <feather-headphones-mic class="f-icon-26" />-->
+<!--      </AsideLeftNavButton>-->
 
-      <AsideLeftNavButton
-        title="Role Management"
-        path="/role_management"
-        badge-number=""
-      >
-        <feather-user-check class="f-icon-26" />
-      </AsideLeftNavButton>
+<!--      <AsideLeftNavButton-->
+<!--        title="Role Management"-->
+<!--        path="/role_management"-->
+<!--        badge-number=""-->
+<!--      >-->
+<!--        <feather-user-check class="f-icon-26" />-->
+<!--      </AsideLeftNavButton>-->
 
       <AsideLeftNavButton title="Settings" path="/settings" badge-number="">
         <feather-settings class="f-icon-26" />

@@ -2,8 +2,12 @@
   <div class="media-grid-tile" v-if="item">
     <MediaItem :item="item" :is-drop-down-menu="true" />
 
-    <span class="text-truncate media-grid-tile-name-label"> {{ item.name }}</span>
-    <span class="media-grid-tile-created-label">Created {{ getCreatedAgo }}</span>
+    <span class="text-truncate media-grid-tile-name-label">
+      {{ item.name }}</span
+    >
+    <span class="media-grid-tile-created-label"
+      >Created {{ getCreatedAgo }}</span
+    >
   </div>
 </template>
 <script>
@@ -28,4 +32,3 @@ export default {
   },
 };
 </script>
-

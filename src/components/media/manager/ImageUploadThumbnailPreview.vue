@@ -1,15 +1,6 @@
 <template>
-  <div
-    v-if="!isLoaded"
-    class="
-      list-media-item list-media-card
-      on-hover
-      position-relative
-      mb-3
-      hover-action-group
-    "
-  >
-    <canvas ref="refCanvas" class="image-load-thumbnail"></canvas>
+  <div v-if="!isLoaded" class="media-grid-tile position-relative">
+    <canvas ref="refCanvas" class="bound-canvas"></canvas>
     <div class="image-load-button-loader">
       <div v-if="isUpLoading" class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -133,5 +124,12 @@ export default {
   position: absolute;
   top: calc(50% - 24px);
   left: calc(50% - 24px);
+}
+
+.bound-canvas {
+  height: 172px;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 4px;
 }
 </style>
