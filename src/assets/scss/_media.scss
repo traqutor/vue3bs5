@@ -92,3 +92,17 @@
   padding: 20px 0;
   height: 65px;
 }
+
+.media-top-right-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px;
+
+  width: 32px !important;
+  height: 32px !important;
+
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}

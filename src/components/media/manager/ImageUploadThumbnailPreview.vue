@@ -1,14 +1,9 @@
 <template>
   <div v-if="!isLoaded" class="media-grid-tile position-relative">
     <canvas ref="refCanvas" class="bound-canvas"></canvas>
-    <div class="image-load-button-loader">
-      <div v-if="isUpLoading" class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div v-else>
-        <ButtonIcon @click="onFileUpload">
-          <FeatherPlus class="f-icon-26 text-success" />
-        </ButtonIcon>
+    <div class="position-absolute position-top-right m-2">
+      <div class="media-top-right-button" @click="onRemoveFile">
+        <FeatherX class="f-icon-26 text-danger" />
       </div>
     </div>
   </div>
@@ -17,14 +12,14 @@
 <script>
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
-import { Actions } from "@/store/enums/EnumTypes";
+
+import {Actions, Mutations} from "@/store/enums/EnumTypes";
 import { guidsGetOne } from "@/services/guids.service";
-import ButtonIcon from "@/components/common/buttons/ButtonIcon";
-import FeatherPlus from "@/icons/FeatherPlus";
+import FeatherX from "@/icons/FeatherX";
 
 export default {
-  components: { FeatherPlus, ButtonIcon },
-  props: ["file"],
+  components: { FeatherX },
+  props: ["file", "index"],
   setup(props) {
     const refCanvas = ref();
     const progress = ref(0);
@@ -32,6 +27,10 @@ export default {
     const isUpLoading = ref();
     const isLoaded = ref();
     const store = useStore();
+
+    const onRemoveFile = () => {
+      store.commit(Mutations.removeTemporarySelectedFile, props.index);
+    }
 
     const onFileUpload = () => {
       isUpLoading.value = true;
@@ -111,6 +110,7 @@ export default {
       isUpLoading,
       isLoaded,
       onFileUpload,
+      onRemoveFile,
     };
   },
 };
@@ -122,8 +122,8 @@ export default {
   height: 48px;
   width: 48px;
   position: absolute;
-  top: calc(50% - 24px);
-  left: calc(50% - 24px);
+  top: 0;
+  right: 0;
 }
 
 .bound-canvas {

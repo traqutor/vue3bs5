@@ -43,9 +43,10 @@ export default {
     const buttonClickFileSelectorInput = ref();
 
     const onFileSelected = (event) => {
+      const dt = Array.from(event.target.files);
       store.commit(
         Mutations.setTemporarySelectedFilesToUpload,
-        event.target.files
+        dt
       );
     };
 

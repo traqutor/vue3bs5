@@ -149,4 +149,8 @@ export default {
   getTemporarySelectedFilesToUpload: (state) => {
     return state.temporarySelectedFilesToUpload;
   },
+
+  getIsDropFileBoxVisible: (state) => {
+    return state.isDropFileBoxVisible;
+  },
 };

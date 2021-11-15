@@ -38,6 +38,7 @@ export const initialState = () => ({
   isLightBoxVisible: false,
   lightBoxViewFiles: [],
   temporarySelectedFilesToUpload: [],
+  isDropFileBoxVisible: false,
 });
 
 const mediaModule = {

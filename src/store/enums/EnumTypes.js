@@ -205,6 +205,8 @@ const Mutations = {
   setLightBoxViewFiles: "setLightBoxViewFiles",
 
   setTemporarySelectedFilesToUpload: "setTemporarySelectedFilesToUpload",
+  removeTemporarySelectedFile: "removeTemporarySelectedFile",
+  setIsDropFileBoxVisible: "setIsDropFileBoxVisible",
 
   //mutations of patients
   cleanPatientsState: "cleanPatientsState",

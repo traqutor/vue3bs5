@@ -2,7 +2,7 @@
   <div
     class="dropdown custom-dropdown position-absolute position-top-right m-2"
   >
-    <ButtonIcon data-bs-toggle="dropdown" class="media-more-drop-menu">
+    <ButtonIcon data-bs-toggle="dropdown" class="media-top-right-button">
       <FeatherMoreVertical class="f-icon-18" />
     </ButtonIcon>
 
@@ -58,18 +58,3 @@ export default {
   },
 };
 </script>
-<style>
-.media-more-drop-menu {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 4px;
-
-  width: 32px !important;
-  height: 32px !important;
-
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-}
-</style>

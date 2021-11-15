@@ -104,4 +104,12 @@ export default {
   [Mutations.setTemporarySelectedFilesToUpload]: (state, files) => {
     state.temporarySelectedFilesToUpload = files;
   },
+
+  [Mutations.setIsMediaShareLoading]: (state, flag) => {
+    state.isDropFileBoxVisible = flag;
+  },
+
+  [Mutations.removeTemporarySelectedFile]: (state, index) => {
+    state.temporarySelectedFilesToUpload.splice(index, 1);
+  },
 };
