@@ -146,6 +146,7 @@ export default {
           console.log(response);
 
           dispatch(Actions.onGetThumbnails);
+          dispatch(Actions.onGetRecentThumbnails);
 
           resolve();
         })

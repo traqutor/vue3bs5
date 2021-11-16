@@ -185,16 +185,6 @@ export default {
 
       dispatch(Actions.onTaskDeletedNotification, task);
     });
-
-    // socket will automatically try to reconnect listen if is reconnecting
-    connection.onreconnecting(() => {
-      commit(Mutations.setIsSocketReconnecting, true);
-    });
-
-    // listen and update when reconnected
-    connection.onreconnected(() => {
-      commit(Mutations.setIsSocketReconnecting, false);
-    });
   },
 
   [Actions.onSocketConnectionClose]: ({ state }) => {

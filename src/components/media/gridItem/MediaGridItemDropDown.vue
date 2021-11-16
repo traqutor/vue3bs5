@@ -28,6 +28,8 @@
 <script>
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 import ButtonIcon from "@/components/common/buttons/ButtonIcon";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
+import { useStore } from "vuex";
 
 export default {
   name: "MediaListItemDropDown",
@@ -35,6 +37,8 @@ export default {
   props: ["item"],
 
   setup(props) {
+    const store = useStore();
+
     const onClickAttachToParent = () => {
       console.log("onClickAttachToParent", props);
     };
@@ -43,6 +47,10 @@ export default {
     };
     const onClickDelete = () => {
       console.log("onClickDelete", props);
+
+      store.dispatch(Actions.onGalleryDelete, {
+        ids: [props.item.id],
+      });
     };
 
     return {

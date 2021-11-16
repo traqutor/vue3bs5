@@ -13,8 +13,9 @@
 </template>
 
 <script>
+import { computed, onBeforeUnmount, ref, watch } from "vue";
 import { useStore } from "vuex";
-import { Actions } from "@/store/enums/EnumTypes";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import AppHeader from "@/components/header/MainHeader";
 import AsideLeft from "@/components/aside/AsideLeft";
 import ModalMediaSelectionManager from "@/components/media/manager/ModalMediaSelectionManager";
@@ -26,8 +27,31 @@ export default {
   setup() {
     const store = useStore();
 
+    const isOnline = ref();
+
     store.dispatch(Actions.onAppInitRecallLoggedUserData);
     store.dispatch(Actions.onCreateHubConnection);
+    store.commit(Mutations.prepareSoundEffect);
+
+    const checkConnection = setInterval(() => {
+      isOnline.value = navigator.onLine;
+    }, 6000);
+
+    watch(isOnline, (newState, oldState) => {
+      if (!newState) {
+        store.commit(Mutations.setIsSocketReconnecting, true);
+      }
+
+      if (newState && !oldState) {
+        store.dispatch(Actions.onCreateHubConnection).then(() => {
+          store.commit(Mutations.setIsSocketReconnecting, false);
+        });
+      }
+    });
+
+    onBeforeUnmount(() => {
+      clearInterval(checkConnection);
+    });
 
     return {};
   },

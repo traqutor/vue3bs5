@@ -6,6 +6,17 @@
         <FeatherX class="f-icon-26 text-danger" />
       </div>
     </div>
+
+    <div class="image-load-button-loader">
+      <div v-if="isUpLoading" class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div v-else>
+        <ButtonIcon @click="onFileUpload">
+          <FeatherPlus class="f-icon-26 text-success" />
+        </ButtonIcon>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -13,12 +24,14 @@
 import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
 
-import {Actions, Mutations} from "@/store/enums/EnumTypes";
+import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import { guidsGetOne } from "@/services/guids.service";
 import FeatherX from "@/icons/FeatherX";
+import ButtonIcon from "@/components/common/buttons/ButtonIcon";
+import FeatherPlus from "@/icons/FeatherPlus";
 
 export default {
-  components: { FeatherX },
+  components: {FeatherPlus, ButtonIcon, FeatherX },
   props: ["file", "index"],
   setup(props) {
     const refCanvas = ref();
@@ -30,7 +43,7 @@ export default {
 
     const onRemoveFile = () => {
       store.commit(Mutations.removeTemporarySelectedFile, props.index);
-    }
+    };
 
     const onFileUpload = () => {
       isUpLoading.value = true;
@@ -122,8 +135,8 @@ export default {
   height: 48px;
   width: 48px;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: calc(50% - 24px);
+  left: calc(50% - 24px);
 }
 
 .bound-canvas {

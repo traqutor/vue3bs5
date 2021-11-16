@@ -1,5 +1,5 @@
 import { Mutations } from "@/store/enums/EnumTypes";
-import {initialState} from "@/store/modules/settings";
+import { initialState } from "@/store/modules/settings";
 
 export default {
   [Mutations.cleanSocketState]: (state) => {
