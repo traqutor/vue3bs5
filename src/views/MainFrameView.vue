@@ -40,6 +40,10 @@ export default {
     watch(isOnline, (newState, oldState) => {
       if (!newState) {
         store.commit(Mutations.setIsSocketReconnecting, true);
+        store.dispatch(Actions.onDisplayNotification, {
+          text: "You're currently offline! Wait until your network comes back.",
+          backgroundColor: "red",
+        });
       }
 
       if (newState && !oldState) {
