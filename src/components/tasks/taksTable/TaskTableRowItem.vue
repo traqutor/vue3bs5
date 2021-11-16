@@ -19,7 +19,7 @@
     </td>
     <td class="custom-td">
       <span class="label">
-        {{ timeTaskCreationFormat(task.created.seconds) }}
+        {{ timeTaskCreationFormat(task.created) }}
       </span>
     </td>
     <td class="custom-td">
