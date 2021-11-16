@@ -1,10 +1,12 @@
 <template>
   <div class="flex-fill position-relative overflow-hidden pt-3">
+    <MediaThumbnailsLoading :is-loading="isLoading" />
     <perfect-scrollbar
       class="d-flex flex-column position-absolute h-100 w-100 pe-3"
     >
-      <template v-for="(group, index) of thumbnailsGroups" :key="index">
+      <UploadMediaFilesBox />
 
+      <template v-for="(group, index) of thumbnailsGroups" :key="index">
         <div class="media-recent-time-ago-divider">
           <span class="label-subheader">{{ group.date }}</span>
         </div>
@@ -32,20 +34,25 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
-import { MEDIA_ITEM_SIZES } from "@/store/enums/EnumTypes";
 import MediaListItem from "@/components/media/table/MediaTableRowItem";
+import MediaThumbnailsLoading from "@/components/media/upload/MediaThumbnailsLoading";
+import UploadMediaFilesBox from "@/components/media/upload/UploadMediaFilesBox";
 export default {
   name: "MediaRecentList",
-  components: { MediaListItem },
+  components: { UploadMediaFilesBox, MediaThumbnailsLoading, MediaListItem },
   setup() {
     const store = useStore();
+
+    const isLoading = computed(
+      () => store.getters.getIsRecentThumbnailsLoading
+    );
     const thumbnailsGroups = computed(
       () => store.getters.getMediaGroupedRecentThumbnails
     );
 
     return {
+      isLoading,
       thumbnailsGroups,
-      MEDIA_ITEM_SIZES,
     };
   },
 };

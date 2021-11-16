@@ -112,4 +112,12 @@ export default {
   [Mutations.removeTemporarySelectedFile]: (state, index) => {
     state.temporarySelectedFilesToUpload.splice(index, 1);
   },
+
+  [Mutations.setIsThumbnailsLoading]: (state, flag) => {
+    state.isThumbnailsLoading = flag;
+  },
+
+  [Mutations.setIsRecentThumbnailsLoading]: (state, flag) => {
+    state.isRecentThumbnailsLoading = flag;
+  },
 };

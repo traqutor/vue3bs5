@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { computed, onBeforeUnmount, ref, watch } from "vue";
+import { onBeforeUnmount, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import AppHeader from "@/components/header/MainHeader";

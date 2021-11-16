@@ -1,7 +1,12 @@
 <template>
   <div class="col d-flex flex-column overflow-hidden max-content-wrapper">
     <div class="flex-section-slide flex-fill">
-      <div class="flex-slide-content d-flex flex-column">
+      <div
+        class="flex-slide-content d-flex flex-column"
+        @dragenter="onDragEnter(true)"
+        @dragover.prevent
+        @drop.prevent
+      >
         <media-nav-header />
 
         <media-recent v-if="tabActive === MEDIA_NAV_TABS.RECENT" />
@@ -14,9 +19,9 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, useStore } from "vuex";
 
-import { MEDIA_NAV_TABS } from "@/store/enums/EnumTypes";
+import { MEDIA_NAV_TABS, Mutations } from "@/store/enums/EnumTypes";
 import MediaNavHeader from "@/components/media/MediaNavHeader";
 import MediaRecent from "@/components/media/MediaRecent";
 import MediaGeneral from "@/components/media/MediaGeneral";
@@ -24,7 +29,14 @@ import MediaGeneral from "@/components/media/MediaGeneral";
 export default {
   name: "MediaContainer",
   data() {
+    const store = useStore();
+
+    const onDragEnter = (flag) => {
+      store.commit(Mutations.setIsMediaShareLoading, flag);
+    };
+
     return {
+      onDragEnter,
       MEDIA_NAV_TABS,
     };
   },

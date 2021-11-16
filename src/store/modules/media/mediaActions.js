@@ -3,6 +3,8 @@ import { axiosWebApiInstance } from "@/services/axios.service";
 
 export default {
   [Actions.onGetThumbnails]: ({ commit }) => {
+    commit(Mutations.setIsThumbnailsLoading, true);
+
     const itemsQuantity = 100;
     const isGeneral = true;
     const isMetadataRequest = false;
@@ -17,13 +19,17 @@ export default {
         } else {
           console.error("On onGetThumbnails error:", response.data.message);
         }
+        commit(Mutations.setIsThumbnailsLoading, false);
       })
       .catch((error) => {
+        commit(Mutations.setIsThumbnailsLoading, false);
         console.error("On onGetThumbnails error:", error);
       });
   },
 
   [Actions.onGetRecentThumbnails]: ({ commit }) => {
+    commit(Mutations.setIsRecentThumbnailsLoading, true);
+
     const itemsQuantity = 100;
     const isGeneral = false;
     const isMetadataRequest = false;
@@ -41,8 +47,10 @@ export default {
             response.data.message
           );
         }
+        commit(Mutations.setIsRecentThumbnailsLoading, false);
       })
       .catch((error) => {
+        commit(Mutations.setIsRecentThumbnailsLoading, false);
         console.error("On onGetRecentThumbnails error:", error);
       });
   },
@@ -118,13 +126,14 @@ export default {
     return new Promise((resolve) => {
       const url = `${process.env.VUE_APP_BASE_URL}/Gallery/storeInGallery`;
 
-      const payload = { ...filePayload, isGeneral: getters.getMediaNavTabSelected === "General" };
+      const payload = {
+        ...filePayload,
+        isGeneral: getters.getMediaNavTabSelected === "General",
+      };
 
       axiosWebApiInstance
         .post(url, payload)
-        .then(function (response) {
-          console.log(response);
-
+        .then(() => {
           dispatch(Actions.onGetThumbnails);
           dispatch(Actions.onGetRecentThumbnails);
 
@@ -136,17 +145,30 @@ export default {
     });
   },
 
-  [Actions.onGalleryDelete]: ({ dispatch }, deletePayload) => {
+  [Actions.onGalleryDelete]: ({ getters, commit }, deletePayload) => {
+    const general = getters.getMediaThumbnails;
+    const recent = getters.getMediaRecentThumbnails;
+
+    deletePayload.ids.forEach((id) => {
+      const idx = general.findIndex((item) => item.id === id);
+      if (idx !== -1) {
+        general.splice(idx, 1);
+      }
+
+      const ridx = recent.findIndex((item) => item.id === id);
+      if (ridx !== -1) {
+        recent.splice(ridx, 1);
+      }
+    });
+
     return new Promise((resolve) => {
       const url = `${process.env.VUE_APP_BASE_URL}/Gallery/Delete`;
 
       axiosWebApiInstance
         .delete(url, { data: deletePayload })
-        .then(function (response) {
-          console.log(response);
-
-          dispatch(Actions.onGetThumbnails);
-          dispatch(Actions.onGetRecentThumbnails);
+        .then(function () {
+          commit(Mutations.setMediaThumbnails, general);
+          commit(Mutations.setMediaRecentThumbnails, recent);
 
           resolve();
         })

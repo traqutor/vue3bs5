@@ -207,6 +207,10 @@ const Mutations = {
   setTemporarySelectedFilesToUpload: "setTemporarySelectedFilesToUpload",
   removeTemporarySelectedFile: "removeTemporarySelectedFile",
   setIsDropFileBoxVisible: "setIsDropFileBoxVisible",
+  setIsThumbnailsLoading: "setIsThumbnailsLoading",
+  setIsRecentThumbnailsLoading: "setIsRecentThumbnailsLoading",
+
+
 
   //mutations of patients
   cleanPatientsState: "cleanPatientsState",

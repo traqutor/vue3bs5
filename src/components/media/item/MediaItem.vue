@@ -10,6 +10,8 @@
 
     <NoteItem :item="item" v-if="item.blobType === MEDIA_TYPES.NOTE" />
 
+    <MediaItemIsLoading :is-loading="item.isLoading" />
+
     <MediaListItemDropDown v-if="isDropDownMenu" :item="item" />
 
     <MediaItemSelectToggle v-if="isSelect" :item="item" />
@@ -24,6 +26,7 @@ import NoteItem from "@/components/media/item/NoteItem";
 import VideoItem from "@/components/media/item/VideoItem";
 import MediaListItemDropDown from "@/components/media/gridItem/MediaGridItemDropDown";
 import MediaItemSelectToggle from "@/components/media/item/MediaItemSelectToggle";
+import MediaItemIsLoading from "@/components/media/item/MediaItemIsLoading";
 
 export default {
   props: ["item", "isSelect", "isDropDownMenu"],
@@ -34,6 +37,7 @@ export default {
   },
 
   components: {
+    MediaItemIsLoading,
     MediaItemSelectToggle,
     MediaListItemDropDown,
     NoteItem,

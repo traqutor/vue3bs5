@@ -6,6 +6,7 @@ import {
   MEDIA_ITEM_SIZES,
   MEDIA_PATIENT_ITEM_SIZES,
   MEDIA_TYPES,
+  Mutations,
 } from "@/store/enums/EnumTypes";
 
 export default {
@@ -152,5 +153,13 @@ export default {
 
   getIsDropFileBoxVisible: (state) => {
     return state.isDropFileBoxVisible;
+  },
+
+  getIsThumbnailsLoading: (state) => {
+    return state.isThumbnailsLoading;
+  },
+
+  getIsRecentThumbnailsLoading: (state) => {
+    return state.isRecentThumbnailsLoading;
   },
 };

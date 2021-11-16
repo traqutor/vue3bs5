@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isLoaded" class="media-grid-tile position-relative">
+  <div class="media-grid-tile position-relative">
     <canvas ref="refCanvas" class="bound-canvas"></canvas>
     <div class="position-absolute position-top-right m-2">
       <div class="media-top-right-button" @click="onRemoveFile">
@@ -7,38 +7,27 @@
       </div>
     </div>
 
-    <div class="image-load-button-loader">
-      <div v-if="isUpLoading" class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div v-else>
-        <ButtonIcon @click="onFileUpload">
-          <FeatherPlus class="f-icon-26 text-success" />
-        </ButtonIcon>
-      </div>
-    </div>
+    <MediaItemIsLoading :is-loading="isLoading" />
   </div>
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 
 import { Actions, Mutations } from "@/store/enums/EnumTypes";
 import { guidsGetOne } from "@/services/guids.service";
 import FeatherX from "@/icons/FeatherX";
-import ButtonIcon from "@/components/common/buttons/ButtonIcon";
-import FeatherPlus from "@/icons/FeatherPlus";
+import MediaItemIsLoading from "@/components/media/item/MediaItemIsLoading";
 
 export default {
-  components: {FeatherPlus, ButtonIcon, FeatherX },
-  props: ["file", "index"],
+  components: { MediaItemIsLoading, FeatherX },
+  props: ["file", "index", "onUpload"],
   setup(props) {
     const refCanvas = ref();
     const progress = ref(0);
     const fileData = ref();
-    const isUpLoading = ref();
-    const isLoaded = ref();
+    const isLoading = ref();
     const store = useStore();
 
     const onRemoveFile = () => {
@@ -46,7 +35,7 @@ export default {
     };
 
     const onFileUpload = () => {
-      isUpLoading.value = true;
+      isLoading.value = true;
       const thumbnailData = refCanvas.value
         .toDataURL(props.file.type)
         .replace("data:", "")
@@ -78,11 +67,11 @@ export default {
       store
         .dispatch(Actions.onStoreInGallery, filePayload)
         .then(() => {
-          isUpLoading.value = false;
-          isLoaded.value = true;
+          isLoading.value = false;
+          store.commit(Mutations.removeTemporarySelectedFile, props.index);
         })
         .catch(() => {
-          isUpLoading.value = false;
+          isLoading.value = false;
         });
     };
 
@@ -117,11 +106,19 @@ export default {
       reader.readAsDataURL(props.file);
     });
 
+    watch(
+      () => props.onUpload,
+      (value) => {
+        if (value) {
+          onFileUpload();
+        }
+      }
+    );
+
     return {
       refCanvas,
       progress,
-      isUpLoading,
-      isLoaded,
+      isLoading,
       onFileUpload,
       onRemoveFile,
     };
@@ -131,13 +128,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../assets/scss/constans";
-.image-load-button-loader {
-  height: 48px;
-  width: 48px;
-  position: absolute;
-  top: calc(50% - 24px);
-  left: calc(50% - 24px);
-}
 
 .bound-canvas {
   height: 172px;

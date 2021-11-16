@@ -28,7 +28,7 @@
 <script>
 import FeatherMoreVertical from "@/icons/FeatherMoreVertical";
 import ButtonIcon from "@/components/common/buttons/ButtonIcon";
-import { Actions, Mutations } from "@/store/enums/EnumTypes";
+import { Actions } from "@/store/enums/EnumTypes";
 import { useStore } from "vuex";
 
 export default {
@@ -46,8 +46,6 @@ export default {
       console.log("onClickShareInConversation", props);
     };
     const onClickDelete = () => {
-      console.log("onClickDelete", props);
-
       store.dispatch(Actions.onGalleryDelete, {
         ids: [props.item.id],
       });

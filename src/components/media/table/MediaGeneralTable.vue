@@ -1,8 +1,11 @@
 <template>
   <div class="flex-fill position-relative overflow-hidden pt-3">
+    <MediaThumbnailsLoading :is-loading="isLoading" />
     <perfect-scrollbar
       class="d-flex flex-column position-absolute h-100 w-100 pe-3"
     >
+      <UploadMediaFilesBox />
+
       <table>
         <thead>
           <tr>
@@ -25,17 +28,23 @@
 import { useStore } from "vuex";
 import { computed } from "vue";
 import MediaTableRowItem from "@/components/media/table/MediaTableRowItem";
+import MediaThumbnailsLoading from "@/components/media/upload/MediaThumbnailsLoading";
+import UploadMediaFilesBox from "@/components/media/upload/UploadMediaFilesBox";
 export default {
   name: "MediaGeneralList",
-  components: { MediaTableRowItem },
+  components: {
+    UploadMediaFilesBox,
+    MediaThumbnailsLoading,
+    MediaTableRowItem,
+  },
   setup() {
     const store = useStore();
-    const itemSizeClass = computed(() => store.getters.getMediaItemClass);
+    const isLoading = computed(() => store.getters.getIsThumbnailsLoading);
 
     const thumbnails = computed(() => store.getters.getMediaThumbnails);
 
     return {
-      itemSizeClass,
+      isLoading,
       thumbnails,
     };
   },

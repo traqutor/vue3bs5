@@ -25,7 +25,9 @@
         <li class="dropdown-item custom-dropdown-item">
           Share in conversation
         </li>
-        <li class="dropdown-item custom-dropdown-item">Delete</li>
+        <li class="dropdown-item custom-dropdown-item" @click="onClickDelete">
+          Delete
+        </li>
       </ul>
     </td>
   </tr>
@@ -59,7 +61,9 @@ export default {
       console.log("onClickShareInConversation", props);
     };
     const onClickDelete = () => {
-      console.log("onClickDelete", props);
+      store.dispatch(Actions.onGalleryDelete, {
+        ids: [props.item.id],
+      });
     };
 
     const getCreatedAgo = () => moment(props.item.created).fromNow();
