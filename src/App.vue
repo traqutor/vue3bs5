@@ -6,10 +6,17 @@
 <script>
 import { defineComponent } from "vue";
 import ToastNotifications from "@/views/toast/ToastNotifications";
+import { useStore } from "vuex";
+import { Mutations } from "@/store/enums/EnumTypes";
 
 export default defineComponent({
   name: "app",
   components: { ToastNotifications },
+  setup() {
+    const store = useStore();
+
+    store.commit(Mutations.prepareSoundEffect);
+  },
 });
 </script>
 
