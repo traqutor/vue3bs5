@@ -8,6 +8,7 @@ import {
 import { CHAT_VIEW_MODES } from "@/const";
 import { Actions, MEDIA_TYPES, Mutations } from "@/store/enums/EnumTypes";
 import { subtractNotLessTenZero } from "@/services/counter.service";
+import { notifyUser } from "@/services/notifications.service";
 
 let getMessagesSource = null;
 
@@ -668,6 +669,11 @@ export default {
         if (conversation.id === getters.getSelectedConversationId) {
           dispatch(Actions.onMarkMessagesAsRead);
         }
+
+        if (message.authorId !== getters.getLoggedUser.id) {
+          commit(Mutations.setSoundWaterDrop);
+          notifyUser("New message: " + message.text);
+        }
       }
     };
 
@@ -682,10 +688,6 @@ export default {
           applyNewMessage();
         });
       });
-    }
-
-    if (message.authorId !== getters.getLoggedUser.id) {
-      commit(Mutations.setSoundWaterDrop);
     }
   },
 

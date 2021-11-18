@@ -1,7 +1,7 @@
 <template>
   <div @wheel="onScrollZoom">
     <div ref="locationPanZoomRef" id="panzoom-element">
-      <PlanAlexa3d></PlanAlexa3d>
+      <Plan3dIso></Plan3dIso>
     </div>
   </div>
 </template>
@@ -10,8 +10,9 @@
 import { onMounted, ref } from "vue";
 import PlanAlexa3d from "@/components/locations/plans/PlanAlexa3d";
 import Panzoom from "@panzoom/panzoom";
+import Plan3dIso from "@/components/locations/plans/Plan3dIso";
 export default {
-  components: { PlanAlexa3d },
+  components: {Plan3dIso, PlanAlexa3d },
   setup() {
     const locationPanZoomRef = ref();
     let panzoom = null;
